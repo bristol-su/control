@@ -18,7 +18,7 @@ class PositionTagScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereHas('tag_relationship', function(Builder $builder) {
+        $builder->whereHas('tagRelationship', function(Builder $builder) {
             $builder->where('type', 'position');
         });
     }
