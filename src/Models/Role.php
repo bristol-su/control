@@ -172,14 +172,12 @@ class Role extends Model implements RoleContract
 
     public function positionRelationship()
     {
-        return $this->hasOne(\BristolSU\ControlDB\Models\Position::class);
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Position::class);
+        return $this->belongsTo(\BristolSU\ControlDB\Models\Position::class, 'position_id');
     }
 
     public function groupRelationship()
     {
-        return $this->hasOne(\BristolSU\ControlDB\Models\Group::class);
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Group::class);
+        return $this->belongsTo(\BristolSU\ControlDB\Models\Group::class, 'group_id');
     }
 
     public function userRelationship()
