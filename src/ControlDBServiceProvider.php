@@ -1,5 +1,7 @@
 <?php
 
+namespace BristolSU\ControlDB;
+
 use BristolSU\Support\Control\Contracts\Models\Group as GroupModelContract;
 use BristolSU\Support\Control\Contracts\Models\Role as RoleModelContract;
 use BristolSU\Support\Control\Contracts\Models\User as UserContract;

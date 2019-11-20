@@ -15,9 +15,10 @@ class CreateTagTable extends Migration
     {
         Schema::create('control_tag', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('tag_id');
-            $table->unsignedBigInteger('taggable_id');
-            $table->unsignedBigInteger('taggable_type');
+            $table->string('name');
+            $table->text('description');
+            $table->string('reference');
+            $table->unsignedBigInteger('tag_category_id');
             $table->timestamps();
         });
     }

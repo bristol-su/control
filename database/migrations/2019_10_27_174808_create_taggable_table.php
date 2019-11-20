@@ -15,9 +15,9 @@ class CreateTaggableTable extends Migration
     {
         Schema::create('control_taggable', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('user_id');
-            $table->string('position_name');
-            $table->unsignedInteger('role_id');
+            $table->unsignedBigInteger('tag_id');
+            $table->unsignedBigInteger('taggable_id');
+            $table->unsignedBigInteger('taggable_type');
             $table->timestamps();
         });
     }
