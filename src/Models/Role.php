@@ -17,6 +17,11 @@ use Illuminate\Support\Collection;
 class Role extends Model implements RoleContract
 {
 
+    protected $table = 'control_roles';
+
+    protected $guarded = [];
+
+
 
     /**
      * Get the name of the unique identifier for the user.
@@ -109,6 +114,7 @@ class Role extends Model implements RoleContract
      */
     public function positionName(): string
     {
+        // TODO Isn't working
         return $this->position_name;
     }
 
@@ -119,6 +125,7 @@ class Role extends Model implements RoleContract
      */
     public function position(): Position
     {
+        // TODO Not working
         return $this->positionRelationship;
     }
 
@@ -129,6 +136,7 @@ class Role extends Model implements RoleContract
      */
     public function group(): Group
     {
+        // TODO Not working
         return $this->groupRelationship;
     }
 
@@ -162,22 +170,22 @@ class Role extends Model implements RoleContract
         return $this->id;
     }
 
-    protected function positionRelationship()
+    public function positionRelationship()
     {
-        return $this->hasOne(\BristolSU\ControlDB\Models\Position::class);
+        return $this->belongsTo(\BristolSU\ControlDB\Models\Position::class);
     }
 
-    protected function groupRelationship()
+    public function groupRelationship()
     {
-        return $this->hasOne(\BristolSU\ControlDB\Models\Group::class);
+        return $this->belongsTo(\BristolSU\ControlDB\Models\Group::class);
     }
 
-    protected function userRelationship()
+    public function userRelationship()
     {
         return $this->belongsToMany(User::class, 'control_role_user');
     }
 
-    protected function tagRelationship()
+    public function tagRelationship()
     {
         
     }

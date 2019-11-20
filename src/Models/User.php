@@ -15,9 +15,9 @@ use Illuminate\Support\Collection;
  */
 class User extends Model implements UserContract
 {
-    protected $table = 'control_user';
+    protected $table = 'control_users';
 
-    protected $fillable = ['data_provider_id'];
+    protected $guarded = [];
     /**
      * Get the name of the unique identifier for the user.
      *
@@ -129,17 +129,17 @@ class User extends Model implements UserContract
         return $this->groupRelationship;
     }
 
-    protected function tagRelationship()
+    public function tagRelationship()
     {
 
     }
 
-    protected function roleRelationship()
+    public function roleRelationship()
     {
         return $this->belongsToMany(Role::class, 'control_role_user');
     }
 
-    protected function groupRelationship()
+    public function groupRelationship()
     {
         return $this->belongsToMany(Group::class, 'control_group_user');
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateControlPositionTable extends Migration
+class CreateControlRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateControlPositionTable extends Migration
      */
     public function up()
     {
-        Schema::create('control_position', function (Blueprint $table) {
+        Schema::create('control_roles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->unique();
-            $table->text('description');
+            $table->unsignedInteger('position_id');
+            $table->unsignedInteger('group_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateControlPositionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('control_position');
+        Schema::dropIfExists('control_roles');
     }
 }

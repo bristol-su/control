@@ -4,6 +4,7 @@
 namespace BristolSU\ControlDB\Models;
 
 
+use BristolSU\ControlDB\Models\Tags\GroupTag;
 use BristolSU\Support\Control\Contracts\Models\Position as PositionContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -15,8 +16,10 @@ use Illuminate\Support\Collection;
 class Position extends Model implements PositionContract
 {
     
-    protected $table = 'control_position';
-    
+    protected $table = 'control_positions';
+
+    protected $guarded = [];
+
     /**
      * Name of the position
      *
@@ -67,13 +70,13 @@ class Position extends Model implements PositionContract
         return $this->tagRelationship;
     }
 
-    protected function roleRelationship()
+    public function roleRelationship()
     {
         return $this->hasMany(Role::class);
     }
 
-    protected function tagRelationship()
+    public function tagRelationship()
     {
-        
+        return $this->morphToMany(GroupTag::class, 'control_taggable');
     }
 }

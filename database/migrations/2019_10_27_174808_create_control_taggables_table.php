@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateControlGroupTable extends Migration
+class CreateControlTaggablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateControlGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('control_group', function (Blueprint $table) {
+        Schema::create('control_taggables', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->unsignedInteger('data_provider_id')->unique();
-            $table->string('email')->nullable();
+            $table->unsignedBigInteger('tag_id');
+            $table->unsignedBigInteger('taggable_id');
+            $table->string('taggable_type');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateControlGroupTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('control_group');
+        Schema::dropIfExists('control_taggables');
     }
 }

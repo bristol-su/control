@@ -14,7 +14,9 @@ use Illuminate\Support\Collection;
 class Group extends Model implements GroupContract
 {
 
-    protected $table = 'control_group';
+    protected $table = 'control_groups';
+    
+    protected $guarded = [];
 
     /**
      * Get the name of the unique identifier for the user.
@@ -147,19 +149,19 @@ class Group extends Model implements GroupContract
         return $this->tagRelationship;
     }
 
-    protected function userRelationship()
+    public function userRelationship()
     {
         return $this->belongsToMany(User::class, 'control_group_user');
     }
 
-    protected function roleRelationship()
+    public function roleRelationship()
     {
         // TODO Only return occupied roles
         return $this->hasMany(Role::class);
     }
 
-    protected function tagRelationship()
+    public function tagRelationship()
     {
-        return $this->morphToMany(GroupTag::class, 'taggable');
+        return $this->morphToMany(GroupTag::class, 'control_taggable');
     }
 }

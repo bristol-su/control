@@ -19,8 +19,9 @@ class GroupTagCategory extends Model implements GroupTagCategoryContract
         static::addGlobalScope(new GroupTagCategoryScope());
     }
 
-    protected $table = 'control_tag_category';
-    
+    protected $table = 'control_tag_categories';
+    protected $guarded = [];
+
     /**
      * ID of the tag category
      *
@@ -71,7 +72,7 @@ class GroupTagCategory extends Model implements GroupTagCategoryContract
         return $this->tagRelationship;
     }
 
-    protected function tagRelationship()
+    public function tagRelationship()
     {
         return $this->hasMany(GroupTag::class);
     }

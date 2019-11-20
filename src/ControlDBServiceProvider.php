@@ -2,72 +2,97 @@
 
 namespace BristolSU\ControlDB;
 
-use BristolSU\Support\Control\Contracts\Models\Group as GroupModelContract;
-use BristolSU\Support\Control\Contracts\Models\Role as RoleModelContract;
-use BristolSU\Support\Control\Contracts\Models\User as UserContract;
-use BristolSU\Support\Control\Contracts\Models\Position as PositionContract;
-
+use BristolSU\ControlDB\Commands\SeedDatabase;
 use BristolSU\ControlDB\Models\Group as GroupModel;
-use BristolSU\ControlDB\Models\Role as RoleModel;
-use BristolSU\ControlDB\Models\User as UserModel;
 use BristolSU\ControlDB\Models\Position as PositionModel;
-
-
-use BristolSU\Support\Control\Contracts\Repositories\Group as GroupRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\Role as RoleRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\User as UserRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\Position as PositionRepositoryContract;
-use BristolSU\ControlDB\Repositories\Group as GroupRepository;
-use BristolSU\ControlDB\Repositories\Role as RoleRepository;
-use BristolSU\ControlDB\Repositories\User as UserRepository;
-use BristolSU\ControlDB\Repositories\Position as PositionRepository;
-
-// Tag models (contracts)
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModelContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\UserTagCategory as UserTagCategoryModelContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryModelContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\PositionTagCategory as PositionTagCategoryModelContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTag as GroupTagModelContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\UserTag as UserTagModelContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTag as RoleTagModelContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\PositionTag as PositionTagModelContract;
-
-// Tag models
+use BristolSU\ControlDB\Models\Role as RoleModel;
 use BristolSU\ControlDB\Models\Tags\GroupTag as GroupTagModel;
 use BristolSU\ControlDB\Models\Tags\GroupTagCategory as GroupTagCategoryModel;
-use BristolSU\ControlDB\Models\Tags\UserTag as UserTagModel;
-use BristolSU\ControlDB\Models\Tags\UserTagCategory as UserTagCategoryModel;
-use BristolSU\ControlDB\Models\Tags\RoleTag as RoleTagModel;
-use BristolSU\ControlDB\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
 use BristolSU\ControlDB\Models\Tags\PositionTag as PositionTagModel;
 use BristolSU\ControlDB\Models\Tags\PositionTagCategory as PositionTagCategoryModel;
-
-// Tag repositories (contracts)
-use BristolSU\Support\Control\Contracts\Repositories\Tags\GroupTagCategory as GroupTagCategoryRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\RoleTagCategory as RoleTagCategoryRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\PositionTagCategory as PositionTagCategoryRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\GroupTag as GroupTagRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\UserTag as UserTagRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\RoleTag as RoleTagRepositoryContract;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\PositionTag as PositionTagRepositoryContract;
-
-// Tag repositories
+use BristolSU\ControlDB\Models\Tags\RoleTag as RoleTagModel;
+use BristolSU\ControlDB\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
+use BristolSU\ControlDB\Models\Tags\UserTag as UserTagModel;
+use BristolSU\ControlDB\Models\Tags\UserTagCategory as UserTagCategoryModel;
+use BristolSU\ControlDB\Models\User as UserModel;
+use BristolSU\ControlDB\Repositories\Group as GroupRepository;
+use BristolSU\ControlDB\Repositories\Position as PositionRepository;
+use BristolSU\ControlDB\Repositories\Role as RoleRepository;
 use BristolSU\ControlDB\Repositories\Tags\GroupTag as GroupTagRepository;
 use BristolSU\ControlDB\Repositories\Tags\GroupTagCategory as GroupTagCategoryRepository;
-use BristolSU\ControlDB\Repositories\Tags\UserTag as UserTagRepository;
-use BristolSU\ControlDB\Repositories\Tags\UserTagCategory as UserTagCategoryRepository;
-use BristolSU\ControlDB\Repositories\Tags\RoleTag as RoleTagRepository;
-use BristolSU\ControlDB\Repositories\Tags\RoleTagCategory as RoleTagCategoryRepository;
 use BristolSU\ControlDB\Repositories\Tags\PositionTag as PositionTagRepository;
 use BristolSU\ControlDB\Repositories\Tags\PositionTagCategory as PositionTagCategoryRepository;
+use BristolSU\ControlDB\Repositories\Tags\RoleTag as RoleTagRepository;
+use BristolSU\ControlDB\Repositories\Tags\RoleTagCategory as RoleTagCategoryRepository;
+use BristolSU\ControlDB\Repositories\Tags\UserTag as UserTagRepository;
+use BristolSU\ControlDB\Repositories\Tags\UserTagCategory as UserTagCategoryRepository;
+use BristolSU\ControlDB\Repositories\User as UserRepository;
+use BristolSU\Support\Control\Contracts\Models\Group as GroupModelContract;
+use BristolSU\Support\Control\Contracts\Models\Position as PositionContract;
+use BristolSU\Support\Control\Contracts\Models\Role as RoleModelContract;
+use BristolSU\Support\Control\Contracts\Models\Tags\GroupTag as GroupTagModelContract;
+use BristolSU\Support\Control\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModelContract;
+use BristolSU\Support\Control\Contracts\Models\Tags\PositionTag as PositionTagModelContract;
+use BristolSU\Support\Control\Contracts\Models\Tags\PositionTagCategory as PositionTagCategoryModelContract;
+use BristolSU\Support\Control\Contracts\Models\Tags\RoleTag as RoleTagModelContract;
+use BristolSU\Support\Control\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryModelContract;
+use BristolSU\Support\Control\Contracts\Models\Tags\UserTag as UserTagModelContract;
+use BristolSU\Support\Control\Contracts\Models\Tags\UserTagCategory as UserTagCategoryModelContract;
+use BristolSU\Support\Control\Contracts\Models\User as UserContract;
+use BristolSU\Support\Control\Contracts\Repositories\Group as GroupRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Position as PositionRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Role as RoleRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Tags\GroupTag as GroupTagRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Tags\GroupTagCategory as GroupTagCategoryRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Tags\PositionTag as PositionTagRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Tags\PositionTagCategory as PositionTagCategoryRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Tags\RoleTag as RoleTagRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Tags\RoleTagCategory as RoleTagCategoryRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Tags\UserTag as UserTagRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryRepositoryContract;
+use BristolSU\Support\Control\Contracts\Repositories\User as UserRepositoryContract;
+use BristolSU\Support\User\User;
+use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+
+
+// Tag models (contracts)
+
+// Tag models
+
+// Tag repositories (contracts)
+
+// Tag repositories
 
 class ControlDBServiceProvider extends ServiceProvider
 {
 
     public function register()
+    {
+        $this->bindContracts();
+        $this->registerCommands();
+        $this->registerMigrations();
+    }
+
+    public function boot()
+    {
+        Relation::morphMap([
+            'user' => User::class,
+            'group' => GroupModel::class,
+            'role' => RoleModel::class,
+            'position' => PositionModel::class
+        ]);
+
+        $this->app->make(Factory::class)->load(__DIR__ . '/../database/factories');
+    }
+
+    public function registerMigrations()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+    }
+
+    public function bindContracts()
     {
         // Base Models
         $this->app->bind(GroupModelContract::class, GroupModel::class);
@@ -102,13 +127,12 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(PositionTagCategoryRepositoryContract::class, PositionTagCategoryRepository::class);
     }
 
-    public function boot()
+    public function registerCommands()
     {
-        Relation::morphMap([
-            'user' => \BristolSU\Support\User\User::class,
-            'group' => \BristolSU\ControlDB\Models\Group::class,
-            'role' => \BristolSU\ControlDB\Models\Role::class,
-            'position' => \BristolSU\ControlDB\Models\Position::class
+        $this->commands([
+            SeedDatabase::class
         ]);
     }
+
+
 }

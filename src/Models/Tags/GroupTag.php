@@ -24,7 +24,10 @@ class GroupTag extends Model implements GroupTagContract
         static::addGlobalScope(new GroupTagScope());
     }
 
-    protected $table = 'control_tag';
+    protected $table = 'control_tags';
+
+    protected $guarded = [];
+
 
     /**
      * ID of the group tag
@@ -106,13 +109,13 @@ class GroupTag extends Model implements GroupTagContract
         return $this->groupRelationship;
     }
 
-    protected function categoryRelationship()
+    public function categoryRelationship()
     {
         return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\GroupTagCategory::class);
     }
 
-    protected function groupRelationship()
+    public function groupRelationship()
     {
-        return $this->morphedByMany(Group::class, 'taggable');
+        return $this->morphedByMany(Group::class, 'taggable', 'control_taggables', 'taggable_id', 'tag_id');
     }
 }
