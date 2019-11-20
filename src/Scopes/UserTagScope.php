@@ -18,7 +18,7 @@ class UserTagScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereHas('tagRelationship', function(Builder $builder) {
+        $builder->whereHas('categoryRelationship', function(Builder $builder) {
             $builder->where('type', 'user');
         });
     }
