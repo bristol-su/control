@@ -111,7 +111,7 @@ class GroupTag extends Model implements GroupTagContract
 
     public function categoryRelationship()
     {
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\GroupTagCategory::class);
+        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\GroupTagCategory::class, 'tag_category_id');
     }
 
     public function groupRelationship()

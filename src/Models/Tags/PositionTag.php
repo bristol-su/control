@@ -110,7 +110,7 @@ class PositionTag extends Model implements PositionTagModel
 
     public function categoryRelationship()
     {
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\PositionTagCategory::class);
+        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\PositionTagCategory::class, 'tag_category_id');
     }
 
     public function positionRelationship()

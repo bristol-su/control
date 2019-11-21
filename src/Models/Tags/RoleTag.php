@@ -110,7 +110,7 @@ class RoleTag extends Model implements RoleTagContract
 
     public function categoryRelationship()
     {
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\RoleTagCategory::class);
+        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\RoleTagCategory::class, 'tag_category_id');
     }
 
     public function roleRelationship()

@@ -110,7 +110,7 @@ class UserTag extends Model implements UserTagContract
 
     public function categoryRelationship()
     {
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\UserTagCategory::class);
+        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\UserTagCategory::class, 'tag_category_id');
     }
 
     public function userRelationship()
