@@ -15,7 +15,7 @@ class Group extends Model implements GroupContract
 {
 
     protected $table = 'control_groups';
-    
+
     protected $guarded = [];
 
     /**
@@ -162,6 +162,12 @@ class Group extends Model implements GroupContract
 
     public function tagRelationship()
     {
-        return $this->morphToMany(GroupTag::class, 'control_taggable');
+        return $this->morphToMany(
+            GroupTag::class, 
+            'taggable', 
+            'control_taggables', 
+            'taggable_id', 
+            'tag_id'
+            );
     }
 }

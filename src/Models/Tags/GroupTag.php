@@ -96,7 +96,7 @@ class GroupTag extends Model implements GroupTagContract
      */
     public function fullReference(): string
     {
-        return $this->reference . '.' . $this->category()->reference();
+        return $this->category()->reference() . '.' . $this->reference;
     }
 
     /**
@@ -116,6 +116,12 @@ class GroupTag extends Model implements GroupTagContract
 
     public function groupRelationship()
     {
-        return $this->morphedByMany(Group::class, 'taggable', 'control_taggables', 'taggable_id', 'tag_id');
+        return $this->morphedByMany(
+            Group::class,
+            'taggable',
+            'control_taggables',
+            'taggable_id',
+            'tag_id'
+        );
     }
 }

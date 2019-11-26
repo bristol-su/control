@@ -95,7 +95,7 @@ class UserTag extends Model implements UserTagContract
      */
     public function fullReference(): string
     {
-        return $this->reference . '.' . $this->category()->reference();
+        return $this->category()->reference() . '.' . $this->reference;
     }
 
     /**

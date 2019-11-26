@@ -44,9 +44,13 @@ class GroupTag implements GroupTagContract
      */
     public function getTagByFullReference(string $reference): \BristolSU\Support\Control\Contracts\Models\Tags\GroupTag
     {
-        return $this->all()->filter(function(\BristolSU\ControlDB\Models\Tags\GroupTag $tag) use ($reference) {
+        $result = $this->all()->filter(function(\BristolSU\ControlDB\Models\Tags\GroupTag $tag) use ($reference) {
             return $reference === $tag->fullReference();
-        })->firstOrFail();
+        })->first();
+        if($result === null) {
+            throw new \Exception('Tag not found');
+        }
+        return $result;
     }
 
     /**

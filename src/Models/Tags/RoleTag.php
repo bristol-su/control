@@ -95,7 +95,7 @@ class RoleTag extends Model implements RoleTagContract
      */
     public function fullReference(): string
     {
-        return $this->reference . '.' . $this->category()->reference();
+        return $this->category()->reference() . '.' . $this->reference;
     }
 
     /**
