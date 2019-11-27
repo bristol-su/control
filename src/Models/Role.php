@@ -114,8 +114,8 @@ class Role extends Model implements RoleContract
      */
     public function positionName(): string
     {
-        // TODO Isn't working
-        return $this->position_name;
+        // TODO Should return custom position name
+        return $this->position()->name();
     }
 
     /**
