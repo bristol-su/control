@@ -16,33 +16,35 @@ abstract class UserTagCategory
      *
      * @return mixed
      */
-    public function id();
+    abstract  public function id();
 
     /**
      * Name of the tag category
      *
      * @return string
      */
-    public function name(): string;
+    abstract public function name(): string;
 
     /**
      * Deacription of the tag category
      *
      * @return string
      */
-    public function description(): string;
+    abstract public function description(): string;
 
     /**
      * Reference of the tag category
      *
      * @return string
      */
-    public function reference(): string;
+    abstract public function reference(): string;
 
     /**
      * All tags under this tag category
      *
      * @return Collection
      */
-    public function tags(): Collection;
+    public function tags(): Collection {
+        
+    }
 }

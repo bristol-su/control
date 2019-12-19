@@ -16,17 +16,16 @@ abstract class User extends Authenticatable
 
     /**
      * ID of the user
-     * 
+     *
      * @return mixed
      */
-    public function id();
+    abstract public function id();
 
-    /**
-     * ID of the user on the data platform
-     * 
-     * @return mixed
-     */
-    public function dataPlatformId();
+    abstract public function forename(): string;
+
+    abstract public function surname(): string;
+
+    abstract public function email(): ?string;
 
     /**
      * Tags the user is tagged with
@@ -37,14 +36,14 @@ abstract class User extends Authenticatable
 
     /**
      * Roles the user owns
-     * 
+     *
      * @return Collection
      */
     public function roles(): Collection;
 
     /**
      * Groups the user is a member of
-     * 
+     *
      * @return Collection
      */
     public function groups(): Collection;

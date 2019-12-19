@@ -19,14 +19,14 @@ abstract class Role extends Authenticatable
      * 
      * @return mixed
      */
-    public function positionId();
+    abstract public function positionId();
 
     /**
      * ID of the group
      * 
      * @return mixed
      */
-    public function groupId();
+    abstract public function groupId();
 
     /**
      * Custom name of the position.
@@ -36,41 +36,49 @@ abstract class Role extends Authenticatable
      * 
      * @return string
      */
-    public function positionName(): string;
+    abstract  public function positionName(): string;
 
     /**
      * Position belonging to the role
      * 
      * @return Position
      */
-    public function position(): Position;
+    public function position(): Position {
+        
+    }
 
     /**
      * Group belonging to the role
      * 
      * @return Group
      */
-    public function group(): Group;
+    public function group(): Group {
+        
+    }
 
     /**
      * Users who occupy the role
      * 
      * @return Collection
      */
-    public function users(): Collection;
+    public function users(): Collection {
+        
+    }
 
     /**
      * Tags the role is tagged with
      *
      * @return Collection
      */
-    public function tags(): Collection;
+    public function tags(): Collection {
+        
+    }
 
     /**
      * Get the ID of the role
      * 
      * @return int
      */
-    public function id(): int;
+    abstract public function id(): int;
     
 }
