@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class UserTag
  * @package BristolSU\ControlDB\Repositories
  */
-class UserTagCategory implements UserTagCategoryContract
+class UserTagCategory extends UserTagCategoryContract
 {
 
     /**

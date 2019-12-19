@@ -18,7 +18,7 @@ use Illuminate\Support\Collection;
  * Class Role
  * @package BristolSU\ControlDB\Repositories
  */
-class Role implements RoleContract
+class Role extends RoleContract
 {
 
     /**

@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
  * @package BristolSU\ControlDB\Repositories
  */
 
-class GroupTagCategory implements GroupTagCategoryContract
+class GroupTagCategory extends GroupTagCategoryContract
 {
 
     /**

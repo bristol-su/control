@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Class GroupTag
  * @package BristolSU\ControlDB\Models
  */
-class GroupTagCategory extends Model implements GroupTagCategoryContract
+class GroupTagCategory extends GroupTagCategoryContract
 {
     protected static function boot()
     {

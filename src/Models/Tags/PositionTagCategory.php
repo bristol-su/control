@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Class PositionTag
  * @package BristolSU\ControlDB\Models
  */
-class PositionTagCategory extends Model implements PositionTagCategoryContract
+class PositionTagCategory extends PositionTagCategoryContract
 {
     protected static function boot()
     {

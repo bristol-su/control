@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
  * Class User
  * @package BristolSU\ControlDB\Models
  */
-class User extends Model implements UserContract
+class User extends UserContract
 {
     protected $table = 'control_users';
 

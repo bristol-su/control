@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class RoleTag
  * @package BristolSU\ControlDB\Repositories
  */
-class RoleTag implements RoleTagContract
+class RoleTag extends RoleTagContract
 {
     /**
      * Get all role tags

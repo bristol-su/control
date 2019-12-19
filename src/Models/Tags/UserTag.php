@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
  * Class UserTag
  * @package BristolSU\ControlDB\Models
  */
-class UserTag extends Model implements UserTagContract
+class UserTag extends UserTagContract
 {
     protected static function boot()
     {

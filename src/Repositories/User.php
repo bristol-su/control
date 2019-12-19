@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
  * Class User
  * @package BristolSU\ControlDB\Repositories
  */
-class User implements UserContract
+class User extends UserContract
 {
 
     /**

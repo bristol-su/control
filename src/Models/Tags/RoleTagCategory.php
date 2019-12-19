@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Class RoleTag
  * @package BristolSU\ControlDB\Models
  */
-class RoleTagCategory extends Model implements RoleTagCategoryContract
+class RoleTagCategory extends RoleTagCategoryContract
 {
     protected static function boot()
     {

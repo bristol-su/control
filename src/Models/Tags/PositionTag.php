@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
  * Class PositionTag
  * @package BristolSU\ControlDB\Models
  */
-class PositionTag extends Model implements PositionTagModel
+class PositionTag extends PositionTagModel
 {
     protected static function boot()
     {

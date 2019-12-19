@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class Position
  * @package BristolSU\ControlDB\Repositories
  */
-class Position implements PositionContract
+class Position extends PositionContract
 {
 
     /**

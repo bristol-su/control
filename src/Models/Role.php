@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
  * Class Role
  * @package BristolSU\ControlDB\Models
  */
-class Role extends Model implements RoleContract
+class Role extends RoleContract
 {
 
     protected $table = 'control_roles';

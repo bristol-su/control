@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Class Group
  * @package BristolSU\ControlDB\Models
  */
-class Group extends Model implements GroupContract
+class Group extends GroupContract
 {
 
     protected $table = 'control_groups';

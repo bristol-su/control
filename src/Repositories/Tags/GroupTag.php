@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class GroupTag
  * @package BristolSU\ControlDB\Repositories
  */
-class GroupTag implements GroupTagContract
+class GroupTag extends GroupTagContract
 {
 
     /**

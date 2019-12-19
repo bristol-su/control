@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
  * Class Position
  * @package BristolSU\ControlDB\Models
  */
-class Position extends Model implements PositionContract
+class Position extends PositionContract
 {
     
     protected $table = 'control_positions';

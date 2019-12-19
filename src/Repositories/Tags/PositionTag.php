@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class PositionTag
  * @package BristolSU\ControlDB\Repositories
  */
-class PositionTag implements PositionTagContract
+class PositionTag extends PositionTagContract
 {
     /**
      * Get all position tags

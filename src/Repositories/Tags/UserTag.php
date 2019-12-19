@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class UserTag
  * @package BristolSU\ControlDB\Repositories
  */
-class UserTag implements UserTagContract
+class UserTag extends UserTagContract
 {
     /**
      * Get all user tags
