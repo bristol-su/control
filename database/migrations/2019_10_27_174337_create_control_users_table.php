@@ -18,6 +18,7 @@ class CreateControlUsersTable extends Migration
             $table->string('student_id')->nullable();
             $table->unsignedBigInteger('data_provider_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -3,16 +3,19 @@
 namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\PositionTagCategoryScope;
-use BristolSU\Support\Control\Contracts\Models\Tags\PositionTagCategory as PositionTagCategoryContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class PositionTag
  * @package BristolSU\ControlDB\Models
  */
-class PositionTagCategory extends PositionTagCategoryContract
+class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory
 {
+
+    use SoftDeletes;
+
     protected static function boot()
     {
         parent::boot();
@@ -74,6 +77,6 @@ class PositionTagCategory extends PositionTagCategoryContract
 
     public function tagRelationship()
     {
-        return $this->hasMany(PositionTag::class);
+        return $this->hasMany(PositionTag::class, 'tag_category_id');
     }
 }

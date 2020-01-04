@@ -20,7 +20,7 @@ abstract class Group
      * @param $id
      * @return GroupModel
      */
-    public function getById(int $id): GroupModel;
+    abstract public function getById(int $id): GroupModel;
 
     /**
      * Get all groups with a specific tag
@@ -28,21 +28,25 @@ abstract class Group
      * @param GroupTagModel $groupTag
      * @return Collection
      */
-    public function allThroughTag(GroupTagModel $groupTag): Collection;
+    public function getThroughTag(GroupTagModel $groupTag): Collection {
+        return $groupTag->groups();
+    }
 
     /**
      * Get all groups
      *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
      * Get all groups the given user is a member of
-     * 
+     *
      * @param $id
      * @return Collection
      */
-    public function allThroughUser(UserModel $user): Collection;
+    public function allThroughUser(UserModel $user): Collection {
+        return $user->groups();
+    }
 
 }

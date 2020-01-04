@@ -20,6 +20,7 @@ class CreateControlTagCategoriesTable extends Migration
             $table->string('reference');
             $table->enum('type', ['user', 'group', 'role', 'position']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

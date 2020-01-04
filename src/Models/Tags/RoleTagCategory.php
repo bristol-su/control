@@ -3,16 +3,18 @@
 namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\RoleTagCategoryScope;
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class RoleTag
  * @package BristolSU\ControlDB\Models
  */
-class RoleTagCategory extends RoleTagCategoryContract
+class RoleTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory
 {
+    use SoftDeletes;
+
     protected static function boot()
     {
         parent::boot();
@@ -74,6 +76,6 @@ class RoleTagCategory extends RoleTagCategoryContract
 
     public function tagRelationship()
     {
-        return $this->hasMany(RoleTag::class);
+        return $this->hasMany(RoleTag::class, 'tag_category_id');
     }
 }

@@ -8,43 +8,41 @@ use Illuminate\Support\Collection;
  * Interface GroupTag
  * @package BristolSU\ControlDB\Contracts\Models
  */
-abstract class GroupTagCategory
+interface GroupTagCategory
 {
 
     /**
      * ID of the tag category
-     * 
+     *
      * @return mixed
      */
-    abstract public function id();
+    public function id();
 
     /**
      * Name of the tag category
-     * 
+     *
      * @return string
      */
-    abstract public function name(): string;
+    public function name(): string;
 
     /**
      * Deacription of the tag category
-     * 
+     *
      * @return string
      */
-    abstract public function description(): string;
+    public function description(): string;
 
     /**
      * Reference of the tag category
-     * 
+     *
      * @return string
      */
-    abstract public function reference(): string;
+    public function reference(): string;
 
     /**
      * All tags under this tag category
-     * 
+     *
      * @return Collection
      */
-    public function tags(): Collection {
-        
-    }
+    public function tags(): Collection;
 }

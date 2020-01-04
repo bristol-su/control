@@ -18,6 +18,7 @@ class CreateControlGroupUserTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('group_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

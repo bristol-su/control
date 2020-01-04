@@ -3,9 +3,9 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTag as RoleTagModel;
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\RoleTagCategory as RoleTagCategoryContract;
+use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag as RoleTagModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory as RoleTagCategoryContract;
 use Illuminate\Support\Collection;
 
 /**
@@ -16,9 +16,7 @@ class RoleTagCategory extends RoleTagCategoryContract
 {
 
     /**
-     * Get all role tag categories
-     *
-     * @return Collection
+     * @inheritDoc
      */
     public function all(): Collection
     {
@@ -26,36 +24,18 @@ class RoleTagCategory extends RoleTagCategoryContract
     }
 
     /**
-     * Get the role tag category of a role tag
-     *
-     * @param RoleTagModel $role
-     * @return RoleTagCategoryModel
-     */
-    public function allThroughTag(RoleTagModel $roleTag): RoleTagCategoryModel
-    {
-        // TODO this method should be changed to getThroughRoleTag
-        return $roleTag->category();
-    }
-
-    /**
-     * Get a tag category by the reference
-     *
-     * @param $reference
-     * @return mixed
+     * @inheritDoc
      */
     public function getByReference(string $reference): RoleTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::where('reference', $reference)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::where('reference', $reference)->get()->first();
     }
 
     /**
-     * Get a role tag category by id
-     *
-     * @param int $id
-     * @return RoleTagCategoryModel
+     * @inheritDoc
      */
     public function getById(int $id): RoleTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::findOrFail($id);
+        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::where('id', $id)->get()->first();
     }
 }

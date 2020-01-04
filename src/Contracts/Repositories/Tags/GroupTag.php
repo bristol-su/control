@@ -3,9 +3,7 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Group as GroupContract;
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagModel;
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryContract;
+use BristolSU\ControlDB\Contracts\Models\Group;
 use Illuminate\Support\Collection;
 
 /**
@@ -17,40 +15,46 @@ abstract class GroupTag
 
     /**
      * Get all group tags
-     * 
+     *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
-     * Get all group tags which a group is tagged with 
-     * 
-     * @param GroupContract $group
+     * Get all group tags which a group is tagged with
+     *
+     * @param Group $group
      * @return Collection
      */
-    public function allThroughGroup(GroupContract $group): Collection;
+    public function allThroughGroup(Group $group): Collection {
+        return $group->tags();
+    }
 
     /**
      * Get a tag by the full reference
-     * 
+     *
+     * The full reference looks like 'tag_category_ref.tag_ref'
+     *
      * @param string $reference
      * @return mixed
      */
-    public function getTagByFullReference(string $reference): GroupTagModel;
-    
+    abstract public function getTagByFullReference(string $reference): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+
     /**
      * Get a group tag by id
-     * 
+     *
      * @param int $id
-     * @return GroupTagModel
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
      */
-    public function getById(int $id): GroupTagModel;
+    abstract public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 
     /**
      * Get all group tags belonging to a group tag category
-     * 
-     * @param GroupTagCategoryContract $groupTagCategory
+     *
+     * @param  $groupTagCategory
      * @return Collection
      */
-    public function allThroughGroupTagCategory(GroupTagCategoryContract $groupTagCategory): Collection;
+    public function allThroughGroupTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory): Collection {
+        return $groupTagCategory->tags();
+    }
 }

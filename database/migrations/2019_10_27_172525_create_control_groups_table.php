@@ -19,6 +19,7 @@ class CreateControlGroupsTable extends Migration
             $table->unsignedInteger('data_provider_id')->unique();
             $table->string('email')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

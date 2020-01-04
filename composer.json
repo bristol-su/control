@@ -1,33 +1,39 @@
 {
-    "name": "bristol-su/control-db-implementation",
-    "description": "An implementation of the control contracts using a local database in a laravel app",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Toby Twigger",
-            "email": "tt15951@my.bristol.ac.uk"
-        }
-    ],
-    "require": {
-        "laravel/framework": "^6.5",
-        "bristol-su/support": "dev-master"
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": [],
-            "providers": [
-                "BristolSU\\ControlDB\\ControlDBServiceProvider"
-            ]
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "BristolSU\\ControlDB\\": "src/"
-        },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ]
+  "name": "bristol-su/control-db-implementation",
+  "description": "An implementation of the control contracts using a local database in a laravel app",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Toby Twigger",
+      "email": "tt15951@my.bristol.ac.uk"
     }
+  ],
+  "require": {
+    "laravel/framework": "^6.5",
+    "orchestra/testbench": "^4.0",
+    "bristol-su/support": "@dev"
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": [],
+      "providers": [
+        "BristolSU\\ControlDB\\ControlDBServiceProvider"
+      ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "BristolSU\\ControlDB\\": "src/"
+    },
+    "classmap": [
+      "database/seeds",
+      "database/factories"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BristolSU\\Tests\\ControlDB\\": "tests/"
+    }
+  }
 }

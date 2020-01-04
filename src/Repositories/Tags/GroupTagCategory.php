@@ -3,9 +3,9 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTag as GroupTagModel;
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModel;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\GroupTagCategory as GroupTagCategoryContract;
+use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModel;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory as GroupTagCategoryContract;
 use Illuminate\Support\Collection;
 
 /**
@@ -17,9 +17,7 @@ class GroupTagCategory extends GroupTagCategoryContract
 {
 
     /**
-     * Get all group tag categories
-     *
-     * @return Collection
+     * @inheritDoc
      */
     public function all(): Collection
     {
@@ -27,36 +25,18 @@ class GroupTagCategory extends GroupTagCategoryContract
     }
 
     /**
-     * Get the group tag category of a group tag
-     *
-     * @param GroupTagModel $group
-     * @return GroupTagCategoryModel
-     */
-    public function allThroughTag(GroupTagModel $groupTag): GroupTagCategoryModel
-    {
-        // TODO this method should be changed to getThroughGroupTag
-        return $groupTag->category();
-    }
-
-    /**
-     * Get a tag category by the reference
-     *
-     * @param $reference
-     * @return mixed
+     * @inheritDoc
      */
     public function getByReference(string $reference): GroupTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('reference', $reference)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('reference', $reference)->get()->first();
     }
 
     /**
-     * Get a group tag category by id
-     *
-     * @param int $id
-     * @return GroupTagCategoryModel
+     * @inheritDoc
      */
     public function getById(int $id): GroupTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::findOrFail($id);
+        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('id', $id)->get()->first();
     }
 }

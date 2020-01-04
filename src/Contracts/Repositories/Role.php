@@ -23,7 +23,7 @@ abstract class Role
      * @param $id
      * @return RoleModel
      */
-    public function getById($id): RoleModel;
+    abstract public function getById($id): RoleModel;
 
     /**
      * Get all roles belonging to a user
@@ -31,28 +31,34 @@ abstract class Role
      * @param UserModel $user
      * @return Collection
      */
-    public function allThroughUser(UserModel $user): Collection;
+    public function allThroughUser(UserModel $user): Collection {
+        return $user->roles();
+    }
 
     /**
      * Get all roles
      *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
      * Get all roles belonging to a group
-     * 
+     *
      * @param GroupModel $group
      * @return Collection
      */
-    public function allThroughGroup(GroupModel $group): Collection;
+    public function allThroughGroup(GroupModel $group): Collection {
+        return $group->roles();
+    }
 
     /**
      * Get all roles belonging to a position
-     * 
+     *
      * @param PositionModel $position
      * @return Collection
      */
-    public function allThroughPosition(PositionModel $position): Collection;
+    public function allThroughPosition(PositionModel $position): Collection {
+        return $position->roles();
+    }
 }

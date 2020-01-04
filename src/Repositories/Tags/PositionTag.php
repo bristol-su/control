@@ -3,9 +3,10 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Position;
-use BristolSU\Support\Control\Contracts\Models\Tags\PositionTagCategory;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\PositionTag as PositionTagContract;
+use BristolSU\ControlDB\Contracts\Models\Position;
+use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag as PositionTagModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag as PositionTagContract;
 use Illuminate\Support\Collection;
 
 /**
@@ -14,10 +15,9 @@ use Illuminate\Support\Collection;
  */
 class PositionTag extends PositionTagContract
 {
+
     /**
-     * Get all position tags
-     *
-     * @return Collection
+     * @inheritDoc
      */
     public function all(): Collection
     {
@@ -25,48 +25,18 @@ class PositionTag extends PositionTagContract
     }
 
     /**
-     * Get all position tags which a position is tagged with
-     *
-     * @param Position $position
-     * @return Collection
+     * @inheritDoc
      */
-    public function allThroughPosition(Position $position): Collection
+    public function getTagByFullReference(string $reference): PositionTagModel
     {
-        return $position->tags();
+        return \BristolSU\ControlDB\Models\Tags\PositionTag::where('reference', $reference)->get()->first();
     }
 
     /**
-     * Get a tag by the full reference
-     *
-     * @param string $reference
-     * @return mixed
+     * @inheritDoc
      */
-    public function getTagByFullReference(string $reference): \BristolSU\Support\Control\Contracts\Models\Tags\PositionTag
+    public function getById(int $id): PositionTagModel
     {
-        return $this->all()->filter(function(\BristolSU\ControlDB\Models\Tags\PositionTag $tag) use ($reference) {
-            return $reference === $tag->fullReference();
-        })->firstOrFail();
-    }
-
-    /**
-     * Get a position tag by id
-     *
-     * @param int $id
-     * @return \BristolSU\Support\Control\Contracts\Models\Tags\PositionTag
-     */
-    public function getById(int $id): \BristolSU\Support\Control\Contracts\Models\Tags\PositionTag
-    {
-        return \BristolSU\ControlDB\Models\Tags\PositionTag::findOrFail($id);
-    }
-
-    /**
-     * Get all position tags belonging to a position tag category
-     *
-     * @param PositionTagCategory $positionTagCategory
-     * @return Collection
-     */
-    public function allThroughPositionTagCategory(PositionTagCategory $positionTagCategory): Collection
-    {
-        return $positionTagCategory->tags();
+        return \BristolSU\ControlDB\Models\Tags\PositionTag::where('id', $id)->get()->first();
     }
 }

@@ -19,6 +19,7 @@ class CreateControlRoleUserTable extends Migration
             $table->string('position_name');
             $table->unsignedInteger('role_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

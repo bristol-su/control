@@ -3,16 +3,19 @@
 namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\Models\Tags\GroupTag;
-use BristolSU\Support\Control\Contracts\Models\Group as GroupContract;
+use BristolSU\ControlDB\Contracts\Models\Group as GroupContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class Group
  * @package BristolSU\ControlDB\Models
  */
-class Group extends GroupContract
+class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
 {
+
+    use SoftDeletes;
 
     protected $table = 'control_groups';
 
@@ -55,7 +58,6 @@ class Group extends GroupContract
      */
     public function getAuthPassword()
     {
-        // TODO: Implement getAuthPassword() method.
     }
 
     /**
@@ -65,7 +67,6 @@ class Group extends GroupContract
      */
     public function getRememberToken()
     {
-        // TODO: Implement getRememberToken() method.
     }
 
     /**
@@ -76,7 +77,6 @@ class Group extends GroupContract
      */
     public function setRememberToken($value)
     {
-        // TODO: Implement setRememberToken() method.
     }
 
     /**
@@ -86,7 +86,6 @@ class Group extends GroupContract
      */
     public function getRememberTokenName()
     {
-        // TODO: Implement getRememberTokenName() method.
     }
 
     /**
@@ -107,16 +106,6 @@ class Group extends GroupContract
     public function email(): ?string
     {
         return $this->email;
-    }
-
-    /**
-     * Data platform ID of the group
-     *
-     * @return int
-     */
-    public function dataPlatformId(): int
-    {
-        return $this->data_provider_id;
     }
 
     /**
@@ -156,17 +145,16 @@ class Group extends GroupContract
 
     public function roleRelationship()
     {
-        // TODO Only return occupied roles
         return $this->hasMany(Role::class);
     }
 
     public function tagRelationship()
     {
         return $this->morphToMany(
-            GroupTag::class, 
-            'taggable', 
-            'control_taggables', 
-            'taggable_id', 
+            GroupTag::class,
+            'taggable',
+            'control_taggables',
+            'taggable_id',
             'tag_id'
             );
     }

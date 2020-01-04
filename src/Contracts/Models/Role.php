@@ -11,74 +11,67 @@ use Illuminate\Support\Collection;
  * Interface Role
  * @package BristolSU\ControlDB\Contracts\Models
  */
-abstract class Role extends Authenticatable
+interface Role extends Authenticatable
 {
 
     /**
      * ID of the position
-     * 
+     *
      * @return mixed
      */
-    abstract public function positionId();
+    public function positionId();
+
+    public function email(): ?string;
 
     /**
      * ID of the group
-     * 
+     *
      * @return mixed
      */
-    abstract public function groupId();
+    public function groupId();
 
     /**
      * Custom name of the position.
-     * 
+     *
      * This does not need to be the same as the actual position name. It may instead be anything you like, to allow for
      * more granular control over the positions and roles owned by an individual, whilst not creating too many positions.
-     * 
+     *
      * @return string
      */
-    abstract  public function positionName(): string;
+    public function positionName(): string;
 
     /**
      * Position belonging to the role
-     * 
+     *
      * @return Position
      */
-    public function position(): Position {
-        
-    }
-
+    public function position(): Position;
     /**
      * Group belonging to the role
-     * 
+     *
      * @return Group
      */
-    public function group(): Group {
-        
-    }
+    public function group(): Group;
 
     /**
      * Users who occupy the role
-     * 
+     *
      * @return Collection
      */
-    public function users(): Collection {
-        
-    }
+    public function users(): Collection;
 
     /**
      * Tags the role is tagged with
      *
      * @return Collection
      */
-    public function tags(): Collection {
-        
-    }
+    public function tags(): Collection;
 
     /**
      * Get the ID of the role
-     * 
+     *
      * @return int
      */
-    abstract public function id(): int;
-    
+    public function id(): int;
+
 }

@@ -19,7 +19,7 @@ abstract class RoleTagCategory
      *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
      * Get the role tag category of a role tag
@@ -27,7 +27,9 @@ abstract class RoleTagCategory
      * @param RoleTagModel $role
      * @return RoleTagCategoryModel
      */
-    public function allThroughTag(RoleTagModel $role): RoleTagCategoryModel;
+    public function getThroughTag(RoleTagModel $role): RoleTagCategoryModel {
+        return $role->category();
+    }
 
     /**
      * Get a tag category by the reference
@@ -35,7 +37,7 @@ abstract class RoleTagCategory
      * @param $reference
      * @return mixed
      */
-    public function getByReference(string $reference): RoleTagCategoryModel;
+    abstract public function getByReference(string $reference): RoleTagCategoryModel;
 
     /**
      * Get a role tag category by id
@@ -43,5 +45,5 @@ abstract class RoleTagCategory
      * @param int $id
      * @return RoleTagCategoryModel
      */
-    public function getById(int $id): RoleTagCategoryModel;
+    abstract public function getById(int $id): RoleTagCategoryModel;
 }

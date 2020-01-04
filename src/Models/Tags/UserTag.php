@@ -6,27 +6,27 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Models\User;
 use BristolSU\ControlDB\Scopes\UserTagScope;
-use BristolSU\Support\Control\Contracts\Models\Tags\UserTagCategory;
-use BristolSU\Support\Control\Contracts\Models\Tags\UserTag as UserTagContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class UserTag
  * @package BristolSU\ControlDB\Models
  */
-class UserTag extends UserTagContract
+class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
 {
+
+    use SoftDeletes;
+
+    protected $table = 'control_tags';
+    protected $guarded = [];
+
     protected static function boot()
     {
         parent::boot();
         static::addGlobalScope(new UserTagScope());
     }
-
-    protected $table = 'control_tags';
-
-    protected $guarded = [];
-
 
     /**
      * ID of the user tag
@@ -78,16 +78,6 @@ class UserTag extends UserTagContract
     }
 
     /**
-     * Tag Category
-     *
-     * @return UserTagCategory
-     */
-    public function category(): UserTagCategory
-    {
-        return $this->categoryRelationship;
-    }
-
-    /**
      * Full reference of the tag
      *
      * This should be the tag category reference and the tag reference, separated with a period.
@@ -96,6 +86,16 @@ class UserTag extends UserTagContract
     public function fullReference(): string
     {
         return $this->category()->reference() . '.' . $this->reference;
+    }
+
+    /**
+     * Tag Category
+     *
+     * @return UserTagCategory
+     */
+    public function category(): \BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory
+    {
+        return $this->categoryRelationship;
     }
 
     /**
@@ -110,11 +110,12 @@ class UserTag extends UserTagContract
 
     public function categoryRelationship()
     {
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\UserTagCategory::class, 'tag_category_id');
+        return $this->belongsTo(UserTagCategory::class, 'tag_category_id');
     }
 
     public function userRelationship()
     {
-        return $this->morphedByMany(User::class, 'taggable', 'control_taggables', 'taggable_id', 'tag_id');
+        return $this->morphedByMany(User::class, 'taggable', 'control_taggables', 'tag_id',
+            'taggable_id');
     }
 }

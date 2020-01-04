@@ -5,17 +5,19 @@ namespace BristolSU\ControlDB\Models;
 
 
 use BristolSU\ControlDB\Models\Tags\GroupTag;
-use BristolSU\Support\Control\Contracts\Models\Position as PositionContract;
+use BristolSU\ControlDB\Models\Tags\PositionTag;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class Position
  * @package BristolSU\ControlDB\Models
  */
-class Position extends PositionContract
+class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Position
 {
-    
+    use SoftDeletes;
+
     protected $table = 'control_positions';
 
     protected $guarded = [];
@@ -77,6 +79,10 @@ class Position extends PositionContract
 
     public function tagRelationship()
     {
-        return $this->morphToMany(GroupTag::class, 'control_taggable');
+        return $this->morphToMany(PositionTag::class,
+            'taggable',
+            'control_taggables',
+            'taggable_id',
+            'tag_id');
     }
 }

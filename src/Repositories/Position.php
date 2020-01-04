@@ -5,7 +5,7 @@ namespace BristolSU\ControlDB\Repositories;
 
 
 use BristolSU\ControlDB\Models\Position as PositionModel;
-use BristolSU\Support\Control\Contracts\Repositories\Position as PositionContract;
+use BristolSU\ControlDB\Contracts\Repositories\Position as PositionContract;
 use Illuminate\Support\Collection;
 
 /**
@@ -15,10 +15,9 @@ use Illuminate\Support\Collection;
 class Position extends PositionContract
 {
 
+
     /**
-     * Get all positions
-     *
-     * @return Collection
+     * @inheritDoc
      */
     public function all(): Collection
     {
@@ -26,13 +25,10 @@ class Position extends PositionContract
     }
 
     /**
-     * Get a position by a given ID
-     *
-     * @param int $id
-     * @return \BristolSU\Support\Control\Contracts\Models\Position
+     * @inheritDoc
      */
-    public function getById(int $id): \BristolSU\Support\Control\Contracts\Models\Position
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Position
     {
-        return \BristolSU\ControlDB\Models\Position::findOrFail($id);
+        return \BristolSU\ControlDB\Models\Position::where('id', $id)->get()->first();
     }
 }

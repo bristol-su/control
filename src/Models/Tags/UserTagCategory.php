@@ -3,16 +3,20 @@
 namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\UserTagCategoryScope;
-use BristolSU\Support\Control\Contracts\Models\Tags\UserTagCategory as UserTagCategoryContract;
+use BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory as UserTagCategoryContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class UserTag
  * @package BristolSU\ControlDB\Models
  */
-class UserTagCategory extends UserTagCategoryContract
+class UserTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory
 {
+
+    use SoftDeletes;
+
     protected static function boot()
     {
         parent::boot();
@@ -74,6 +78,6 @@ class UserTagCategory extends UserTagCategoryContract
 
     public function tagRelationship()
     {
-        return $this->hasMany(UserTag::class, 'tag_category_id', 'id');
+        return $this->hasMany(UserTag::class, 'tag_category_id');
     }
 }

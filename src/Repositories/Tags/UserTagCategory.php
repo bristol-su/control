@@ -3,9 +3,9 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Tags\UserTag as UserTagModel;
-use BristolSU\Support\Control\Contracts\Models\Tags\UserTagCategory as UserTagCategoryModel;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryContract;
+use BristolSU\ControlDB\Contracts\Models\Tags\UserTag as UserTagModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory as UserTagCategoryModel;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryContract;
 use Illuminate\Support\Collection;
 
 /**
@@ -16,9 +16,7 @@ class UserTagCategory extends UserTagCategoryContract
 {
 
     /**
-     * Get all user tag categories
-     *
-     * @return Collection
+     * @inheritDoc
      */
     public function all(): Collection
     {
@@ -26,36 +24,18 @@ class UserTagCategory extends UserTagCategoryContract
     }
 
     /**
-     * Get the user tag category of a user tag
-     *
-     * @param UserTagModel $user
-     * @return UserTagCategoryModel
-     */
-    public function allThroughTag(UserTagModel $userTag): UserTagCategoryModel
-    {
-        // TODO this method should be changed to getThroughUserTag
-        return $userTag->category();
-    }
-
-    /**
-     * Get a tag category by the reference
-     *
-     * @param $reference
-     * @return mixed
+     * @inheritDoc
      */
     public function getByReference(string $reference): UserTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\UserTagCategory::where('reference', $reference)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Tags\UserTagCategory::where('reference', $reference)->get()->first();
     }
 
     /**
-     * Get a user tag category by id
-     *
-     * @param int $id
-     * @return UserTagCategoryModel
+     * @inheritDoc
      */
     public function getById(int $id): UserTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\UserTagCategory::findOrFail($id);
+        return \BristolSU\ControlDB\Models\Tags\UserTagCategory::where('id', $id)->get()->first();
     }
 }

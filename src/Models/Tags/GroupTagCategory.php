@@ -3,16 +3,18 @@
 namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\GroupTagCategoryScope;
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class GroupTag
  * @package BristolSU\ControlDB\Models
  */
-class GroupTagCategory extends GroupTagCategoryContract
+class GroupTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory
 {
+    use SoftDeletes;
+
     protected static function boot()
     {
         parent::boot();
@@ -74,6 +76,6 @@ class GroupTagCategory extends GroupTagCategoryContract
 
     public function tagRelationship()
     {
-        return $this->hasMany(GroupTag::class);
+        return $this->hasMany(GroupTag::class, 'tag_category_id');
     }
 }

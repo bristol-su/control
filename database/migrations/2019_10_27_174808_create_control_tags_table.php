@@ -20,6 +20,7 @@ class CreateControlTagsTable extends Migration
             $table->string('reference');
             $table->unsignedBigInteger('tag_category_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

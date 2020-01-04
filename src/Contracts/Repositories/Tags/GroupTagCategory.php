@@ -16,32 +16,34 @@ abstract class GroupTagCategory
 
     /**
      * Get all group tag categories
-     * 
+     *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
      * Get the group tag category of a group tag
-     * 
+     *
      * @param GroupTagModel $group
      * @return GroupTagCategoryModel
      */
-    public function allThroughTag(GroupTagModel $group): GroupTagCategoryModel;
+    public function getThroughTag(GroupTagModel $group): GroupTagCategoryModel {
+        return $group->category();
+    }
 
     /**
      * Get a tag category by the reference
-     * 
+     *
      * @param $reference
      * @return mixed
      */
-    public function getByReference(string $reference): GroupTagCategoryModel;
-    
+    abstract public function getByReference(string $reference): GroupTagCategoryModel;
+
     /**
      * Get a group tag category by id
-     * 
+     *
      * @param int $id
      * @return GroupTagCategoryModel
      */
-    public function getById(int $id): GroupTagCategoryModel;
+    abstract public function getById(int $id): GroupTagCategoryModel;
 }

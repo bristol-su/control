@@ -19,7 +19,7 @@ abstract class PositionTagCategory
      *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
      * Get the position tag category of a position tag
@@ -27,7 +27,9 @@ abstract class PositionTagCategory
      * @param PositionTagModel $position
      * @return PositionTagCategoryModel
      */
-    public function allThroughTag(PositionTagModel $position): PositionTagCategoryModel;
+    public function getThroughTag(PositionTagModel $position): PositionTagCategoryModel {
+        return $position->category();
+    }
 
     /**
      * Get a tag category by the reference
@@ -35,7 +37,7 @@ abstract class PositionTagCategory
      * @param $reference
      * @return mixed
      */
-    public function getByReference(string $reference): PositionTagCategoryModel;
+    abstract public function getByReference(string $reference): PositionTagCategoryModel;
 
     /**
      * Get a position tag category by id
@@ -43,5 +45,5 @@ abstract class PositionTagCategory
      * @param int $id
      * @return PositionTagCategoryModel
      */
-    public function getById(int $id): PositionTagCategoryModel;
+    abstract public function getById(int $id): PositionTagCategoryModel;
 }

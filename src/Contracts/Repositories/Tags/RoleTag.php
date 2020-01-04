@@ -17,34 +17,36 @@ abstract class RoleTag
 
     /**
      * Get all role tags
-     * 
+     *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
-     * Get all role tags which a role is tagged with 
-     * 
+     * Get all role tags which a role is tagged with
+     *
      * @param RoleContract $role
      * @return Collection
      */
-    public function allThroughRole(RoleContract $role): Collection;
+    public function allThroughRole(RoleContract $role): Collection {
+        return $role->tags();
+    }
 
     /**
      * Get a tag by the full reference
-     * 
+     *
      * @param $reference
      * @return mixed
      */
-    public function getTagByFullReference(string $reference): RoleTagModel;
-    
+    abstract public function getTagByFullReference(string $reference): RoleTagModel;
+
     /**
      * Get a role tag by id
-     * 
+     *
      * @param int $id
      * @return RoleTagModel
      */
-    public function getById(int $id): RoleTagModel;
+    abstract public function getById(int $id): RoleTagModel;
 
     /**
      * Get all role tags belonging to a role tag category
@@ -52,5 +54,7 @@ abstract class RoleTag
      * @param RoleTagCategoryContract $roleTagCategory
      * @return Collection
      */
-    public function allThroughRoleTagCategory(RoleTagCategoryContract $roleTagCategory): Collection;
+    public function allThroughRoleTagCategory(RoleTagCategoryContract $roleTagCategory): Collection {
+        return $roleTagCategory->tags();
+    }
 }

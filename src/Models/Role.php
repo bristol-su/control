@@ -4,23 +4,24 @@
 namespace BristolSU\ControlDB\Models;
 
 
-use BristolSU\Support\Control\Contracts\Models\Group;
-use BristolSU\Support\Control\Contracts\Models\Position;
-use BristolSU\Support\Control\Contracts\Models\Role as RoleContract;
+use BristolSU\ControlDB\Models\Tags\PositionTag;
+use BristolSU\ControlDB\Models\Tags\RoleTag;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class Role
  * @package BristolSU\ControlDB\Models
  */
-class Role extends RoleContract
+class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
 {
+
+    use SoftDeletes;
 
     protected $table = 'control_roles';
 
     protected $guarded = [];
-
 
 
     /**
@@ -44,13 +45,22 @@ class Role extends RoleContract
     }
 
     /**
+     * Get the ID of the role
+     *
+     * @return int
+     */
+    public function id(): int
+    {
+        return $this->id;
+    }
+
+    /**
      * Get the password for the user.
      *
      * @return string
      */
     public function getAuthPassword()
     {
-        // TODO: Implement getAuthPassword() method.
     }
 
     /**
@@ -60,7 +70,6 @@ class Role extends RoleContract
      */
     public function getRememberToken()
     {
-        // TODO: Implement getRememberToken() method.
     }
 
     /**
@@ -71,7 +80,6 @@ class Role extends RoleContract
      */
     public function setRememberToken($value)
     {
-        // TODO: Implement setRememberToken() method.
     }
 
     /**
@@ -81,7 +89,6 @@ class Role extends RoleContract
      */
     public function getRememberTokenName()
     {
-        // TODO: Implement getRememberTokenName() method.
     }
 
     /**
@@ -92,6 +99,11 @@ class Role extends RoleContract
     public function positionId()
     {
         return $this->position_id;
+    }
+
+    public function email(): ?string
+    {
+        return $this->email;
     }
 
     /**
@@ -105,16 +117,11 @@ class Role extends RoleContract
     }
 
     /**
-     * Custom name of the position.
-     *
-     * This does not need to be the same as the actual position name. It may instead be anything you like, to allow for
-     * more granular control over the positions and roles owned by an individual, whilst not creating too many positions.
-     *
+     * Name of the position
      * @return string
      */
     public function positionName(): string
     {
-        // TODO Should return custom position name
         return $this->position()->name();
     }
 
@@ -123,9 +130,8 @@ class Role extends RoleContract
      *
      * @return Position
      */
-    public function position(): Position
+    public function position(): \BristolSU\ControlDB\Contracts\Models\Position
     {
-        // TODO Not working
         return $this->positionRelationship;
     }
 
@@ -134,9 +140,8 @@ class Role extends RoleContract
      *
      * @return Group
      */
-    public function group(): Group
+    public function group(): \BristolSU\ControlDB\Contracts\Models\Group
     {
-        // TODO Not working
         return $this->groupRelationship;
     }
 
@@ -160,24 +165,14 @@ class Role extends RoleContract
         return $this->tagRelationship;
     }
 
-    /**
-     * Get the ID of the role
-     *
-     * @return int
-     */
-    public function id(): int
-    {
-        return $this->id;
-    }
-
     public function positionRelationship()
     {
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Position::class, 'position_id');
+        return $this->belongsTo(Position::class, 'position_id');
     }
 
     public function groupRelationship()
     {
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Group::class, 'group_id');
+        return $this->belongsTo(Group::class, 'group_id');
     }
 
     public function userRelationship()
@@ -187,6 +182,10 @@ class Role extends RoleContract
 
     public function tagRelationship()
     {
-        
+        return $this->morphToMany(RoleTag::class,
+            'taggable',
+            'control_taggables',
+            'taggable_id',
+            'tag_id');
     }
 }

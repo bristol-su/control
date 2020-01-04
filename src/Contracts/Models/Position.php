@@ -10,46 +10,42 @@ use Illuminate\Support\Collection;
  * Interface Position
  * @package BristolSU\ControlDB\Contracts\Models
  */
-abstract class Position
+interface Position
 {
 
     /**
      * Name of the position
-     * 
+     *
      * @return string
      */
-    abstract public function name(): string;
+    public function name(): string;
 
     /**
      * Description of the position
-     * 
+     *
      * @return string
      */
-    abstract public function description(): string;
+    public function description(): string;
 
     /**
      * ID of the position
-     * 
+     *
      * @return int
      */
-    abstract public function id(): int;
+    public function id(): int;
 
     /**
      * Roles with this position
-     * 
+     *
      * @return Collection
      */
-    public function roles(): Collection {
-        
-    }
+    public function roles(): Collection;
 
     /**
      * Tags the position is tagged with
      *
      * @return Collection
      */
-    public function tags(): Collection {
-        
-    }
-    
+    public function tags(): Collection;
+
 }

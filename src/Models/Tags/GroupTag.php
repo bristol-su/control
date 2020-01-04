@@ -6,18 +6,20 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Scopes\GroupTagScope;
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTag as GroupTagContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTagCategory;
+use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class GroupTag
  * @package BristolSU\ControlDB\Models
  */
-class GroupTag extends GroupTagContract
+class GroupTag extends Model implements GroupTagContract
 {
-    
+
+    use SoftDeletes;
+
     protected static function boot()
     {
         parent::boot();
@@ -81,9 +83,9 @@ class GroupTag extends GroupTagContract
     /**
      * Tag Category
      *
-     * @return GroupTagCategory
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory
      */
-    public function category(): GroupTagCategory
+    public function category(): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory
     {
         return $this->categoryRelationship;
     }
@@ -120,8 +122,8 @@ class GroupTag extends GroupTagContract
             Group::class,
             'taggable',
             'control_taggables',
-            'taggable_id',
-            'tag_id'
+            'tag_id',
+            'taggable_id'
         );
     }
 }

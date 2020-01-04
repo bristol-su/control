@@ -3,9 +3,10 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Role;
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTagCategory;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\RoleTag as RoleTagContract;
+use BristolSU\ControlDB\Contracts\Models\Role;
+use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag as RoleTagModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTag as RoleTagContract;
 use Illuminate\Support\Collection;
 
 /**
@@ -14,10 +15,9 @@ use Illuminate\Support\Collection;
  */
 class RoleTag extends RoleTagContract
 {
+
     /**
-     * Get all role tags
-     *
-     * @return Collection
+     * @inheritDoc
      */
     public function all(): Collection
     {
@@ -25,48 +25,18 @@ class RoleTag extends RoleTagContract
     }
 
     /**
-     * Get all role tags which a role is tagged with
-     *
-     * @param Role $role
-     * @return Collection
+     * @inheritDoc
      */
-    public function allThroughRole(Role $role): Collection
+    public function getTagByFullReference(string $reference): RoleTagModel
     {
-        return $role->tags();
+        return \BristolSU\ControlDB\Models\Tags\RoleTag::where('reference', $reference)->get()->first();
     }
 
     /**
-     * Get a tag by the full reference
-     *
-     * @param string $reference
-     * @return mixed
+     * @inheritDoc
      */
-    public function getTagByFullReference(string $reference): \BristolSU\Support\Control\Contracts\Models\Tags\RoleTag
+    public function getById(int $id): RoleTagModel
     {
-        return $this->all()->filter(function(\BristolSU\ControlDB\Models\Tags\RoleTag $tag) use ($reference) {
-            return $reference === $tag->fullReference();
-        })->firstOrFail();
-    }
-
-    /**
-     * Get a role tag by id
-     *
-     * @param int $id
-     * @return \BristolSU\Support\Control\Contracts\Models\Tags\RoleTag
-     */
-    public function getById(int $id): \BristolSU\Support\Control\Contracts\Models\Tags\RoleTag
-    {
-        return \BristolSU\ControlDB\Models\Tags\RoleTag::findOrFail($id);
-    }
-
-    /**
-     * Get all role tags belonging to a role tag category
-     *
-     * @param RoleTagCategory $roleTagCategory
-     * @return Collection
-     */
-    public function allThroughRoleTagCategory(RoleTagCategory $roleTagCategory): Collection
-    {
-        return $roleTagCategory->tags();
+        return \BristolSU\ControlDB\Models\Tags\RoleTag::where('id', $id)->get()->first();
     }
 }

@@ -18,6 +18,7 @@ class CreateControlRolesTable extends Migration
             $table->unsignedInteger('position_id');
             $table->unsignedInteger('group_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

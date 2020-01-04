@@ -19,7 +19,7 @@ abstract class UserTagCategory
      *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
      * Get the user tag category of a user tag
@@ -27,7 +27,9 @@ abstract class UserTagCategory
      * @param UserTagModel $user
      * @return UserTagCategoryModel
      */
-    public function allThroughTag(UserTagModel $user): UserTagCategoryModel;
+    public function getThroughTag(UserTagModel $user): UserTagCategoryModel {
+        return $user->category();
+    }
 
     /**
      * Get a tag category by the reference
@@ -35,7 +37,7 @@ abstract class UserTagCategory
      * @param $reference
      * @return mixed
      */
-    public function getByReference(string $reference): UserTagCategoryModel;
+    abstract public function getByReference(string $reference): UserTagCategoryModel;
 
     /**
      * Get a user tag category by id
@@ -43,5 +45,5 @@ abstract class UserTagCategory
      * @param int $id
      * @return UserTagCategoryModel
      */
-    public function getById(int $id): UserTagCategoryModel;
+    abstract public function getById(int $id): UserTagCategoryModel;
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Interface User
  * @package BristolSU\ControlDB\Contracts\Models
  */
-abstract class User extends Authenticatable
+interface User extends Authenticatable
 {
 
     /**
@@ -19,13 +19,13 @@ abstract class User extends Authenticatable
      *
      * @return mixed
      */
-    abstract public function id();
+    public function id();
 
-    abstract public function forename(): string;
+    public function forename(): string;
 
-    abstract public function surname(): string;
+    public function surname(): string;
 
-    abstract public function email(): ?string;
+    public function email(): ?string;
 
     /**
      * Tags the user is tagged with

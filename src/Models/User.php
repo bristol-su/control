@@ -4,20 +4,25 @@
 namespace BristolSU\ControlDB\Models;
 
 
-use BristolSU\Support\Control\Contracts\Models\User as UserContract;
+use BristolSU\ControlDB\Contracts\Models\User as UserContract;
+use BristolSU\ControlDB\Models\Tags\UserTag;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class User
  * @package BristolSU\ControlDB\Models
  */
-class User extends UserContract
+class User extends Model implements UserContract
 {
+    use SoftDeletes;
+
     protected $table = 'control_users';
 
     protected $guarded = [];
+
     /**
      * Get the name of the unique identifier for the user.
      *
@@ -55,7 +60,6 @@ class User extends UserContract
      */
     public function getAuthPassword()
     {
-        // TODO: Implement getAuthPassword() method.
     }
 
     /**
@@ -65,7 +69,6 @@ class User extends UserContract
      */
     public function getRememberToken()
     {
-        // TODO: Implement getRememberToken() method.
     }
 
     /**
@@ -76,7 +79,6 @@ class User extends UserContract
      */
     public function setRememberToken($value)
     {
-        // TODO: Implement setRememberToken() method.
     }
 
     /**
@@ -86,17 +88,6 @@ class User extends UserContract
      */
     public function getRememberTokenName()
     {
-        // TODO: Implement getRememberTokenName() method.
-    }
-
-    /**
-     * ID of the user on the data platform
-     *
-     * @return mixed
-     */
-    public function dataPlatformId()
-    {
-        return $this->data_provider_id;
     }
 
     /**
@@ -131,7 +122,11 @@ class User extends UserContract
 
     public function tagRelationship()
     {
-
+        return $this->morphToMany(UserTag::class,
+            'taggable',
+            'control_taggables',
+            'taggable_id',
+            'tag_id');
     }
 
     public function roleRelationship()
@@ -142,5 +137,20 @@ class User extends UserContract
     public function groupRelationship()
     {
         return $this->belongsToMany(Group::class, 'control_group_user');
+    }
+
+    public function forename(): string
+    {
+        // TODO: Implement forename() method.
+    }
+
+    public function surname(): string
+    {
+        // TODO: Implement surname() method.
+    }
+
+    public function email(): ?string
+    {
+        // TODO: Implement email() method.
     }
 }

@@ -3,9 +3,9 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Tags\PositionTag as PositionTagModel;
-use BristolSU\Support\Control\Contracts\Models\Tags\PositionTagCategory as PositionTagCategoryModel;
-use BristolSU\Support\Control\Contracts\Repositories\Tags\PositionTagCategory as PositionTagCategoryContract;
+use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag as PositionTagModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory as PositionTagCategoryModel;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTagCategory as PositionTagCategoryContract;
 use Illuminate\Support\Collection;
 
 /**
@@ -15,10 +15,9 @@ use Illuminate\Support\Collection;
 class PositionTagCategory extends PositionTagCategoryContract
 {
 
+
     /**
-     * Get all position tag categories
-     *
-     * @return Collection
+     * @inheritDoc
      */
     public function all(): Collection
     {
@@ -26,37 +25,18 @@ class PositionTagCategory extends PositionTagCategoryContract
     }
 
     /**
-     * Get the position tag category of a position tag
-     *
-     * @param PositionTagModel $position
-     * @return PositionTagCategoryModel
-     */
-    public function allThroughTag(PositionTagModel $positionTag): PositionTagCategoryModel
-    {
-        // TODO this method should be changed to getThroughPositionTag
-        return $positionTag->category();
-    }
-
-    /**
-     * Get a tag category by the reference
-     *
-     * @param $reference
-     * @return mixed
+     * @inheritDoc
      */
     public function getByReference(string $reference): PositionTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::where('reference', $reference)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::where('reference', $reference)->get()->first();
     }
 
     /**
-     * Get a position tag category by id
-     *
-     * @param int $id
-     * @return PositionTagCategoryModel
+     * @inheritDoc
      */
     public function getById(int $id): PositionTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::findOrFail($id);
+        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::where('id', $id)->get()->first();
     }
-
 }

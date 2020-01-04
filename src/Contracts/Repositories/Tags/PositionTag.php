@@ -17,34 +17,36 @@ abstract class PositionTag
 
     /**
      * Get all position tags
-     * 
+     *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
-     * Get all position tags which a position is tagged with 
-     * 
+     * Get all position tags which a position is tagged with
+     *
      * @param PositionContract $position
      * @return Collection
      */
-    public function allThroughPosition(PositionContract $position): Collection;
+    public function allThroughPosition(PositionContract $position): Collection {
+        return $position->tags();
+    }
 
     /**
      * Get a tag by the full reference
-     * 
+     *
      * @param $reference
      * @return mixed
      */
-    public function getTagByFullReference(string $reference): PositionTagModel;
-    
+    abstract public function getTagByFullReference(string $reference): PositionTagModel;
+
     /**
      * Get a position tag by id
-     * 
+     *
      * @param int $id
      * @return PositionTagModel
      */
-    public function getById(int $id): PositionTagModel;
+    abstract public function getById(int $id): PositionTagModel;
 
     /**
      * Get all position tags belonging to a position tag category
@@ -52,5 +54,7 @@ abstract class PositionTag
      * @param PositionTagCategoryContract $positionTagCategory
      * @return Collection
      */
-    public function allThroughPositionTagCategory(PositionTagCategoryContract $positionTagCategory): Collection;
+    public function allThroughPositionTagCategory(PositionTagCategoryContract $positionTagCategory): Collection {
+        return $positionTagCategory->tags();
+    }
 }

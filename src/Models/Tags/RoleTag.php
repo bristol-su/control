@@ -6,27 +6,26 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Models\Role;
 use BristolSU\ControlDB\Scopes\RoleTagScope;
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTagCategory;
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTag as RoleTagContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
 /**
  * Class RoleTag
  * @package BristolSU\ControlDB\Models
  */
-class RoleTag extends RoleTagContract
+class RoleTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\RoleTag
 {
+    use SoftDeletes;
+
+    protected $table = 'control_tags';
+    protected $guarded = [];
+
     protected static function boot()
     {
         parent::boot();
         static::addGlobalScope(new RoleTagScope());
     }
-
-    protected $table = 'control_tags';
-
-    protected $guarded = [];
-
 
     /**
      * ID of the role tag
@@ -78,16 +77,6 @@ class RoleTag extends RoleTagContract
     }
 
     /**
-     * Tag Category
-     *
-     * @return RoleTagCategory
-     */
-    public function category(): RoleTagCategory
-    {
-        return $this->categoryRelationship;
-    }
-
-    /**
      * Full reference of the tag
      *
      * This should be the tag category reference and the tag reference, separated with a period.
@@ -96,6 +85,16 @@ class RoleTag extends RoleTagContract
     public function fullReference(): string
     {
         return $this->category()->reference() . '.' . $this->reference;
+    }
+
+    /**
+     * Tag Category
+     *
+     * @return RoleTagCategory
+     */
+    public function category(): \BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory
+    {
+        return $this->categoryRelationship;
     }
 
     /**
@@ -110,11 +109,12 @@ class RoleTag extends RoleTagContract
 
     public function categoryRelationship()
     {
-        return $this->belongsTo(\BristolSU\ControlDB\Models\Tags\RoleTagCategory::class, 'tag_category_id');
+        return $this->belongsTo(RoleTagCategory::class, 'tag_category_id');
     }
 
     public function roleRelationship()
     {
-        return $this->morphedByMany(Role::class, 'taggable', 'control_taggables', 'taggable_id', 'tag_id');
+        return $this->morphedByMany(Role::class, 'taggable', 'control_taggables', 'tag_id',
+            'taggable_id');
     }
 }

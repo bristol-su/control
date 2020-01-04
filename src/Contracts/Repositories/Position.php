@@ -15,16 +15,16 @@ abstract class Position
 {
     /**
      * Get all positions
-     * 
+     *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
      * Get a position by a given ID
-     * 
+     *
      * @param int $id
      * @return PositionModel
      */
-    public function getById(int $id): PositionModel;
+    abstract public function getById(int $id): PositionModel;
 }

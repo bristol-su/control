@@ -18,48 +18,44 @@ abstract class User
 
     /**
      * Get a user by their ID
-     * 
+     *
      * @param $id
      * @return UserModelContract
      */
-    public function getById(int $id): UserModelContract;
+    abstract public function getById(int $id): UserModelContract;
 
     /**
      * Get all users
-     * 
+     *
      * @return Collection
      */
-    public function all(): Collection;
+    abstract public function all(): Collection;
 
     /**
-     * Get a user by their data platform ID
-     * 
+     * Create a user
+     *
      * @param int $dataPlatformId
      * @return UserModelContract
      */
-    public function getByDataPlatformId(int $dataPlatformId) : UserModelContract;
-
-    /**
-     * Create a user 
-     * 
-     * @param int $dataPlatformId
-     * @return UserModelContract
-     */
-    public function create(int $dataPlatformId): UserModelContract;
+    abstract public function create(string $forename, string $surname, string $email): UserModelContract;
 
     /**
      * Get all users with a specific role
-     * 
+     *
      * @param RoleModel $role
      * @return Collection
      */
-    public function allThroughRole(RoleModel $role): Collection;
+    public function allThroughRole(RoleModel $role): Collection {
+        return $role->users();
+    }
 
     /**
      * Get all users of a group
-     * 
+     *
      * @param GroupModel $group
      * @return Collection
      */
-    public function allThroughGroup(GroupModel $group): Collection;
+    public function allThroughGroup(GroupModel $group): Collection {
+        return $group->members();
+    }
 }
