@@ -29,6 +29,6 @@ class CreateControlGroupUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('control_user_group');
+        Schema::dropIfExists('control_group_user');
     }
 }
