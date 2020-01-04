@@ -1,17 +1,17 @@
 <?php
 
 
-namespace BristolSU\Support\Control\Contracts\Repositories;
+namespace BristolSU\ControlDB\Contracts\Repositories;
 
 
-use BristolSU\Support\Control\Contracts\Models\Group as GroupModel;
-use BristolSU\Support\Control\Contracts\Models\Role as RoleModel;
-use BristolSU\Support\Control\Contracts\Models\User as UserModelContract;
+use BristolSU\ControlDB\Contracts\Models\Group as GroupModel;
+use BristolSU\ControlDB\Contracts\Models\Role as RoleModel;
+use BristolSU\ControlDB\Contracts\Models\User as UserModelContract;
 use Illuminate\Support\Collection;
 
 /**
  * Interface User
- * @package BristolSU\Support\Control\Contracts\Repositories
+ * @package BristolSU\ControlDB\Contracts\Repositories
  */
 abstract class User
 {

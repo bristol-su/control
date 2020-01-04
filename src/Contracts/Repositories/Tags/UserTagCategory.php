@@ -1,15 +1,15 @@
 <?php
 
 
-namespace BristolSU\Support\Control\Contracts\Repositories\Tags;
+namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Tags\UserTag as UserTagModel;
-use BristolSU\Support\Control\Contracts\Models\Tags\UserTagCategory as UserTagCategoryModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\UserTag as UserTagModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory as UserTagCategoryModel;
 use Illuminate\Support\Collection;
 
 /**
  * Interface UserTag
- * @package BristolSU\Support\Control\Contracts\Repositories
+ * @package BristolSU\ControlDB\Contracts\Repositories
  */
 abstract class UserTagCategory
 {

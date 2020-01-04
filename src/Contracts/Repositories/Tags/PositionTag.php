@@ -1,16 +1,16 @@
 <?php
 
 
-namespace BristolSU\Support\Control\Contracts\Repositories\Tags;
+namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Position as PositionContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\PositionTagCategory as PositionTagCategoryContract;
-use BristolSU\Support\Control\Contracts\Models\Tags\PositionTag as PositionTagModel;
+use BristolSU\ControlDB\Contracts\Models\Position as PositionContract;
+use BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory as PositionTagCategoryContract;
+use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag as PositionTagModel;
 use Illuminate\Support\Collection;
 
 /**
  * Interface PositionTag
- * @package BristolSU\Support\Control\Contracts\Repositories
+ * @package BristolSU\ControlDB\Contracts\Repositories
  */
 abstract class PositionTag
 {

@@ -1,15 +1,15 @@
 <?php
 
 
-namespace BristolSU\Support\Control\Contracts\Repositories\Tags;
+namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTag as GroupTagModel;
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModel;
 use Illuminate\Support\Collection;
 
 /**
  * Interface GroupTag
- * @package BristolSU\Support\Control\Contracts\Repositories
+ * @package BristolSU\ControlDB\Contracts\Repositories
  */
 abstract class GroupTagCategory
 {

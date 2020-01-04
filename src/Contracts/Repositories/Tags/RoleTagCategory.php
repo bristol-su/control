@@ -1,15 +1,15 @@
 <?php
 
 
-namespace BristolSU\Support\Control\Contracts\Repositories\Tags;
+namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTag as RoleTagModel;
-use BristolSU\Support\Control\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag as RoleTagModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
 use Illuminate\Support\Collection;
 
 /**
  * Interface RoleTag
- * @package BristolSU\Support\Control\Contracts\Repositories
+ * @package BristolSU\ControlDB\Contracts\Repositories
  */
 abstract class RoleTagCategory
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace BristolSU\Support\Control\Contracts\Repositories;
+namespace BristolSU\ControlDB\Contracts\Repositories;
 
-use BristolSU\Support\Control\Contracts\Models\User as UserModel;
-use BristolSU\Support\Control\Contracts\Models\Group as GroupModel;
-use BristolSU\Support\Control\Contracts\Models\Tags\GroupTag as GroupTagModel;
+use BristolSU\ControlDB\Contracts\Models\User as UserModel;
+use BristolSU\ControlDB\Contracts\Models\Group as GroupModel;
+use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagModel;
 use Illuminate\Support\Collection;
 
 /**
  * Interface Group
- * @package BristolSU\Support\Control\Contracts\Repositories
+ * @package BristolSU\ControlDB\Contracts\Repositories
  */
 abstract class Group
 {

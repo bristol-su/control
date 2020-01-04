@@ -1,15 +1,15 @@
 <?php
 
 
-namespace BristolSU\Support\Control\Contracts\Repositories;
+namespace BristolSU\ControlDB\Contracts\Repositories;
 
 
-use BristolSU\Support\Control\Contracts\Models\Position as PositionModel;
+use BristolSU\ControlDB\Contracts\Models\Position as PositionModel;
 use Illuminate\Support\Collection;
 
 /**
  * Interface Position
- * @package BristolSU\Support\Control\Contracts\Repositories
+ * @package BristolSU\ControlDB\Contracts\Repositories
  */
 abstract class Position
 {
