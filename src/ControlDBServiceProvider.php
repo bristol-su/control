@@ -51,7 +51,6 @@ use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory as RoleTagCa
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag as UserTagRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\User as UserRepositoryContract;
-use BristolSU\Support\User\User;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -78,7 +77,7 @@ class ControlDBServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::morphMap([
-            'user' => User::class,
+            'user' => UserModel::class,
             'group' => GroupModel::class,
             'role' => RoleModel::class,
             'position' => PositionModel::class
