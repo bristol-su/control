@@ -3,10 +3,8 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Group;
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag as GroupTagContract;
-use BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagModel;
+use BristolSU\ControlDB\Models\Tags\GroupTag as GroupTagModel;
 use Illuminate\Support\Collection;
 
 /**
@@ -21,7 +19,7 @@ class GroupTag extends GroupTagContract
      */
     public function all(): Collection
     {
-        return \BristolSU\ControlDB\Models\Tags\GroupTag::all();
+        return GroupTagModel::all();
     }
 
     /**
@@ -29,7 +27,13 @@ class GroupTag extends GroupTagContract
      */
     public function getTagByFullReference(string $reference): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
     {
-        return \BristolSU\ControlDB\Models\Tags\GroupTag::where('reference', $reference)->get()->first();
+        $fullTagReference = explode('.', $reference);
+        $categoryReference = $fullTagReference[0];
+        $tagReference = $fullTagReference[1];
+        
+        return GroupTagModel::where('reference', $tagReference)->whereHas('categoryRelationship', function($builder) use ($categoryReference) {
+            $builder->where('reference', $categoryReference);
+        })->firstOrFail();
     }
 
     /**
@@ -37,6 +41,6 @@ class GroupTag extends GroupTagContract
      */
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
     {
-        return \BristolSU\ControlDB\Models\Tags\GroupTag::where('id', $id)->get()->first();
+        return GroupTagModel::where('id', $id)->firstOrFail();
     }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "bristol-su/control-db-implementation",
+  "name": "bristol-su/control",
   "description": "An implementation of the control contracts using a local database in a laravel app",
   "type": "library",
   "license": "MIT",
@@ -12,7 +12,8 @@
   "require": {
     "laravel/framework": "^6.5",
     "orchestra/testbench": "^4.0",
-    "bristol-su/support": "@dev"
+    "bristol-su/support": "@dev",
+    "php": "^7.2"
   },
   "extra": {
     "laravel": {

@@ -3,9 +3,8 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Position;
-use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag as PositionTagModel;
-use BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory;
+use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag as PositionTagModelContract;
+use BristolSU\ControlDB\Models\Tags\PositionTag as PositionTagModel;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag as PositionTagContract;
 use Illuminate\Support\Collection;
 
@@ -21,22 +20,28 @@ class PositionTag extends PositionTagContract
      */
     public function all(): Collection
     {
-        return \BristolSU\ControlDB\Models\Tags\PositionTag::all();
+        return PositionTagModel::all();
     }
 
     /**
      * @inheritDoc
      */
-    public function getTagByFullReference(string $reference): PositionTagModel
+    public function getTagByFullReference(string $reference): PositionTagModelContract
     {
-        return \BristolSU\ControlDB\Models\Tags\PositionTag::where('reference', $reference)->get()->first();
+        $fullTagReference = explode('.', $reference);
+        $categoryReference = $fullTagReference[0];
+        $tagReference = $fullTagReference[1];
+
+        return PositionTagModel::where('reference', $tagReference)->whereHas('categoryRelationship', function($builder) use ($categoryReference) {
+            $builder->where('reference', $categoryReference);
+        })->firstOrFail();
     }
 
     /**
      * @inheritDoc
      */
-    public function getById(int $id): PositionTagModel
+    public function getById(int $id): PositionTagModelContract
     {
-        return \BristolSU\ControlDB\Models\Tags\PositionTag::where('id', $id)->get()->first();
+        return PositionTagModel::where('id', $id)->firstOrFail();
     }
 }

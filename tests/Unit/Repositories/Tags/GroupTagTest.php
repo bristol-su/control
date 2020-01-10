@@ -44,7 +44,7 @@ class GroupTagTest extends TestCase
     /** @test */
     public function getTagByFullReference_returns_a_tag_given_the_full_reference(){
         $groupTagCategory = factory(GroupTagCategory::class)->create(['reference' => 'ref1']);
-        $groupTag = factory(GroupTag::class)->create(['reference' => 'ref2']);
+        $groupTag = factory(GroupTag::class)->create(['reference' => 'ref2', 'tag_category_id' => $groupTagCategory->id]);
 
         $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
         $groupTagFromRepo = $groupTagRepo->getTagByFullReference('ref1.ref2');

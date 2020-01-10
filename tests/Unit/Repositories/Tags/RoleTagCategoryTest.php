@@ -30,7 +30,7 @@ class RoleTagCategoryTest extends TestCase
 
     /** @test */
     public function all_returns_all_role_tags_categories(){
-        $roleTagCategories = factory(RoleTag::class, 15)->create();
+        $roleTagCategories = factory(RoleTagCategory::class, 15)->create();
         $roleTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
         $allTagCategories = $roleTagCategoryRepo->all();
         $this->assertInstanceOf(Collection::class, $allTagCategories);

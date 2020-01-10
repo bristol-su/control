@@ -20,7 +20,7 @@ class Group extends GroupContract
      */
     public function getById(int $id): GroupModel
     {
-        return \BristolSU\ControlDB\Models\Group::where('id', $id)->get()->first();
+        return \BristolSU\ControlDB\Models\Group::where('id', $id)->firstOrFail();
     }
 
     /**

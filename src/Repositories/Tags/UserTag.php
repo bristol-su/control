@@ -3,9 +3,7 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\UserTag as UserTagModel;
-use BristolSU\ControlDB\Contracts\Models\User;
-use BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory;
+use BristolSU\ControlDB\Models\Tags\UserTag as UserTagModel;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag as UserTagContract;
 use Illuminate\Support\Collection;
 
@@ -21,22 +19,28 @@ class UserTag extends UserTagContract
      */
     public function all(): Collection
     {
-        return \BristolSU\ControlDB\Models\Tags\UserTag::all();
+        return UserTagModel::all();
     }
 
     /**
      * @inheritDoc
      */
-    public function getTagByFullReference(string $reference): UserTagModel
+    public function getTagByFullReference(string $reference): \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
     {
-        return \BristolSU\ControlDB\Models\Tags\UserTag::where('reference', $reference)->get()->first();
+        $fullTagReference = explode('.', $reference);
+        $categoryReference = $fullTagReference[0];
+        $tagReference = $fullTagReference[1];
+
+        return UserTagModel::where('reference', $tagReference)->whereHas('categoryRelationship', function($builder) use ($categoryReference) {
+            $builder->where('reference', $categoryReference);
+        })->firstOrFail();
     }
 
     /**
      * @inheritDoc
      */
-    public function getById(int $id): UserTagModel
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
     {
-        return \BristolSU\ControlDB\Models\Tags\UserTag::where('id', $id)->get()->first();
+        return UserTagModel::where('id', $id)->firstOrFail();
     }
 }

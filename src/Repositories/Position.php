@@ -29,6 +29,6 @@ class Position extends PositionContract
      */
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Position
     {
-        return \BristolSU\ControlDB\Models\Position::where('id', $id)->get()->first();
+        return \BristolSU\ControlDB\Models\Position::where('id', $id)->firstOrFail();
     }
 }

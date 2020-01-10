@@ -27,7 +27,7 @@ class Role extends RoleContract
      */
     public function getById($id): \BristolSU\ControlDB\Contracts\Models\Role
     {
-        return \BristolSU\ControlDB\Models\Role::where('id', $id)->get()->first();
+        return \BristolSU\ControlDB\Models\Role::where('id', $id)->firstOrFail();
     }
 
     /**

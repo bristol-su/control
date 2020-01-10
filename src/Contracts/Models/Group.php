@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
  * Interface Group
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface Group extends Authenticatable
+interface Group
 {
 
     /**

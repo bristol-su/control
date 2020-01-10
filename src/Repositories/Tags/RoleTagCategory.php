@@ -28,7 +28,7 @@ class RoleTagCategory extends RoleTagCategoryContract
      */
     public function getByReference(string $reference): RoleTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::where('reference', $reference)->get()->first();
+        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::where('reference', $reference)->firstOrFail();
     }
 
     /**
@@ -36,6 +36,6 @@ class RoleTagCategory extends RoleTagCategoryContract
      */
     public function getById(int $id): RoleTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::where('id', $id)->get()->first();
+        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::where('id', $id)->firstOrFail();
     }
 }

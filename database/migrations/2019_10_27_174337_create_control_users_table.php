@@ -15,7 +15,6 @@ class CreateControlUsersTable extends Migration
     {
         Schema::create('control_users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('student_id')->nullable();
             $table->unsignedBigInteger('data_provider_id');
             $table->timestamps();
             $table->softDeletes();

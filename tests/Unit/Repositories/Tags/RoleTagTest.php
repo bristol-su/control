@@ -44,7 +44,7 @@ class RoleTagTest extends TestCase
     /** @test */
     public function getTagByFullReference_returns_a_tag_given_the_full_reference(){
         $roleTagCategory = factory(RoleTagCategory::class)->create(['reference' => 'ref1']);
-        $roleTag = factory(RoleTag::class)->create(['reference' => 'ref2']);
+        $roleTag = factory(RoleTag::class)->create(['reference' => 'ref2', 'tag_category_id' => $roleTagCategory]);
 
         $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
         $roleTagFromRepo = $roleTagRepo->getTagByFullReference('ref1.ref2');

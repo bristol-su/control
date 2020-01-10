@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateControlRoleUserTable extends Migration
+class CreateControlDataUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateControlRoleUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('control_role_user', function (Blueprint $table) {
+        Schema::create('control_data_user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('user_id');
-            $table->string('position_name')->nullable();
-            $table->unsignedInteger('role_id');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('email')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('preferred_name')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +32,6 @@ class CreateControlRoleUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('control_role_user');
+        Schema::dropIfExists('control_data_user');
     }
 }

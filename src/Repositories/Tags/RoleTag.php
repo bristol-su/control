@@ -3,9 +3,8 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Role;
-use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag as RoleTagModel;
-use BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory;
+use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag as RoleTagModelContract;
+use BristolSU\ControlDB\Models\Tags\RoleTag as RoleTagModel;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTag as RoleTagContract;
 use Illuminate\Support\Collection;
 
@@ -21,22 +20,28 @@ class RoleTag extends RoleTagContract
      */
     public function all(): Collection
     {
-        return \BristolSU\ControlDB\Models\Tags\RoleTag::all();
+        return RoleTagModel::all();
     }
 
     /**
      * @inheritDoc
      */
-    public function getTagByFullReference(string $reference): RoleTagModel
+    public function getTagByFullReference(string $reference): RoleTagModelContract
     {
-        return \BristolSU\ControlDB\Models\Tags\RoleTag::where('reference', $reference)->get()->first();
+        $fullTagReference = explode('.', $reference);
+        $categoryReference = $fullTagReference[0];
+        $tagReference = $fullTagReference[1];
+
+        return RoleTagModel::where('reference', $tagReference)->whereHas('categoryRelationship', function($builder) use ($categoryReference) {
+            $builder->where('reference', $categoryReference);
+        })->firstOrFail();
     }
 
     /**
      * @inheritDoc
      */
-    public function getById(int $id): RoleTagModel
+    public function getById(int $id): RoleTagModelContract
     {
-        return \BristolSU\ControlDB\Models\Tags\RoleTag::where('id', $id)->get()->first();
+        return RoleTagModel::where('id', $id)->firstOrFail();
     }
 }

@@ -12,10 +12,13 @@ use BristolSU\Tests\ControlDB\TestCase;
 
 class UserTest extends TestCase
 {
-    // TODO Test ID method
-    // TODO Test forename method
-    // TODO Test surname method
-    // TODO Test email method
+    /** @test */
+    public function id_returns_the_id_of_the_user(){
+        $user = factory(User::class)->create();
+        
+        $this->assertEquals($user->id, $user->id());
+    }
+    
     /** @test */
     public function getAuthIdentifierName_returns_id(){
         $group = factory(User::class)->create();
@@ -166,6 +169,13 @@ class UserTest extends TestCase
                 'user_id' => $user->id, 'group_id' => $group->id
             ]);
         }
+    }
+    
+    /** @test */
+    public function dataProviderId_returns_the_data_provider_id_of_the_model(){
+        $user = factory(User::class)->create(['data_provider_id' => 5]);
+        
+        $this->assertEquals(5, $user->dataProviderId());
     }
 
 }

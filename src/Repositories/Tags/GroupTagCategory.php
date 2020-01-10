@@ -29,7 +29,7 @@ class GroupTagCategory extends GroupTagCategoryContract
      */
     public function getByReference(string $reference): GroupTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('reference', $reference)->get()->first();
+        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('reference', $reference)->firstOrFail();
     }
 
     /**
@@ -37,6 +37,6 @@ class GroupTagCategory extends GroupTagCategoryContract
      */
     public function getById(int $id): GroupTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('id', $id)->get()->first();
+        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('id', $id)->firstOrFail();
     }
 }

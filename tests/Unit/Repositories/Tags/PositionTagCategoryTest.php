@@ -30,7 +30,7 @@ class PositionTagCategoryTest extends TestCase
 
     /** @test */
     public function all_returns_all_position_tags_categories(){
-        $positionTagCategories = factory(PositionTag::class, 15)->create();
+        $positionTagCategories = factory(PositionTagCategory::class, 15)->create();
         $positionTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
         $allTagCategories = $positionTagCategoryRepo->all();
         $this->assertInstanceOf(Collection::class, $allTagCategories);

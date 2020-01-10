@@ -3,6 +3,9 @@
 namespace BristolSU\ControlDB;
 
 use BristolSU\ControlDB\Commands\SeedDatabase;
+use BristolSU\ControlDB\Contracts\Models\DataUser as DataUserContract;
+use BristolSU\ControlDB\Contracts\Repositories\DataUser as DataUserRepositoryContract;
+use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\ControlDB\Models\Group as GroupModel;
 use BristolSU\ControlDB\Models\Position as PositionModel;
 use BristolSU\ControlDB\Models\Role as RoleModel;
@@ -15,6 +18,7 @@ use BristolSU\ControlDB\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
 use BristolSU\ControlDB\Models\Tags\UserTag as UserTagModel;
 use BristolSU\ControlDB\Models\Tags\UserTagCategory as UserTagCategoryModel;
 use BristolSU\ControlDB\Models\User as UserModel;
+use BristolSU\ControlDB\Repositories\DataUser as DataUserRepository;
 use BristolSU\ControlDB\Repositories\Group as GroupRepository;
 use BristolSU\ControlDB\Repositories\Position as PositionRepository;
 use BristolSU\ControlDB\Repositories\Role as RoleRepository;
@@ -98,13 +102,15 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(RoleModelContract::class, RoleModel::class);
         $this->app->bind(UserContract::class, UserModel::class);
         $this->app->bind(PositionContract::class, PositionModel::class);
+        $this->app->bind(DataUserContract::class, DataUser::class);
 
         // Base Repositories
         $this->app->bind(GroupRepositoryContract::class, GroupRepository::class);
         $this->app->bind(RoleRepositoryContract::class, RoleRepository::class);
         $this->app->bind(UserRepositoryContract::class, UserRepository::class);
         $this->app->bind(PositionRepositoryContract::class, PositionRepository::class);
-
+        $this->app->bind(DataUserRepositoryContract::class, DataUserRepository::class);
+        
         // Tag Models
         $this->app->bind(GroupTagModelContract::class, GroupTagModel::class);
         $this->app->bind(GroupTagCategoryModelContract::class, GroupTagCategoryModel::class);

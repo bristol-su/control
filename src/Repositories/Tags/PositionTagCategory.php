@@ -29,7 +29,7 @@ class PositionTagCategory extends PositionTagCategoryContract
      */
     public function getByReference(string $reference): PositionTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::where('reference', $reference)->get()->first();
+        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::where('reference', $reference)->firstOrFail();
     }
 
     /**
@@ -37,6 +37,6 @@ class PositionTagCategory extends PositionTagCategoryContract
      */
     public function getById(int $id): PositionTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::where('id', $id)->get()->first();
+        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::where('id', $id)->firstOrFail();
     }
 }

@@ -44,7 +44,7 @@ class UserTagTest extends TestCase
     /** @test */
     public function getTagByFullReference_returns_a_tag_given_the_full_reference(){
         $userTagCategory = factory(UserTagCategory::class)->create(['reference' => 'ref1']);
-        $userTag = factory(UserTag::class)->create(['reference' => 'ref2']);
+        $userTag = factory(UserTag::class)->create(['reference' => 'ref2', 'tag_category_id' => $userTagCategory]);
 
         $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
         $userTagFromRepo = $userTagRepo->getTagByFullReference('ref1.ref2');

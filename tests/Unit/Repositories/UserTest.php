@@ -2,6 +2,7 @@
 
 namespace BristolSU\Tests\ControlDB\Unit\Repositories;
 
+use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\ControlDB\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use BristolSU\Tests\ControlDB\TestCase;
@@ -27,34 +28,25 @@ class UserTest extends TestCase
 
     /** @test */
     public function create_creates_a_new_user_model(){
+        $dataUser = factory(DataUser::class)->create();
+        
         $userRepo = new \BristolSU\ControlDB\Repositories\User();
-        $user = $userRepo->create('forename1', 'surname1', 'email@email.com');
+        $user = $userRepo->create($dataUser->id);
 
         $this->assertDatabaseHas('control_users', [
-            'forename' => 'forename1',
-            'surname' => 'surname1',
-            'email' => 'email@email.com'
+            'data_provider_id' => $dataUser->id
         ]);
     }
 
     /** @test */
     public function create_returns_the_new_user_model(){
+        $dataUser = factory(DataUser::class)->create();
+        
         $userRepo = new \BristolSU\ControlDB\Repositories\User();
-        $user = $userRepo->create('forename1', 'surname1', 'email@email.com');
+        $user = $userRepo->create($dataUser->id);
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals('forename1', $user->forename());
-        $this->assertEquals('surname', $user->surname());
-        $this->assertEquals('email@email.com', $user->email());
-    }
-
-    /** @test */
-    public function it_throws_an_exception_if_the_user_email_already_exists(){
-        $this->expectException(ModelNotFoundException::class);
-
-        $user = factory(User::class)->create(['email' => 'email1@email.com']);
-        $userRepo = new \BristolSU\ControlDB\Repositories\User();
-        $userRepo->create('forename1', 'surname1', 'email1@email.com');
+        $this->assertEquals($dataUser->id, $user->dataProviderId());
     }
 
     /** @test */
@@ -67,6 +59,31 @@ class UserTest extends TestCase
                 $repoUsers->shift()
             ));
         }
+    }
+
+    /** @test */
+    public function getByDataProviderId_returns_a_user_model_with_a_given_data_provider_id()
+    {
+        $dataUser = factory(DataUser::class)->create();
+        $user = factory(User::class)->create(['data_provider_id' => $dataUser->id]);
+        
+        $userRepo = new \BristolSU\ControlDB\Repositories\User();
+        $dbUser = $userRepo->getByDataProviderId($dataUser->id);
+
+        $this->assertInstanceOf(User::class, $dbUser);
+        $this->assertEquals($dataUser->id, $dbUser->dataProviderId());
+        $this->assertEquals($user->id, $dbUser->dataProviderId());
+    }
+
+    /** @test */
+    public function getByDataProviderId_throws_an_exception_if_no_model_found()
+    {
+        $this->expectException(ModelNotFoundException::class);
+        factory(User::class)->create(['data_provider_id' => 10]);
+
+        $userRepo = new \BristolSU\ControlDB\Repositories\User();
+        $userRepo->getByDataProviderId(11);
+
     }
 
 }

@@ -34,11 +34,12 @@ abstract class User
     /**
      * Create a user
      *
-     * @param int $dataPlatformId
+     * @param $dataProviderId
      * @return UserModelContract
      */
-    abstract public function create(string $forename, string $surname, string $email): UserModelContract;
+    abstract public function create($dataProviderId): UserModelContract;
 
+    abstract public function getByDataProviderId($dataProviderId): UserModelContract;
     /**
      * Get all users with a specific role
      *

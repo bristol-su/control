@@ -30,7 +30,7 @@ class UserTagCategoryTest extends TestCase
 
     /** @test */
     public function all_returns_all_user_tags_categories(){
-        $userTagCategories = factory(UserTag::class, 15)->create();
+        $userTagCategories = factory(UserTagCategory::class, 15)->create();
         $userTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
         $allTagCategories = $userTagCategoryRepo->all();
         $this->assertInstanceOf(Collection::class, $allTagCategories);

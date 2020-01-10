@@ -21,11 +21,9 @@ interface User extends Authenticatable
      */
     public function id();
 
-    public function forename(): string;
+    public function data(): DataUser;
 
-    public function surname(): string;
-
-    public function email(): ?string;
+    public function dataProviderId();
 
     /**
      * Tags the user is tagged with

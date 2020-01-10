@@ -139,18 +139,15 @@ class User extends Model implements UserContract
         return $this->belongsToMany(Group::class, 'control_group_user');
     }
 
-    public function forename(): string
-    {
-        // TODO: Implement forename() method.
+    public function data(): \BristolSU\ControlDB\Contracts\Models\DataUser {
+        if($this->data_provider_id !== null) {
+            return app(\BristolSU\ControlDB\Contracts\Repositories\DataUser::class)->getById($this->data_provider_id);
+        }
+        return app(\BristolSU\ControlDB\Contracts\Repositories\DataUser::class)->create();
     }
 
-    public function surname(): string
+    public function dataProviderId()
     {
-        // TODO: Implement surname() method.
-    }
-
-    public function email(): ?string
-    {
-        // TODO: Implement email() method.
+        return $this->data_provider_id;
     }
 }
