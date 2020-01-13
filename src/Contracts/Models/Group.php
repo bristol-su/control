@@ -19,6 +19,11 @@ interface Group
      */
     public function name(): string;
 
+
+    public function data(): DataGroup;
+
+    public function dataProviderId();
+    
     /**
      * Contact email address for the group
      *

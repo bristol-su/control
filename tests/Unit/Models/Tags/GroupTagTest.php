@@ -57,7 +57,7 @@ class GroupTagTest extends TestCase
         $positions = factory(Position::class, 5)->create();
 
         DB::table('control_taggables')->insert($taggedGroups->map(function($group) use ($groupTag) {
-            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => Group::class];
+            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => 'group'];
         })->toArray());
 
         $groupGroupRelationship = $groupTag->groupRelationship;
@@ -92,7 +92,7 @@ class GroupTagTest extends TestCase
         $positions = factory(Position::class, 5)->create();
 
         DB::table('control_taggables')->insert($taggedGroups->map(function($group) use ($groupTag) {
-            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => Group::class];
+            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => 'group'];
         })->toArray());
 
         $groupGroupRelationship = $groupTag->groups();

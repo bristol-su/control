@@ -15,9 +15,7 @@ class CreateControlGroupsTable extends Migration
     {
         Schema::create('control_groups', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
             $table->unsignedInteger('data_provider_id')->unique();
-            $table->string('email')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

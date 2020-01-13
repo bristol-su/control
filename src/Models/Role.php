@@ -23,6 +23,14 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
 
     protected $guarded = [];
 
+    protected $appends = [
+        'data'
+    ];
+
+    public function getDataAttribute()
+    {
+        return $this->data();
+    }
 
     /**
      * Get the name of the unique identifier for the user.
@@ -34,6 +42,15 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
         return 'id';
     }
 
+    public function data(): \BristolSU\ControlDB\Contracts\Models\DataRole {
+        return app(\BristolSU\ControlDB\Contracts\Repositories\DataRole::class)->getById($this->dataProviderId());
+    }
+
+    public function dataProviderId()
+    {
+        return $this->data_provider_id;
+    }
+    
     /**
      * Get the unique identifier for the user.
      *

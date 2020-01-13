@@ -2,6 +2,7 @@
 
 namespace BristolSU\Tests\ControlDB\Unit\Models;
 
+use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Position;
 use BristolSU\ControlDB\Models\Role;
 use BristolSU\ControlDB\Models\Tags\PositionTag;
@@ -10,16 +11,25 @@ use BristolSU\Tests\ControlDB\TestCase;
 
 class PositionTest extends TestCase
 {
-    // TODO Test ID method
-    // TODO Test name method
-    // TODO Test description method
+    
+    /** @test */
+    public function an_id_can_be_retrieved_from_the_model()
+    {
+        $position = factory(Position::class)->create([
+            'id' => 4
+        ]);
+
+        $this->assertEquals(4, $position->id());
+    }
+    
+    
     /** @test */
     public function tagRelationship_returns_all_tags_the_position_has(){
         $positionTags = factory(PositionTag::class, 5)->create();
         $position = factory(Position::class)->create();
 
         DB::table('control_taggables')->insert($positionTags->map(function($positionTag) use ($position) {
-            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => Position::class];
+            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => 'position'];
         })->toArray());
 
         $tags = $position->tagRelationship;
@@ -35,7 +45,7 @@ class PositionTest extends TestCase
         $position = factory(Position::class)->create();
 
         DB::table('control_taggables')->insert($positionTags->map(function($positionTag) use ($position) {
-            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => Position::class];
+            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => 'position'];
         })->toArray());
 
         $tags = $position->tags();
@@ -56,7 +66,7 @@ class PositionTest extends TestCase
             $this->assertDatabaseHas('control_taggables', [
                 'tag_id' => $tag->id,
                 'taggable_id' => $position->id,
-                'taggable_type' => Position::class
+                'taggable_type' => 'position'
             ]);
         }
     }

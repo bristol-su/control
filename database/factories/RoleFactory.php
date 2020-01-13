@@ -7,6 +7,9 @@ $factory->define(\BristolSU\ControlDB\Models\Role::class, function(\Faker\Genera
         },
         'group_id' => function() {
             return factory(\BristolSU\ControlDB\Models\Group::class)->create()->id;
-        }
+        },
+        'data_provider_id' => function() {
+            return factory(\BristolSU\ControlDB\Models\DataRole::class)->create()->id;
+        },
     ];
 });

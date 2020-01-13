@@ -21,6 +21,24 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
 
     protected $guarded = [];
 
+    protected $appends = [
+        'data'
+    ];
+
+    public function getDataAttribute()
+    {
+        return $this->data();
+    }
+    
+    public function data(): \BristolSU\ControlDB\Contracts\Models\DataGroup {
+        return app(\BristolSU\ControlDB\Contracts\Repositories\DataGroup::class)->getById($this->dataProviderId());
+    }
+
+    public function dataProviderId()
+    {
+        return $this->data_provider_id;
+    }
+    
     /**
      * Get the name of the unique identifier for the user.
      *

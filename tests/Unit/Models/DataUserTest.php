@@ -32,6 +32,27 @@ class DataUserTest extends TestCase
     }
 
     /** @test */
+    public function an_empty_data_user_can_be_created(){
+        $dataUser = factory(DataUser::class)->create([
+            'first_name' => null,
+            'last_name' => null,
+            'email' => null,
+            'dob' => null,
+            'preferred_name' => null
+        ]);
+
+        $this->assertDatabaseHas('control_data_user', [
+            'id' => $dataUser->id,
+            'first_name' => null,
+            'last_name' => null,
+            'email' => null,
+            'dob' => null,
+            'preferred_name' => null
+        ]);
+
+    }
+
+    /** @test */
     public function an_id_can_be_retrieved_from_the_model()
     {
         $dataUser = factory(DataUser::class)->create([

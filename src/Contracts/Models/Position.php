@@ -20,6 +20,10 @@ interface Position
      */
     public function name(): string;
 
+    public function data(): DataPosition;
+
+    public function dataProviderId();
+    
     /**
      * Description of the position
      *

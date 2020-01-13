@@ -2,12 +2,14 @@
 
 namespace BristolSU\Tests\ControlDB;
 
-use BristolSU\Support\ActivityInstance\ActivityInstance;
+use BristolSU\ControlDB\ControlDBServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
+    use DatabaseTransactions;
+    
     public function setUp(): void
     {
         parent::setUp();
@@ -23,5 +25,18 @@ abstract class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
+    }
+
+    /**
+     * Load package service provider.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            ControlDBServiceProvider::class,
+        ];
     }
 }

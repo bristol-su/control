@@ -2,7 +2,8 @@
 
 $factory->define(\BristolSU\ControlDB\Models\Position::class, function(\Faker\Generator $faker) {
     return [
-        'name' => $faker->company,
-        'description' => $faker->paragraph
+        'data_provider_id' => function() {
+            return factory(\BristolSU\ControlDB\Models\DataPosition::class)->create()->id;
+        },
     ];
 });

@@ -14,10 +14,36 @@ use BristolSU\Tests\ControlDB\TestCase;
 class RoleTest extends TestCase
 {
 
-    // TODO Test ID method
-    // TODO Test groupId method
-    // TODO Test positionId method
-    // TODO Test email method
+    /** @test */
+    public function an_id_can_be_retrieved_from_the_model()
+    {
+        $role = factory(Role::class)->create([
+            'id' => 4
+        ]);
+
+        $this->assertEquals(4, $role->id());
+    }
+
+    /** @test */
+    public function a_group_id_can_be_retrieved_from_the_model()
+    {
+        $role = factory(Role::class)->create([
+            'group_id' => 4
+        ]);
+
+        $this->assertEquals(4, $role->groupId());
+    }
+
+    /** @test */
+    public function a_position_id_can_be_retrieved_from_the_model()
+    {
+        $role = factory(Role::class)->create([
+            'position_id' => 4
+        ]);
+
+        $this->assertEquals(4, $role->positionId());
+    }
+    
 
 
     /** @test */
@@ -38,7 +64,7 @@ class RoleTest extends TestCase
         $role = factory(Role::class)->create();
 
         DB::table('control_taggables')->insert($roleTags->map(function($roleTag) use ($role) {
-            return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => Role::class];
+            return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => 'role'];
         })->toArray());
 
         $tags = $role->tagRelationship;
@@ -59,7 +85,7 @@ class RoleTest extends TestCase
             $this->assertDatabaseHas('control_taggables', [
                 'tag_id' => $tag->id,
                 'taggable_id' => $role->id,
-                'taggable_type' => Role::class
+                'taggable_type' => 'role'
             ]);
         }
     }
@@ -70,7 +96,7 @@ class RoleTest extends TestCase
         $role = factory(Role::class)->create();
 
         DB::table('control_taggables')->insert($roleTags->map(function($roleTag) use ($role) {
-            return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => Role::class];
+            return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => 'role'];
         })->toArray());
 
         $tags = $role->tags();
@@ -168,14 +194,6 @@ class RoleTest extends TestCase
         $positionThroughRole = $role->position();
         $this->assertInstanceOf(Position::class, $positionThroughRole);
         $this->assertTrue($position->is($positionThroughRole));
-    }
-
-    /** @test */
-    public function positionName_returns_the_position_name_from_the_pivot_table(){
-        $position = factory(Position::class)->create(['name' => 'Position 1']);
-        $role = factory(Role::class)->create(['position_id' => $position->id]);
-
-        $this->assertEquals('Position 1', $role->positionName());
     }
 
 }

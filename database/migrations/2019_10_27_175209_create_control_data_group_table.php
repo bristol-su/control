@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateControlUsersTable extends Migration
+class CreateControlDataGroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateControlUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('control_users', function (Blueprint $table) {
+        Schema::create('control_data_group', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('data_provider_id')->unique();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +29,6 @@ class CreateControlUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('control_users');
+        Schema::dropIfExists('control_data_group');
     }
 }

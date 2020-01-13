@@ -12,9 +12,15 @@ use BristolSU\Tests\ControlDB\TestCase;
 class GroupTest extends TestCase
 {
 
-    // TODO Test ID method
-    // TODO Test name method
-    // TODO Test email method
+    /** @test */
+    public function an_id_can_be_retrieved_from_the_model()
+    {
+        $group = factory(Group::class)->create([
+            'id' => 4
+        ]);
+
+        $this->assertEquals(4, $group->id());
+    }
 
     /** @test */
     public function getAuthIdentifierName_returns_id(){
@@ -62,7 +68,7 @@ class GroupTest extends TestCase
         $group = factory(Group::class)->create();
 
         DB::table('control_taggables')->insert($groupTags->map(function($groupTag) use ($group) {
-            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => Group::class];
+            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => 'group'];
         })->toArray());
 
         $tags = $group->tags();
@@ -132,7 +138,7 @@ class GroupTest extends TestCase
         $group = factory(Group::class)->create();
 
         DB::table('control_taggables')->insert($groupTags->map(function($groupTag) use ($group) {
-            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => Group::class];
+            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => 'group'];
         })->toArray());
 
         $tags = $group->tagRelationship;
@@ -153,7 +159,7 @@ class GroupTest extends TestCase
             $this->assertDatabaseHas('control_taggables', [
                 'tag_id' => $tag->id,
                 'taggable_id' => $group->id,
-                'taggable_type' => Group::class
+                'taggable_type' => 'group'
             ]);
             $this->assertDatabaseHas('control_tags', $tag->toArray());
         }

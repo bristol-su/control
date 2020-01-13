@@ -37,7 +37,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         DB::table('control_taggables')->insert($userTags->map(function($userTag) use ($user) {
-            return ['tag_id' => $userTag->id, 'taggable_id' => $user->id, 'taggable_type' => User::class];
+            return ['tag_id' => $userTag->id, 'taggable_id' => $user->id, 'taggable_type' => 'user'];
         })->toArray());
 
         $tags = $user->tagRelationship;
@@ -58,7 +58,7 @@ class UserTest extends TestCase
             $this->assertDatabaseHas('control_taggables', [
                 'tag_id' => $tag->id,
                 'taggable_id' => $user->id,
-                'taggable_type' => User::class
+                'taggable_type' => 'user'
             ]);
         }
     }
@@ -69,7 +69,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         DB::table('control_taggables')->insert($userTags->map(function($userTag) use ($user) {
-            return ['tag_id' => $userTag->id, 'taggable_id' => $user->id, 'taggable_type' => User::class];
+            return ['tag_id' => $userTag->id, 'taggable_id' => $user->id, 'taggable_type' => 'user'];
         })->toArray());
 
         $tags = $user->tags();

@@ -3,9 +3,18 @@
 namespace BristolSU\ControlDB;
 
 use BristolSU\ControlDB\Commands\SeedDatabase;
-use BristolSU\ControlDB\Contracts\Models\DataUser as DataUserContract;
 use BristolSU\ControlDB\Contracts\Repositories\DataUser as DataUserRepositoryContract;
+use BristolSU\ControlDB\Contracts\Repositories\DataGroup as DataGroupRepositoryContract;
+use BristolSU\ControlDB\Contracts\Repositories\DataRole as DataRoleRepositoryContract;
+use BristolSU\ControlDB\Contracts\Repositories\DataPosition as DataPositionRepositoryContract;
+use BristolSU\ControlDB\Contracts\Models\DataUser as DataUserContract;
+use BristolSU\ControlDB\Contracts\Models\DataGroup as DataGroupContract;
+use BristolSU\ControlDB\Contracts\Models\DataRole as DataRoleContract;
+use BristolSU\ControlDB\Contracts\Models\DataPosition as DataPositionContract;
 use BristolSU\ControlDB\Models\DataUser;
+use BristolSU\ControlDB\Models\DataGroup;
+use BristolSU\ControlDB\Models\DataRole;
+use BristolSU\ControlDB\Models\DataPosition;
 use BristolSU\ControlDB\Models\Group as GroupModel;
 use BristolSU\ControlDB\Models\Position as PositionModel;
 use BristolSU\ControlDB\Models\Role as RoleModel;
@@ -19,6 +28,9 @@ use BristolSU\ControlDB\Models\Tags\UserTag as UserTagModel;
 use BristolSU\ControlDB\Models\Tags\UserTagCategory as UserTagCategoryModel;
 use BristolSU\ControlDB\Models\User as UserModel;
 use BristolSU\ControlDB\Repositories\DataUser as DataUserRepository;
+use BristolSU\ControlDB\Repositories\DataGroup as DataGroupRepository;
+use BristolSU\ControlDB\Repositories\DataRole as DataRoleRepository;
+use BristolSU\ControlDB\Repositories\DataPosition as DataPositionRepository;
 use BristolSU\ControlDB\Repositories\Group as GroupRepository;
 use BristolSU\ControlDB\Repositories\Position as PositionRepository;
 use BristolSU\ControlDB\Repositories\Role as RoleRepository;
@@ -103,6 +115,9 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(UserContract::class, UserModel::class);
         $this->app->bind(PositionContract::class, PositionModel::class);
         $this->app->bind(DataUserContract::class, DataUser::class);
+        $this->app->bind(DataGroupContract::class, DataGroup::class);
+        $this->app->bind(DataRoleContract::class, DataRole::class);
+        $this->app->bind(DataPositionContract::class, DataPosition::class);
 
         // Base Repositories
         $this->app->bind(GroupRepositoryContract::class, GroupRepository::class);
@@ -110,6 +125,9 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryContract::class, UserRepository::class);
         $this->app->bind(PositionRepositoryContract::class, PositionRepository::class);
         $this->app->bind(DataUserRepositoryContract::class, DataUserRepository::class);
+        $this->app->bind(DataGroupRepositoryContract::class, DataGroupRepository::class);
+        $this->app->bind(DataRoleRepositoryContract::class, DataRoleRepository::class);
+        $this->app->bind(DataPositionRepositoryContract::class, DataPositionRepository::class);
         
         // Tag Models
         $this->app->bind(GroupTagModelContract::class, GroupTagModel::class);

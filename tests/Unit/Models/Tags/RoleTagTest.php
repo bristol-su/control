@@ -55,7 +55,7 @@ class RoleTagTest extends TestCase
         $users = factory(User::class, 5)->create();
 
         DB::table('control_taggables')->insert($taggedRoles->map(function($role) use ($roleTag) {
-            return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => Role::class];
+            return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => 'role'];
         })->toArray());
 
         $roleRoleRelationship = $roleTag->roleRelationship;
@@ -90,7 +90,7 @@ class RoleTagTest extends TestCase
         $users = factory(User::class, 5)->create();
 
         DB::table('control_taggables')->insert($taggedRoles->map(function($role) use ($roleTag) {
-            return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => Role::class];
+            return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => 'role'];
         })->toArray());
 
         $roleRoleRelationship = $roleTag->roles();

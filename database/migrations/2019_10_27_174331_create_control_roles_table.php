@@ -15,6 +15,7 @@ class CreateControlRolesTable extends Migration
     {
         Schema::create('control_roles', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('data_provider_id')->unique();
             $table->unsignedInteger('position_id');
             $table->unsignedInteger('group_id');
             $table->timestamps();

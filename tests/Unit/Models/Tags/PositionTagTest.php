@@ -55,7 +55,7 @@ class PositionTagTest extends TestCase
         $users = factory(User::class, 5)->create();
 
         DB::table('control_taggables')->insert($taggedPositions->map(function($position) use ($positionTag) {
-            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => Position::class];
+            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => 'position'];
         })->toArray());
 
         $positionPositionRelationship = $positionTag->positionRelationship;
@@ -90,7 +90,7 @@ class PositionTagTest extends TestCase
         $users = factory(User::class, 5)->create();
 
         DB::table('control_taggables')->insert($taggedPositions->map(function($position) use ($positionTag) {
-            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => Position::class];
+            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => 'position'];
         })->toArray());
 
         $positionPositionRelationship = $positionTag->positions();

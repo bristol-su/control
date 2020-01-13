@@ -22,6 +22,15 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
 
     protected $guarded = [];
 
+    protected $appends = [
+        'data'
+    ];
+
+    public function getDataAttribute()
+    {
+        return $this->data();
+    }
+    
     /**
      * Name of the position
      *
@@ -32,6 +41,15 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
         return $this->name;
     }
 
+    public function data(): \BristolSU\ControlDB\Contracts\Models\DataPosition {
+        return app(\BristolSU\ControlDB\Contracts\Repositories\DataPosition::class)->getById($this->dataProviderId());
+    }
+
+    public function dataProviderId()
+    {
+        return $this->data_provider_id;
+    }
+    
     /**
      * Description of the position
      *

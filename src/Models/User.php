@@ -23,6 +23,15 @@ class User extends Model implements UserContract
 
     protected $guarded = [];
 
+    protected $appends = [
+        'data'
+    ];
+
+    public function getDataAttribute()
+    {
+        return $this->data();
+    }
+    
     /**
      * Get the name of the unique identifier for the user.
      *
@@ -140,10 +149,7 @@ class User extends Model implements UserContract
     }
 
     public function data(): \BristolSU\ControlDB\Contracts\Models\DataUser {
-        if($this->data_provider_id !== null) {
-            return app(\BristolSU\ControlDB\Contracts\Repositories\DataUser::class)->getById($this->data_provider_id);
-        }
-        return app(\BristolSU\ControlDB\Contracts\Repositories\DataUser::class)->create();
+        return app(\BristolSU\ControlDB\Contracts\Repositories\DataUser::class)->getById($this->dataProviderId());
     }
 
     public function dataProviderId()

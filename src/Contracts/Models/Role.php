@@ -23,6 +23,10 @@ interface Role extends Authenticatable
 
     public function email(): ?string;
 
+    public function data(): DataRole;
+
+    public function dataProviderId();
+    
     /**
      * ID of the group
      *
