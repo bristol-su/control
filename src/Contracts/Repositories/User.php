@@ -59,4 +59,6 @@ abstract class User
     public function allThroughGroup(GroupModel $group): Collection {
         return $group->members();
     }
+    
+    abstract public function delete(int $id);
 }

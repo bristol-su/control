@@ -46,4 +46,9 @@ class User extends UserContract
     {
         return \BristolSU\ControlDB\Models\User::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
+
+    public function delete(int $id)
+    {
+        $this->getById($id)->delete();
+    }
 }
