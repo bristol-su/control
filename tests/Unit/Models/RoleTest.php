@@ -1,6 +1,6 @@
 <?php
 
-namespace BristolSU\Tests\ControlDB\Unit\Models\Tags;
+namespace BristolSU\Tests\ControlDB\Unit\Models;
 
 use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Position;
@@ -135,7 +135,7 @@ class RoleTest extends TestCase
                 'user_id' => $user->id,
                 'role_id' => $role->id,
             ]);
-            $this->assertDatabaseHas('control_users', $user->toArray());
+            $this->assertDatabaseHas('control_users', ['id' => $user->id]);
         }
     }
 

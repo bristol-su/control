@@ -124,11 +124,13 @@ class GroupTest extends TestCase
     public function roleRelationship_can_be_used_to_add_a_role_to_a_group() {
         $roles = factory(Role::class, 5)->make();
         $group = factory(Group::class)->create();
-
         $group->roleRelationship()->saveMany($roles);
 
         foreach($roles as $role) {
-            $this->assertDatabaseHas('control_roles', array_merge($role->toArray(), ['group_id' => $group->id]));
+            $this->assertDatabaseHas('control_roles', [
+                'group_id' => $group->id,
+                'id' => $role->id
+            ]);
         }
     }
 
