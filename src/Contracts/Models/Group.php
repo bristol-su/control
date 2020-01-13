@@ -2,7 +2,8 @@
 
 namespace BristolSU\ControlDB\Contracts\Models;
 
-use Illuminate\Contracts\Auth\Authenticatable;
+use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+use BristolSU\ControlDB\Contracts\Models\User;
 use Illuminate\Support\Collection;
 
 /**
@@ -43,6 +44,7 @@ interface Group
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function members(): Collection;
 
     /**
@@ -50,6 +52,7 @@ interface Group
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function roles(): Collection;
 
     /**
@@ -57,6 +60,21 @@ interface Group
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function tags(): Collection;
+
+    // TODO Abstract!
+    public function addTag(GroupTag $groupTag);
+
+    // TODO Abstract!
+    public function removeTag(GroupTag $groupTag);
+
+    // TODO Abstract!
+    public function addUser(User $user);
+
+    // TODO Abstract!
+    public function removeUser(User $user);
+
+    public function setDataProviderId(int $dataProviderId);
 
 }

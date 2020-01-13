@@ -20,6 +20,7 @@ interface Position
      */
     public function name(): string;
 
+    // TODO Abstract!
     public function data(): DataPosition;
 
     public function dataProviderId();
@@ -43,6 +44,7 @@ interface Position
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function roles(): Collection;
 
     /**
@@ -50,6 +52,10 @@ interface Position
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function tags(): Collection;
+
+    public function setDataProviderId(int $dataProviderId);
+
 
 }

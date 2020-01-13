@@ -49,4 +49,8 @@ abstract class Group
         return $user->groups();
     }
 
+    abstract public function create(int $dataProviderId): GroupModel;
+    
+    abstract public function delete(int $id);
+
 }

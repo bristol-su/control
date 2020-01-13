@@ -176,4 +176,31 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
             'tag_id'
             );
     }
+
+    public function addTag(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTag $groupTag)
+    {
+        $this->tagRelationship()->attach($groupTag);
+    }
+
+    public function removeTag(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTag $groupTag)
+    {
+        $this->tagRelationship()->detach($groupTag);
+    }
+
+
+    public function addUser(\BristolSU\ControlDB\Contracts\Models\User $user)
+    {
+        $this->userRelationship()->attach($user->id());
+    }
+
+    public function removeUser(\BristolSU\ControlDB\Contracts\Models\User $user)
+    {
+        $this->userRelationship()->detach($user->id());
+    }
+
+    public function setDataProviderId(int $dataProviderId)
+    {
+        $this->data_provider_id = $dataProviderId;
+        $this->save();
+    }
 }

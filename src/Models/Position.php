@@ -103,4 +103,10 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
             'taggable_id',
             'tag_id');
     }
+
+    public function setDataProviderId(int $dataProviderId)
+    {
+        $this->data_provider_id = $dataProviderId;
+        $this->save();
+    }
 }

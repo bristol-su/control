@@ -21,6 +21,7 @@ interface User extends Authenticatable
      */
     public function id();
 
+    // TODO Abstract!
     public function data(): DataUser;
 
     public function dataProviderId();
@@ -30,6 +31,7 @@ interface User extends Authenticatable
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function tags(): Collection;
 
     /**
@@ -37,6 +39,7 @@ interface User extends Authenticatable
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function roles(): Collection;
 
     /**
@@ -44,5 +47,9 @@ interface User extends Authenticatable
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function groups(): Collection;
+
+    public function setDataProviderId(int $dataProviderId);
+
 }

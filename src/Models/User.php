@@ -156,4 +156,10 @@ class User extends Model implements UserContract
     {
         return $this->data_provider_id;
     }
+
+    public function setDataProviderId(int $dataProviderId)
+    {
+        $this->data_provider_id = $dataProviderId;
+        $this->save();
+    }
 }

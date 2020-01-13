@@ -82,6 +82,7 @@ use Illuminate\Support\ServiceProvider;
 
 class ControlDBServiceProvider extends ServiceProvider
 {
+    // TODO Soon, the method of populating pivot tables (through eloquent relationships) needs to be abstracted away to allow for the relationships to stay in the db and the models to come from elsewhere.
 
     public function register()
     {

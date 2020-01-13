@@ -23,6 +23,7 @@ interface Role extends Authenticatable
 
     public function email(): ?string;
 
+    // TODO Abstract!
     public function data(): DataRole;
 
     public function dataProviderId();
@@ -42,6 +43,7 @@ interface Role extends Authenticatable
      *
      * @return string
      */
+    // TODO Check this works fine
     public function positionName(): string;
 
     /**
@@ -62,6 +64,7 @@ interface Role extends Authenticatable
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function users(): Collection;
 
     /**
@@ -69,6 +72,7 @@ interface Role extends Authenticatable
      *
      * @return Collection
      */
+    // TODO Abstract!
     public function tags(): Collection;
 
     /**
@@ -77,5 +81,11 @@ interface Role extends Authenticatable
      * @return int
      */
     public function id(): int;
+
+    public function setGroupId(int $groupId);
+    
+    public function setPositionId(int $positionId);
+
+    public function setDataProviderId(int $dataProviderId);
 
 }

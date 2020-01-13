@@ -205,4 +205,22 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
             'taggable_id',
             'tag_id');
     }
+
+    public function setGroupId(int $groupId)
+    {
+        $this->group_id = $groupId;
+        $this->save();    
+    }
+
+    public function setPositionId(int $positionId)
+    {
+        $this->position_id = $positionId;
+        $this->save();    
+    }
+
+    public function setDataProviderId(int $dataProviderId)
+    {
+        $this->data_provider_id = $dataProviderId;
+        $this->save();
+    }
 }

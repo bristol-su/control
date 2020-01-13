@@ -30,4 +30,16 @@ class Group extends GroupContract
     {
         return \BristolSU\ControlDB\Models\Group::all();
     }
+
+    public function create(int $dataProviderId): GroupModel
+    {
+        return \BristolSU\ControlDB\Models\Group::create([
+            'data_provider_id' => $dataProviderId
+        ]);
+    }
+
+    public function delete(int $id)
+    {
+        \BristolSU\ControlDB\Models\Group::findOrFail($id)->delete();
+    }
 }
