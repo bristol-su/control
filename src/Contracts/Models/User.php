@@ -4,6 +4,7 @@
 namespace BristolSU\ControlDB\Contracts\Models;
 
 
+use BristolSU\ControlDB\Contracts\Models\Tags\UserTag;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
 
@@ -51,5 +52,23 @@ interface User extends Authenticatable
     public function groups(): Collection;
 
     public function setDataProviderId(int $dataProviderId);
+
+    // TODO Abstract!
+    public function addTag(UserTag $userTag);
+
+    // TODO Abstract!
+    public function removeTag(UserTag $userTag);
+
+    // TODO Abstract!
+    public function addRole(Role $role);
+
+    // TODO Abstract!
+    public function removeRole(Role $role);
+
+    // TODO Abstract!
+    public function addGroup(Group $group);
+
+    // TODO Abstract!
+    public function removeGroup(Group $group);
 
 }

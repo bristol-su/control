@@ -4,6 +4,7 @@
 namespace BristolSU\ControlDB\Models;
 
 
+use BristolSU\ControlDB\Contracts\Models\Role;
 use BristolSU\ControlDB\Contracts\Models\User as UserContract;
 use BristolSU\ControlDB\Models\Tags\UserTag;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -140,7 +141,7 @@ class User extends Model implements UserContract
 
     public function roleRelationship()
     {
-        return $this->belongsToMany(Role::class, 'control_role_user');
+        return $this->belongsToMany(\BristolSU\ControlDB\Models\Role::class, 'control_role_user');
     }
 
     public function groupRelationship()
@@ -161,5 +162,35 @@ class User extends Model implements UserContract
     {
         $this->data_provider_id = $dataProviderId;
         $this->save();
+    }
+
+    public function addTag(\BristolSU\ControlDB\Contracts\Models\Tags\UserTag $userTag)
+    {
+        $this->tagRelationship()->attach($userTag);
+    }
+
+    public function removeTag(\BristolSU\ControlDB\Contracts\Models\Tags\UserTag $userTag)
+    {
+        $this->tagRelationship()->detach($userTag);
+    }
+
+    public function addRole(Role $role)
+    {
+        $this->roleRelationship()->attach($role->id());
+    }
+
+    public function removeRole(Role $role)
+    {
+        $this->roleRelationship()->detach($role->id());
+    }
+
+    public function addGroup(\BristolSU\ControlDB\Contracts\Models\Group $group)
+    {
+        $this->groupRelationship()->attach($group->id());
+    }
+
+    public function removeGroup(\BristolSU\ControlDB\Contracts\Models\Group $group)
+    {
+        $this->groupRelationship()->detach($group->id());
     }
 }
