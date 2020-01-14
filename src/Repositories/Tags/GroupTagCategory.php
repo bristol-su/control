@@ -39,4 +39,19 @@ class GroupTagCategory extends GroupTagCategoryContract
     {
         return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('id', $id)->firstOrFail();
     }
+
+    public function create(string $name, string $description, string $reference): GroupTagCategoryModel
+    {
+        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::create([
+            'name' => $name,
+            'description' => $description,
+            'reference' => $reference,
+        ]);
+    }
+
+    public function delete(int $id)
+    {
+        $this->getById($id)->delete();
+    }
+    
 }

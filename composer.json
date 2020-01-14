@@ -26,8 +26,8 @@
       "BristolSU\\ControlDB\\": "src/"
     },
     "classmap": [
-      "database/seeds",
-      "database/factories"
+      "database/seeds/",
+      "database/factories/"
     ]
   },
   "autoload-dev": {

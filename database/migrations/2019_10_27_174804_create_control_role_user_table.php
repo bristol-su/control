@@ -16,7 +16,6 @@ class CreateControlRoleUserTable extends Migration
         Schema::create('control_role_user', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id');
-            $table->string('position_name')->nullable();
             $table->unsignedInteger('role_id');
             $table->timestamps();
             $table->softDeletes();

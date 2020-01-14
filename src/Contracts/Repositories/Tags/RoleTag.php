@@ -57,4 +57,8 @@ abstract class RoleTag
     public function allThroughRoleTagCategory(RoleTagCategoryContract $roleTagCategory): Collection {
         return $roleTagCategory->tags();
     }
+
+    abstract public function create(string $name, string $description, string $reference, $tagCategoryId): RoleTagModel;
+
+    abstract public function delete(int $id);
 }

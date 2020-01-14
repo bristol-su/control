@@ -46,4 +46,8 @@ abstract class PositionTagCategory
      * @return PositionTagCategoryModel
      */
     abstract public function getById(int $id): PositionTagCategoryModel;
+
+    abstract public function delete(int $id);
+
+    abstract public function create(string $name, string $description, string $reference): PositionTagCategoryModel;
 }

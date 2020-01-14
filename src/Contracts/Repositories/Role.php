@@ -64,5 +64,5 @@ abstract class Role
 
     abstract public function create($positionId, $groupId, $dataProviderId): RoleModel;
     
-    abstract public function delete($id);
+    abstract public function delete(int $id);
 }

@@ -44,4 +44,19 @@ class PositionTag extends PositionTagContract
     {
         return PositionTagModel::where('id', $id)->firstOrFail();
     }
+
+    public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
+    {
+        return \BristolSU\ControlDB\Models\Tags\PositionTag::create([
+            'name' => $name,
+            'description' => $description,
+            'reference' => $reference,
+            'tag_category_id' => $tagCategoryId
+        ]);
+    }
+
+    public function delete(int $id)
+    {
+        $this->getById($id)->delete();
+    }
 }

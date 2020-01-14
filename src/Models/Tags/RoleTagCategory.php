@@ -78,4 +78,22 @@ class RoleTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
     {
         return $this->hasMany(RoleTag::class, 'tag_category_id');
     }
+
+    public function setName(string $name)
+    {
+        $this->name = $name;
+        $this->save();
+    }
+
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+        $this->save();
+    }
+
+    public function setReference(string $reference)
+    {
+        $this->reference = $reference;
+        $this->save();
+    }
 }

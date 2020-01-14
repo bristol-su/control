@@ -38,4 +38,18 @@ class UserTagCategory extends UserTagCategoryContract
     {
         return \BristolSU\ControlDB\Models\Tags\UserTagCategory::where('id', $id)->firstOrFail();
     }
+
+    public function create(string $name, string $description, string $reference): UserTagCategoryModel
+    {
+        return \BristolSU\ControlDB\Models\Tags\UserTagCategory::create([
+            'name' => $name,
+            'description' => $description,
+            'reference' => $reference,
+        ]);
+    }
+
+    public function delete(int $id)
+    {
+        $this->getById($id)->delete();
+    }
 }

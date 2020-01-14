@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
  */
 class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
 {
-
+// TODO Set fillable attribute
     use SoftDeletes;
 
     protected $table = 'control_groups';

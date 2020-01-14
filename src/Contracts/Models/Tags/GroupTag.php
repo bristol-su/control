@@ -4,6 +4,7 @@
 namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
+use BristolSU\ControlDB\Contracts\Repositories\Group;
 use Illuminate\Support\Collection;
 
 /**
@@ -68,4 +69,16 @@ interface GroupTag
      * @return Collection
      */
     public function groups(): Collection;
+
+    public function setName(string $name);
+
+    public function setDescription(string $description);
+
+    public function setReference(string $reference);
+
+    public function setTagCategoryId($categoryId);
+
+    public function addGroup(Group $group);
+
+    public function removeGroup(Group $group);
 }

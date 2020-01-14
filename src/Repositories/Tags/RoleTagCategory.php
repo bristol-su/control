@@ -38,4 +38,18 @@ class RoleTagCategory extends RoleTagCategoryContract
     {
         return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::where('id', $id)->firstOrFail();
     }
+
+    public function create(string $name, string $description, string $reference): RoleTagCategoryModel
+    {
+        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::create([
+            'name' => $name,
+            'description' => $description,
+            'reference' => $reference,
+        ]);
+    }
+
+    public function delete(int $id)
+    {
+        $this->getById($id)->delete();
+    }
 }

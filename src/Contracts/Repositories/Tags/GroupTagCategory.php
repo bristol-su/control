@@ -46,4 +46,8 @@ abstract class GroupTagCategory
      * @return GroupTagCategoryModel
      */
     abstract public function getById(int $id): GroupTagCategoryModel;
+
+    abstract public function delete(int $id);
+
+    abstract public function create(string $name, string $description, string $reference): GroupTagCategoryModel;
 }

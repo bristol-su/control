@@ -126,4 +126,38 @@ class GroupTag extends Model implements GroupTagContract
             'taggable_id'
         );
     }
+
+    public function setName(string $name)
+    {
+        $this->name = $name;
+        $this->save();
+    }
+
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+        $this->save();
+    }
+
+    public function setReference(string $reference)
+    {
+        $this->reference = $reference;
+        $this->save();
+    }
+
+    public function setTagCategoryId($categoryId)
+    {
+        $this->category_id = $categoryId;
+        $this->save();
+    }
+
+    public function addGroup(\BristolSU\ControlDB\Contracts\Repositories\Group $group)
+    {
+        $this->groupRelationship()->attach($group->id());
+    }
+
+    public function removeGroup(\BristolSU\ControlDB\Contracts\Repositories\Group $group)
+    {
+        $this->groupRelationship()->detach($group->id());
+    }
 }

@@ -118,4 +118,38 @@ class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
         return $this->morphedByMany(User::class, 'taggable', 'control_taggables', 'tag_id',
             'taggable_id');
     }
+
+    public function setName(string $name)
+    {
+        $this->name = $name;
+        $this->save();
+    }
+
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+        $this->save();
+    }
+
+    public function setReference(string $reference)
+    {
+        $this->reference = $reference;
+        $this->save();
+    }
+
+    public function setTagCategoryId($categoryId)
+    {
+        $this->category_id = $categoryId;
+        $this->save();
+    }
+
+    public function addUser(\BristolSU\ControlDB\Contracts\Models\User $user)
+    {
+        $this->userRelationship()->attach($user->id());
+    }
+
+    public function removeUser(\BristolSU\ControlDB\Contracts\Models\User $user)
+    {
+        $this->userRelationship()->detach($user->id());
+    }
 }

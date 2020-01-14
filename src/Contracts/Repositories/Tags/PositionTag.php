@@ -57,4 +57,8 @@ abstract class PositionTag
     public function allThroughPositionTagCategory(PositionTagCategoryContract $positionTagCategory): Collection {
         return $positionTagCategory->tags();
     }
+
+    abstract public function create(string $name, string $description, string $reference, $tagCategoryId): PositionTagModel;
+
+    abstract public function delete(int $id);
 }

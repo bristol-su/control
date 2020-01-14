@@ -4,6 +4,7 @@
 namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
+use BristolSU\ControlDB\Contracts\Models\Position;
 use Illuminate\Support\Collection;
 
 /**
@@ -68,4 +69,16 @@ interface PositionTag
      * @return Collection
      */
     public function positions(): Collection;
+
+    public function setName(string $name);
+
+    public function setDescription(string $description);
+
+    public function setReference(string $reference);
+
+    public function setTagCategoryId($categoryId);
+
+    public function addPosition(Position $position);
+
+    public function removePosition(Position $position);
 }

@@ -41,7 +41,7 @@ class Role extends RoleContract
         ]);
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->getById($id)->delete();
     }

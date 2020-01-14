@@ -45,4 +45,10 @@ interface RoleTagCategory
      * @return Collection
      */
     public function tags(): Collection;
+
+    public function setName(string $name);
+
+    public function setDescription(string $description);
+
+    public function setReference(string $reference);
 }

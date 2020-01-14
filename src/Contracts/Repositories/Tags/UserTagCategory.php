@@ -46,4 +46,8 @@ abstract class UserTagCategory
      * @return UserTagCategoryModel
      */
     abstract public function getById(int $id): UserTagCategoryModel;
+    
+    abstract public function delete(int $id);
+    
+    abstract public function create(string $name, string $description, string $reference): UserTagCategoryModel;
 }

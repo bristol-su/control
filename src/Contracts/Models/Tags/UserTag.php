@@ -4,7 +4,7 @@
 namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
-use BristolSU\ControlDB\Models\User;
+use BristolSU\ControlDB\Contracts\Models\User;
 use Illuminate\Support\Collection;
 
 /**
@@ -69,4 +69,16 @@ interface UserTag
      * @return Collection
      */
     public function users(): Collection;
+
+    public function setName(string $name);
+
+    public function setDescription(string $description);
+
+    public function setReference(string $reference);
+
+    public function setTagCategoryId($categoryId);
+
+    public function addUser(User $user);
+    
+    public function removeUser(User $user);
 }

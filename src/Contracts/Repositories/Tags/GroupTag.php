@@ -57,4 +57,8 @@ abstract class GroupTag
     public function allThroughGroupTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory): Collection {
         return $groupTagCategory->tags();
     }
+
+    abstract public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+
+    abstract public function delete(int $id);
 }

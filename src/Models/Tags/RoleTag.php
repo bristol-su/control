@@ -117,4 +117,38 @@ class RoleTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
         return $this->morphedByMany(Role::class, 'taggable', 'control_taggables', 'tag_id',
             'taggable_id');
     }
+
+    public function setName(string $name)
+    {
+        $this->name = $name;
+        $this->save();
+    }
+
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+        $this->save();
+    }
+
+    public function setReference(string $reference)
+    {
+        $this->reference = $reference;
+        $this->save();
+    }
+
+    public function setTagCategoryId($categoryId)
+    {
+        $this->category_id = $categoryId;
+        $this->save();
+    }
+
+    public function addRole(\BristolSU\ControlDB\Contracts\Models\Role $role)
+    {
+        $this->roleRelationship()->attach($role->id());
+    }
+
+    public function removeRole(\BristolSU\ControlDB\Contracts\Models\Role $role)
+    {
+        $this->roleRelationship()->detach($role->id());
+    }
 }

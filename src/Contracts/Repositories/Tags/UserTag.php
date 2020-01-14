@@ -57,4 +57,9 @@ abstract class UserTag
     public function allThroughUserTagCategory(UserTagCategoryContract $userTagCategory): Collection {
         return $userTagCategory->tags();
     }
+
+    abstract public function create(string $name, string $description, string $reference, $tagCategoryId): UserTagModel;
+    
+    abstract public function delete(int $id);
+    
 }

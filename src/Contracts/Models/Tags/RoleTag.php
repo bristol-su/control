@@ -4,6 +4,7 @@
 namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
+use BristolSU\ControlDB\Contracts\Models\Role;
 use Illuminate\Support\Collection;
 
 /**
@@ -68,4 +69,16 @@ interface RoleTag
      * @return Collection
      */
     public function roles(): Collection;
+
+    public function setName(string $name);
+
+    public function setDescription(string $description);
+
+    public function setReference(string $reference);
+
+    public function setTagCategoryId($categoryId);
+
+    public function addRole(Role $role);
+
+    public function removeRole(Role $role);
 }

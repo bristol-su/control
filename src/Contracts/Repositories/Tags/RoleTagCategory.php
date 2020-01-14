@@ -46,4 +46,8 @@ abstract class RoleTagCategory
      * @return RoleTagCategoryModel
      */
     abstract public function getById(int $id): RoleTagCategoryModel;
+
+    abstract public function delete(int $id);
+
+    abstract public function create(string $name, string $description, string $reference): RoleTagCategoryModel;
 }
