@@ -109,4 +109,14 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
         $this->data_provider_id = $dataProviderId;
         $this->save();
     }
+
+    public function addTag(\BristolSU\ControlDB\Contracts\Models\Tags\PositionTag $roleTag)
+    {
+        $this->tagRelationship()->attach($roleTag->id());
+    }
+
+    public function removeTag(\BristolSU\ControlDB\Contracts\Models\Tags\PositionTag $roleTag)
+    {
+        $this->tagRelationship()->detach($roleTag->id());
+    }
 }

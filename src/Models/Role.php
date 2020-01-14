@@ -4,6 +4,7 @@
 namespace BristolSU\ControlDB\Models;
 
 
+use BristolSU\ControlDB\Contracts\Models\User;
 use BristolSU\ControlDB\Models\Tags\PositionTag;
 use BristolSU\ControlDB\Models\Tags\RoleTag;
 use Illuminate\Database\Eloquent\Model;
@@ -194,7 +195,7 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
 
     public function userRelationship()
     {
-        return $this->belongsToMany(User::class, 'control_role_user');
+        return $this->belongsToMany(\BristolSU\ControlDB\Models\User::class, 'control_role_user');
     }
 
     public function tagRelationship()
@@ -222,5 +223,26 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
     {
         $this->data_provider_id = $dataProviderId;
         $this->save();
+    }
+
+    public function addTag(\BristolSU\ControlDB\Contracts\Models\Tags\RoleTag $roleTag)
+    {
+        $this->tagRelationship()->attach($roleTag->id());
+    }
+
+    public function removeTag(\BristolSU\ControlDB\Contracts\Models\Tags\RoleTag $roleTag)
+    {
+        $this->tagRelationship()->detach($roleTag->id());
+    }
+
+
+    public function addUser(User $user)
+    {
+        $this->userRelationship()->attach($user->id());
+    }
+
+    public function removeUser(User $user)
+    {
+        $this->userRelationship()->detach($user->id());
     }
 }

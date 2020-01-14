@@ -4,6 +4,7 @@
 namespace BristolSU\ControlDB\Contracts\Models;
 
 
+use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag;
 use Illuminate\Support\Collection;
 
 /**
@@ -56,6 +57,12 @@ interface Position
     public function tags(): Collection;
 
     public function setDataProviderId(int $dataProviderId);
+
+    // TODO Abstract!
+    public function addTag(PositionTag $roleTag);
+
+    // TODO Abstract!
+    public function removeTag(PositionTag $roleTag);
 
 
 }

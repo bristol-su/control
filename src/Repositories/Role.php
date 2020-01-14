@@ -4,13 +4,7 @@
 namespace BristolSU\ControlDB\Repositories;
 
 
-use BristolSU\ControlDB\Models\Group as GroupModel;
-use BristolSU\ControlDB\Models\Position as PositionModel;
-use BristolSU\ControlDB\Models\Role as RoleModel;
-use BristolSU\ControlDB\Models\User as UserModel;
-use BristolSU\ControlDB\Contracts\Models\Group;
-use BristolSU\ControlDB\Contracts\Models\Position;
-use BristolSU\ControlDB\Contracts\Models\User;
+
 use BristolSU\ControlDB\Contracts\Repositories\Role as RoleContract;
 use Illuminate\Support\Collection;
 
@@ -36,5 +30,19 @@ class Role extends RoleContract
     public function all(): Collection
     {
         return \BristolSU\ControlDB\Models\Role::all();
+    }
+
+    public function create($positionId, $groupId, $dataProviderId): \BristolSU\ControlDB\Contracts\Models\Role
+    {
+        return \BristolSU\ControlDB\Models\Role::create([
+            'position_id' => $positionId,
+            'group_id' => $groupId,
+            'data_provider_id' => $dataProviderId
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $this->getById($id)->delete();
     }
 }

@@ -4,6 +4,7 @@
 namespace BristolSU\ControlDB\Contracts\Models;
 
 
+use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
 
@@ -88,4 +89,16 @@ interface Role extends Authenticatable
 
     public function setDataProviderId(int $dataProviderId);
 
+    // TODO Abstract!
+    public function addTag(RoleTag $roleTag);
+
+    // TODO Abstract!
+    public function removeTag(RoleTag $roleTag);
+
+
+    // TODO Abstract!
+    public function addUser(User $user);
+
+    // TODO Abstract!
+    public function removeUser(User $user);
 }

@@ -61,4 +61,8 @@ abstract class Role
     public function allThroughPosition(PositionModel $position): Collection {
         return $position->roles();
     }
+
+    abstract public function create($positionId, $groupId, $dataProviderId): RoleModel;
+    
+    abstract public function delete($id);
 }
