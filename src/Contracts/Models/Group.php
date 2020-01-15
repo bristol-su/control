@@ -4,13 +4,14 @@ namespace BristolSU\ControlDB\Contracts\Models;
 
 use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 use BristolSU\ControlDB\Contracts\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface Group
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface Group
+interface Group extends Authenticatable
 {
 
     /**

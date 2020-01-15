@@ -5,13 +5,14 @@ namespace BristolSU\ControlDB\Contracts\Models;
 
 
 use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface Position
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface Position
+interface Position extends Authenticatable
 {
 
     /**
