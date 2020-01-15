@@ -59,5 +59,38 @@ class PositionTagCategoryTest extends TestCase
         $positionTagCategoryRepo->getByReference('notavalidref');
     }
 
+    /** @test */
+    public function create_creates_a_position_tag_category_model(){
+        $positionTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
+        $positionTagCategoryRepo->create('Name', 'Description', 'reference');
+
+        $this->assertDatabaseHas('control_tag_categories', [
+            'name' => 'Name',
+            'description' => 'Description',
+            'reference' => 'reference',
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_a_position_tag_category_model(){
+        $positionTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
+        $positionTagCategory = $positionTagCategoryRepo->create('Name', 'Description', 'reference');
+
+        $this->assertInstanceOf(PositionTagCategory::class, $positionTagCategory);
+        $this->assertEquals('Name', $positionTagCategory->name());
+        $this->assertEquals('Description', $positionTagCategory->description());
+        $this->assertEquals('reference', $positionTagCategory->reference());
+    }
+
+    /** @test */
+    public function delete_deletes_a_position_tag_category_model(){
+        $positionTagCategory = factory(PositionTagCategory::class)->create();
+        $positionTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
+        $positionTagCategoryRepo->delete($positionTagCategory->id());
+
+        $positionTagCategory->refresh();
+        $this->assertTrue($positionTagCategory->trashed());
+    }
+
 
 }

@@ -60,5 +60,38 @@ class RoleTagTest extends TestCase
         $roleTagRepo->getTagByFullReference('nota.validref');
     }
 
+    /** @test */
+    public function create_creates_a_role_tag_model(){
+        $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
+        $roleTagRepo->create('Name', 'Description', 'reference', 1);
 
+        $this->assertDatabaseHas('control_tags', [
+            'name' => 'Name',
+            'description' => 'Description',
+            'reference' => 'reference',
+            'tag_category_id' => 1
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_a_role_tag_model(){
+        $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
+        $roleTag = $roleTagRepo->create('Name', 'Description', 'reference', 1);
+
+        $this->assertInstanceOf(RoleTag::class, $roleTag);
+        $this->assertEquals('Name', $roleTag->name());
+        $this->assertEquals('Description', $roleTag->description());
+        $this->assertEquals('reference', $roleTag->reference());
+        $this->assertEquals(1, $roleTag->categoryId());
+    }
+
+    /** @test */
+    public function delete_deletes_a_role_tag_model(){
+        $roleTag = factory(RoleTag::class)->create();
+        $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
+        $roleTagRepo->delete($roleTag->id());
+
+        $roleTag->refresh();
+        $this->assertTrue($roleTag->trashed());
+    }
 }

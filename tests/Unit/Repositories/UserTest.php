@@ -86,4 +86,14 @@ class UserTest extends TestCase
 
     }
 
+    /** @test */
+    public function delete_deletes_a_user_model(){
+        $user = factory(User::class)->create();
+        $userRepo = new \BristolSU\ControlDB\Repositories\User();
+        $userRepo->delete($user->id());
+
+        $user->refresh();
+        $this->assertTrue($user->trashed());
+    }
+
 }

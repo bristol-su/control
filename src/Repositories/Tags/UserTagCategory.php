@@ -45,6 +45,7 @@ class UserTagCategory extends UserTagCategoryContract
             'name' => $name,
             'description' => $description,
             'reference' => $reference,
+            'type' => 'user'
         ]);
     }
 

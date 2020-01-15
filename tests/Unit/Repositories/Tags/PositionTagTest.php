@@ -59,6 +59,40 @@ class PositionTagTest extends TestCase
         $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
         $positionTagRepo->getTagByFullReference('nota.validref');
     }
+   
+    /** @test */
+    public function create_creates_a_position_tag_model(){
+        $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
+        $positionTagRepo->create('Name', 'Description', 'reference', 1);
 
+        $this->assertDatabaseHas('control_tags', [
+            'name' => 'Name',
+            'description' => 'Description',
+            'reference' => 'reference',
+            'tag_category_id' => 1
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_a_position_tag_model(){
+        $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
+        $positionTag = $positionTagRepo->create('Name', 'Description', 'reference', 1);
+
+        $this->assertInstanceOf(PositionTag::class, $positionTag);
+        $this->assertEquals('Name', $positionTag->name());
+        $this->assertEquals('Description', $positionTag->description());
+        $this->assertEquals('reference', $positionTag->reference());
+        $this->assertEquals(1, $positionTag->categoryId());
+    }
+
+    /** @test */
+    public function delete_deletes_a_position_tag_model(){
+        $positionTag = factory(PositionTag::class)->create();
+        $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
+        $positionTagRepo->delete($positionTag->id());
+
+        $positionTag->refresh();
+        $this->assertTrue($positionTag->trashed());
+    }
 
 }

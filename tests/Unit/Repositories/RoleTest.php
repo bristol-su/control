@@ -37,5 +37,38 @@ class RoleTest extends TestCase
         }
     }
 
+    /** @test */
+    public function create_creates_a_role_model(){
+        $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
+        $roleRepo->create(1, 2, 3);
+
+        $this->assertDatabaseHas('control_roles', [
+            'position_id' => 1,
+            'group_id' => 2,
+            'data_provider_id' => 3
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_a_role_model(){
+        $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
+        $role = $roleRepo->create(1, 2, 3);
+
+        $this->assertInstanceOf(Role::class, $role);
+        $this->assertEquals(1, $role->positionId());
+        $this->assertEquals(2, $role->groupId());
+        $this->assertEquals(3, $role->dataProviderId());
+    }
+
+    /** @test */
+    public function delete_deletes_a_role_model(){
+        $role = factory(Role::class)->create();
+        $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
+        $roleRepo->delete($role->id());
+
+        $role->refresh();
+        $this->assertTrue($role->trashed());
+    }
+
 
 }

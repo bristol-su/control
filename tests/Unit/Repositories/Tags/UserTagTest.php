@@ -60,5 +60,38 @@ class UserTagTest extends TestCase
         $userTagRepo->getTagByFullReference('nota.validref');
     }
 
+    /** @test */
+    public function create_creates_a_user_tag_model(){
+        $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
+        $userTagRepo->create('Name', 'Description', 'reference', 1);
 
+        $this->assertDatabaseHas('control_tags', [
+            'name' => 'Name',
+            'description' => 'Description',
+            'reference' => 'reference',
+            'tag_category_id' => 1
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_a_user_tag_model(){
+        $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
+        $userTag = $userTagRepo->create('Name', 'Description', 'reference', 1);
+
+        $this->assertInstanceOf(UserTag::class, $userTag);
+        $this->assertEquals('Name', $userTag->name());
+        $this->assertEquals('Description', $userTag->description());
+        $this->assertEquals('reference', $userTag->reference());
+        $this->assertEquals(1, $userTag->categoryId());
+    }
+
+    /** @test */
+    public function delete_deletes_a_user_tag_model(){
+        $userTag = factory(UserTag::class)->create();
+        $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
+        $userTagRepo->delete($userTag->id());
+
+        $userTag->refresh();
+        $this->assertTrue($userTag->trashed());
+    }
 }

@@ -46,6 +46,7 @@ class PositionTagCategory extends PositionTagCategoryContract
             'name' => $name,
             'description' => $description,
             'reference' => $reference,
+            'type' => 'position'
         ]);
     }
 

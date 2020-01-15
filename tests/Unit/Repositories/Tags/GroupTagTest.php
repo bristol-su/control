@@ -61,4 +61,41 @@ class GroupTagTest extends TestCase
     }
 
 
+    /** @test */
+    public function create_creates_a_group_tag_model(){
+        $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
+        $groupTagRepo->create('Name', 'Description', 'reference', 1);
+
+        $this->assertDatabaseHas('control_tags', [
+            'name' => 'Name',
+            'description' => 'Description',
+            'reference' => 'reference',
+            'tag_category_id' => 1
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_a_group_tag_model(){
+        $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
+        $groupTag = $groupTagRepo->create('Name', 'Description', 'reference', 1);
+
+        $this->assertInstanceOf(GroupTag::class, $groupTag);
+        $this->assertEquals('Name', $groupTag->name());
+        $this->assertEquals('Description', $groupTag->description());
+        $this->assertEquals('reference', $groupTag->reference());
+        $this->assertEquals(1, $groupTag->categoryId());
+    }
+
+    /** @test */
+    public function delete_deletes_a_group_tag_model(){
+        $groupTag = factory(GroupTag::class)->create();
+        $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
+        $groupTagRepo->delete($groupTag->id());
+
+        $groupTag->refresh();
+        $this->assertTrue($groupTag->trashed());
+    }
+
+
+
 }

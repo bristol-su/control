@@ -46,6 +46,7 @@ class GroupTagCategory extends GroupTagCategoryContract
             'name' => $name,
             'description' => $description,
             'reference' => $reference,
+            'type' => 'group'
         ]);
     }
 

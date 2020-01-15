@@ -45,6 +45,7 @@ class RoleTagCategory extends RoleTagCategoryContract
             'name' => $name,
             'description' => $description,
             'reference' => $reference,
+            'type' => 'role'
         ]);
     }
 

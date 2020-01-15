@@ -60,5 +60,37 @@ class GroupTagCategoryTest extends TestCase
         $groupTagCategoryRepo->getByReference('notavalidref');
     }
 
+    /** @test */
+    public function create_creates_a_group_tag_category_model(){
+        $groupTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTagCategory();
+        $groupTagCategoryRepo->create('Name', 'Description', 'reference');
+
+        $this->assertDatabaseHas('control_tag_categories', [
+            'name' => 'Name',
+            'description' => 'Description',
+            'reference' => 'reference',
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_a_group_tag_category_model(){
+        $groupTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTagCategory();
+        $groupTagCategory = $groupTagCategoryRepo->create('Name', 'Description', 'reference');
+
+        $this->assertInstanceOf(GroupTagCategory::class, $groupTagCategory);
+        $this->assertEquals('Name', $groupTagCategory->name());
+        $this->assertEquals('Description', $groupTagCategory->description());
+        $this->assertEquals('reference', $groupTagCategory->reference());
+    }
+
+    /** @test */
+    public function delete_deletes_a_group_tag_category_model(){
+        $groupTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTagCategory();
+        $groupTagCategoryRepo->delete($groupTagCategory->id());
+
+        $groupTagCategory->refresh();
+        $this->assertTrue($groupTagCategory->trashed());
+    }
 
 }

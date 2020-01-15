@@ -59,5 +59,38 @@ class UserTagCategoryTest extends TestCase
         $userTagCategoryRepo->getByReference('notavalidref');
     }
 
+    /** @test */
+    public function create_creates_a_user_tag_category_model(){
+        $userTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
+        $userTagCategoryRepo->create('Name', 'Description', 'reference');
+
+        $this->assertDatabaseHas('control_tag_categories', [
+            'name' => 'Name',
+            'description' => 'Description',
+            'reference' => 'reference',
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_a_user_tag_category_model(){
+        $userTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
+        $userTagCategory = $userTagCategoryRepo->create('Name', 'Description', 'reference');
+
+        $this->assertInstanceOf(UserTagCategory::class, $userTagCategory);
+        $this->assertEquals('Name', $userTagCategory->name());
+        $this->assertEquals('Description', $userTagCategory->description());
+        $this->assertEquals('reference', $userTagCategory->reference());
+    }
+
+    /** @test */
+    public function delete_deletes_a_user_tag_category_model(){
+        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
+        $userTagCategoryRepo->delete($userTagCategory->id());
+
+        $userTagCategory->refresh();
+        $this->assertTrue($userTagCategory->trashed());
+    }
+
 
 }

@@ -59,5 +59,37 @@ class RoleTagCategoryTest extends TestCase
         $roleTagCategoryRepo->getByReference('notavalidref');
     }
 
+    /** @test */
+    public function create_creates_a_role_tag_category_model(){
+        $roleTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
+        $roleTagCategoryRepo->create('Name', 'Description', 'reference');
+
+        $this->assertDatabaseHas('control_tag_categories', [
+            'name' => 'Name',
+            'description' => 'Description',
+            'reference' => 'reference',
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_a_role_tag_category_model(){
+        $roleTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
+        $roleTagCategory = $roleTagCategoryRepo->create('Name', 'Description', 'reference');
+
+        $this->assertInstanceOf(RoleTagCategory::class, $roleTagCategory);
+        $this->assertEquals('Name', $roleTagCategory->name());
+        $this->assertEquals('Description', $roleTagCategory->description());
+        $this->assertEquals('reference', $roleTagCategory->reference());
+    }
+
+    /** @test */
+    public function delete_deletes_a_role_tag_category_model(){
+        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
+        $roleTagCategoryRepo->delete($roleTagCategory->id());
+
+        $roleTagCategory->refresh();
+        $this->assertTrue($roleTagCategory->trashed());
+    }
 
 }
