@@ -107,26 +107,6 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
     }
 
     /**
-     * Name of the group
-     *
-     * @return string
-     */
-    public function name(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Contact email address for the group
-     *
-     * @return string|null
-     */
-    public function email(): ?string
-    {
-        return $this->email;
-    }
-
-    /**
      * Members of the group
      *
      * @return Collection

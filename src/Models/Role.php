@@ -119,11 +119,6 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
         return $this->position_id;
     }
 
-    public function email(): ?string
-    {
-        return $this->email;
-    }
-
     /**
      * ID of the group
      *
@@ -132,15 +127,6 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
     public function groupId()
     {
         return $this->group_id;
-    }
-
-    /**
-     * Name of the position
-     * @return string
-     */
-    public function positionName(): string
-    {
-        return $this->position()->name();
     }
 
     /**

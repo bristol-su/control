@@ -30,16 +30,6 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
     {
         return $this->data();
     }
-    
-    /**
-     * Name of the position
-     *
-     * @return string
-     */
-    public function name(): string
-    {
-        return $this->name;
-    }
 
     public function data(): \BristolSU\ControlDB\Contracts\Models\DataPosition {
         return app(\BristolSU\ControlDB\Contracts\Repositories\DataPosition::class)->getById($this->dataProviderId());
@@ -50,16 +40,6 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
         return $this->data_provider_id;
     }
     
-    /**
-     * Description of the position
-     *
-     * @return string
-     */
-    public function description(): string
-    {
-        return $this->description;
-    }
-
     /**
      * ID of the position
      *
@@ -119,4 +99,5 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
     {
         $this->tagRelationship()->detach($roleTag->id());
     }
+
 }

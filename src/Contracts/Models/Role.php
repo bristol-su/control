@@ -22,8 +22,6 @@ interface Role extends Authenticatable
      */
     public function positionId();
 
-    public function email(): ?string;
-
     // TODO Abstract!
     public function data(): DataRole;
 
@@ -35,17 +33,6 @@ interface Role extends Authenticatable
      * @return mixed
      */
     public function groupId();
-
-    /**
-     * Custom name of the position.
-     *
-     * This does not need to be the same as the actual position name. It may instead be anything you like, to allow for
-     * more granular control over the positions and roles owned by an individual, whilst not creating too many positions.
-     *
-     * @return string
-     */
-    // TODO Check this works fine
-    public function positionName(): string;
 
     /**
      * Position belonging to the role

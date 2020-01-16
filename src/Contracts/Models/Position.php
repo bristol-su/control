@@ -14,25 +14,11 @@ use Illuminate\Support\Collection;
 interface Position
 {
 
-    /**
-     * Name of the position
-     *
-     * @return string
-     */
-    public function name(): string;
-
     // TODO Abstract!
     public function data(): DataPosition;
 
     public function dataProviderId();
     
-    /**
-     * Description of the position
-     *
-     * @return string
-     */
-    public function description(): string;
-
     /**
      * ID of the position
      *

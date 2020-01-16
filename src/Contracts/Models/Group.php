@@ -14,24 +14,9 @@ use Illuminate\Support\Collection;
 interface Group extends Authenticatable
 {
 
-    /**
-     * Name of the group
-     *
-     * @return string
-     */
-    public function name(): string;
-
-
     public function data(): DataGroup;
 
     public function dataProviderId();
-    
-    /**
-     * Contact email address for the group
-     *
-     * @return string|null
-     */
-    public function email(): ?string;
 
     /**
      * ID of the group
