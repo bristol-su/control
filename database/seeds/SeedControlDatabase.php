@@ -46,30 +46,30 @@ class SeedControlDatabase extends Seeder
         }
         
         // Tag groups
-        factory(GroupTagCategory::class, 15)->create()->each(function(GroupTagCategory $groupTagCategory) use ($groups) {
-            factory(GroupTag::class, 15)->create(['tag_category_id' => $groupTagCategory->id()])->each(function(GroupTag $groupTag) use ($groups) {
-                $groupTag->groupRelationship()->attach($groups->random(10));
+        factory(GroupTagCategory::class, 15)->create()->each(function(GroupTagCategory $groupTagCategory) {
+            factory(GroupTag::class, 15)->create(['tag_category_id' => $groupTagCategory->id()])->each(function(GroupTag $groupTag){
+                $groupTag->groupRelationship()->attach(Group::all()->random(10));
             });
         });
 
         // Tag users
-        factory(UserTagCategory::class, 15)->create()->each(function(UserTagCategory $userTagCategory) use ($users) {
-            factory(UserTag::class, 15)->create(['tag_category_id' => $userTagCategory->id()])->each(function(UserTag $userTag) use ($users) {
-                $userTag->userRelationship()->attach($users->random(10));
+        factory(UserTagCategory::class, 15)->create()->each(function(UserTagCategory $userTagCategory) {
+            factory(UserTag::class, 15)->create(['tag_category_id' => $userTagCategory->id()])->each(function(UserTag $userTag) {
+                $userTag->userRelationship()->attach(User::all()->random(10));
             });
         });
 
         // Tag roles
-        factory(RoleTagCategory::class, 15)->create()->each(function(RoleTagCategory $roleTagCategory) use ($roles) {
-            factory(RoleTag::class, 15)->create(['tag_category_id' => $roleTagCategory->id()])->each(function(RoleTag $roleTag) use ($roles) {
-                $roleTag->roleRelationship()->attach($roles->random(10));
+        factory(RoleTagCategory::class, 15)->create()->each(function(RoleTagCategory $roleTagCategory) {
+            factory(RoleTag::class, 15)->create(['tag_category_id' => $roleTagCategory->id()])->each(function(RoleTag $roleTag) {
+                $roleTag->roleRelationship()->attach(Role::all()->random(10));
             });
         });
 
         // Tag positions
-        factory(PositionTagCategory::class, 15)->create()->each(function(PositionTagCategory $positionTagCategory) use ($positions) {
-            factory(PositionTag::class, 15)->create(['tag_category_id' => $positionTagCategory->id()])->each(function(PositionTag $positionTag) use ($positions) {
-                $positionTag->positionRelationship()->attach($positions->random(10));
+        factory(PositionTagCategory::class, 15)->create()->each(function(PositionTagCategory $positionTagCategory) {
+            factory(PositionTag::class, 15)->create(['tag_category_id' => $positionTagCategory->id()])->each(function(PositionTag $positionTag) {
+                $positionTag->positionRelationship()->attach(Position::all()->random(10));
             });
         });
 
