@@ -35,13 +35,16 @@ class PositionTagTest extends TestCase
     }
 
     /** @test */
-    public function position_relationship_can_be_used_to_tag_a_position(){
+    public function positions_can_be_added_to_the_tag(){
         $positionTag = factory(PositionTag::class)->create();
 
-        $taggedPositions = factory(Position::class, 5)->make();
-        $positionTag->positionRelationship()->saveMany($taggedPositions);
+        $taggedPositions = factory(Position::class, 5)->create();
+        
+        foreach($taggedPositions as $position) {
+            $positionTag->addPosition($position);
+        }
 
-        $positionPositionRelationship = $positionTag->positionRelationship;
+        $positionPositionRelationship = $positionTag->positions();
         $this->assertEquals(5, $positionPositionRelationship->count());
         foreach($taggedPositions as $position) {
             $this->assertTrue($position->is($positionPositionRelationship->shift()));

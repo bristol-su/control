@@ -37,13 +37,15 @@ class GroupTagTest extends TestCase
     }
     
     /** @test */
-    public function group_relationship_can_be_used_to_tag_a_group(){
+    public function groups_can_be_added_to_the_tag(){
         $groupTag = factory(GroupTag::class)->create();
+        $taggedGroups = factory(Group::class, 5)->create();
+        
+        foreach($taggedGroups as $group) {
+            $groupTag->addGroup($group);
+        }
 
-        $taggedGroups = factory(Group::class, 5)->make();
-        $groupTag->groupRelationship()->saveMany($taggedGroups);
-
-        $groupGroupRelationship = $groupTag->groupRelationship;
+        $groupGroupRelationship = $groupTag->groups();
         $this->assertEquals(5, $groupGroupRelationship->count());
         foreach($taggedGroups as $group) {
             $this->assertTrue($group->is($groupGroupRelationship->shift()));

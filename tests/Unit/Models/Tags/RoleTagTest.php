@@ -35,13 +35,15 @@ class RoleTagTest extends TestCase
     }
 
     /** @test */
-    public function role_relationship_can_be_used_to_tag_a_role(){
+    public function roles_can_be_added_to_the_tag(){
         $roleTag = factory(RoleTag::class)->create();
+        $taggedRoles = factory(Role::class, 5)->create();
+        
+        foreach($taggedRoles as $role) {
+            $roleTag->addRole($role);
+        }
 
-        $taggedRoles = factory(Role::class, 5)->make();
-        $roleTag->roleRelationship()->saveMany($taggedRoles);
-
-        $roleRoleRelationship = $roleTag->roleRelationship;
+        $roleRoleRelationship = $roleTag->roles();
         $this->assertEquals(5, $roleRoleRelationship->count());
         foreach($taggedRoles as $role) {
             $this->assertTrue($role->is($roleRoleRelationship->shift()));

@@ -84,7 +84,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function tags_can_be_added_to_a_group() {
-        $tags = factory(GroupTag::class, 5)->make();
+        $tags = factory(GroupTag::class, 5)->create();
         $group = factory(Group::class)->create();
 
         foreach($tags as $tag) {

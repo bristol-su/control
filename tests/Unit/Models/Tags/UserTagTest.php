@@ -35,13 +35,16 @@ class UserTagTest extends TestCase
     }
 
     /** @test */
-    public function user_relationship_can_be_used_to_tag_a_user(){
+    public function userss_can_be_added_to_the_tag(){
         $userTag = factory(UserTag::class)->create();
 
-        $taggedUsers = factory(User::class, 5)->make();
-        $userTag->userRelationship()->saveMany($taggedUsers);
+        $taggedUsers = factory(User::class, 5)->create();
+        
+        foreach($taggedUsers as $user) {
+            $userTag->addUser($user);
+        }
 
-        $userUserRelationship = $userTag->userRelationship;
+        $userUserRelationship = $userTag->users();
         $this->assertEquals(5, $userUserRelationship->count());
         foreach($taggedUsers as $user) {
             $this->assertTrue($user->is($userUserRelationship->shift()));

@@ -85,18 +85,8 @@ use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
-
-// Tag models (contracts)
-
-// Tag models
-
-// Tag repositories (contracts)
-
-// Tag repositories
-
 class ControlDBServiceProvider extends ServiceProvider
 {
-    // TODO Soon, the method of populating pivot tables (through eloquent relationships) needs to be abstracted away to allow for the relationships to stay in the db and the models to come from elsewhere.
 
     public function register()
     {

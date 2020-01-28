@@ -41,12 +41,12 @@ trait PositionTrait
 
     public function addTag(\BristolSU\ControlDB\Contracts\Models\Tags\PositionTag $positionTag): void
     {
-        app(PositionPositionTag::class)->addTagToPosition($positionTag);
+        app(PositionPositionTag::class)->addTagToPosition($positionTag, $this);
     }
 
     public function removeTag(\BristolSU\ControlDB\Contracts\Models\Tags\PositionTag $positionTag): void
     {
-        app(PositionPositionTag::class)->removeTagFromPosition($positionTag);
+        app(PositionPositionTag::class)->removeTagFromPosition($positionTag, $this);
     }
 
 
