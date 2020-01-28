@@ -11,14 +11,16 @@ use Illuminate\Support\Collection;
  * Interface Position
  * @package BristolSU\ControlDB\Contracts\Repositories
  */
-abstract class Position
+interface Position
 {
     /**
      * Get all positions
      *
      * @return Collection
      */
-    abstract public function all(): Collection;
+    public function all(): Collection;
+
+    public function getByDataProviderId($dataProviderId): PositionModel;
 
     /**
      * Get a position by a given ID
@@ -26,5 +28,5 @@ abstract class Position
      * @param int $id
      * @return PositionModel
      */
-    abstract public function getById(int $id): PositionModel;
+    public function getById(int $id): PositionModel;
 }

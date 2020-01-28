@@ -5,14 +5,15 @@ namespace BristolSU\ControlDB\Contracts\Models;
 
 
 use BristolSU\ControlDB\Contracts\Models\Tags\UserTag;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface User
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface User extends Authenticatable
+interface User extends Arrayable, Jsonable
 {
 
     /**
@@ -20,12 +21,12 @@ interface User extends Authenticatable
      *
      * @return mixed
      */
-    public function id();
+    public function id(): int;
 
     // TODO Abstract!
     public function data(): DataUser;
 
-    public function dataProviderId();
+    public function dataProviderId(): int;
 
     /**
      * Tags the user is tagged with
@@ -51,24 +52,24 @@ interface User extends Authenticatable
     // TODO Abstract!
     public function groups(): Collection;
 
-    public function setDataProviderId(int $dataProviderId);
+    public function setDataProviderId(int $dataProviderId): void;
 
     // TODO Abstract!
-    public function addTag(UserTag $userTag);
+    public function addTag(UserTag $userTag): void;
 
     // TODO Abstract!
-    public function removeTag(UserTag $userTag);
+    public function removeTag(UserTag $userTag): void;
 
     // TODO Abstract!
-    public function addRole(Role $role);
+    public function addRole(Role $role): void;
 
     // TODO Abstract!
-    public function removeRole(Role $role);
+    public function removeRole(Role $role): void;
 
     // TODO Abstract!
-    public function addGroup(Group $group);
+    public function addGroup(Group $group): void;
 
     // TODO Abstract!
-    public function removeGroup(Group $group);
+    public function removeGroup(Group $group): void;
 
 }

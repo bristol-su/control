@@ -12,12 +12,12 @@ class DataRoleTest extends TestCase
     /** @test */
     public function a_data_role_can_be_created(){
         factory(DataRole::class)->create([
-            'position_name' => 'Role1',
+            'role_name' => 'Role1',
             'email' => 'email1@email.com',
         ]);
         
         $this->assertDatabaseHas('control_data_role', [
-            'position_name' => 'Role1',
+            'role_name' => 'Role1',
             'email' => 'email1@email.com',
         ]);
         
@@ -26,13 +26,13 @@ class DataRoleTest extends TestCase
     /** @test */
     public function an_empty_data_role_can_be_created(){
         $dataRole = factory(DataRole::class)->create([
-            'position_name' => null,
+            'role_name' => null,
             'email' => null,
         ]);
 
         $this->assertDatabaseHas('control_data_role', [
             'id' => $dataRole->id,
-            'position_name' => null,
+            'role_name' => null,
             'email' => null,
         ]);
 
@@ -49,13 +49,13 @@ class DataRoleTest extends TestCase
     }
 
     /** @test */
-    public function a_position_name_can_be_retrieved_from_the_model()
+    public function a_role_name_can_be_retrieved_from_the_model()
     {
         $dataRole = factory(DataRole::class)->create([
-            'position_name' => 'Role1'
+            'role_name' => 'Role1'
         ]);
 
-        $this->assertEquals('Role1', $dataRole->positionName());
+        $this->assertEquals('Role1', $dataRole->roleName());
     }
 
     /** @test */
@@ -69,15 +69,15 @@ class DataRoleTest extends TestCase
     }
 
     /** @test */
-    public function a_position_name_can_be_set_on_the_model()
+    public function a_role_name_can_be_set_on_the_model()
     {
         $dataRole = factory(DataRole::class)->create([
-            'position_name' => 'Role1'
+            'role_name' => 'Role1'
         ]);
 
-        $dataRole->setPositionName('Role2');
+        $dataRole->setroleName('Role2');
         
-        $this->assertEquals('Role2', $dataRole->positionName());
+        $this->assertEquals('Role2', $dataRole->roleName());
     }
 
     /** @test */

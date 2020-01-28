@@ -17,6 +17,7 @@ class CreateControlDataGroupTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('email')->nullable();
+            $table->json('additional_attributes')->nullable()->default('[]');
             $table->timestamps();
             $table->softDeletes();
         });

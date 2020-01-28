@@ -4,11 +4,10 @@
 namespace BristolSU\ControlDB\Models\Tags;
 
 
-use BristolSU\ControlDB\Models\User;
 use BristolSU\ControlDB\Scopes\UserTagScope;
+use BristolSU\ControlDB\Traits\Tags\UserTagTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 /**
  * Class UserTag
@@ -17,10 +16,13 @@ use Illuminate\Support\Collection;
 class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
 {
 
-    use SoftDeletes;
+    use SoftDeletes, UserTagTrait;
 
     protected $table = 'control_tags';
-    protected $guarded = [];
+
+    protected $fillable = [
+        'name', 'description', 'reference', 'tag_category_id'
+    ];
 
     protected static function boot()
     {
@@ -77,79 +79,27 @@ class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
         return $this->tag_category_id;
     }
 
-    /**
-     * Full reference of the tag
-     *
-     * This should be the tag category reference and the tag reference, separated with a period.
-     * @return string
-     */
-    public function fullReference(): string
-    {
-        return $this->category()->reference() . '.' . $this->reference;
-    }
-
-    /**
-     * Tag Category
-     *
-     * @return UserTagCategory
-     */
-    public function category(): \BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory
-    {
-        return $this->categoryRelationship;
-    }
-
-    /**
-     * Users who have this tag
-     *
-     * @return Collection
-     */
-    public function users(): Collection
-    {
-        return $this->userRelationship;
-    }
-
-    public function categoryRelationship()
-    {
-        return $this->belongsTo(UserTagCategory::class, 'tag_category_id');
-    }
-
-    public function userRelationship()
-    {
-        return $this->morphedByMany(User::class, 'taggable', 'control_taggables', 'tag_id',
-            'taggable_id');
-    }
-
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
         $this->save();
     }
 
-    public function setDescription(string $description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
         $this->save();
     }
 
-    public function setReference(string $reference)
+    public function setReference(string $reference): void
     {
         $this->reference = $reference;
         $this->save();
     }
 
-    public function setTagCategoryId($categoryId)
+    public function setTagCategoryId($categoryId): void
     {
         $this->category_id = $categoryId;
         $this->save();
-    }
-
-    public function addUser(\BristolSU\ControlDB\Contracts\Models\User $user)
-    {
-        $this->userRelationship()->attach($user->id());
-    }
-
-    public function removeUser(\BristolSU\ControlDB\Contracts\Models\User $user)
-    {
-        $this->userRelationship()->detach($user->id());
     }
 }

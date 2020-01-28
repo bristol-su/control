@@ -5,13 +5,15 @@ namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
 use BristolSU\ControlDB\Contracts\Models\Role;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface RoleTag
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface RoleTag
+interface RoleTag extends Arrayable, Jsonable
 {
 
     /**
@@ -70,15 +72,15 @@ interface RoleTag
      */
     public function roles(): Collection;
 
-    public function setName(string $name);
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    public function setReference(string $reference): void;
 
-    public function setTagCategoryId($categoryId);
+    public function setTagCategoryId($categoryId): void;
 
-    public function addRole(Role $role);
+    public function addRole(Role $role): void;
 
-    public function removeRole(Role $role);
+    public function removeRole(Role $role): void;
 }

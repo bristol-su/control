@@ -2,17 +2,24 @@
 
 namespace BristolSU\ControlDB\Contracts\Models;
 
-interface DataRole
+use BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+
+interface DataRole extends ImplementsAdditionalProperties, Arrayable, Jsonable
 {
 
-    public function setPositionName(?string $positionName): void;
+    public function setRoleName(?string $roleName): void;
 
     public function setEmail(?string $email): void;
 
-    public function positionName(): ?string;
+    public function roleName(): ?string;
 
     public function email(): ?string;
 
-    public function id();
+    public function id(): int;
+
+    public function role(): ?Role;
+
 
 }

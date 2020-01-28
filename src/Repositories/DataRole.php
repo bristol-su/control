@@ -18,10 +18,10 @@ class DataRole implements \BristolSU\ControlDB\Contracts\Repositories\DataRole
         return \BristolSU\ControlDB\Models\DataRole::where($attributes)->firstOrFail();
     }
 
-    public function create(?string $positionName = null, ?string $email = null): \BristolSU\ControlDB\Contracts\Models\DataRole
+    public function create(?string $roleName = null, ?string $email = null): \BristolSU\ControlDB\Contracts\Models\DataRole
     {
         return \BristolSU\ControlDB\Models\DataRole::create([
-            'position_name' => $positionName,
+            'role_name' => $roleName,
             'email' => $email,
         ]);
     }

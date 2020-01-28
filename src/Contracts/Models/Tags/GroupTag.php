@@ -4,14 +4,16 @@
 namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
-use BristolSU\ControlDB\Contracts\Repositories\Group;
+use BristolSU\ControlDB\Contracts\Models\Group;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface GroupTag
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface GroupTag
+interface GroupTag extends Arrayable, Jsonable
 {
 
     /**
@@ -70,15 +72,15 @@ interface GroupTag
      */
     public function groups(): Collection;
 
-    public function setName(string $name);
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    public function setReference(string $reference): void;
 
-    public function setTagCategoryId($categoryId);
+    public function setTagCategoryId($categoryId): void;
 
-    public function addGroup(Group $group);
+    public function addGroup(Group $group): void;
 
-    public function removeGroup(Group $group);
+    public function removeGroup(Group $group): void;
 }

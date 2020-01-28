@@ -2,11 +2,9 @@
 
 namespace BristolSU\ControlDB\Models;
 
-use BristolSU\ControlDB\Models\Tags\GroupTag;
-use BristolSU\ControlDB\Contracts\Models\Group as GroupContract;
+use BristolSU\ControlDB\Traits\GroupTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 /**
  * Class Group
@@ -14,49 +12,24 @@ use Illuminate\Support\Collection;
  */
 class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
 {
-// TODO Set fillable attribute
-    use SoftDeletes;
+    use SoftDeletes, GroupTrait;
 
     protected $table = 'control_groups';
 
-    protected $guarded = [];
+    protected $fillable = ['data_provider_id'];
 
     protected $appends = [
         'data'
     ];
 
-    public function getDataAttribute()
+    public function getDataAttribute(): \BristolSU\ControlDB\Contracts\Models\DataGroup
     {
         return $this->data();
     }
-    
-    public function data(): \BristolSU\ControlDB\Contracts\Models\DataGroup {
-        return app(\BristolSU\ControlDB\Contracts\Repositories\DataGroup::class)->getById($this->dataProviderId());
-    }
 
-    public function dataProviderId()
+    public function dataProviderId(): int
     {
         return $this->data_provider_id;
-    }
-    
-    /**
-     * Get the name of the unique identifier for the user.
-     *
-     * @return string
-     */
-    public function getAuthIdentifierName()
-    {
-        return 'id';
-    }
-
-    /**
-     * Get the unique identifier for the user.
-     *
-     * @return mixed
-     */
-    public function getAuthIdentifier()
-    {
-        return $this->id();
     }
 
     /**
@@ -69,116 +42,9 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
         return $this->id;
     }
 
-    /**
-     * Get the password for the user.
-     *
-     * @return string
-     */
-    public function getAuthPassword()
-    {
-    }
+    
 
-    /**
-     * Get the token value for the "remember me" session.
-     *
-     * @return string
-     */
-    public function getRememberToken()
-    {
-    }
-
-    /**
-     * Set the token value for the "remember me" session.
-     *
-     * @param string $value
-     * @return void
-     */
-    public function setRememberToken($value)
-    {
-    }
-
-    /**
-     * Get the column name for the "remember me" token.
-     *
-     * @return string
-     */
-    public function getRememberTokenName()
-    {
-    }
-
-    /**
-     * Members of the group
-     *
-     * @return Collection
-     */
-    public function members(): Collection
-    {
-        return $this->userRelationship;
-    }
-
-    /**
-     * Roles belonging to the group
-     *
-     * @return Collection
-     */
-    public function roles(): Collection
-    {
-        return $this->roleRelationship;
-    }
-
-    /**
-     * Tags the group is tagged with
-     *
-     * @return Collection
-     */
-    public function tags(): Collection
-    {
-        return $this->tagRelationship;
-    }
-
-    public function userRelationship()
-    {
-        return $this->belongsToMany(User::class, 'control_group_user');
-    }
-
-    public function roleRelationship()
-    {
-        return $this->hasMany(Role::class);
-    }
-
-    public function tagRelationship()
-    {
-        return $this->morphToMany(
-            GroupTag::class,
-            'taggable',
-            'control_taggables',
-            'taggable_id',
-            'tag_id'
-            );
-    }
-
-    public function addTag(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTag $groupTag)
-    {
-        $this->tagRelationship()->attach($groupTag);
-    }
-
-    public function removeTag(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTag $groupTag)
-    {
-        $this->tagRelationship()->detach($groupTag);
-    }
-
-
-    public function addUser(\BristolSU\ControlDB\Contracts\Models\User $user)
-    {
-        $this->userRelationship()->attach($user->id());
-    }
-
-    public function removeUser(\BristolSU\ControlDB\Contracts\Models\User $user)
-    {
-        $this->userRelationship()->detach($user->id());
-    }
-
-    public function setDataProviderId(int $dataProviderId)
+    public function setDataProviderId(int $dataProviderId): void
     {
         $this->data_provider_id = $dataProviderId;
         $this->save();

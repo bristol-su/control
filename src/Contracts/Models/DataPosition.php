@@ -2,7 +2,11 @@
 
 namespace BristolSU\ControlDB\Contracts\Models;
 
-interface DataPosition
+use BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+
+interface DataPosition extends ImplementsAdditionalProperties, Arrayable, Jsonable
 {
 
     public function setName(?string $name): void;
@@ -13,6 +17,8 @@ interface DataPosition
 
     public function description(): ?string;
 
-    public function id();
+    public function id(): int;
+
+    public function position(): ?Position;
 
 }

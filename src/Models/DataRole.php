@@ -4,16 +4,20 @@
 namespace BristolSU\ControlDB\Models;
 
 
+use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
+use BristolSU\ControlDB\Traits\DataRoleTrait;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\DataRole
 {
-
+    use SoftDeletes, HasAdditionalProperties, DataRoleTrait;
+    
     protected $table = 'control_data_role';
 
     protected $fillable = [
-        'position_name', 'email'
+        'role_name', 'email'
     ];
 
     public function setEmail(?string $email): void
@@ -27,19 +31,19 @@ class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
         return $this->email;
     }
 
-    public function id()
+    public function id(): int
     {
         return $this->id;
     }
 
-    public function setPositionName(?string $positionName): void
+    public function setRoleName(?string $roleName): void
     {
-        $this->position_name = $positionName;
+        $this->role_name = $roleName;
         $this->save();
     }
 
-    public function positionName(): ?string
+    public function roleName(): ?string
     {
-        return $this->position_name;
+        return $this->role_name;
     }
 }

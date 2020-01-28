@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class PositionTag
  * @package BristolSU\ControlDB\Repositories
  */
-class PositionTagCategory extends PositionTagCategoryContract
+class PositionTagCategory implements PositionTagCategoryContract
 {
 
 
@@ -46,11 +46,10 @@ class PositionTagCategory extends PositionTagCategoryContract
             'name' => $name,
             'description' => $description,
             'reference' => $reference,
-            'type' => 'position'
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }

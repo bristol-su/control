@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class Role
  * @package BristolSU\ControlDB\Repositories
  */
-class Role extends RoleContract
+class Role implements RoleContract
 {
 
 
@@ -41,8 +41,12 @@ class Role extends RoleContract
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
+    }
+
+    public function getByDataProviderId($dataProviderId): \BristolSU\ControlDB\Contracts\Models\Role {
+        return \BristolSU\ControlDB\Models\Role::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
 }

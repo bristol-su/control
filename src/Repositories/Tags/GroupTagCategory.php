@@ -3,7 +3,6 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagModel;
 use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModel;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory as GroupTagCategoryContract;
 use Illuminate\Support\Collection;
@@ -13,7 +12,7 @@ use Illuminate\Support\Collection;
  * @package BristolSU\ControlDB\Repositories
  */
 
-class GroupTagCategory extends GroupTagCategoryContract
+class GroupTagCategory implements GroupTagCategoryContract
 {
 
     /**
@@ -46,11 +45,10 @@ class GroupTagCategory extends GroupTagCategoryContract
             'name' => $name,
             'description' => $description,
             'reference' => $reference,
-            'type' => 'group'
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }

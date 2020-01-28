@@ -56,10 +56,10 @@ class DataRoleTest extends TestCase
     /** @test */
     public function create_creates_a_new_data_role(){
         $repository = new \BristolSU\ControlDB\Repositories\DataRole();
-        $dataRole = $repository->create('GrpPosition_name', 'email@email.com');
+        $dataRole = $repository->create('GrpRole_name', 'email@email.com');
         
         $this->assertDatabaseHas('control_data_role', [
-            'position_name' => 'GrpPosition_name',
+            'role_name' => 'GrpRole_name',
             'email' => 'email@email.com',
         ]);
     }
@@ -75,11 +75,11 @@ class DataRoleTest extends TestCase
     /** @test */
     public function create_returns_the_created_model(){
         $repository = new \BristolSU\ControlDB\Repositories\DataRole();
-        $dataRole = $repository->create('GrpPosition_name', 'email@email.com');
+        $dataRole = $repository->create('GrpRole_name', 'email@email.com');
         
         $this->assertInstanceOf(DataRole::class, $dataRole);
         
-        $this->assertEquals('GrpPosition_name', $dataRole->positionName());
+        $this->assertEquals('GrpRole_name', $dataRole->roleName());
         $this->assertEquals('email@email.com', $dataRole->email());
     }
     

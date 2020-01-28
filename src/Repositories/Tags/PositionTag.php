@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class PositionTag
  * @package BristolSU\ControlDB\Repositories
  */
-class PositionTag extends PositionTagContract
+class PositionTag implements PositionTagContract
 {
 
     /**
@@ -32,9 +32,12 @@ class PositionTag extends PositionTagContract
         $categoryReference = $fullTagReference[0];
         $tagReference = $fullTagReference[1];
 
-        return PositionTagModel::where('reference', $tagReference)->whereHas('categoryRelationship', function($builder) use ($categoryReference) {
-            $builder->where('reference', $categoryReference);
-        })->firstOrFail();
+        $tagCategory = app(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTagCategory::class)->getByReference($categoryReference);
+
+        return PositionTagModel::where([
+            'reference' => $tagReference,
+            'tag_category_id' => $tagCategory->id()
+        ])->firstOrFail();
     }
 
     /**
@@ -55,7 +58,7 @@ class PositionTag extends PositionTagContract
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }

@@ -5,14 +5,15 @@ namespace BristolSU\ControlDB\Contracts\Models;
 
 
 use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface Role
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface Role extends Authenticatable
+interface Role extends Arrayable, Jsonable
 {
 
     /**
@@ -20,19 +21,18 @@ interface Role extends Authenticatable
      *
      * @return mixed
      */
-    public function positionId();
+    public function positionId(): int;
 
-    // TODO Abstract!
     public function data(): DataRole;
 
-    public function dataProviderId();
+    public function dataProviderId(): int;
     
     /**
      * ID of the group
      *
      * @return mixed
      */
-    public function groupId();
+    public function groupId(): int;
 
     /**
      * Position belonging to the role
@@ -52,7 +52,6 @@ interface Role extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function users(): Collection;
 
     /**
@@ -60,7 +59,6 @@ interface Role extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function tags(): Collection;
 
     /**
@@ -70,22 +68,18 @@ interface Role extends Authenticatable
      */
     public function id(): int;
 
-    public function setGroupId(int $groupId);
+    public function setGroupId(int $groupId): void;
     
-    public function setPositionId(int $positionId);
+    public function setPositionId(int $positionId): void;
 
-    public function setDataProviderId(int $dataProviderId);
+    public function setDataProviderId(int $dataProviderId): void;
 
-    // TODO Abstract!
-    public function addTag(RoleTag $roleTag);
+    public function addTag(RoleTag $roleTag): void;
 
-    // TODO Abstract!
-    public function removeTag(RoleTag $roleTag);
+    public function removeTag(RoleTag $roleTag): void;
 
 
-    // TODO Abstract!
-    public function addUser(User $user);
+    public function addUser(User $user): void;
 
-    // TODO Abstract!
-    public function removeUser(User $user);
+    public function removeUser(User $user): void;
 }

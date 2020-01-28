@@ -5,13 +5,15 @@ namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
 use BristolSU\ControlDB\Contracts\Models\Position;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface PositionTag
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface PositionTag
+interface PositionTag extends Arrayable, Jsonable
 {
 
     /**
@@ -70,15 +72,15 @@ interface PositionTag
      */
     public function positions(): Collection;
 
-    public function setName(string $name);
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    public function setReference(string $reference): void;
 
-    public function setTagCategoryId($categoryId);
+    public function setTagCategoryId($categoryId): void;
 
-    public function addPosition(Position $position);
+    public function addPosition(Position $position): void;
 
-    public function removePosition(Position $position);
+    public function removePosition(Position $position): void;
 }

@@ -15,8 +15,9 @@ class CreateControlDataRoleTable extends Migration
     {
         Schema::create('control_data_role', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('position_name')->nullable();
+            $table->string('role_name')->nullable();
             $table->string('email')->nullable();
+            $table->json('additional_attributes')->nullable()->default('[]');
             $table->timestamps();
             $table->softDeletes();
         });

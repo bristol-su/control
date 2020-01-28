@@ -5,13 +5,15 @@ namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
 use BristolSU\ControlDB\Contracts\Models\User;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface UserTag
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface UserTag
+interface UserTag extends Arrayable, Jsonable
 {
 
     /**
@@ -70,15 +72,15 @@ interface UserTag
      */
     public function users(): Collection;
 
-    public function setName(string $name);
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    public function setReference(string $reference): void;
 
-    public function setTagCategoryId($categoryId);
+    public function setTagCategoryId($categoryId): void;
 
-    public function addUser(User $user);
+    public function addUser(User $user): void;
     
-    public function removeUser(User $user);
+    public function removeUser(User $user): void;
 }

@@ -2,6 +2,8 @@
 
 namespace BristolSU\ControlDB\Scopes;
 
+use BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory as PositionTagCategoryAlias;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTagCategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
@@ -18,8 +20,10 @@ class PositionTagScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereHas('categoryRelationship', function(Builder $builder) {
-            $builder->where('type', 'position');
+        $positionTagCategories = app(PositionTagCategory::class)->all()->map(function(PositionTagCategoryAlias $positionTagCategory) {
+            return $positionTagCategory->id();
         });
+
+        $builder->whereIn('tag_category_id', $positionTagCategories);
     }
 }

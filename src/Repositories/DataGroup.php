@@ -1,8 +1,6 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Repositories;
-
 
 class DataGroup implements \BristolSU\ControlDB\Contracts\Repositories\DataGroup
 {

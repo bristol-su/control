@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Interface PositionTag
  * @package BristolSU\ControlDB\Contracts\Repositories
  */
-abstract class PositionTagCategory
+interface PositionTagCategory
 {
 
     /**
@@ -19,17 +19,7 @@ abstract class PositionTagCategory
      *
      * @return Collection
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get the position tag category of a position tag
-     *
-     * @param PositionTagModel $position
-     * @return PositionTagCategoryModel
-     */
-    public function getThroughTag(PositionTagModel $position): PositionTagCategoryModel {
-        return $position->category();
-    }
+    public function all(): Collection;
 
     /**
      * Get a tag category by the reference
@@ -37,7 +27,7 @@ abstract class PositionTagCategory
      * @param $reference
      * @return mixed
      */
-    abstract public function getByReference(string $reference): PositionTagCategoryModel;
+    public function getByReference(string $reference): PositionTagCategoryModel;
 
     /**
      * Get a position tag category by id
@@ -45,9 +35,9 @@ abstract class PositionTagCategory
      * @param int $id
      * @return PositionTagCategoryModel
      */
-    abstract public function getById(int $id): PositionTagCategoryModel;
+    public function getById(int $id): PositionTagCategoryModel;
 
-    abstract public function delete(int $id);
+    public function delete(int $id): void;
 
-    abstract public function create(string $name, string $description, string $reference): PositionTagCategoryModel;
+    public function create(string $name, string $description, string $reference): PositionTagCategoryModel;
 }

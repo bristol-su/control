@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
  * Interface GroupTag
  * @package BristolSU\ControlDB\Contracts\Repositories
  */
-abstract class GroupTag
+interface GroupTag
 {
 
     /**
@@ -18,17 +18,7 @@ abstract class GroupTag
      *
      * @return Collection
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get all group tags which a group is tagged with
-     *
-     * @param Group $group
-     * @return Collection
-     */
-    public function allThroughGroup(Group $group): Collection {
-        return $group->tags();
-    }
+    public function all(): Collection;
 
     /**
      * Get a tag by the full reference
@@ -38,7 +28,7 @@ abstract class GroupTag
      * @param string $reference
      * @return mixed
      */
-    abstract public function getTagByFullReference(string $reference): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+    public function getTagByFullReference(string $reference): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 
     /**
      * Get a group tag by id
@@ -46,19 +36,9 @@ abstract class GroupTag
      * @param int $id
      * @return \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
      */
-    abstract public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 
-    /**
-     * Get all group tags belonging to a group tag category
-     *
-     * @param  $groupTagCategory
-     * @return Collection
-     */
-    public function allThroughGroupTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory): Collection {
-        return $groupTagCategory->tags();
-    }
+    public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 
-    abstract public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
-
-    abstract public function delete(int $id);
+    public function delete(int $id): void;
 }

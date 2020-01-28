@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Interface UserTag
  * @package BristolSU\ControlDB\Contracts\Repositories
  */
-abstract class UserTag
+interface UserTag
 {
 
     /**
@@ -20,17 +20,7 @@ abstract class UserTag
      *
      * @return Collection
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get all user tags which a user is tagged with
-     *
-     * @param UserContract $user
-     * @return Collection
-     */
-    public function allThroughUser(UserContract $user): Collection {
-        return $user->tags();
-    }
+    public function all(): Collection;
 
     /**
      * Get a tag by the full reference
@@ -38,7 +28,7 @@ abstract class UserTag
      * @param $reference
      * @return mixed
      */
-    abstract public function getTagByFullReference(string $reference): UserTagModel;
+    public function getTagByFullReference(string $reference): UserTagModel;
 
     /**
      * Get a user tag by id
@@ -46,20 +36,10 @@ abstract class UserTag
      * @param int $id
      * @return UserTagModel
      */
-    abstract public function getById(int $id): UserTagModel;
+    public function getById(int $id): UserTagModel;
 
-    /**
-     * Get all user tags belonging to a user tag category
-     *
-     * @param UserTagCategoryContract $userTagCategory
-     * @return Collection
-     */
-    public function allThroughUserTagCategory(UserTagCategoryContract $userTagCategory): Collection {
-        return $userTagCategory->tags();
-    }
-
-    abstract public function create(string $name, string $description, string $reference, $tagCategoryId): UserTagModel;
+    public function create(string $name, string $description, string $reference, $tagCategoryId): UserTagModel;
     
-    abstract public function delete(int $id);
+    public function delete(int $id): void;
     
 }

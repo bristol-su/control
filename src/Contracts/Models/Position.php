@@ -5,19 +5,20 @@ namespace BristolSU\ControlDB\Contracts\Models;
 
 
 use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface Position
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface Position
+interface Position extends Arrayable, Jsonable
 {
 
-    // TODO Abstract!
     public function data(): DataPosition;
 
-    public function dataProviderId();
+    public function dataProviderId(): int;
     
     /**
      * ID of the position
@@ -31,7 +32,6 @@ interface Position
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function roles(): Collection;
 
     /**
@@ -39,16 +39,13 @@ interface Position
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function tags(): Collection;
 
-    public function setDataProviderId(int $dataProviderId);
+    public function setDataProviderId(int $dataProviderId): void;
 
-    // TODO Abstract!
-    public function addTag(PositionTag $roleTag);
+    public function addTag(PositionTag $roleTag): void;
 
-    // TODO Abstract!
-    public function removeTag(PositionTag $roleTag);
+    public function removeTag(PositionTag $roleTag): void;
 
 
 }

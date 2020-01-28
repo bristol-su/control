@@ -4,11 +4,15 @@
 namespace BristolSU\ControlDB\Models;
 
 
+use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
+use BristolSU\ControlDB\Traits\DataPositionTrait;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Models\DataPosition
 {
+    use SoftDeletes, HasAdditionalProperties, DataPositionTrait;
 
     protected $table = 'control_data_position';
     
@@ -38,7 +42,7 @@ class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Model
         return $this->description;
     }
 
-    public function id()
+    public function id(): int
     {
         return $this->id;
     }

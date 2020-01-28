@@ -4,9 +4,12 @@
 namespace BristolSU\ControlDB\Contracts\Models;
 
 
+use BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties;
 use DateTime;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 
-interface DataUser
+interface DataUser extends ImplementsAdditionalProperties, Arrayable, Jsonable
 {
 
     public function setFirstName(?string $firstName): void;
@@ -29,6 +32,8 @@ interface DataUser
 
     public function preferredName(): ?string;
 
-    public function id();
+    public function id(): int;
+
+    public function user(): ?User;
 
 }

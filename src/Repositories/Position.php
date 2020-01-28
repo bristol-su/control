@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class Position
  * @package BristolSU\ControlDB\Repositories
  */
-class Position extends PositionContract
+class Position implements PositionContract
 {
 
 
@@ -31,4 +31,10 @@ class Position extends PositionContract
     {
         return \BristolSU\ControlDB\Models\Position::where('id', $id)->firstOrFail();
     }
+
+    public function getByDataProviderId($dataProviderId): \BristolSU\ControlDB\Contracts\Models\Position {
+        return \BristolSU\ControlDB\Models\Position::where('data_provider_id', $dataProviderId)->firstOrFail();
+    }
+
+
 }

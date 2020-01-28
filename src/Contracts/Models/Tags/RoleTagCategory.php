@@ -2,13 +2,15 @@
 
 namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface RoleTag
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface RoleTagCategory
+interface RoleTagCategory extends Arrayable, Jsonable
 {
 
     /**
@@ -16,7 +18,7 @@ interface RoleTagCategory
      *
      * @return mixed
      */
-    public function id();
+    public function id(): int;
 
     /**
      * Name of the tag category
@@ -46,9 +48,9 @@ interface RoleTagCategory
      */
     public function tags(): Collection;
 
-    public function setName(string $name);
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    public function setReference(string $reference): void;
 }

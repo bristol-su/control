@@ -3,20 +3,20 @@
 namespace BristolSU\ControlDB\Contracts\Models;
 
 use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
-use BristolSU\ControlDB\Contracts\Models\User;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface Group
  * @package BristolSU\ControlDB\Contracts\Models
  */
-interface Group extends Authenticatable
+interface Group extends Arrayable, Jsonable
 {
 
     public function data(): DataGroup;
 
-    public function dataProviderId();
+    public function dataProviderId(): int;
 
     /**
      * ID of the group
@@ -30,7 +30,6 @@ interface Group extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function members(): Collection;
 
     /**
@@ -38,7 +37,6 @@ interface Group extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function roles(): Collection;
 
     /**
@@ -46,21 +44,16 @@ interface Group extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function tags(): Collection;
 
-    // TODO Abstract!
-    public function addTag(GroupTag $groupTag);
+    public function addTag(GroupTag $groupTag): void;
 
-    // TODO Abstract!
-    public function removeTag(GroupTag $groupTag);
+    public function removeTag(GroupTag $groupTag): void;
 
-    // TODO Abstract!
-    public function addUser(User $user);
+    public function addUser(User $user): void;
 
-    // TODO Abstract!
-    public function removeUser(User $user);
+    public function removeUser(User $user): void;
 
-    public function setDataProviderId(int $dataProviderId);
+    public function setDataProviderId(int $dataProviderId): void;
 
 }

@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class RoleTag
  * @package BristolSU\ControlDB\Repositories
  */
-class RoleTag extends RoleTagContract
+class RoleTag implements RoleTagContract
 {
 
     /**
@@ -32,9 +32,12 @@ class RoleTag extends RoleTagContract
         $categoryReference = $fullTagReference[0];
         $tagReference = $fullTagReference[1];
 
-        return RoleTagModel::where('reference', $tagReference)->whereHas('categoryRelationship', function($builder) use ($categoryReference) {
-            $builder->where('reference', $categoryReference);
-        })->firstOrFail();
+        $tagCategory = app(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory::class)->getByReference($categoryReference);
+
+        return RoleTagModel::where([
+            'reference' => $tagReference,
+            'tag_category_id' => $tagCategory->id()
+        ])->firstOrFail();
     }
 
     /**
@@ -55,7 +58,7 @@ class RoleTag extends RoleTagContract
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }

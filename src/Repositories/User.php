@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class User
  * @package BristolSU\ControlDB\Repositories
  */
-class User extends UserContract
+class User implements UserContract
 {
 
 
@@ -47,7 +47,7 @@ class User extends UserContract
         return \BristolSU\ControlDB\Models\User::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }

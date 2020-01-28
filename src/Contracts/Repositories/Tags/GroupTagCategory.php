@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Interface GroupTag
  * @package BristolSU\ControlDB\Contracts\Repositories
  */
-abstract class GroupTagCategory
+interface GroupTagCategory
 {
 
     /**
@@ -19,17 +19,7 @@ abstract class GroupTagCategory
      *
      * @return Collection
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get the group tag category of a group tag
-     *
-     * @param GroupTagModel $group
-     * @return GroupTagCategoryModel
-     */
-    public function getThroughTag(GroupTagModel $group): GroupTagCategoryModel {
-        return $group->category();
-    }
+    public function all(): Collection;
 
     /**
      * Get a tag category by the reference
@@ -37,7 +27,7 @@ abstract class GroupTagCategory
      * @param $reference
      * @return mixed
      */
-    abstract public function getByReference(string $reference): GroupTagCategoryModel;
+    public function getByReference(string $reference): GroupTagCategoryModel;
 
     /**
      * Get a group tag category by id
@@ -45,9 +35,9 @@ abstract class GroupTagCategory
      * @param int $id
      * @return GroupTagCategoryModel
      */
-    abstract public function getById(int $id): GroupTagCategoryModel;
+    public function getById(int $id): GroupTagCategoryModel;
 
-    abstract public function delete(int $id);
+    public function delete(int $id): void;
 
-    abstract public function create(string $name, string $description, string $reference): GroupTagCategoryModel;
+    public function create(string $name, string $description, string $reference): GroupTagCategoryModel;
 }

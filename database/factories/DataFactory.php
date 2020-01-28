@@ -26,7 +26,7 @@ $factory->define(\BristolSU\ControlDB\Models\DataPosition::class, function(\Fake
 
 $factory->define(\BristolSU\ControlDB\Models\DataRole::class, function(\Faker\Generator $faker) {
     return [
-        'position_name' => $faker->jobTitle,
+        'role_name' => $faker->jobTitle,
         'email' => $faker->unique()->email
     ];
 });

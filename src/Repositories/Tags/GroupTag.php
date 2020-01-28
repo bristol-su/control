@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Class GroupTag
  * @package BristolSU\ControlDB\Repositories
  */
-class GroupTag extends GroupTagContract
+class GroupTag implements GroupTagContract
 {
 
     /**
@@ -30,10 +30,12 @@ class GroupTag extends GroupTagContract
         $fullTagReference = explode('.', $reference);
         $categoryReference = $fullTagReference[0];
         $tagReference = $fullTagReference[1];
-        
-        return GroupTagModel::where('reference', $tagReference)->whereHas('categoryRelationship', function($builder) use ($categoryReference) {
-            $builder->where('reference', $categoryReference);
-        })->firstOrFail();
+        $tagCategory = app(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory::class)->getByReference($categoryReference);
+
+        return GroupTagModel::where([
+            'reference' => $tagReference,
+            'tag_category_id' => $tagCategory->id()
+        ])->firstOrFail();
     }
 
     /**
@@ -54,7 +56,7 @@ class GroupTag extends GroupTagContract
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }

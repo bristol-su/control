@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class UserTag
  * @package BristolSU\ControlDB\Repositories
  */
-class UserTagCategory extends UserTagCategoryContract
+class UserTagCategory implements UserTagCategoryContract
 {
 
     /**
@@ -45,11 +45,10 @@ class UserTagCategory extends UserTagCategoryContract
             'name' => $name,
             'description' => $description,
             'reference' => $reference,
-            'type' => 'user'
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }

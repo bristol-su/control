@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Interface Group
  * @package BristolSU\ControlDB\Contracts\Repositories
  */
-abstract class Group
+interface Group
 {
 
     /**
@@ -20,37 +20,19 @@ abstract class Group
      * @param $id
      * @return GroupModel
      */
-    abstract public function getById(int $id): GroupModel;
+    public function getById(int $id): GroupModel;
 
-    /**
-     * Get all groups with a specific tag
-     *
-     * @param GroupTagModel $groupTag
-     * @return Collection
-     */
-    public function getThroughTag(GroupTagModel $groupTag): Collection {
-        return $groupTag->groups();
-    }
+    public function getByDataProviderId($dataProviderId): GroupModel;
 
     /**
      * Get all groups
      *
      * @return Collection
      */
-    abstract public function all(): Collection;
+    public function all(): Collection;
 
-    /**
-     * Get all groups the given user is a member of
-     *
-     * @param $id
-     * @return Collection
-     */
-    public function allThroughUser(UserModel $user): Collection {
-        return $user->groups();
-    }
-
-    abstract public function create(int $dataProviderId): GroupModel;
+    public function create(int $dataProviderId): GroupModel;
     
-    abstract public function delete(int $id);
+    public function delete(int $id): void;
 
 }

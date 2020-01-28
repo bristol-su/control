@@ -1,14 +1,15 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Models;
 
-
-use DateTime;
+use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
+use BristolSU\ControlDB\Traits\DataGroupTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\DataGroup
 {
+    use SoftDeletes, HasAdditionalProperties, DataGroupTrait;
 
     protected $table = 'control_data_group';
     
@@ -38,8 +39,9 @@ class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\D
         return $this->email;
     }
 
-    public function id()
+    public function id(): int
     {
         return $this->id;
     }
+    
 }

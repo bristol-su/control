@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
  * Class UserTag
  * @package BristolSU\ControlDB\Repositories
  */
-class UserTag extends UserTagContract
+class UserTag implements UserTagContract
 {
 
     /**
@@ -31,9 +31,12 @@ class UserTag extends UserTagContract
         $categoryReference = $fullTagReference[0];
         $tagReference = $fullTagReference[1];
 
-        return UserTagModel::where('reference', $tagReference)->whereHas('categoryRelationship', function($builder) use ($categoryReference) {
-            $builder->where('reference', $categoryReference);
-        })->firstOrFail();
+        $tagCategory = app(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class)->getByReference($categoryReference);
+
+        return UserTagModel::where([
+            'reference' => $tagReference,
+            'tag_category_id' => $tagCategory->id()
+        ])->firstOrFail();
     }
 
     /**
@@ -54,7 +57,7 @@ class UserTag extends UserTagContract
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }

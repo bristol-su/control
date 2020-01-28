@@ -2,6 +2,8 @@
 
 namespace BristolSU\ControlDB;
 
+use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertySingletonStore;
+use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertyStore;
 use BristolSU\ControlDB\Commands\SeedDatabase;
 use BristolSU\ControlDB\Contracts\Repositories\DataUser as DataUserRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\DataGroup as DataGroupRepositoryContract;
@@ -149,6 +151,9 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(RoleTagCategoryRepositoryContract::class, RoleTagCategoryRepository::class);
         $this->app->bind(PositionTagRepositoryContract::class, PositionTagRepository::class);
         $this->app->bind(PositionTagCategoryRepositoryContract::class, PositionTagCategoryRepository::class);
+        
+        // Additional Properties
+        $this->app->singleton(AdditionalPropertyStore::class, AdditionalPropertySingletonStore::class);
     }
 
     public function registerCommands()

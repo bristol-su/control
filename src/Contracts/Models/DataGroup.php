@@ -2,7 +2,11 @@
 
 namespace BristolSU\ControlDB\Contracts\Models;
 
-interface DataGroup
+use BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+
+interface DataGroup extends ImplementsAdditionalProperties, Arrayable, Jsonable
 {
 
     public function setName(?string $name): void;
@@ -13,6 +17,8 @@ interface DataGroup
 
     public function email(): ?string;
 
-    public function id();
+    public function id(): int;
+
+    public function group(): ?Group;
 
 }

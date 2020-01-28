@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Class RoleTag
  * @package BristolSU\ControlDB\Repositories
  */
-class RoleTagCategory extends RoleTagCategoryContract
+class RoleTagCategory implements RoleTagCategoryContract
 {
 
     /**
@@ -45,11 +45,10 @@ class RoleTagCategory extends RoleTagCategoryContract
             'name' => $name,
             'description' => $description,
             'reference' => $reference,
-            'type' => 'role'
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }

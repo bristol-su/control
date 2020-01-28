@@ -4,11 +4,15 @@
 namespace BristolSU\ControlDB\Models;
 
 
+use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
+use BristolSU\ControlDB\Traits\DataUserTrait;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\DataUser
 {
+    use SoftDeletes, HasAdditionalProperties, DataUserTrait;
 
     protected $table = 'control_data_user';
     
@@ -20,7 +24,7 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
         'dob' => 'date'
     ];
 
-    public function setDobAttribute(?DateTime $dob)
+    public function setDobAttribute(?DateTime $dob): void
     {
         if($dob !== null) {
             $this->attributes['dob'] = $dob->format('Y-m-d');
@@ -57,32 +61,32 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
         $this->save();
     }
 
-    public function firstName(): string
+    public function firstName(): ?string
     {
         return $this->first_name;
     }
 
-    public function lastName(): string
+    public function lastName(): ?string
     {
         return $this->last_name;
     }
 
-    public function email(): string
+    public function email(): ?string
     {
         return $this->email;
     }
 
-    public function dob(): DateTime
+    public function dob(): ?DateTime
     {
         return $this->dob;
     }
 
-    public function preferredName(): string
+    public function preferredName(): ?string
     {
         return $this->preferred_name;
     }
 
-    public function id()
+    public function id(): int
     {
         return $this->id;
     }

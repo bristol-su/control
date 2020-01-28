@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  * Interface RoleTag
  * @package BristolSU\ControlDB\Contracts\Repositories
  */
-abstract class RoleTag
+interface RoleTag
 {
 
     /**
@@ -20,25 +20,15 @@ abstract class RoleTag
      *
      * @return Collection
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get all role tags which a role is tagged with
-     *
-     * @param RoleContract $role
-     * @return Collection
-     */
-    public function allThroughRole(RoleContract $role): Collection {
-        return $role->tags();
-    }
-
+    public function all(): Collection;
+    
     /**
      * Get a tag by the full reference
      *
      * @param $reference
      * @return mixed
      */
-    abstract public function getTagByFullReference(string $reference): RoleTagModel;
+    public function getTagByFullReference(string $reference): RoleTagModel;
 
     /**
      * Get a role tag by id
@@ -46,19 +36,9 @@ abstract class RoleTag
      * @param int $id
      * @return RoleTagModel
      */
-    abstract public function getById(int $id): RoleTagModel;
+    public function getById(int $id): RoleTagModel;
 
-    /**
-     * Get all role tags belonging to a role tag category
-     *
-     * @param RoleTagCategoryContract $roleTagCategory
-     * @return Collection
-     */
-    public function allThroughRoleTagCategory(RoleTagCategoryContract $roleTagCategory): Collection {
-        return $roleTagCategory->tags();
-    }
+    public function create(string $name, string $description, string $reference, $tagCategoryId): RoleTagModel;
 
-    abstract public function create(string $name, string $description, string $reference, $tagCategoryId): RoleTagModel;
-
-    abstract public function delete(int $id);
+    public function delete(int $id): void;
 }

@@ -3,8 +3,6 @@
 namespace BristolSU\ControlDB\Repositories;
 
 use BristolSU\ControlDB\Contracts\Models\Group as GroupModel;
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
-use BristolSU\ControlDB\Contracts\Models\User;
 use BristolSU\ControlDB\Contracts\Repositories\Group as GroupContract;
 use Illuminate\Support\Collection;
 
@@ -12,7 +10,7 @@ use Illuminate\Support\Collection;
  * Class Group
  * @package BristolSU\ControlDB\Repositories
  */
-class Group extends GroupContract
+class Group implements GroupContract
 {
 
     /**
@@ -38,8 +36,13 @@ class Group extends GroupContract
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         \BristolSU\ControlDB\Models\Group::findOrFail($id)->delete();
     }
+
+    public function getByDataProviderId($dataProviderId): GroupModel {
+        return \BristolSU\ControlDB\Models\Group::where('data_provider_id', $dataProviderId)->firstOrFail();
+    }
+
 }
