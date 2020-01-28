@@ -10,8 +10,7 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface PositionTag
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a Position Tag
  */
 interface PositionTag extends Arrayable, Jsonable
 {
@@ -46,6 +45,7 @@ interface PositionTag extends Arrayable, Jsonable
 
     /**
      * ID of the tag category
+     *
      * @return int
      */
     public function categoryId(): int;
@@ -66,21 +66,51 @@ interface PositionTag extends Arrayable, Jsonable
     public function fullReference(): string;
 
     /**
-     * Positions that have this tag
+     * Positions who have this tag
      *
      * @return Collection
      */
     public function positions(): Collection;
 
+    /**
+     * Set the name of the tag
+     *
+     * @param string $name
+     */
     public function setName(string $name): void;
 
+    /**
+     * Set the description of the tag
+     *
+     * @param string $description
+     */
     public function setDescription(string $description): void;
 
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
     public function setReference(string $reference): void;
 
-    public function setTagCategoryId($categoryId): void;
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
+    public function setTagCategoryId(int $categoryId): void;
 
+    /**
+     * Add a position to the tag
+     *
+     * @param Position $position
+     */
     public function addPosition(Position $position): void;
 
+    /**
+     * Remove a position from the tag
+     *
+     * @param Position $position
+     */
     public function removePosition(Position $position): void;
 }

@@ -2,6 +2,9 @@
 
 namespace BristolSU\ControlDB\AdditionalProperties;
 
+/**
+ * Handles additional properties
+ */
 interface ImplementsAdditionalProperties
 {
 

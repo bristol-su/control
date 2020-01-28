@@ -7,8 +7,7 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface RoleTag
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a role tag category
  */
 interface RoleTagCategory extends Arrayable, Jsonable
 {
@@ -48,9 +47,24 @@ interface RoleTagCategory extends Arrayable, Jsonable
      */
     public function tags(): Collection;
 
+    /**
+     * Set the name of the role tag category
+     *
+     * @param string $name
+     */
     public function setName(string $name): void;
 
+    /**
+     * Set a description for the role tag category
+     *
+     * @param string $description
+     */
     public function setDescription(string $description): void;
 
+    /**
+     * Set a reference for a role tag category
+     *
+     * @param string $reference
+     */
     public function setReference(string $reference): void;
 }

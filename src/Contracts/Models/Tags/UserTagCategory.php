@@ -7,8 +7,7 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface UserTag
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a user tag category
  */
 interface UserTagCategory extends Arrayable, Jsonable
 {
@@ -48,11 +47,24 @@ interface UserTagCategory extends Arrayable, Jsonable
      */
     public function tags(): Collection;
 
+    /**
+     * Set the name of the user tag category
+     *
+     * @param string $name
+     */
     public function setName(string $name): void;
 
+    /**
+     * Set a description for the user tag category
+     *
+     * @param string $description
+     */
     public function setDescription(string $description): void;
 
+    /**
+     * Set a reference for a user tag category
+     *
+     * @param string $reference
+     */
     public function setReference(string $reference): void;
-    
-    
 }

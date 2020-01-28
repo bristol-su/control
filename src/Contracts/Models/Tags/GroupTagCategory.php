@@ -7,8 +7,7 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface GroupTag
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a group tag category
  */
 interface GroupTagCategory extends Arrayable, Jsonable
 {
@@ -48,9 +47,24 @@ interface GroupTagCategory extends Arrayable, Jsonable
      */
     public function tags(): Collection;
 
+    /**
+     * Set the name of the group tag category
+     * 
+     * @param string $name
+     */
     public function setName(string $name): void;
 
+    /**
+     * Set a description for the group tag category
+     * 
+     * @param string $description
+     */
     public function setDescription(string $description): void;
 
+    /**
+     * Set a reference for a group tag category
+     * 
+     * @param string $reference
+     */
     public function setReference(string $reference): void;
 }

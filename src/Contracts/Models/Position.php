@@ -10,22 +10,37 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface Position
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a position
  */
 interface Position extends Arrayable, Jsonable
 {
 
-    public function data(): DataPosition;
-
-    public function dataProviderId(): int;
-    
     /**
      * ID of the position
      *
      * @return int
      */
     public function id(): int;
+
+    /**
+     * The ID of the data provider
+     * @return int
+     */
+    public function dataProviderId(): int;
+
+    /**
+     * Set the data provider ID
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void;
+
+    /**
+     * The data attributes of the position
+     * 
+     * @return DataPosition
+     */
+    public function data(): DataPosition;
 
     /**
      * Roles with this position
@@ -41,10 +56,18 @@ interface Position extends Arrayable, Jsonable
      */
     public function tags(): Collection;
 
-    public function setDataProviderId(int $dataProviderId): void;
-
+    /**
+     * Add a tag to the position
+     * 
+     * @param PositionTag $roleTag
+     */
     public function addTag(PositionTag $roleTag): void;
 
+    /**
+     * Remove a tag from the position
+     * 
+     * @param PositionTag $roleTag
+     */
     public function removeTag(PositionTag $roleTag): void;
 
 

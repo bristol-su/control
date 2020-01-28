@@ -8,15 +8,10 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface Group
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a group
  */
 interface Group extends Arrayable, Jsonable
 {
-
-    public function data(): DataGroup;
-
-    public function dataProviderId(): int;
 
     /**
      * ID of the group
@@ -24,6 +19,27 @@ interface Group extends Arrayable, Jsonable
      * @return int
      */
     public function id(): int;
+
+    /**
+     * Get the ID of the data provider
+     * 
+     * @return int
+     */
+    public function dataProviderId(): int;
+
+    /**
+     * Set the data provider ID
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void;
+
+    /**
+     * Get the DataGroup attached to the group
+     *
+     * @return DataGroup
+     */
+    public function data(): DataGroup;
 
     /**
      * Members of the group
@@ -46,14 +62,34 @@ interface Group extends Arrayable, Jsonable
      */
     public function tags(): Collection;
 
+    /**
+     * Add a group tag to the group
+     * 
+     * @param GroupTag $groupTag
+     */
     public function addTag(GroupTag $groupTag): void;
 
+    /**
+     * Remove a group tag from the group
+     * 
+     * @param GroupTag $groupTag
+     */
     public function removeTag(GroupTag $groupTag): void;
 
+    /**
+     * Add a user to the group
+     * 
+     * @param User $user
+     */
     public function addUser(User $user): void;
 
+    /**
+     * Remove a user from the group
+     * 
+     * @param User $user
+     */
     public function removeUser(User $user): void;
 
-    public function setDataProviderId(int $dataProviderId): void;
+
 
 }

@@ -209,6 +209,12 @@ class HasAdditionalPropertiesTest extends TestCase
         $model->setProperty1Attribute('value1');
         $this->assertEquals('value1', $model->getProperty1Attribute());
     }
+    
+    /** @test */
+    public function the_parent_call_function_is_called_if_the_method_is_not_an_accessor_or_mutator(){
+        $model = new Model();
+        $this->assertEquals('TestHere', $model->someOther);
+    }
 }
 
 class IsNotEloquentModel{
@@ -229,6 +235,11 @@ class HasAppendMethod extends \Illuminate\Database\Eloquent\Model{
 
 class Model extends \Illuminate\Database\Eloquent\Model {
     use HasAdditionalProperties;
+
+    public function getSomeOtherAttribute()
+    {
+        return 'TestHere';
+    }
 }
 
 class ModelWithAppends extends \Illuminate\Database\Eloquent\Model {

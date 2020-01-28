@@ -35,7 +35,7 @@ class UserTagTest extends TestCase
     }
 
     /** @test */
-    public function userss_can_be_added_to_the_tag(){
+    public function users_can_be_added_to_the_tag(){
         $userTag = factory(UserTag::class)->create();
 
         $taggedUsers = factory(User::class, 5)->create();

@@ -12,12 +12,19 @@ use Illuminate\Support\Str;
 trait HasAdditionalProperties
 {
 
+    /**
+     * Holds the additional properties for the model
+     * 
+     * @var array
+     */
     private $additionalProperties;
 
     /**
      * Initialise the trait
      *
      * - Add all additional properties to the appends array
+     * - Add additional_properties column to hidden
+     * - Cast the additional_properties column to an array
      */
     public function initializeHasAdditionalProperties()
     {
@@ -49,8 +56,8 @@ trait HasAdditionalProperties
      */
     public function getAdditionalAttribute(string $key)
     {
-        return (array_key_exists($key, $this->additional_attributes) 
-            ? $this->additional_attributes[$key] : null);
+        return (array_key_exists($key, $this->{$this->getColumnName()}) 
+            ? $this->{$this->getColumnName()}[$key] : null);
     }
 
     /**
@@ -61,7 +68,7 @@ trait HasAdditionalProperties
      */
     public function setAdditionalAttribute(string $key, $value)
     {
-        $this->attributes[$this->getColumnName()] = array_merge($this->additional_attributes, [$key => $value]);
+        $this->attributes[$this->getColumnName()] = array_merge($this->{$this->getColumnName()}, [$key => $value]);
     }
 
     /**
@@ -155,7 +162,8 @@ trait HasAdditionalProperties
                 Str::snake(Str::substr(Str::substr($method, 3), 0, -9)), $args[0]
             );
         } else {
-            return parent::__call($method, $args);
+            return parent::__call($method,
+                $args);
         }
         
         

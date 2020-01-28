@@ -23,17 +23,32 @@ interface User extends Arrayable, Jsonable
      */
     public function id(): int;
 
-    // TODO Abstract!
-    public function data(): DataUser;
-
+    /**
+     * ID of the data provider for the user
+     * 
+     * @return int
+     */
     public function dataProviderId(): int;
+
+    /**
+     * Set data provider of the user
+     * 
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void;
+
+    /**
+     * Get the data attributes for the user
+     * 
+     * @return DataUser
+     */
+    public function data(): DataUser;
 
     /**
      * Tags the user is tagged with
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function tags(): Collection;
 
     /**
@@ -41,7 +56,6 @@ interface User extends Arrayable, Jsonable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function roles(): Collection;
 
     /**
@@ -49,27 +63,48 @@ interface User extends Arrayable, Jsonable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function groups(): Collection;
 
-    public function setDataProviderId(int $dataProviderId): void;
-
-    // TODO Abstract!
+    /**
+     * Add a tag to the user
+     * 
+     * @param UserTag $userTag
+     */
     public function addTag(UserTag $userTag): void;
 
-    // TODO Abstract!
+    /**
+     * Remove a tag from the user
+     * 
+     * @param UserTag $userTag
+     */
     public function removeTag(UserTag $userTag): void;
 
-    // TODO Abstract!
+    /**
+     * Add a role to the user
+     * 
+     * @param Role $role
+     */
     public function addRole(Role $role): void;
 
-    // TODO Abstract!
+    /**
+     * Remove a role from the user
+     * 
+     * @param Role $role
+     */
     public function removeRole(Role $role): void;
 
-    // TODO Abstract!
+    /**
+     * Add a group from the user
+     * 
+     * @param Group $group
+     */
     public function addGroup(Group $group): void;
 
-    // TODO Abstract!
+    /**
+     * Remove a group from the user
+     * 
+     * @param Group $group
+     */
     public function removeGroup(Group $group): void;
 
 }
