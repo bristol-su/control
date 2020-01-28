@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface RoleTag
- * @package BristolSU\ControlDB\Contracts\Repositories
  */
 interface RoleTagCategory
 {

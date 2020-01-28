@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class Group
- * @package BristolSU\ControlDB\Repositories
  */
 class Group implements GroupContract
 {

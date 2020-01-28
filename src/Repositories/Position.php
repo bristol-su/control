@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class Position
- * @package BristolSU\ControlDB\Repositories
  */
 class Position implements PositionContract
 {
@@ -37,4 +36,13 @@ class Position implements PositionContract
     }
 
 
+    public function create(int $dataProviderId): \BristolSU\ControlDB\Contracts\Models\Position
+    {
+        return \BristolSU\ControlDB\Models\Position::create(['data_provider_id' => $dataProviderId]);
+    }
+
+    public function delete(int $id): void
+    {
+        $this->getById($id)->delete();
+    }
 }

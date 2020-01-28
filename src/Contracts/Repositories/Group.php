@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface Group
- * @package BristolSU\ControlDB\Contracts\Repositories
  */
 interface Group
 {

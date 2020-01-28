@@ -8,14 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class PositionTag
- * @package BristolSU\ControlDB\Models
+ * Position Tag Category
  */
 class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory
 {
-
     use SoftDeletes, PositionTagCategoryTrait;
 
+    /**
+     * Boot the model
+     *
+     * - Add a scope to only retrieve position tag categories
+     */
     protected static function boot()
     {
         parent::boot();
@@ -25,8 +28,18 @@ class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contract
         });
     }
 
+    /**
+     * Table to use
+     *
+     * @var string
+     */
     protected $table = 'control_tag_categories';
 
+    /**
+     * Fillable attributes
+     *
+     * @var array
+     */
     protected $fillable = [
         'name', 'description', 'reference'
     ];
@@ -71,18 +84,33 @@ class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contract
         return $this->reference;
     }
 
+    /**
+     * Set the name of the tag category
+     *
+     * @param string $name
+     */
     public function setName(string $name): void
     {
         $this->name = $name;
         $this->save();
     }
 
+    /**
+     * Set the description of the tag category
+     *
+     * @param string $description
+     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
         $this->save();
     }
 
+    /**
+     * Set the reference of the tag category
+     *
+     * @param string $reference
+     */
     public function setReference(string $reference): void
     {
         $this->reference = $reference;

@@ -3,6 +3,7 @@
 namespace BristolSU\Tests\ControlDB\Unit\Models;
 
 
+use BristolSU\ControlDB\Models\DataRole;
 use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\Tests\ControlDB\TestCase;
 use Carbon\Carbon;
@@ -13,7 +14,8 @@ class DataUserTest extends TestCase
     /** @test */
     public function a_data_user_can_be_created(){
         $dob = Carbon::now()->subYears(22);
-        factory(DataUser::class)->create([
+        
+        $dataUser = factory(DataUser::class)->create([
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'email1@email.com',
@@ -25,7 +27,7 @@ class DataUserTest extends TestCase
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'email1@email.com',
-            'dob' => $dob->format('Y-m-d'),
+            'dob' => $dob,
             'preferred_name' => 'TobyT'
         ]);
         
@@ -110,7 +112,7 @@ class DataUserTest extends TestCase
             'dob' => $dob
         ]);
 
-        $this->assertEquals($dob->format('Y-m-d'), $dataUser->dob()->format('Y-m-d'));
+        $this->assertTrue($dob->equalTo($dataUser->dob()));
     }
 
     /** @test */
@@ -175,4 +177,43 @@ class DataUserTest extends TestCase
         $this->assertEquals($dob->format('Y-m-d'), $dataUser->dob()->format('Y-m-d'));
     }
 
+    /** @test */
+    public function additional_properties_can_be_set_and_got(){
+        DataUser::addProperty('student_id');
+        $dataUser = factory(DataUser::class)->create();
+
+        $dataUser->student_id = 'xy12345';
+        $dataUser->save();
+
+        $this->assertEquals('xy12345', $dataUser->student_id);
+    }
+
+    /** @test */
+    public function additional_properties_are_saved_in_the_database(){
+        DataUser::addProperty('student_id');
+        $dataUser = factory(DataUser::class)->create();
+
+        $dataUser->student_id = 'xy12345';
+        $dataUser->save();
+
+        $this->assertDatabaseHas('control_data_user', [
+            'id' => $dataUser->id(),
+            'additional_attributes' => '{"student_id":"xy12345"}'
+        ]);
+    }
+
+    /** @test */
+    public function additional_properties_are_appended_to_an_array(){
+        DataUser::addProperty('student_id');
+        $dataUser = factory(DataUser::class)->create();
+
+        $dataUser->student_id = 'XY12345';
+        $dataUser->save();
+
+        $attributes = $dataUser->toArray();
+        $this->assertArrayHasKey('id', $attributes);
+        $this->assertArrayHasKey('student_id', $attributes);
+        $this->assertEquals($dataUser->id(), $attributes['id']);
+        $this->assertEquals('XY12345', $attributes['student_id']);
+    }
 }

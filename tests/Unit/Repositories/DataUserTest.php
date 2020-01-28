@@ -62,7 +62,7 @@ class DataUserTest extends TestCase
             'first_name' => 'FirstName',
             'last_name' => 'Lastname',
             'email' => 'email@email.com',
-            'dob' => '1990-02-14',
+            'dob' => '1990-02-14 00:00:00',
             'preferred_name' => 'TobyT'
         ]);
     }

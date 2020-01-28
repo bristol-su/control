@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface Position
- * @package BristolSU\ControlDB\Contracts\Repositories
  */
 interface Position
 {
@@ -29,4 +28,9 @@ interface Position
      * @return PositionModel
      */
     public function getById(int $id): PositionModel;
+    
+    public function create(int $dataProviderId): PositionModel;
+
+    public function delete(int $id): void;
+
 }

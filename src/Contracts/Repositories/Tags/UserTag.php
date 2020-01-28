@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface UserTag
- * @package BristolSU\ControlDB\Contracts\Repositories
  */
 interface UserTag
 {

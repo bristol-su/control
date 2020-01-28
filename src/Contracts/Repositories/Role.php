@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface Role
- * @package BristolSU\ControlDB\Contracts\Repositories
  */
 interface Role
 {

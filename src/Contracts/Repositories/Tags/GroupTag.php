@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface GroupTag
- * @package BristolSU\ControlDB\Contracts\Repositories
  */
 interface GroupTag
 {

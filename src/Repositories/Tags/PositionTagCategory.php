@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class PositionTag
- * @package BristolSU\ControlDB\Repositories
  */
 class PositionTagCategory implements PositionTagCategoryContract
 {

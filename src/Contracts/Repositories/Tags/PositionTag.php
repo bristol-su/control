@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface PositionTag
- * @package BristolSU\ControlDB\Contracts\Repositories
  */
 interface PositionTag
 {

@@ -7,30 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Group
- * @package BristolSU\ControlDB\Models
+ * Represents a group
  */
 class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
 {
     use SoftDeletes, GroupTrait;
 
+    /**
+     * Table to use
+     * 
+     * @var string 
+     */
     protected $table = 'control_groups';
 
+    /**
+     * Fillable attributes
+     * 
+     * @var array 
+     */
     protected $fillable = ['data_provider_id'];
 
+    /**
+     * Attributes to append when casting to an array
+     * 
+     * @var array 
+     */
     protected $appends = [
         'data'
     ];
-
-    public function getDataAttribute(): \BristolSU\ControlDB\Contracts\Models\DataGroup
-    {
-        return $this->data();
-    }
-
-    public function dataProviderId(): int
-    {
-        return $this->data_provider_id;
-    }
 
     /**
      * ID of the group
@@ -42,11 +46,34 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
         return $this->id;
     }
 
-    
+    /**
+     * ID of the data provider for the group
+     * 
+     * @return int
+     */
+    public function dataProviderId(): int
+    {
+        return $this->data_provider_id;
+    }
 
+    /**
+     * Set the ID of the data provider
+     * 
+     * @param int $dataProviderId
+     */
     public function setDataProviderId(int $dataProviderId): void
     {
         $this->data_provider_id = $dataProviderId;
         $this->save();
+    }
+    
+    /**
+     * Laravel integration for a data property
+     *
+     * @return \BristolSU\ControlDB\Contracts\Models\DataGroup
+     */
+    public function getDataAttribute(): \BristolSU\ControlDB\Contracts\Models\DataGroup
+    {
+        return $this->data();
     }
 }

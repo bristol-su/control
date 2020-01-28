@@ -10,7 +10,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class RoleTag
- * @package BristolSU\ControlDB\Repositories
  */
 class RoleTagCategory implements RoleTagCategoryContract
 {

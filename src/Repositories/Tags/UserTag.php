@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class UserTag
- * @package BristolSU\ControlDB\Repositories
  */
 class UserTag implements UserTagContract
 {

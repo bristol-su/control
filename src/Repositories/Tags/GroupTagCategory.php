@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Class GroupTag
- * @package BristolSU\ControlDB\Repositories
  */
 
 class GroupTagCategory implements GroupTagCategoryContract

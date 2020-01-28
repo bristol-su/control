@@ -3,6 +3,7 @@
 namespace BristolSU\Tests\ControlDB\Unit\Models;
 
 
+use BristolSU\ControlDB\Models\DataGroup;
 use BristolSU\ControlDB\Models\DataPosition;
 use BristolSU\Tests\ControlDB\TestCase;
 
@@ -90,6 +91,58 @@ class DataPositionTest extends TestCase
         $dataPosition->setDescription('newdescription');
 
         $this->assertEquals('newdescription', $dataPosition->description());
+    }
+
+    /** @test */
+    public function additional_properties_can_be_set_and_got(){
+        DataPosition::addProperty('alias');
+        $dataPosition = factory(DataPosition::class)->create([
+            'name' => 'Secretary',
+            'description' => 'someDescription'
+        ]);
+
+        $dataPosition->alias = 'Sec';
+        $dataPosition->save();
+
+        $this->assertEquals('Sec', $dataPosition->alias);
+    }
+
+    /** @test */
+    public function additional_properties_are_saved_in_the_database(){
+        DataPosition::addProperty('alias');
+        $dataPosition = factory(DataPosition::class)->create([
+            'name' => 'Secretary',
+            'description' => 'someDescription'
+        ]);
+
+        $dataPosition->alias = 'Sec';
+        $dataPosition->save();
+
+        $this->assertDatabaseHas('control_data_position', [
+            'name' => 'Secretary',
+            'description' => 'someDescription',
+            'additional_attributes' => '{"alias":"Sec"}'
+        ]);
+    }
+
+    /** @test */
+    public function additional_properties_are_appended_to_an_array(){
+        DataPosition::addProperty('alias');
+        $dataPosition = factory(DataPosition::class)->create([
+            'name' => 'Secretary',
+            'description' => 'someDescription'
+        ]);
+
+        $dataPosition->alias = 'Sec';
+        $dataPosition->save();
+
+        $attributes = $dataPosition->toArray();
+        $this->assertArrayHasKey('name', $attributes);
+        $this->assertArrayHasKey('description', $attributes);
+        $this->assertArrayHasKey('alias', $attributes);
+        $this->assertEquals('Secretary', $attributes['name']);
+        $this->assertEquals('someDescription', $attributes['description']);
+        $this->assertEquals('Sec', $attributes['alias']);
     }
 
 }
