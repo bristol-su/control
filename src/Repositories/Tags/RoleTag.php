@@ -62,4 +62,10 @@ class RoleTag implements RoleTagContract
     {
         $this->getById($id)->delete();
     }
+
+    public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory $roleTagCategory): Collection
+    {
+        return \BristolSU\ControlDB\Models\Tags\RoleTag::where('tag_category_id', $roleTagCategory->id())->get();
+    }
+    
 }

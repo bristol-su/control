@@ -15,7 +15,7 @@ trait PositionTagCategoryTrait
      */
     public function tags(): Collection
     {
-        return app(PositionTag::class)->allThroughPositionTagCategory($this);
+        return app(PositionTag::class)->allThroughTagCategory($this);
     }
     
 }

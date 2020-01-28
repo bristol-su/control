@@ -41,4 +41,6 @@ interface GroupTag
     public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 
     public function delete(int $id): void;
+
+    public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory): Collection;
 }

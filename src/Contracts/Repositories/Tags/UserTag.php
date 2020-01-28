@@ -41,5 +41,8 @@ interface UserTag
     public function create(string $name, string $description, string $reference, $tagCategoryId): UserTagModel;
     
     public function delete(int $id): void;
-    
+
+    public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory $userTagCategory): Collection;
+
+
 }

@@ -13,6 +13,12 @@ use BristolSU\ControlDB\Contracts\Models\DataUser as DataUserContract;
 use BristolSU\ControlDB\Contracts\Models\DataGroup as DataGroupContract;
 use BristolSU\ControlDB\Contracts\Models\DataRole as DataRoleContract;
 use BristolSU\ControlDB\Contracts\Models\DataPosition as DataPositionContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\GroupGroupTag as GroupGroupTagContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\UserUserTag as UserUserTagContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\RoleRoleTag as RoleRoleTagContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\PositionPositionTag as PositionPositionTagContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup as UserGroupContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole as UserRoleContract;
 use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\ControlDB\Models\DataGroup;
 use BristolSU\ControlDB\Models\DataRole;
@@ -34,6 +40,12 @@ use BristolSU\ControlDB\Repositories\DataGroup as DataGroupRepository;
 use BristolSU\ControlDB\Repositories\DataRole as DataRoleRepository;
 use BristolSU\ControlDB\Repositories\DataPosition as DataPositionRepository;
 use BristolSU\ControlDB\Repositories\Group as GroupRepository;
+use BristolSU\ControlDB\Repositories\Pivots\Tags\GroupGroupTag;
+use BristolSU\ControlDB\Repositories\Pivots\Tags\PositionPositionTag;
+use BristolSU\ControlDB\Repositories\Pivots\Tags\RoleRoleTag;
+use BristolSU\ControlDB\Repositories\Pivots\Tags\UserUserTag;
+use BristolSU\ControlDB\Repositories\Pivots\UserGroup;
+use BristolSU\ControlDB\Repositories\Pivots\UserRole;
 use BristolSU\ControlDB\Repositories\Position as PositionRepository;
 use BristolSU\ControlDB\Repositories\Role as RoleRepository;
 use BristolSU\ControlDB\Repositories\Tags\GroupTag as GroupTagRepository;
@@ -154,6 +166,14 @@ class ControlDBServiceProvider extends ServiceProvider
         
         // Additional Properties
         $this->app->singleton(AdditionalPropertyStore::class, AdditionalPropertySingletonStore::class);
+        
+        // Pivot Repositories
+        $this->app->bind(UserGroupContract::class, UserGroup::class);
+        $this->app->bind(UserRoleContract::class, UserRole::class);
+        $this->app->bind(GroupGroupTagContract::class, GroupGroupTag::class);
+        $this->app->bind(UserUserTagContract::class, UserUserTag::class);
+        $this->app->bind(RoleRoleTagContract::class, RoleRoleTag::class);
+        $this->app->bind(PositionPositionTagContract::class, PositionPositionTag::class);
     }
 
     public function registerCommands()

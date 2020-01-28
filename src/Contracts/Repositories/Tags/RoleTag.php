@@ -41,4 +41,8 @@ interface RoleTag
     public function create(string $name, string $description, string $reference, $tagCategoryId): RoleTagModel;
 
     public function delete(int $id): void;
+
+    public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory $roleTagCategory): Collection;
+
+
 }

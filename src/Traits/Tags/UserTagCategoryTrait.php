@@ -15,7 +15,7 @@ trait UserTagCategoryTrait
      */
     public function tags(): Collection
     {
-        return app(UserTag::class)->allThroughUserTagCategory($this);
+        return app(UserTag::class)->allThroughTagCategory($this);
     }
     
 }

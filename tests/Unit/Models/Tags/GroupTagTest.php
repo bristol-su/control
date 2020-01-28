@@ -28,15 +28,6 @@ class GroupTagTest extends TestCase
     }
 
     /** @test */
-    public function category_relationship_returns_the_owning_category(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
-        $groupTag = factory(GroupTag::class)->create(['tag_category_id' => $groupTagCategory->id]);
-
-        $this->assertInstanceOf(GroupTagCategory::class, $groupTag->categoryRelationship);
-        $this->assertTrue($groupTagCategory->is($groupTag->categoryRelationship));
-    }
-
-    /** @test */
     public function category_returns_the_owning_category(){
         $groupTagCategory = factory(GroupTagCategory::class)->create();
         $groupTag = factory(GroupTag::class)->create(['tag_category_id' => $groupTagCategory->id]);
@@ -44,29 +35,7 @@ class GroupTagTest extends TestCase
         $this->assertInstanceOf(GroupTagCategory::class, $groupTag->category());
         $this->assertTrue($groupTagCategory->is($groupTag->category()));
     }
-
-
-    /** @test */
-    public function group_relationship_returns_groups_with_the_tag(){
-        $groupTag = factory(GroupTag::class)->create();
-        // Models which could be linked to a tag. Users, roles and positions should never be returned
-        $taggedGroups = factory(Group::class, 5)->create();
-        $untaggedGroups = factory(Group::class, 5)->create();
-        $users = factory(User::class, 5)->create();
-        $roles = factory(Role::class, 5)->create();
-        $positions = factory(Position::class, 5)->create();
-
-        DB::table('control_taggables')->insert($taggedGroups->map(function($group) use ($groupTag) {
-            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => 'group'];
-        })->toArray());
-
-        $groupGroupRelationship = $groupTag->groupRelationship;
-        $this->assertEquals(5, $groupGroupRelationship->count());
-        foreach($taggedGroups as $group) {
-            $this->assertTrue($group->is($groupGroupRelationship->shift()));
-        }
-    }
-
+    
     /** @test */
     public function group_relationship_can_be_used_to_tag_a_group(){
         $groupTag = factory(GroupTag::class)->create();

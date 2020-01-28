@@ -15,7 +15,7 @@ trait GroupTagCategoryTrait
      */
     public function tags(): Collection
     {
-        return app(GroupTag::class)->allThroughGroupTagCategory($this);
+        return app(GroupTag::class)->allThroughTagCategory($this);
     }
     
 }

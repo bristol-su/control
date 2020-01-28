@@ -24,16 +24,7 @@ class RoleTagTest extends TestCase
         $roleTag = factory(RoleTag::class)->create(['id' => 1]);
         $this->assertEquals(1, $roleTag->id());
     }
-
-    /** @test */
-    public function category_relationship_returns_the_owning_category(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
-        $roleTag = factory(RoleTag::class)->create(['tag_category_id' => $roleTagCategory->id]);
-
-        $this->assertInstanceOf(RoleTagCategory::class, $roleTag->categoryRelationship);
-        $this->assertTrue($roleTagCategory->is($roleTag->categoryRelationship));
-    }
-
+    
     /** @test */
     public function category_returns_the_owning_category(){
         $roleTagCategory = factory(RoleTagCategory::class)->create();
@@ -41,28 +32,6 @@ class RoleTagTest extends TestCase
 
         $this->assertInstanceOf(RoleTagCategory::class, $roleTag->category());
         $this->assertTrue($roleTagCategory->is($roleTag->category()));
-    }
-
-
-    /** @test */
-    public function role_relationship_returns_roles_with_the_tag(){
-        $roleTag = factory(RoleTag::class)->create();
-        // Models which could be linked to a tag. Roles, roles and roles should never be returned
-        $taggedRoles = factory(Role::class, 5)->create();
-        $untaggedRoles = factory(Role::class, 5)->create();
-        $groups = factory(Group::class, 5)->create();
-        $positions = factory(Position::class, 5)->create();
-        $users = factory(User::class, 5)->create();
-
-        DB::table('control_taggables')->insert($taggedRoles->map(function($role) use ($roleTag) {
-            return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => 'role'];
-        })->toArray());
-
-        $roleRoleRelationship = $roleTag->roleRelationship;
-        $this->assertEquals(5, $roleRoleRelationship->count());
-        foreach($taggedRoles as $role) {
-            $this->assertTrue($role->is($roleRoleRelationship->shift()));
-        }
     }
 
     /** @test */

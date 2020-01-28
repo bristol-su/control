@@ -60,4 +60,9 @@ class GroupTag implements GroupTagContract
     {
         $this->getById($id)->delete();
     }
+
+    public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory): Collection
+    {
+        return \BristolSU\ControlDB\Models\Tags\GroupTag::where('tag_category_id', $groupTagCategory->id())->get();
+    }
 }

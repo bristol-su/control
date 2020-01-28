@@ -49,4 +49,14 @@ class Role implements RoleContract
     public function getByDataProviderId($dataProviderId): \BristolSU\ControlDB\Contracts\Models\Role {
         return \BristolSU\ControlDB\Models\Role::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
+
+    public function allThroughGroup(\BristolSU\ControlDB\Contracts\Models\Group $group): Collection
+    {
+        return \BristolSU\ControlDB\Models\Role::where('group_id', $group->id())->get();
+    }
+
+    public function allThroughPosition(\BristolSU\ControlDB\Contracts\Models\Position $position): Collection
+    {
+        return \BristolSU\ControlDB\Models\Role::where('position_id', $position->id())->get();
+    }
 }

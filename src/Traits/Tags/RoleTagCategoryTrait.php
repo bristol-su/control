@@ -15,7 +15,7 @@ trait RoleTagCategoryTrait
      */
     public function tags(): Collection
     {
-        return app(RoleTag::class)->allThroughRoleTagCategory($this);
+        return app(RoleTag::class)->allThroughTagCategory($this);
     }
     
 }

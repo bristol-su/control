@@ -62,4 +62,9 @@ class PositionTag implements PositionTagContract
     {
         $this->getById($id)->delete();
     }
+
+    public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory $positionTagCategory): Collection
+    {
+        return \BristolSU\ControlDB\Models\Tags\PositionTag::where('tag_category_id', $positionTagCategory->id())->get();
+    }
 }

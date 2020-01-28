@@ -24,16 +24,7 @@ class PositionTagTest extends TestCase
         $positionTag = factory(PositionTag::class)->create(['id' => 1]);
         $this->assertEquals(1, $positionTag->id());
     }
-
-    /** @test */
-    public function category_relationship_returns_the_owning_category(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create();
-        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => $positionTagCategory->id]);
-
-        $this->assertInstanceOf(PositionTagCategory::class, $positionTag->categoryRelationship);
-        $this->assertTrue($positionTagCategory->is($positionTag->categoryRelationship));
-    }
-
+    
     /** @test */
     public function category_returns_the_owning_category(){
         $positionTagCategory = factory(PositionTagCategory::class)->create();
@@ -41,28 +32,6 @@ class PositionTagTest extends TestCase
 
         $this->assertInstanceOf(PositionTagCategory::class, $positionTag->category());
         $this->assertTrue($positionTagCategory->is($positionTag->category()));
-    }
-
-
-    /** @test */
-    public function position_relationship_returns_positions_with_the_tag(){
-        $positionTag = factory(PositionTag::class)->create();
-        // Models which could be linked to a tag. Positions, roles and positions should never be returned
-        $taggedPositions = factory(Position::class, 5)->create();
-        $untaggedPositions = factory(Position::class, 5)->create();
-        $groups = factory(Group::class, 5)->create();
-        $roles = factory(Role::class, 5)->create();
-        $users = factory(User::class, 5)->create();
-
-        DB::table('control_taggables')->insert($taggedPositions->map(function($position) use ($positionTag) {
-            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => 'position'];
-        })->toArray());
-
-        $positionPositionRelationship = $positionTag->positionRelationship;
-        $this->assertEquals(5, $positionPositionRelationship->count());
-        foreach($taggedPositions as $position) {
-            $this->assertTrue($position->is($positionPositionRelationship->shift()));
-        }
     }
 
     /** @test */

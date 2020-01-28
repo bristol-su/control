@@ -61,4 +61,9 @@ class UserTag implements UserTagContract
     {
         $this->getById($id)->delete();
     }
+
+    public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory $userTagCategory): Collection
+    {
+        return \BristolSU\ControlDB\Models\Tags\UserTag::where('tag_category_id', $userTagCategory->id())->get();
+    }
 }

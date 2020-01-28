@@ -36,4 +36,8 @@ interface Role
     
     public function delete(int $id): void;
 
+    public function allThroughGroup(\BristolSU\ControlDB\Contracts\Models\Group $group): Collection;
+
+    public function allThroughPosition(\BristolSU\ControlDB\Contracts\Models\Position $position): Collection;
+    
 }
