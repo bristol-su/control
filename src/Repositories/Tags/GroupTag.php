@@ -46,7 +46,7 @@ class GroupTag implements GroupTagContract
         return GroupTagModel::where('id', $id)->firstOrFail();
     }
 
-    public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
+    public function create(string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
     {
         return \BristolSU\ControlDB\Models\Tags\GroupTag::create([
             'name' => $name,

@@ -3,13 +3,11 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagModel;
 use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModel;
 use Illuminate\Support\Collection;
 
 /**
- * Interface GroupTag
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Manages group tag categories
  */
 interface GroupTagCategory
 {
@@ -17,15 +15,15 @@ interface GroupTagCategory
     /**
      * Get all group tag categories
      *
-     * @return Collection
+     * @return Collection|GroupTagCategoryModel[]
      */
     public function all(): Collection;
 
     /**
      * Get a tag category by the reference
      *
-     * @param $reference
-     * @return mixed
+     * @param string $reference Reference of the tag
+     * @return GroupTagCategoryModel
      */
     public function getByReference(string $reference): GroupTagCategoryModel;
 
@@ -37,7 +35,20 @@ interface GroupTagCategory
      */
     public function getById(int $id): GroupTagCategoryModel;
 
+    /**
+     * Delete a group tag category
+     * 
+     * @param int $id ID of the group tag category to delete
+     */
     public function delete(int $id): void;
 
+    /**
+     * Create a group tag category
+     * 
+     * @param string $name Name of the group tag category
+     * @param string $description Description of the group tag category
+     * @param string $reference Reference of the group tag category
+     * @return GroupTagCategoryModel New group tag category
+     */
     public function create(string $name, string $description, string $reference): GroupTagCategoryModel;
 }

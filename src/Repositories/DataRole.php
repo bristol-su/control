@@ -7,7 +7,7 @@ namespace BristolSU\ControlDB\Repositories;
 class DataRole implements \BristolSU\ControlDB\Contracts\Repositories\DataRole
 {
 
-    public function getById($id): \BristolSU\ControlDB\Contracts\Models\DataRole
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\DataRole
     {
         return \BristolSU\ControlDB\Models\DataRole::findOrFail($id);
     }

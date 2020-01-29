@@ -48,7 +48,7 @@ class RoleTag implements RoleTagContract
         return RoleTagModel::where('id', $id)->firstOrFail();
     }
 
-    public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\RoleTag
+    public function create(string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\RoleTag
     {
         return \BristolSU\ControlDB\Models\Tags\RoleTag::create([
             'name' => $name,

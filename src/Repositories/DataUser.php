@@ -7,7 +7,7 @@ namespace BristolSU\ControlDB\Repositories;
 class DataUser implements \BristolSU\ControlDB\Contracts\Repositories\DataUser
 {
 
-    public function getById($id): \BristolSU\ControlDB\Contracts\Models\DataUser
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\DataUser
     {
         return \BristolSU\ControlDB\Models\DataUser::findOrFail($id);
     }

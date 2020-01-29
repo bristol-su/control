@@ -2,14 +2,11 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories;
 
-use BristolSU\ControlDB\Contracts\Models\User as UserModel;
 use BristolSU\ControlDB\Contracts\Models\Group as GroupModel;
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagModel;
 use Illuminate\Support\Collection;
 
 /**
- * Interface Group
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Handles groups
  */
 interface Group
 {
@@ -17,22 +14,39 @@ interface Group
     /**
      * Get a group by ID
      *
-     * @param $id
+     * @param int $id ID of the group
      * @return GroupModel
      */
     public function getById(int $id): GroupModel;
 
-    public function getByDataProviderId($dataProviderId): GroupModel;
+    /**
+     * Get a group by its data provider ID
+     * 
+     * @param int $dataProviderId
+     * @return GroupModel
+     */
+    public function getByDataProviderId(int $dataProviderId): GroupModel;
 
     /**
      * Get all groups
      *
-     * @return Collection
+     * @return Collection|GroupModel[]
      */
     public function all(): Collection;
 
+    /**
+     * Create a new group
+     * 
+     * @param int $dataProviderId
+     * @return GroupModel
+     */
     public function create(int $dataProviderId): GroupModel;
-    
+
+    /**
+     * Delete a group by ID
+     * 
+     * @param int $id
+     */
     public function delete(int $id): void;
 
 }

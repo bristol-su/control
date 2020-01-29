@@ -19,7 +19,7 @@ class Role implements RoleContract
     /**
      * @inheritDoc
      */
-    public function getById($id): \BristolSU\ControlDB\Contracts\Models\Role
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Role
     {
         return \BristolSU\ControlDB\Models\Role::where('id', $id)->firstOrFail();
     }
@@ -32,7 +32,7 @@ class Role implements RoleContract
         return \BristolSU\ControlDB\Models\Role::all();
     }
 
-    public function create($positionId, $groupId, $dataProviderId): \BristolSU\ControlDB\Contracts\Models\Role
+    public function create(int $positionId, int $groupId, int $dataProviderId): \BristolSU\ControlDB\Contracts\Models\Role
     {
         return \BristolSU\ControlDB\Models\Role::create([
             'position_id' => $positionId,
@@ -46,7 +46,7 @@ class Role implements RoleContract
         $this->getById($id)->delete();
     }
 
-    public function getByDataProviderId($dataProviderId): \BristolSU\ControlDB\Contracts\Models\Role {
+    public function getByDataProviderId(int $dataProviderId): \BristolSU\ControlDB\Contracts\Models\Role {
         return \BristolSU\ControlDB\Models\Role::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
 

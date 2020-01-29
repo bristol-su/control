@@ -41,7 +41,7 @@ class Group implements GroupContract
         \BristolSU\ControlDB\Models\Group::findOrFail($id)->delete();
     }
 
-    public function getByDataProviderId($dataProviderId): GroupModel {
+    public function getByDataProviderId(int $dataProviderId): GroupModel {
         return \BristolSU\ControlDB\Models\Group::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
 

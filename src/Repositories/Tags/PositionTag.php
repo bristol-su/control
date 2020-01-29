@@ -48,7 +48,7 @@ class PositionTag implements PositionTagContract
         return PositionTagModel::where('id', $id)->firstOrFail();
     }
 
-    public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
+    public function create(string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
     {
         return \BristolSU\ControlDB\Models\Tags\PositionTag::create([
             'name' => $name,

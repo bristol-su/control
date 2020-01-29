@@ -3,13 +3,11 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag as RoleTagModel;
 use BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
 use Illuminate\Support\Collection;
 
 /**
- * Interface RoleTag
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Manages role tag categories
  */
 interface RoleTagCategory
 {
@@ -17,15 +15,15 @@ interface RoleTagCategory
     /**
      * Get all role tag categories
      *
-     * @return Collection
+     * @return Collection|RoleTagCategoryModel[]
      */
     public function all(): Collection;
 
     /**
      * Get a tag category by the reference
      *
-     * @param $reference
-     * @return mixed
+     * @param string $reference Reference of the tag
+     * @return RoleTagCategoryModel
      */
     public function getByReference(string $reference): RoleTagCategoryModel;
 
@@ -37,7 +35,20 @@ interface RoleTagCategory
      */
     public function getById(int $id): RoleTagCategoryModel;
 
+    /**
+     * Delete a role tag category
+     *
+     * @param int $id ID of the role tag category to delete
+     */
     public function delete(int $id): void;
 
+    /**
+     * Create a role tag category
+     *
+     * @param string $name Name of the role tag category
+     * @param string $description Description of the role tag category
+     * @param string $reference Reference of the role tag category
+     * @return RoleTagCategoryModel New role tag category
+     */
     public function create(string $name, string $description, string $reference): RoleTagCategoryModel;
 }

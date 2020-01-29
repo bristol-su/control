@@ -35,14 +35,14 @@ class User implements UserContract
     /**
      * @inheritDoc
      */
-    public function create($dataProviderId): UserModelContract
+    public function create(int $dataProviderId): UserModelContract
     {
         return \BristolSU\ControlDB\Models\User::create([
             'data_provider_id' => $dataProviderId
         ]);
     }
 
-    public function getByDataProviderId($dataProviderId): UserModelContract
+    public function getByDataProviderId(int $dataProviderId): UserModelContract
     {
         return \BristolSU\ControlDB\Models\User::where('data_provider_id', $dataProviderId)->firstOrFail();
     }

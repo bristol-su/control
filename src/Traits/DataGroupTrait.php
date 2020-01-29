@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 trait DataGroupTrait
 {
 
+    /**
+     * Get the group using the data group
+     *
+     * @return Group|null
+     */
     public function group(): ?Group
     {
         try {

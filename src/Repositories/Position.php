@@ -15,7 +15,6 @@ use Illuminate\Support\Collection;
 class Position implements PositionContract
 {
 
-
     /**
      * @inheritDoc
      */
@@ -32,9 +31,24 @@ class Position implements PositionContract
         return \BristolSU\ControlDB\Models\Position::where('id', $id)->firstOrFail();
     }
 
-    public function getByDataProviderId($dataProviderId): \BristolSU\ControlDB\Contracts\Models\Position {
+    public function getByDataProviderId(int $dataProviderId): \BristolSU\ControlDB\Contracts\Models\Position {
         return \BristolSU\ControlDB\Models\Position::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
 
 
+    /**
+     * @inheritDoc
+     */
+    public function create(int $dataProviderId): \BristolSU\ControlDB\Contracts\Models\Position
+    {
+        return \BristolSU\ControlDB\Models\Position::create(['data_provider_id' => $dataProviderId]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id): void
+    {
+        $this->getById($id)->delete();
+    }
 }

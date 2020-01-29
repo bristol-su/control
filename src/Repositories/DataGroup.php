@@ -5,7 +5,7 @@ namespace BristolSU\ControlDB\Repositories;
 class DataGroup implements \BristolSU\ControlDB\Contracts\Repositories\DataGroup
 {
 
-    public function getById($id): \BristolSU\ControlDB\Contracts\Models\DataGroup
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\DataGroup
     {
         return \BristolSU\ControlDB\Models\DataGroup::findOrFail($id);
     }

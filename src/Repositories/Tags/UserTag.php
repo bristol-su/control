@@ -47,7 +47,7 @@ class UserTag implements UserTagContract
         return UserTagModel::where('id', $id)->firstOrFail();
     }
 
-    public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
+    public function create(string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
     {
         return \BristolSU\ControlDB\Models\Tags\UserTag::create([
             'name' => $name,

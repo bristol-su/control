@@ -7,7 +7,7 @@ namespace BristolSU\ControlDB\Repositories;
 class DataPosition implements \BristolSU\ControlDB\Contracts\Repositories\DataPosition
 {
 
-    public function getById($id): \BristolSU\ControlDB\Contracts\Models\DataPosition
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\DataPosition
     {
         return \BristolSU\ControlDB\Models\DataPosition::findOrFail($id);
     }
