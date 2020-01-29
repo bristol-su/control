@@ -9,23 +9,38 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class PositionTag
- * @package BristolSU\ControlDB\Models
  */
 class PositionTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
 {
     use SoftDeletes, PositionTagTrait;
 
-    protected $table = 'control_tags';
-
-    protected $fillable = [
-        'name', 'description', 'reference', 'tag_category_id'
-    ];
-
+    /**
+     * Boot the model
+     *
+     * - Add a global scope to only return position tags
+     */
     protected static function boot()
     {
         parent::boot();
         static::addGlobalScope(new PositionTagScope());
     }
+
+    /**
+     * Table to use
+     *
+     * @var string
+     */
+    protected $table = 'control_tags';
+
+    /**
+     * Fillable properties
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'description', 'reference', 'tag_category_id'
+    ];
+
 
     /**
      * ID of the position tag
@@ -69,6 +84,7 @@ class PositionTag extends Model implements \BristolSU\ControlDB\Contracts\Models
 
     /**
      * ID of the tag category
+     *
      * @return int
      */
     public function categoryId(): int
@@ -76,28 +92,48 @@ class PositionTag extends Model implements \BristolSU\ControlDB\Contracts\Models
         return $this->tag_category_id;
     }
 
+    /**
+     * Set the name of the tag
+     *
+     * @param string $name
+     */
     public function setName(string $name): void
     {
         $this->name = $name;
         $this->save();
     }
 
+    /**
+     * Set the description of the tagTag Reference
+     *
+     * @param string $description
+     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
         $this->save();
     }
 
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
     public function setReference(string $reference): void
     {
         $this->reference = $reference;
         $this->save();
     }
 
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
     public function setTagCategoryId($categoryId): void
     {
-        $this->category_id = $categoryId;
+        $this->tag_category_id = $categoryId;
         $this->save();
     }
-    
+
 }

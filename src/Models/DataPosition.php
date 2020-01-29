@@ -6,10 +6,12 @@ namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
 use BristolSU\ControlDB\Traits\DataPositionTrait;
-use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Handles attributes belonging to a position
+ */
 class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Models\DataPosition
 {
     use SoftDeletes, HasAdditionalProperties, DataPositionTrait;
@@ -41,28 +43,6 @@ class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Model
     }
 
     /**
-     * Set the position name
-     * 
-     * @param string|null $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-        $this->save();
-    }
-
-    /**
-     * Set the description
-     * 
-     * @param string|null $description
-     */
-    public function setDescription(?string $description): void
-    {
-        $this->description = $description;
-        $this->save();
-    }
-
-    /**
      * Name of the position
      * 
      * @return string|null
@@ -80,5 +60,27 @@ class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Model
     public function description(): ?string
     {
         return $this->description;
+    }
+
+    /**
+     * Set the position name
+     *
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+        $this->save();
+    }
+
+    /**
+     * Set the description
+     *
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+        $this->save();
     }
 }

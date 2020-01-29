@@ -8,23 +8,26 @@ use BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory as GroupTag
 use Illuminate\Support\Collection;
 
 /**
- * Class GroupTag
- * @package BristolSU\ControlDB\Repositories
+ * Manages group tag categories
  */
-
 class GroupTagCategory implements GroupTagCategoryContract
 {
 
     /**
-     * @inheritDoc
+     * Get all group tag categories
+     *
+     * @return Collection|GroupTagCategoryModel[]
      */
     public function all(): Collection
     {
         return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::all();
     }
-
+    
     /**
-     * @inheritDoc
+     * Get a tag category by the reference
+     *
+     * @param string $reference Reference of the tag
+     * @return GroupTagCategoryModel
      */
     public function getByReference(string $reference): GroupTagCategoryModel
     {
@@ -32,13 +35,24 @@ class GroupTagCategory implements GroupTagCategoryContract
     }
 
     /**
-     * @inheritDoc
+     * Get a group tag category by id
+     *
+     * @param int $id
+     * @return GroupTagCategoryModel
      */
     public function getById(int $id): GroupTagCategoryModel
     {
         return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('id', $id)->firstOrFail();
     }
 
+    /**
+     * Create a group tag category
+     *
+     * @param string $name Name of the group tag category
+     * @param string $description Description of the group tag category
+     * @param string $reference Reference of the group tag category
+     * @return GroupTagCategoryModel New group tag category
+     */
     public function create(string $name, string $description, string $reference): GroupTagCategoryModel
     {
         return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::create([
@@ -48,6 +62,11 @@ class GroupTagCategory implements GroupTagCategoryContract
         ]);
     }
 
+    /**
+     * Delete a group tag category
+     *
+     * @param int $id ID of the group tag category to delete
+     */
     public function delete(int $id): void
     {
         $this->getById($id)->delete();

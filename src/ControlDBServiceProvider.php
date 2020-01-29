@@ -81,8 +81,9 @@ use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory as RoleTagCa
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag as UserTagRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\User as UserRepositoryContract;
+
 use Illuminate\Database\Eloquent\Factory;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class ControlDBServiceProvider extends ServiceProvider
@@ -97,14 +98,9 @@ class ControlDBServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        Relation::morphMap([
-            'user' => UserModel::class,
-            'group' => GroupModel::class,
-            'role' => RoleModel::class,
-            'position' => PositionModel::class
-        ]);
-
         $this->app->make(Factory::class)->load(__DIR__ . '/../database/factories');
+        $this->setupRouteModelBinding();
+        $this->setupRoutes();
     }
 
     public function registerMigrations()
@@ -171,6 +167,70 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->commands([
             SeedDatabase::class
         ]);
+    }
+
+    public function setupRouteModelBinding()
+    {
+        Route::model('control_group', GroupModel::class);
+        Route::model('control_role', RoleModel::class);
+        Route::model('control_user', UserModel::class);
+        Route::model('control_position', PositionModel::class);
+        Route::model('control_group_tag', GroupTagModel::class);
+        Route::model('control_role_tag', RoleTagModel::class);
+        Route::model('control_user_tag', UserTagModel::class);
+        Route::model('control_position_tag', PositionTagModel::class);
+        Route::model('control_group_tag_category', GroupTagCategoryModel::class);
+        Route::model('control_role_tag_category', RoleTagCategoryModel::class);
+        Route::model('control_user_tag_category', UserTagCategoryModel::class);
+        Route::model('control_position_tag_category', PositionTagCategoryModel::class);
+
+        Route::bind('control_group', function($id) {
+            return app(GroupRepository::class)->getById($id);
+        });
+        Route::bind('control_role', function($id) {
+            return app(RoleRepository::class)->getById($id);
+        });
+        Route::bind('control_user', function($id) {
+            return app(UserRepository::class)->getById($id);
+        });
+        Route::bind('control_position', function($id) {
+            return app(PositionRepository::class)->getById($id);
+        });
+
+        Route::bind('control_group_tag', function($id) {
+            return app(GroupTagRepository::class)->getById($id);
+        });
+        Route::bind('control_role_tag', function($id) {
+            return app(RoleTagRepository::class)->getById($id);
+        });
+        Route::bind('control_user_tag', function($id) {
+            return app(UserTagRepository::class)->getById($id);
+        });
+        Route::bind('control_position_tag', function($id) {
+            return app(PositionTagRepository::class)->getById($id);
+        });
+
+        Route::bind('control_group_tag_category', function($id) {
+            return app(GroupTagCategoryRepository::class)->getById($id);
+        });
+        Route::bind('control_role_tag_category', function($id) {
+            return app(RoleTagCategoryRepository::class)->getById($id);
+        });
+        Route::bind('control_user_tag_category', function($id) {
+            return app(UserTagCategoryRepository::class)->getById($id);
+        });
+        Route::bind('control_position_tag_category', function($id) {
+            return app(PositionTagCategoryRepository::class)->getById($id);
+        });
+    }
+
+    public function setupRoutes()
+    {
+        Route::prefix('api')
+            ->middleware('control-api')
+            ->middleware('api')
+            ->namespace('BristolSU\ControlDB\Http\Controllers\Api')
+            ->group(__DIR__ . '/../routes/api.php');
     }
 
 

@@ -1,0 +1,10 @@
+<map id="BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties" name="BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties">
+<area shape="rect" id="node2" href="$interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1DataGroup.html" title="BristolSU\\ControlDB\l\\Contracts\\Models\\DataGroup" alt="" coords="270,5,466,47"/>
+<area shape="rect" id="node4" href="$interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1DataPosition.html" title="BristolSU\\ControlDB\l\\Contracts\\Models\\DataPosition" alt="" coords="264,71,472,112"/>
+<area shape="rect" id="node6" href="$interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1DataRole.html" title="BristolSU\\ControlDB\l\\Contracts\\Models\\DataRole" alt="" coords="274,136,462,177"/>
+<area shape="rect" id="node8" href="$interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1DataUser.html" title="BristolSU\\ControlDB\l\\Contracts\\Models\\DataUser" alt="" coords="273,201,463,243"/>
+<area shape="rect" id="node3" href="$classBristolSU_1_1ControlDB_1_1Models_1_1DataGroup.html" title="BristolSU\\ControlDB\l\\Models\\DataGroup" alt="" coords="522,5,665,47"/>
+<area shape="rect" id="node5" href="$classBristolSU_1_1ControlDB_1_1Models_1_1DataPosition.html" title="BristolSU\\ControlDB\l\\Models\\DataPosition" alt="" coords="520,71,667,112"/>
+<area shape="rect" id="node7" href="$classBristolSU_1_1ControlDB_1_1Models_1_1DataRole.html" title="BristolSU\\ControlDB\l\\Models\\DataRole" alt="" coords="522,136,665,177"/>
+<area shape="rect" id="node9" href="$classBristolSU_1_1ControlDB_1_1Models_1_1DataUser.html" title="BristolSU\\ControlDB\l\\Models\\DataUser" alt="" coords="522,201,665,243"/>
+</map>

@@ -3,20 +3,20 @@
 
 namespace BristolSU\ControlDB\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag as PositionTagModelContract;
-use BristolSU\ControlDB\Models\Tags\PositionTag as PositionTagModel;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag as PositionTagContract;
+use BristolSU\ControlDB\Models\Tags\PositionTag as PositionTagModel;
 use Illuminate\Support\Collection;
 
 /**
- * Class PositionTag
- * @package BristolSU\ControlDB\Repositories
+ * Handles position tags
  */
 class PositionTag implements PositionTagContract
 {
 
     /**
-     * @inheritDoc
+     * Get all position tags
+     *
+     * @return Collection|\BristolSU\ControlDB\Contracts\Models\Tags\PositionTag[]
      */
     public function all(): Collection
     {
@@ -24,14 +24,18 @@ class PositionTag implements PositionTagContract
     }
 
     /**
-     * @inheritDoc
+     * Get a tag by the full reference
+     *
+     * The full reference looks like 'tag_category_ref.tag_ref'
+     *
+     * @param string $reference
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
      */
-    public function getTagByFullReference(string $reference): PositionTagModelContract
+    public function getTagByFullReference(string $reference): \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
     {
         $fullTagReference = explode('.', $reference);
         $categoryReference = $fullTagReference[0];
         $tagReference = $fullTagReference[1];
-
         $tagCategory = app(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTagCategory::class)->getByReference($categoryReference);
 
         return PositionTagModel::where([
@@ -41,13 +45,25 @@ class PositionTag implements PositionTagContract
     }
 
     /**
-     * @inheritDoc
+     * Get a position tag by id
+     *
+     * @param int $id
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
      */
-    public function getById(int $id): PositionTagModelContract
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
     {
         return PositionTagModel::where('id', $id)->firstOrFail();
     }
 
+    /**
+     * Create a position tag
+     *
+     * @param string $name Name of the tag
+     * @param string $description Description of the tag
+     * @param string $reference Reference for the tag
+     * @param int $tagCategoryId Category ID of the tag
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
+     */
     public function create(string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
     {
         return \BristolSU\ControlDB\Models\Tags\PositionTag::create([
@@ -58,11 +74,22 @@ class PositionTag implements PositionTagContract
         ]);
     }
 
+    /**
+     * Delete a position tag
+     *
+     * @param int $id ID of the tag to delete
+     */
     public function delete(int $id): void
     {
         $this->getById($id)->delete();
     }
 
+    /**
+     * Get all tags through a tag category
+     *
+     * @param \BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory $positionTagCategory
+     * @return Collection|\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag[] Tags with the given position tag category
+     */
     public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory $positionTagCategory): Collection
     {
         return \BristolSU\ControlDB\Models\Tags\PositionTag::where('tag_category_id', $positionTagCategory->id())->get();

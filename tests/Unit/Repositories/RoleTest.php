@@ -2,6 +2,10 @@
 
 namespace BristolSU\Tests\ControlDB\Unit\Repositories;
 
+use BristolSU\ControlDB\Models\DataPosition;
+use BristolSU\ControlDB\Models\DataRole;
+use BristolSU\ControlDB\Models\Group;
+use BristolSU\ControlDB\Models\Position;
 use BristolSU\ControlDB\Models\Role;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use BristolSU\Tests\ControlDB\TestCase;
@@ -69,6 +73,63 @@ class RoleTest extends TestCase
         $role->refresh();
         $this->assertTrue($role->trashed());
     }
+    
+   
+    /** @test */
+    public function getByDataProviderId_returns_a_role_model_with_a_given_data_provider_id()
+    {
+        $dataRole = factory(DataRole::class)->create();
+        $role = factory(Role::class)->create(['data_provider_id' => $dataRole->id]);
 
+        $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
+        $dbRole = $roleRepo->getByDataProviderId($dataRole->id);
+
+        $this->assertInstanceOf(Role::class, $dbRole);
+        $this->assertEquals($dataRole->id, $dbRole->dataProviderId());
+        $this->assertEquals($role->id, $dbRole->dataProviderId());
+    }
+
+    /** @test */
+    public function getByDataProviderId_throws_an_exception_if_no_model_found()
+    {
+        $this->expectException(ModelNotFoundException::class);
+        factory(Role::class)->create(['data_provider_id' => 10]);
+
+        $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
+        $roleRepo->getByDataProviderId(11);
+
+    }
+    
+    /** @test */
+    public function allThroughGroup_returns_all_roles_with_the_given_group(){
+        $group = factory(Group::class)->create();
+        $roles = factory(Role::class, 15)->create(['group_id' => $group->id()]);
+        factory(Role::class, 15)->create();
+        
+        $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
+        $repoRoles = $roleRepo->allThroughGroup($group);
+        $this->assertContainsOnlyInstancesOf(Role::class, $repoRoles);
+        foreach($roles as $role) {
+            $this->assertTrue($role->is(
+                $repoRoles->shift()
+            ));
+        }
+    }
+
+    /** @test */
+    public function allThroughPosition_returns_all_roles_with_the_given_position(){
+        $position = factory(Position::class)->create();
+        $roles = factory(Role::class, 15)->create(['position_id' => $position->id()]);
+        factory(Role::class, 15)->create();
+
+        $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
+        $repoRoles = $roleRepo->allThroughPosition($position);
+        $this->assertContainsOnlyInstancesOf(Role::class, $repoRoles);
+        foreach($roles as $role) {
+            $this->assertTrue($role->is(
+                $repoRoles->shift()
+            ));
+        }
+    }
 
 }

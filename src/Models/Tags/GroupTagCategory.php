@@ -6,16 +6,19 @@ use BristolSU\ControlDB\Scopes\GroupTagCategoryScope;
 use BristolSU\ControlDB\Traits\Tags\GroupTagCategoryTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 /**
- * Class GroupTag
- * @package BristolSU\ControlDB\Models
+ * Group Tag Category
  */
 class GroupTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory
 {
     use SoftDeletes, GroupTagCategoryTrait;
 
+    /**
+     * Boot the model
+     * 
+     * - Add a scope to only retrieve group tag categories
+     */
     protected static function boot()
     {
         parent::boot();
@@ -25,8 +28,18 @@ class GroupTagCategory extends Model implements \BristolSU\ControlDB\Contracts\M
         });
     }
 
+    /**
+     * Table to use
+     * 
+     * @var string 
+     */
     protected $table = 'control_tag_categories';
-    
+
+    /**
+     * Fillable attributes
+     * 
+     * @var array 
+     */
     protected $fillable = [
         'name', 'description', 'reference'
     ];
@@ -71,18 +84,33 @@ class GroupTagCategory extends Model implements \BristolSU\ControlDB\Contracts\M
         return $this->reference;
     }
 
+    /**
+     * Set the name of the tag category
+     * 
+     * @param string $name
+     */
     public function setName(string $name): void
     {
         $this->name = $name;
         $this->save();
     }
 
+    /**
+     * Set the description of the tag category
+     * 
+     * @param string $description
+     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
         $this->save();
     }
 
+    /**
+     * Set the reference of the tag category
+     * 
+     * @param string $reference
+     */
     public function setReference(string $reference): void
     {
         $this->reference = $reference;

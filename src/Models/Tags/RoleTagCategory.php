@@ -6,16 +6,19 @@ use BristolSU\ControlDB\Scopes\RoleTagCategoryScope;
 use BristolSU\ControlDB\Traits\Tags\RoleTagCategoryTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 /**
- * Class RoleTag
- * @package BristolSU\ControlDB\Models
+ * Role Tag Category
  */
 class RoleTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory
 {
     use SoftDeletes, RoleTagCategoryTrait;
 
+    /**
+     * Boot the model
+     *
+     * - Add a scope to only retrieve role tag categories
+     */
     protected static function boot()
     {
         parent::boot();
@@ -25,8 +28,18 @@ class RoleTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
         });
     }
 
+    /**
+     * Table to use
+     *
+     * @var string
+     */
     protected $table = 'control_tag_categories';
 
+    /**
+     * Fillable attributes
+     *
+     * @var array
+     */
     protected $fillable = [
         'name', 'description', 'reference'
     ];
@@ -71,18 +84,33 @@ class RoleTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
         return $this->reference;
     }
 
+    /**
+     * Set the name of the tag category
+     *
+     * @param string $name
+     */
     public function setName(string $name): void
     {
         $this->name = $name;
         $this->save();
     }
 
+    /**
+     * Set the description of the tag category
+     *
+     * @param string $description
+     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
         $this->save();
     }
 
+    /**
+     * Set the reference of the tag category
+     *
+     * @param string $reference
+     */
     public function setReference(string $reference): void
     {
         $this->reference = $reference;

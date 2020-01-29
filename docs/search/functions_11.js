@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['user',['user',['../interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1DataUser.html#a1aaca5ded609a9b440256aac7d7d2df6',1,'BristolSU\ControlDB\Contracts\Models\DataUser\user()'],['../classBristolSU_1_1ControlDB_1_1Traits_1_1DataUserTrait.html#ae6e4b1f47b84d5dcdb35b7d4d8a1a1b3',1,'BristolSU\ControlDB\Traits\DataUserTrait\user()']]],
+  ['users',['users',['../interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Role.html#aa2e3a69d28fa0090ec9af7c2976b7e97',1,'BristolSU\ControlDB\Contracts\Models\Role\users()'],['../interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Tags_1_1UserTag.html#a0a2f2c8b96decf502e0e31cca959d1cb',1,'BristolSU\ControlDB\Contracts\Models\Tags\UserTag\users()'],['../classBristolSU_1_1ControlDB_1_1Traits_1_1RoleTrait.html#a8288148c03b43ffb0a09c88d86053d4c',1,'BristolSU\ControlDB\Traits\RoleTrait\users()'],['../classBristolSU_1_1ControlDB_1_1Traits_1_1Tags_1_1UserTagTrait.html#a773d15823d66efab2a1ea6d112facbbd',1,'BristolSU\ControlDB\Traits\Tags\UserTagTrait\users()']]]
+];

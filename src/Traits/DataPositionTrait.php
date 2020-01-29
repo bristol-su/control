@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 trait DataPositionTrait
 {
 
+    /**
+     * Get the position with these attributes
+     * 
+     * @return Position|null
+     */
     public function position(): ?Position
     {
         try {

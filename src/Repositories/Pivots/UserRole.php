@@ -12,9 +12,12 @@ use Illuminate\Support\Collection;
  */
 class UserRole implements \BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole
 {
-    
+
     /**
-     * @inheritDoc
+     * Get all users who have a role
+     *
+     * @param Role $role
+     * @return User[]|Collection Users who have the role
      */
     public function getUsersThroughRole(Role $role): Collection
     {
@@ -28,7 +31,10 @@ class UserRole implements \BristolSU\ControlDB\Contracts\Repositories\Pivots\Use
     }
 
     /**
-     * @inheritDoc
+     * Get all roles a user has
+     *
+     * @param User $user
+     * @return Role[]|Collection Roles the given user is in
      */
     public function getRolesThroughUser(User $user): Collection
     {
@@ -42,7 +48,11 @@ class UserRole implements \BristolSU\ControlDB\Contracts\Repositories\Pivots\Use
     }
 
     /**
-     * @inheritDoc
+     * Assign a user to a role
+     *
+     * @param User $user User to assign to the role
+     * @param Role $role Role to assign the user to
+     * @return void
      */
     public function addUserToRole(User $user, Role $role): void
     {
@@ -52,7 +62,10 @@ class UserRole implements \BristolSU\ControlDB\Contracts\Repositories\Pivots\Use
     }
 
     /**
-     * @inheritDoc
+     * Remove a user from a role
+     * @param User $user User to remove from the role
+     * @param Role $role Role to remove the user from
+     * @return void
      */
     public function removeUserFromRole(User $user, Role $role): void
     {

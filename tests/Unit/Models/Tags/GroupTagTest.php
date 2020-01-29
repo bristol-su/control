@@ -4,22 +4,12 @@
 namespace BristolSU\Tests\ControlDB\Unit\Models\Tags;
 
 
-use BristolSU\ControlDB\Models\Group;
-use BristolSU\ControlDB\Models\Position;
-use BristolSU\ControlDB\Models\Role;
 use BristolSU\ControlDB\Models\Tags\GroupTag;
-use BristolSU\ControlDB\Models\Tags\GroupTagCategory;
-use BristolSU\ControlDB\Models\User;
-use Illuminate\Support\Facades\DB;
+use BristolSU\ControlDB\Models\Tags\RoleTag;
 use BristolSU\Tests\ControlDB\TestCase;
 
 class GroupTagTest extends TestCase
 {
-
-    // TODO Test name method
-    // TODO Test description method
-    // TODO Test reference method
-    // TODO Test categoryId method
 
     /** @test */
     public function it_has_an_id_attribute(){
@@ -28,57 +18,66 @@ class GroupTagTest extends TestCase
     }
 
     /** @test */
-    public function category_returns_the_owning_category(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
-        $groupTag = factory(GroupTag::class)->create(['tag_category_id' => $groupTagCategory->id]);
-
-        $this->assertInstanceOf(GroupTagCategory::class, $groupTag->category());
-        $this->assertTrue($groupTagCategory->is($groupTag->category()));
-    }
-    
-    /** @test */
-    public function groups_can_be_added_to_the_tag(){
-        $groupTag = factory(GroupTag::class)->create();
-        $taggedGroups = factory(Group::class, 5)->create();
-        
-        foreach($taggedGroups as $group) {
-            $groupTag->addGroup($group);
-        }
-
-        $groupGroupRelationship = $groupTag->groups();
-        $this->assertEquals(5, $groupGroupRelationship->count());
-        foreach($taggedGroups as $group) {
-            $this->assertTrue($group->is($groupGroupRelationship->shift()));
-        }
+    public function it_has_a_name_attribute(){
+        $groupTag = factory(GroupTag::class)->create(['name' => 'Tag Name']);
+        $this->assertEquals('Tag Name', $groupTag->name());
     }
 
     /** @test */
-    public function group_returns_all_groups_tagged(){
-        $groupTag = factory(GroupTag::class)->create();
-        // Models which could be linked to a tag. Users, roles and positions should never be returned
-        $taggedGroups = factory(Group::class, 5)->create();
-        $untaggedGroups = factory(Group::class, 5)->create();
-        $users = factory(User::class, 5)->create();
-        $roles = factory(Role::class, 5)->create();
-        $positions = factory(Position::class, 5)->create();
-
-        DB::table('control_taggables')->insert($taggedGroups->map(function($group) use ($groupTag) {
-            return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => 'group'];
-        })->toArray());
-
-        $groupGroupRelationship = $groupTag->groups();
-        $this->assertEquals(5, $groupGroupRelationship->count());
-        foreach($taggedGroups as $group) {
-            $this->assertTrue($group->is($groupGroupRelationship->shift()));
-        }
+    public function it_has_a_description_attribute(){
+        $groupTag = factory(GroupTag::class)->create(['description' => 'Tag Description']);
+        $this->assertEquals('Tag Description', $groupTag->description());
     }
 
     /** @test */
-    public function fullReference_returns_the_category_reference_and_the_tag_reference(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create(['reference' => 'categoryreference1']);
-        $groupTag = factory(GroupTag::class)->create(['reference' => 'tagreference1', 'tag_category_id' => $groupTagCategory->id]);
-
-        $this->assertEquals('categoryreference1.tagreference1', $groupTag->fullReference());
+    public function it_has_a_reference_attribute(){
+        $groupTag = factory(GroupTag::class)->create(['reference' => 'tag_reference']);
+        $this->assertEquals('tag_reference', $groupTag->reference());
     }
 
+    /** @test */
+    public function it_has_a_category_id_attribute(){
+        $groupTag = factory(GroupTag::class)->create(['tag_category_id' => 1]);
+        $this->assertEquals(1, $groupTag->categoryId());$tags = factory(GroupTag::class)->create();
+    }
+
+    /** @test */
+    public function it_sets_a_name_attribute(){
+        $groupTag = factory(GroupTag::class)->create(['name' => 'Tag Name']);
+        $groupTag->setName('Tag Name2');
+        $this->assertEquals('Tag Name2', $groupTag->name());
+    }
+
+    /** @test */
+    public function it_sets_a_description_attribute(){
+        $groupTag = factory(GroupTag::class)->create(['description' => 'Tag Description']);
+        $groupTag->setDescription('Tag Description2');
+        $this->assertEquals('Tag Description2', $groupTag->description());
+    }
+
+    /** @test */
+    public function it_sets_a_reference_attribute(){
+        $groupTag = factory(GroupTag::class)->create(['reference' => 'tag_reference']);
+        $groupTag->setReference('tag_reference2');
+        $this->assertEquals('tag_reference2', $groupTag->reference());
+    }
+
+    /** @test */
+    public function it_sets_a_category_id_attribute(){
+        $groupTag = factory(GroupTag::class)->create(['tag_category_id' => 1]);
+        $groupTag->setTagCategoryId(2);
+        $this->assertEquals(2, $groupTag->categoryId());
+    }
+
+    /** @test */
+    public function it_applies_the_scope(){
+        $tags = factory(GroupTag::class, 5)->create();
+        factory(RoleTag::class)->create();
+
+        $resolvedTags = GroupTag::all();
+        $this->assertEquals(5, $resolvedTags->count());
+        foreach($tags as $tag) {
+            $this->assertTrue($tag->is($resolvedTags->shift()));
+        }
+    }
 }

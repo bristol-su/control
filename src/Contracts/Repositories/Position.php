@@ -47,4 +47,5 @@ interface Position
      * @param int $id
      */
     public function delete(int $id): void;
+
 }

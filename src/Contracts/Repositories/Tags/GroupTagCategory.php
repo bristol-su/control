@@ -1,6 +1,5 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
 use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModel;

@@ -27,6 +27,29 @@ class GroupTest extends TestCase
     }
 
     /** @test */
+    public function create_creates_a_new_group_model(){
+        $dataGroup = factory(DataGroup::class)->create();
+
+        $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
+        $group = $groupRepo->create($dataGroup->id);
+
+        $this->assertDatabaseHas('control_groups', [
+            'data_provider_id' => $dataGroup->id
+        ]);
+    }
+
+    /** @test */
+    public function create_returns_the_new_group_model(){
+        $dataGroup = factory(DataGroup::class)->create();
+
+        $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
+        $group = $groupRepo->create($dataGroup->id);
+
+        $this->assertInstanceOf(Group::class, $group);
+        $this->assertEquals($dataGroup->id, $group->dataProviderId());
+    }
+
+    /** @test */
     public function all_returns_all_groups(){
         $groups = factory(Group::class, 15)->create();
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
@@ -37,35 +60,40 @@ class GroupTest extends TestCase
             ));
         }
     }
-    
+
     /** @test */
-    public function create_creates_a_group_model(){
+    public function getByDataProviderId_returns_a_group_model_with_a_given_data_provider_id()
+    {
+        $dataGroup = factory(DataGroup::class)->create();
+        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup->id]);
+
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
-        $groupRepo->create(1);
-        
-        $this->assertDatabaseHas('control_groups', [
-            'data_provider_id' => 1
-        ]);
+        $dbGroup = $groupRepo->getByDataProviderId($dataGroup->id);
+
+        $this->assertInstanceOf(Group::class, $dbGroup);
+        $this->assertEquals($dataGroup->id, $dbGroup->dataProviderId());
+        $this->assertEquals($group->id, $dbGroup->dataProviderId());
     }
 
     /** @test */
-    public function create_returns_a_group_model(){
-        $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
-        $group = $groupRepo->create(1);
+    public function getByDataProviderId_throws_an_exception_if_no_model_found()
+    {
+        $this->expectException(ModelNotFoundException::class);
+        factory(Group::class)->create(['data_provider_id' => 10]);
 
-        $this->assertInstanceOf(Group::class, $group);
-        $this->assertEquals(1, $group->dataProviderId());
+        $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
+        $groupRepo->getByDataProviderId(11);
+
     }
-    
+
     /** @test */
     public function delete_deletes_a_group_model(){
         $group = factory(Group::class)->create();
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
         $groupRepo->delete($group->id());
-        
+
         $group->refresh();
         $this->assertTrue($group->trashed());
     }
-
 
 }

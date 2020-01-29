@@ -5,6 +5,8 @@ namespace BristolSU\Tests\ControlDB\Unit\Repositories\Tags;
 use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Tags\GroupTag;
 use BristolSU\ControlDB\Models\Tags\GroupTagCategory;
+use BristolSU\ControlDB\Models\Tags\UserTag;
+use BristolSU\ControlDB\Models\Tags\UserTagCategory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use BristolSU\Tests\ControlDB\TestCase;
@@ -96,6 +98,20 @@ class GroupTagTest extends TestCase
         $this->assertTrue($groupTag->trashed());
     }
 
+    /** @test */
+    public function allThroughTagCategory_returns_all_tags_through_a_tag_category(){
+        $category = factory(GroupTagCategory::class)->create();
+        $tags = factory(GroupTag::class, 10)->create(['tag_category_id' => $category->id()]);
+        factory(GroupTag::class, 10)->create();
 
+        $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
+        $tagsFromRepo = $groupTagRepo->allThroughTagCategory($category);
+        $this->assertContainsOnlyInstancesOf(GroupTag::class, $tagsFromRepo);
+        foreach($tags as $tag) {
+            $this->assertTrue($tag->is(
+                $tagsFromRepo->shift()
+            ));
+        }
+    }
 
 }

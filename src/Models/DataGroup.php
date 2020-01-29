@@ -7,6 +7,9 @@ use BristolSU\ControlDB\Traits\DataGroupTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Represents a data group, information to attach to a group such as a name
+ */
 class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\DataGroup
 {
     use SoftDeletes, HasAdditionalProperties, DataGroupTrait;
@@ -28,7 +31,7 @@ class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\D
     ];
 
     /**
-     * Get the ID of the group
+     * Gets the ID of the group
      *
      * @return int
      */
@@ -38,8 +41,8 @@ class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\D
     }
 
     /**
-     * Get the name of the group
-     *
+     * Gets the name of the group
+     * 
      * @return string|null
      */
     public function name(): ?string
@@ -48,8 +51,8 @@ class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\D
     }
 
     /**
-     * Get the email of the group
-     *
+     * Gets the email of the group
+     * 
      * @return string|null
      */
     public function email(): ?string

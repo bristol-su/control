@@ -1,31 +1,32 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Repositories;
 
-
-use BristolSU\ControlDB\Contracts\Models\User as UserModelContract;
+use BristolSU\ControlDB\Contracts\Models\User as UserModel;
 use BristolSU\ControlDB\Contracts\Repositories\User as UserContract;
 use Illuminate\Support\Collection;
 
 /**
- * Class User
- * @package BristolSU\ControlDB\Repositories
+ * Handles users
  */
 class User implements UserContract
 {
 
-
     /**
-     * @inheritDoc
+     * Get a user by ID
+     *
+     * @param int $id ID of the user
+     * @return UserModel
      */
-    public function getById(int $id): UserModelContract
+    public function getById(int $id): UserModel
     {
         return \BristolSU\ControlDB\Models\User::where('id', $id)->firstOrFail();
     }
 
     /**
-     * @inheritDoc
+     * Get all users
+     *
+     * @return Collection|UserModel[]
      */
     public function all(): Collection
     {
@@ -33,22 +34,36 @@ class User implements UserContract
     }
 
     /**
-     * @inheritDoc
+     * Create a new user
+     *
+     * @param int $dataProviderId
+     * @return UserModel
      */
-    public function create(int $dataProviderId): UserModelContract
+    public function create(int $dataProviderId): UserModel
     {
         return \BristolSU\ControlDB\Models\User::create([
             'data_provider_id' => $dataProviderId
         ]);
     }
 
-    public function getByDataProviderId(int $dataProviderId): UserModelContract
+    /**
+     * Delete a user by ID
+     *
+     * @param int $id
+     */
+    public function delete(int $id): void
     {
+        \BristolSU\ControlDB\Models\User::findOrFail($id)->delete();
+    }
+
+    /**
+     * Get a user by its data provider ID
+     *
+     * @param int $dataProviderId
+     * @return UserModel
+     */
+    public function getByDataProviderId(int $dataProviderId): UserModel {
         return \BristolSU\ControlDB\Models\User::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
 
-    public function delete(int $id): void
-    {
-        $this->getById($id)->delete();
-    }
 }

@@ -7,11 +7,18 @@ use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\PositionPositionTag as PositionPositionTagContract;
 use Illuminate\Support\Collection;
 
+/**
+ * Handles the tagging of positions
+ */
 class PositionPositionTag implements PositionPositionTagContract
 {
 
     /**
-     * @inheritDoc
+     * Tag a position
+     *
+     * @param PositionTag $positionTag Tag to tag the position with
+     * @param Position $position Position to tag
+     * @return void
      */
     public function addTagToPosition(PositionTag $positionTag, Position $position): void
     {
@@ -20,8 +27,13 @@ class PositionPositionTag implements PositionPositionTagContract
         ]);
     }
 
+
     /**
-     * @inheritDoc
+     * Remove a tag from a position
+     *
+     * @param PositionTag $positionTag Tag to remove from the position
+     * @param Position $position Position to remove the tag from
+     * @return void
      */
     public function removeTagFromPosition(PositionTag $positionTag, Position $position): void
     {
@@ -31,7 +43,10 @@ class PositionPositionTag implements PositionPositionTagContract
     }
 
     /**
-     * @inheritDoc
+     * Get all tags a position is tagged with
+     *
+     * @param Position $position Position to retrieve tags from
+     * @return Collection|PositionTag[] Tags the position is tagged with
      */
     public function getTagsThroughPosition(Position $position): Collection
     {
@@ -46,7 +61,10 @@ class PositionPositionTag implements PositionPositionTagContract
     }
 
     /**
-     * @inheritDoc
+     * Get all positions tagged with a tag
+     *
+     * @param PositionTag $positionTag Tag to use to retrieve positions
+     * @return Collection|Position[] Positions tagged with the given tag
      */
     public function getPositionsThroughTag(PositionTag $positionTag): Collection
     {

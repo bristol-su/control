@@ -7,6 +7,9 @@ namespace BristolSU\ControlDB\Traits;
 use BristolSU\ControlDB\Contracts\Models\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+/**
+ * Implements methods to the data group interface using repositories
+ */
 trait DataGroupTrait
 {
 

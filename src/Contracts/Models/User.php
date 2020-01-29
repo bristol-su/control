@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface User
- * @package BristolSU\ControlDB\Contracts\Models
  */
 interface User extends Arrayable, Jsonable
 {
