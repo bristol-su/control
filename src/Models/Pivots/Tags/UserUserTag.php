@@ -6,23 +6,44 @@ use BristolSU\ControlDB\Scopes\UserUserTagScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Handles the relationship between a user and a user tag
+ */
 class UserUserTag extends Model
 {
     use SoftDeletes;
-    
+
+    /**
+     * Fillable attributes
+     *
+     * - Tag id: The ID of the user tag
+     * - Taggable ID: The ID of the user
+     * @var array
+     */
     protected $fillable = [
         'tag_id', 'taggable_id'
     ];
-    
+
     /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
      */
     public $incrementing = true;
-    
+
+    /**
+     * Define the table to use
+     *
+     * @var string
+     */
     public $table = 'control_taggables';
 
+    /**
+     * Boot the model
+     *
+     * - Add scope to only retrieve user tags from the table
+     * - Set the taggable_type to user on creation
+     */
     protected static function boot()
     {
         parent::boot();

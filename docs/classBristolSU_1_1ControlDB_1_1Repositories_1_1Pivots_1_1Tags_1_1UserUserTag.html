@@ -98,8 +98,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5529b8b4a919306d20f7da27cd8664bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00011">11</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
+<div class="textblock"><p>Handles the tagging of users </p>
+
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00013">13</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad837836e81e7df1eb00cc7daf44977c3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad837836e81e7df1eb00cc7daf44977c3">&#9670;&nbsp;</a></span>addTagToUser()</h2>
@@ -126,10 +127,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Tag a user</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">UserTag</td><td class="paramname">$userTag</td><td>Tag to tag the user with </td></tr>
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a></td><td class="paramname">$user</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a> to tag </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1Tags_1_1UserUserTag.html#a37486073fc2e3216b5e37bf1cadb18e4">BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\UserUserTag</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00017">17</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00023">23</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Tags_1_1UserTag.html#ad2b9b0f2df8c76c455143f4948878125">BristolSU\ControlDB\Contracts\Models\Tags\UserTag\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>.</p>
 
@@ -150,10 +160,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get all tags a user is tagged with</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a></td><td class="paramname">$user</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a> to retrieve tags from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Collection|UserTag[] <a class="el" href="namespaceBristolSU_1_1ControlDB_1_1Repositories_1_1Pivots_1_1Tags.html">Tags</a> the user is tagged with </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1Tags_1_1UserUserTag.html#ac9f928e276c77ef97bf869ae429cb49a">BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\UserUserTag</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00037">37</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00050">50</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Tags_1_1UserTag.html#ad2b9b0f2df8c76c455143f4948878125">BristolSU\ControlDB\Contracts\Models\Tags\UserTag\id()</a>.</p>
 
@@ -174,10 +192,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get all users tagged with a tag</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">UserTag</td><td class="paramname">$userTag</td><td>Tag to use to retrieve users </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Collection|User[] Users tagged with the given tag </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1Tags_1_1UserUserTag.html#ae618c6f202bd91b15ebaf229aaca0593">BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\UserUserTag</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00052">52</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00068">68</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Tags_1_1UserTag.html#ad2b9b0f2df8c76c455143f4948878125">BristolSU\ControlDB\Contracts\Models\Tags\UserTag\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>.</p>
 
@@ -208,10 +234,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Remove a tag from a user</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">UserTag</td><td class="paramname">$userTag</td><td>Tag to remove from the user </td></tr>
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a></td><td class="paramname">$user</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a> to remove the tag from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1Tags_1_1UserUserTag.html#a08b37c338ecfe58ff03ab489f73b47f2">BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\UserUserTag</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00027">27</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html#l00037">37</a> of file <a class="el" href="Repositories_2Pivots_2Tags_2UserUserTag_8php_source.html">UserUserTag.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Tags_1_1UserTag.html#ad2b9b0f2df8c76c455143f4948878125">BristolSU\ControlDB\Contracts\Models\Tags\UserTag\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>.</p>
 

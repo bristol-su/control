@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,9 +37,8 @@ Route::namespace('Role')->group(function() {
 
 Route::namespace('Position')->group(function() {
     Route::apiResource('position', 'PositionController')->parameter('position', 'control_position');
-    Route::apiResource('position.tag', 'PositionTagController')->only(['index', 'update', 'destroy'])->
-        parameters(['position' => 'control_position', 'tag' => 'control_position_tag']);
-    Route::apiResource('position.role', 'PositionRoleController')->only(['index'])->parameters(['position' => 'position_role']);
+    Route::apiResource('position.tag', 'PositionPositionTagController')->only(['index', 'update', 'destroy'])->parameters(['position' => 'control_position', 'tag' => 'control_position_tag']);
+    Route::apiResource('position.role', 'PositionRoleController')->only(['index'])->parameters(['position' => 'control_position']);
 });
 
 Route::namespace('UserTag')->group(function() {
@@ -52,5 +50,38 @@ Route::namespace('UserTag')->group(function() {
 Route::namespace('UserTagCategory')->group(function() {
     Route::apiResource('user-tag-category', 'UserTagCategoryController')->parameters(['user-tag-category' => 'control_user_tag_category']);
     Route::apiResource('user-tag-category.user-tag', 'UserTagCategoryUserTagController')->only(['index'])->parameters(['user-tag-category' => 'control_user_tag_category']);
+});
+
+Route::namespace('GroupTag')->group(function() {
+    Route::apiResource('group-tag', 'GroupTagController')->parameters(['group-tag' => 'control_group_tag']);
+    Route::apiResource('group-tag.group', 'GroupTagGroupController')->only(['index', 'update', 'destroy'])->parameters(['group-tag' => 'control_group_tag', 'group' => 'control_group']);
+    Route::apiResource('group-tag.group-tag-category', 'GroupTagGroupTagCategoryController')->only(['index'])->parameters(['group-tag' => 'control_group_tag', 'group-tag-category' => 'control_group_tag_category']);
+});
+
+Route::namespace('GroupTagCategory')->group(function() {
+    Route::apiResource('group-tag-category', 'GroupTagCategoryController')->parameters(['group-tag-category' => 'control_group_tag_category']);
+    Route::apiResource('group-tag-category.group-tag', 'GroupTagCategoryGroupTagController')->only(['index'])->parameters(['group-tag-category' => 'control_group_tag_category']);
+});
+
+Route::namespace('RoleTag')->group(function() {
+    Route::apiResource('role-tag', 'RoleTagController')->parameters(['role-tag' => 'control_role_tag']);
+    Route::apiResource('role-tag.role', 'RoleTagRoleController')->only(['index', 'update', 'destroy'])->parameters(['role-tag' => 'control_role_tag', 'role' => 'control_role']);
+    Route::apiResource('role-tag.role-tag-category', 'RoleTagRoleTagCategoryController')->only(['index'])->parameters(['role-tag' => 'control_role_tag', 'role-tag-category' => 'control_role_tag_category']);
+});
+
+Route::namespace('RoleTagCategory')->group(function() {
+    Route::apiResource('role-tag-category', 'RoleTagCategoryController')->parameters(['role-tag-category' => 'control_role_tag_category']);
+    Route::apiResource('role-tag-category.role-tag', 'RoleTagCategoryRoleTagController')->only(['index'])->parameters(['role-tag-category' => 'control_role_tag_category']);
+});
+
+Route::namespace('PositionTag')->group(function() {
+    Route::apiResource('position-tag', 'PositionTagController')->parameters(['position-tag' => 'control_position_tag']);
+    Route::apiResource('position-tag.position', 'PositionTagPositionController')->only(['index', 'update', 'destroy'])->parameters(['position-tag' => 'control_position_tag', 'position' => 'control_position']);
+    Route::apiResource('position-tag.position-tag-category', 'PositionTagPositionTagCategoryController')->only(['index'])->parameters(['position-tag' => 'control_position_tag', 'position-tag-category' => 'control_position_tag_category']);
+});
+
+Route::namespace('PositionTagCategory')->group(function() {
+    Route::apiResource('position-tag-category', 'PositionTagCategoryController')->parameters(['position-tag-category' => 'control_position_tag_category']);
+    Route::apiResource('position-tag-category.position-tag', 'PositionTagCategoryPositionTagController')->only(['index'])->parameters(['position-tag-category' => 'control_position_tag_category']);
 });
 

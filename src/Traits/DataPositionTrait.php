@@ -7,12 +7,15 @@ namespace BristolSU\ControlDB\Traits;
 use BristolSU\ControlDB\Contracts\Models\Position;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+/**
+ * Implements methods to the data position interface using repositories
+ */
 trait DataPositionTrait
 {
 
     /**
-     * Get the position with these attributes
-     * 
+     * Get the position using the data position
+     *
      * @return Position|null
      */
     public function position(): ?Position

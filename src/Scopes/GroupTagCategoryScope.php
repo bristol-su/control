@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Only retrieve tag categories of type group
+ */
 class GroupTagCategoryScope implements Scope
 {
 

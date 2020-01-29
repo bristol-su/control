@@ -127,10 +127,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Assign a user to a role</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a></td><td class="paramname">$user</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a> to assign to the role </td></tr>
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Role.html">Role</a></td><td class="paramname">$role</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Role.html">Role</a> to assign the user to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1UserRole.html#aa2aff099a02e6b3acc8ff49879a7ddeb">BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html#l00047">47</a> of file <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html">UserRole.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html#l00057">57</a> of file <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html">UserRole.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Role.html#a7638a15e5170fb81d9255b3fd70fd3f0">BristolSU\ControlDB\Contracts\Models\Role\id()</a>.</p>
 
@@ -151,10 +160,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get all roles a user has</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a></td><td class="paramname">$user</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Role.html">Role</a>[]|Collection Roles the given user is in </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1UserRole.html#ac16ee164735092c0aacb4b948aa8a7e5">BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html#l00033">33</a> of file <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html">UserRole.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html#l00039">39</a> of file <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html">UserRole.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Role.html#a7638a15e5170fb81d9255b3fd70fd3f0">BristolSU\ControlDB\Contracts\Models\Role\id()</a>.</p>
 
@@ -175,10 +192,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get all users who have a role</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Role.html">Role</a></td><td class="paramname">$role</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a>[]|Collection Users who have the role </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1UserRole.html#a7bd642ed15d23c982c026ffca524b1b5">BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html#l00019">19</a> of file <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html">UserRole.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html#l00022">22</a> of file <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html">UserRole.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Role.html#a7638a15e5170fb81d9255b3fd70fd3f0">BristolSU\ControlDB\Contracts\Models\Role\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>.</p>
 
@@ -209,10 +234,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Remove a user from a role </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a></td><td class="paramname">$user</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a> to remove from the role </td></tr>
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Role.html">Role</a></td><td class="paramname">$role</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Role.html">Role</a> to remove the user from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1UserRole.html#a7d29b232d84e2439ca3722e29f69cd0b">BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html#l00057">57</a> of file <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html">UserRole.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html#l00070">70</a> of file <a class="el" href="Repositories_2Pivots_2UserRole_8php_source.html">UserRole.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Role.html#a7638a15e5170fb81d9255b3fd70fd3f0">BristolSU\ControlDB\Contracts\Models\Role\id()</a>.</p>
 

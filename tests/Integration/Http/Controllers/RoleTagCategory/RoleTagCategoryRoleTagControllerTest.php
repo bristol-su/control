@@ -1,0 +1,27 @@
+<?php
+
+namespace BristolSU\Tests\ControlDB\Integration\Http\Controllers\RoleTagCategory;
+
+use BristolSU\ControlDB\Models\Tags\RoleTagCategory;
+use BristolSU\ControlDB\Models\Tags\RoleTag;
+use BristolSU\Tests\ControlDB\TestCase;
+
+class RoleTagCategoryRoleTagControllerTest extends TestCase
+{
+
+    /** @test */
+    public function it_gets_all_tags_through_a_role_tag_category(){
+        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTags = factory(RoleTag::class, 5)->create(['tag_category_id' => $roleTagCategory->id()]);
+
+        $response = $this->getJson($this->apiUrl . '/role-tag-category/' . $roleTagCategory->id() . '/role-tag');
+        $response->assertStatus(200);
+
+        $response->assertJsonCount(5);
+        foreach($response->json() as $roleTagThroughApi) {
+            $this->assertArrayHasKey('id', $roleTagThroughApi);
+            $this->assertEquals($roleTags->shift()->id(), $roleTagThroughApi['id']);
+        }
+    }
+    
+}

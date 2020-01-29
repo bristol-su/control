@@ -13,9 +13,17 @@ use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Position;
 use Illuminate\Support\Collection;
 
+/**
+ * Implements common methods using repositories required by the role model interface
+ */
 trait RoleTrait
 {
 
+    /**
+     * Get the data attributes of the role
+     * 
+     * @return DataRoleModel
+     */
     public function data(): DataRoleModel
     {
         return app(DataRoleRepository::class)->getById($this->dataProviderId());
@@ -61,21 +69,41 @@ trait RoleTrait
         return app(RoleRoleTag::class)->getTagsThroughRole($this);
     }
 
+    /**
+     * Add a tag to the role
+     * 
+     * @param \BristolSU\ControlDB\Contracts\Models\Tags\RoleTag $roleTag
+     */
     public function addTag(\BristolSU\ControlDB\Contracts\Models\Tags\RoleTag $roleTag): void
     {
         app(RoleRoleTag::class)->addTagToRole($roleTag, $this);
     }
 
+    /**
+     * Remove a tag from the role
+     * 
+     * @param \BristolSU\ControlDB\Contracts\Models\Tags\RoleTag $roleTag
+     */
     public function removeTag(\BristolSU\ControlDB\Contracts\Models\Tags\RoleTag $roleTag): void
     {
         app(RoleRoleTag::class)->removeTagFromRole($roleTag, $this);
     }
 
+    /**
+     * Add a user to the role
+     * 
+     * @param User $user
+     */
     public function addUser(User $user): void
     {
         app(UserRole::class)->addUserToRole($user, $this);
     }
 
+    /**
+     * Remove a user from the role
+     * 
+     * @param User $user
+     */
     public function removeUser(User $user): void
     {
         app(UserRole::class)->removeUserFromRole($user, $this);

@@ -1,0 +1,25 @@
+<?php
+
+namespace BristolSU\ControlDB\Http\Controllers\GroupTagCategory;
+
+use BristolSU\ControlDB\Http\Controllers\Controller;
+use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory;
+
+/**
+ * Controls the link between a group tag category and a group tag
+ */
+class GroupTagCategoryGroupTagController extends Controller
+{
+
+    /**
+     * Get all tags belonging to the group tag category
+     * 
+     * @param GroupTagCategory $groupTagCategory
+     * @return \Illuminate\Support\Collection
+     */
+    public function index(GroupTagCategory $groupTagCategory)
+    {
+        return $groupTagCategory->tags();
+    }
+
+}

@@ -6,10 +6,20 @@ use BristolSU\ControlDB\Scopes\GroupGroupTagScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Handles the relationship between a group and a group tag
+ */
 class GroupGroupTag extends Model
 {
     use SoftDeletes;
-    
+
+    /**
+     * Fillable attributes
+     * 
+     * - Tag id: The ID of the group tag
+     * - Taggable ID: The ID of the group
+     * @var array 
+     */
     protected $fillable = [
         'tag_id', 'taggable_id'
     ];
@@ -20,9 +30,20 @@ class GroupGroupTag extends Model
      * @var bool
      */
     public $incrementing = true;
-    
+
+    /**
+     * Define the table to use
+     * 
+     * @var string 
+     */
     public $table = 'control_taggables';
 
+    /**
+     * Boot the model
+     * 
+     * - Add scope to only retrieve group tags from the table
+     * - Set the taggable_type to group on creation
+     */
     protected static function boot()
     {
         parent::boot();

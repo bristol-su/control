@@ -5,6 +5,9 @@ namespace BristolSU\ControlDB\Traits\Tags;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag;
 use Illuminate\Support\Collection;
 
+/**
+ * Supplies implementations of common functions required by a position tag category model by resolving repositories.
+ */
 trait PositionTagCategoryTrait
 {
 

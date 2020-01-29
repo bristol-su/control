@@ -5,6 +5,9 @@ namespace BristolSU\ControlDB\Traits\Tags;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag;
 use Illuminate\Support\Collection;
 
+/**
+ * Supplies implementations of common functions required by a user tag category model by resolving repositories.
+ */
 trait UserTagCategoryTrait
 {
 

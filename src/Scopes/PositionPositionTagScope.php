@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Only retrieve tag assignments for positions
+ */
 class PositionPositionTagScope implements Scope
 {
 

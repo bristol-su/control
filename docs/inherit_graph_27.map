@@ -1,3 +1,12 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classBristolSU_1_1ControlDB_1_1Traits_1_1DataGroupTrait.html" title="BristolSU\\ControlDB\l\\Traits\\DataGroupTrait" alt="" coords="5,5,157,47"/>
+<area shape="rect" id="node2" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1Group_1_1StoreGroupRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\Group\l\\StoreGroupRequest" alt="" coords="178,5,351,61"/>
+<area shape="rect" id="node3" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1Position_1_1StorePositionRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\Position\l\\StorePositionRequest" alt="" coords="172,85,357,141"/>
+<area shape="rect" id="node4" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1Position_1_1UpdatePositionRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\Position\l\\UpdatePositionRequest" alt="" coords="172,165,357,221"/>
+<area shape="rect" id="node5" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1Role_1_1StoreRoleRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\Role\l\\StoreRoleRequest" alt="" coords="182,245,347,301"/>
+<area shape="rect" id="node6" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1Role_1_1UpdateRoleRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\Role\l\\UpdateRoleRequest" alt="" coords="182,325,347,381"/>
+<area shape="rect" id="node7" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1User_1_1StoreUserRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\User\l\\StoreUserRequest" alt="" coords="181,405,348,461"/>
+<area shape="rect" id="node8" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1UserTag_1_1UserTagCategoryStoreRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\UserTag\l\\UserTagCategoryStoreRequest" alt="" coords="160,485,369,541"/>
+<area shape="rect" id="node9" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1UserTag_1_1UserTagCategoryUpdateRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\UserTag\l\\UserTagCategoryUpdateRequest" alt="" coords="155,565,375,621"/>
+<area shape="rect" id="node10" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1UserTag_1_1UserTagStoreRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\UserTag\l\\UserTagStoreRequest" alt="" coords="171,645,359,701"/>
+<area shape="rect" id="node11" href="$classBristolSU_1_1ControlDB_1_1Http_1_1Requests_1_1Api_1_1UserTag_1_1UserTagUpdateRequest.html" title="BristolSU\\ControlDB\l\\Http\\Requests\\Api\\UserTag\l\\UserTagUpdateRequest" alt="" coords="171,725,359,781"/>
 </map>

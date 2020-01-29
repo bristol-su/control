@@ -2,12 +2,13 @@
 
 namespace BristolSU\ControlDB\Scopes;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryAlias;
-use BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Only retrieve tag assignments for groups
+ */
 class GroupGroupTagScope implements Scope
 {
 

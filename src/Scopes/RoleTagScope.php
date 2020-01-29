@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Only retrieves tags with a tag category of type role.
+ */
 class RoleTagScope implements Scope
 {
 

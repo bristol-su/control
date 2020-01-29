@@ -1,6 +1,6 @@
 <?php
 
-namespace BristolSU\ControlDB\Http\Requests\Api\UserTag;
+namespace BristolSU\ControlDB\Http\Requests\Api\UserTagCategory;
 
 use Illuminate\Foundation\Http\FormRequest;
 

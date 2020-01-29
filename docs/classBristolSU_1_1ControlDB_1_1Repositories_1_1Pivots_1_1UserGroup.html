@@ -127,10 +127,19 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Add a user to a group</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a></td><td class="paramname">$user</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a> to add to the group </td></tr>
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html">Group</a></td><td class="paramname">$group</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html">Group</a> to add the user to </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1UserGroup.html#ab92d89788cb8a9f7af600be32b695b71">BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html#l00047">47</a> of file <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html">UserGroup.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html#l00057">57</a> of file <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html">UserGroup.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Group.html#a999eae6119d72bbdd6c68915b1db6ac4">BristolSU\ControlDB\Contracts\Models\Group\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>.</p>
 
@@ -151,10 +160,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get all groups a user belongs to</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a></td><td class="paramname">$user</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html">Group</a>[]|Collection Groups the user is a member of </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1UserGroup.html#aa9b74a7465625037b4907008075f25f0">BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html#l00033">33</a> of file <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html">UserGroup.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html#l00039">39</a> of file <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html">UserGroup.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Group.html#a999eae6119d72bbdd6c68915b1db6ac4">BristolSU\ControlDB\Contracts\Models\Group\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>.</p>
 
@@ -175,10 +192,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Get all users who are members of a group</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html">Group</a></td><td class="paramname">$group</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a>[]|Collection Users who are members of the group </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1UserGroup.html#a0085b10c28668defa80d08448b6738ec">BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html#l00019">19</a> of file <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html">UserGroup.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html#l00022">22</a> of file <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html">UserGroup.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Group.html#a999eae6119d72bbdd6c68915b1db6ac4">BristolSU\ControlDB\Contracts\Models\Group\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>.</p>
 
@@ -209,10 +234,18 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Remove a user from a group </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a></td><td class="paramname">$user</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1User.html">User</a> to remove from the group </td></tr>
+    <tr><td class="paramtype"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html">Group</a></td><td class="paramname">$group</td><td><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html">Group</a> to remove the user from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Pivots_1_1UserGroup.html#a28e0156254d7ef561aa8331e712ae46b">BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html#l00057">57</a> of file <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html">UserGroup.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html#l00070">70</a> of file <a class="el" href="Repositories_2Pivots_2UserGroup_8php_source.html">UserGroup.php</a>.</p>
 
 <p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Group.html#a999eae6119d72bbdd6c68915b1db6ac4">BristolSU\ControlDB\Contracts\Models\Group\id()</a>, and <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1User.html#a4c4f0a9a48f5bed4fb7ffe7b22ea4292">BristolSU\ControlDB\Contracts\Models\User\id()</a>.</p>
 

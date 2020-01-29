@@ -7,8 +7,21 @@ use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\RoleRoleTag;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory;
 use Illuminate\Support\Collection;
 
+/**
+ * Supplies implementations of common functions required by a role tag model by resolving repositories.
+ */
 trait RoleTagTrait
 {
+
+    /**
+     * Get the role tag category of the role tag
+     *
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory
+     */
+    public function category(): \BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory
+    {
+        return app(RoleTagCategory::class)->getById($this->categoryId());
+    }
 
     /**
      * Full reference of the tag
@@ -22,16 +35,6 @@ trait RoleTagTrait
     }
 
     /**
-     * Tag Category
-     *
-     * @return RoleTagCategory
-     */
-    public function category(): \BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory
-    {
-        return app(RoleTagCategory::class)->getById($this->id());
-    }
-
-    /**
      * Roles who have this tag
      *
      * @return Collection
@@ -41,14 +44,24 @@ trait RoleTagTrait
         return app(RoleRoleTag::class)->getRolesThroughTag($this);
     }
 
+    /**
+     * Tag a role with the role tag
+     *
+     * @param Role $role
+     */
     public function addRole(Role $role): void
     {
         app(RoleRoleTag::class)->addTagToRole($this, $role);
     }
 
+    /**
+     * Untag a role from the role tag
+     *
+     * @param Role $role
+     */
     public function removeRole(Role $role): void
     {
         app(RoleRoleTag::class)->removeTagFromRole($this, $role);
     }
-    
+
 }

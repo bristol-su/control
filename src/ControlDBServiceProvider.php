@@ -82,6 +82,7 @@ use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag as UserTagRepository
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\User as UserRepositoryContract;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -94,6 +95,8 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->bindContracts();
         $this->registerCommands();
         $this->registerMigrations();
+        $this->registerConfig();
+        $this->registerFactories();
     }
 
     public function boot()
@@ -103,6 +106,30 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->setupRoutes();
     }
 
+    /**
+     * Register config
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([__DIR__ .'/../config/config.php' => config_path('control.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            __DIR__ .'/../config/control.php', 'control'
+        );
+    }
+
+    /**
+     * Register factories in a non-production environment
+     *
+     * @throws BindingResolutionException
+     */
+    public function registerFactories()
+    {
+        if (!app()->environment('production')) {
+            $this->app->make(Factory::class)->load(__DIR__ .'/../database/factories');
+        }
+    }
+    
     public function registerMigrations()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -185,51 +212,50 @@ class ControlDBServiceProvider extends ServiceProvider
         Route::model('control_position_tag_category', PositionTagCategoryModel::class);
 
         Route::bind('control_group', function($id) {
-            return app(GroupRepository::class)->getById($id);
+            return app(GroupRepositoryContract::class)->getById($id);
         });
         Route::bind('control_role', function($id) {
-            return app(RoleRepository::class)->getById($id);
+            return app(RoleRepositoryContract::class)->getById($id);
         });
         Route::bind('control_user', function($id) {
-            return app(UserRepository::class)->getById($id);
+            return app(UserRepositoryContract::class)->getById($id);
         });
         Route::bind('control_position', function($id) {
-            return app(PositionRepository::class)->getById($id);
+            return app(PositionRepositoryContract::class)->getById($id);
         });
 
         Route::bind('control_group_tag', function($id) {
-            return app(GroupTagRepository::class)->getById($id);
+            return app(GroupTagRepositoryContract::class)->getById($id);
         });
         Route::bind('control_role_tag', function($id) {
-            return app(RoleTagRepository::class)->getById($id);
+            return app(RoleTagRepositoryContract::class)->getById($id);
         });
         Route::bind('control_user_tag', function($id) {
-            return app(UserTagRepository::class)->getById($id);
+            return app(UserTagRepositoryContract::class)->getById($id);
         });
         Route::bind('control_position_tag', function($id) {
-            return app(PositionTagRepository::class)->getById($id);
+            return app(PositionTagRepositoryContract::class)->getById($id);
         });
 
         Route::bind('control_group_tag_category', function($id) {
-            return app(GroupTagCategoryRepository::class)->getById($id);
+            return app(GroupTagCategoryRepositoryContract::class)->getById($id);
         });
         Route::bind('control_role_tag_category', function($id) {
-            return app(RoleTagCategoryRepository::class)->getById($id);
+            return app(RoleTagCategoryRepositoryContract::class)->getById($id);
         });
         Route::bind('control_user_tag_category', function($id) {
-            return app(UserTagCategoryRepository::class)->getById($id);
+            return app(UserTagCategoryRepositoryContract::class)->getById($id);
         });
         Route::bind('control_position_tag_category', function($id) {
-            return app(PositionTagCategoryRepository::class)->getById($id);
+            return app(PositionTagCategoryRepositoryContract::class)->getById($id);
         });
     }
 
     public function setupRoutes()
     {
-        Route::prefix('api')
-            ->middleware('control-api')
-            ->middleware('api')
-            ->namespace('BristolSU\ControlDB\Http\Controllers\Api')
+        Route::prefix(config('control.api_prefix'))
+            ->middleware(config('control.api_middleware'))
+            ->namespace('BristolSU\ControlDB\Http\Controllers')
             ->group(__DIR__ . '/../routes/api.php');
     }
 

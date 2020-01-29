@@ -34,12 +34,12 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * Casted attributes
+     * 
+     * @var array 
      */
     protected $casts = [
-        'dob' => 'date:Y-m-d',
+        'dob' => 'date:d-m-Y'
     ];
     
     /**
@@ -156,4 +156,6 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
         $this->preferred_name = $name;
         $this->save();
     }
+    
+
 }

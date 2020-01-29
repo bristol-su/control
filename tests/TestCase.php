@@ -8,7 +8,10 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
+    
     use DatabaseTransactions;
+    
+    public $apiUrl = 'api/control';
     
     public function setUp(): void
     {
@@ -25,6 +28,8 @@ abstract class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix' => '',
         ]);
+        $app['config']->set('control.api_prefix', $this->apiUrl);
+        $app['config']->set('control.api_middleware', ['api']);
     }
 
     /**

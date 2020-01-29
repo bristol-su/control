@@ -55,7 +55,6 @@ class UserGroupTest extends TestCase
     public function it_adds_a_user_to_a_group(){
         $group = factory(Group::class)->create();
         $user = factory(User::class)->create();
-
         $userGroup = new UserGroup();
         $this->assertEquals(0, $userGroup->getUsersThroughGroup($group)->count());
 
