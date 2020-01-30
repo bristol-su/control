@@ -5,14 +5,14 @@ namespace BristolSU\ControlDB\Contracts\Models;
 
 
 use BristolSU\ControlDB\Contracts\Models\Tags\UserTag;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
  * Interface User
- * @package BristolSU\ControlDB\Contracts\Models
  */
-interface User extends Authenticatable
+interface User extends Arrayable, Jsonable
 {
 
     /**
@@ -20,19 +20,34 @@ interface User extends Authenticatable
      *
      * @return mixed
      */
-    public function id();
+    public function id(): int;
 
-    // TODO Abstract!
+    /**
+     * ID of the data provider for the user
+     * 
+     * @return int
+     */
+    public function dataProviderId(): int;
+
+    /**
+     * Set data provider of the user
+     * 
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void;
+
+    /**
+     * Get the data attributes for the user
+     * 
+     * @return DataUser
+     */
     public function data(): DataUser;
-
-    public function dataProviderId();
 
     /**
      * Tags the user is tagged with
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function tags(): Collection;
 
     /**
@@ -40,7 +55,6 @@ interface User extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function roles(): Collection;
 
     /**
@@ -48,27 +62,48 @@ interface User extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function groups(): Collection;
 
-    public function setDataProviderId(int $dataProviderId);
+    /**
+     * Add a tag to the user
+     * 
+     * @param UserTag $userTag
+     */
+    public function addTag(UserTag $userTag): void;
 
-    // TODO Abstract!
-    public function addTag(UserTag $userTag);
+    /**
+     * Remove a tag from the user
+     * 
+     * @param UserTag $userTag
+     */
+    public function removeTag(UserTag $userTag): void;
 
-    // TODO Abstract!
-    public function removeTag(UserTag $userTag);
+    /**
+     * Add a role to the user
+     * 
+     * @param Role $role
+     */
+    public function addRole(Role $role): void;
 
-    // TODO Abstract!
-    public function addRole(Role $role);
+    /**
+     * Remove a role from the user
+     * 
+     * @param Role $role
+     */
+    public function removeRole(Role $role): void;
 
-    // TODO Abstract!
-    public function removeRole(Role $role);
+    /**
+     * Add a group from the user
+     * 
+     * @param Group $group
+     */
+    public function addGroup(Group $group): void;
 
-    // TODO Abstract!
-    public function addGroup(Group $group);
-
-    // TODO Abstract!
-    public function removeGroup(Group $group);
+    /**
+     * Remove a group from the user
+     * 
+     * @param Group $group
+     */
+    public function removeGroup(Group $group): void;
 
 }

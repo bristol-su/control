@@ -2,10 +2,15 @@
 
 namespace BristolSU\ControlDB\Scopes;
 
+use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryAlias;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Only retrieves tags with a tag category of type group.
+ */
 class GroupTagScope implements Scope
 {
 
@@ -18,8 +23,10 @@ class GroupTagScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereHas('categoryRelationship', function(Builder $builder) {
-            $builder->where('type', 'group');
+        $groupTagCategories = app(GroupTagCategory::class)->all()->map(function(GroupTagCategoryAlias $groupTagCategory) {
+            return $groupTagCategory->id();
         });
+
+        $builder->whereIn('tag_category_id', $groupTagCategories);
     }
 }

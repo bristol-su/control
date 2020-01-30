@@ -2,13 +2,14 @@
 
 namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface PositionTag
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a position tag category
  */
-interface PositionTagCategory
+interface PositionTagCategory extends Arrayable, Jsonable
 {
 
     /**
@@ -16,7 +17,7 @@ interface PositionTagCategory
      *
      * @return mixed
      */
-    public function id();
+    public function id(): int;
 
     /**
      * Name of the tag category
@@ -46,9 +47,24 @@ interface PositionTagCategory
      */
     public function tags(): Collection;
 
-    public function setName(string $name);
+    /**
+     * Set the name of the position tag category
+     *
+     * @param string $name
+     */
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    /**
+     * Set a description for the position tag category
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    /**
+     * Set a reference for a position tag category
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void;
 }

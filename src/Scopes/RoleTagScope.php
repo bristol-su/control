@@ -2,10 +2,15 @@
 
 namespace BristolSU\ControlDB\Scopes;
 
+use BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryAlias;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Only retrieves tags with a tag category of type role.
+ */
 class RoleTagScope implements Scope
 {
 
@@ -18,8 +23,10 @@ class RoleTagScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereHas('categoryRelationship', function(Builder $builder) {
-            $builder->where('type', 'role');
+        $roleTagCategories = app(RoleTagCategory::class)->all()->map(function(RoleTagCategoryAlias $roleTagCategory) {
+            return $roleTagCategory->id();
         });
+
+        $builder->whereIn('tag_category_id', $roleTagCategories);
     }
 }

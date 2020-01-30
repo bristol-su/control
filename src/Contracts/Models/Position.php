@@ -5,20 +5,16 @@ namespace BristolSU\ControlDB\Contracts\Models;
 
 
 use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface Position
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a position
  */
-interface Position
+interface Position extends Arrayable, Jsonable
 {
 
-    // TODO Abstract!
-    public function data(): DataPosition;
-
-    public function dataProviderId();
-    
     /**
      * ID of the position
      *
@@ -27,11 +23,30 @@ interface Position
     public function id(): int;
 
     /**
+     * The ID of the data provider
+     * @return int
+     */
+    public function dataProviderId(): int;
+
+    /**
+     * Set the data provider ID
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void;
+
+    /**
+     * The data attributes of the position
+     * 
+     * @return DataPosition
+     */
+    public function data(): DataPosition;
+
+    /**
      * Roles with this position
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function roles(): Collection;
 
     /**
@@ -39,16 +54,21 @@ interface Position
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function tags(): Collection;
 
-    public function setDataProviderId(int $dataProviderId);
+    /**
+     * Add a tag to the position
+     * 
+     * @param PositionTag $roleTag
+     */
+    public function addTag(PositionTag $roleTag): void;
 
-    // TODO Abstract!
-    public function addTag(PositionTag $roleTag);
-
-    // TODO Abstract!
-    public function removeTag(PositionTag $roleTag);
+    /**
+     * Remove a tag from the position
+     * 
+     * @param PositionTag $roleTag
+     */
+    public function removeTag(PositionTag $roleTag): void;
 
 
 }

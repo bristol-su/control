@@ -2,13 +2,14 @@
 
 namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface GroupTag
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a group tag category
  */
-interface GroupTagCategory
+interface GroupTagCategory extends Arrayable, Jsonable
 {
 
     /**
@@ -16,7 +17,7 @@ interface GroupTagCategory
      *
      * @return mixed
      */
-    public function id();
+    public function id(): int;
 
     /**
      * Name of the tag category
@@ -46,9 +47,24 @@ interface GroupTagCategory
      */
     public function tags(): Collection;
 
-    public function setName(string $name);
+    /**
+     * Set the name of the group tag category
+     * 
+     * @param string $name
+     */
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    /**
+     * Set a description for the group tag category
+     * 
+     * @param string $description
+     */
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    /**
+     * Set a reference for a group tag category
+     * 
+     * @param string $reference
+     */
+    public function setReference(string $reference): void;
 }

@@ -1,65 +1,63 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory as UserTagCategoryContract;
-use BristolSU\ControlDB\Contracts\Models\User as UserContract;
-use BristolSU\ControlDB\Contracts\Models\Tags\UserTag as UserTagModel;
 use Illuminate\Support\Collection;
 
 /**
- * Interface UserTag
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Manages user tags
  */
-abstract class UserTag
+interface UserTag
 {
 
     /**
      * Get all user tags
      *
-     * @return Collection
+     * @return Collection|\BristolSU\ControlDB\Contracts\Models\Tags\UserTag[]
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get all user tags which a user is tagged with
-     *
-     * @param UserContract $user
-     * @return Collection
-     */
-    public function allThroughUser(UserContract $user): Collection {
-        return $user->tags();
-    }
+    public function all(): Collection;
 
     /**
      * Get a tag by the full reference
      *
-     * @param $reference
-     * @return mixed
+     * The full reference looks like 'tag_category_ref.tag_ref'
+     *
+     * @param string $reference
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
      */
-    abstract public function getTagByFullReference(string $reference): UserTagModel;
+    public function getTagByFullReference(string $reference): \BristolSU\ControlDB\Contracts\Models\Tags\UserTag;
 
     /**
      * Get a user tag by id
      *
      * @param int $id
-     * @return UserTagModel
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
      */
-    abstract public function getById(int $id): UserTagModel;
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\UserTag;
 
     /**
-     * Get all user tags belonging to a user tag category
+     * Create a user tag
      *
-     * @param UserTagCategoryContract $userTagCategory
-     * @return Collection
+     * @param string $name Name of the tag
+     * @param string $description Description of the tag
+     * @param string $reference Reference for the tag
+     * @param int $tagCategoryId Category ID of the tag
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
      */
-    public function allThroughUserTagCategory(UserTagCategoryContract $userTagCategory): Collection {
-        return $userTagCategory->tags();
-    }
+    public function create(string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\UserTag;
 
-    abstract public function create(string $name, string $description, string $reference, $tagCategoryId): UserTagModel;
-    
-    abstract public function delete(int $id);
-    
+    /**
+     * Delete a user tag
+     *
+     * @param int $id ID of the tag to delete
+     */
+    public function delete(int $id): void;
+
+    /**
+     * Get all tags through a tag category
+     *
+     * @param \BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory $userTagCategory
+     * @return Collection|UserTag[] Tags with the given user tag category
+     */
+    public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory $userTagCategory): Collection;
 }

@@ -92,4 +92,55 @@ class DataGroupTest extends TestCase
         $this->assertEquals('newemail@email.com', $dataGroup->email());
     }
 
+    /** @test */
+    public function additional_properties_can_be_set_and_got(){
+        DataGroup::addProperty('account_code');
+        $dataGroup = factory(DataGroup::class)->create([
+            'name' => 'GroupName1',
+            'email' => 'email@email.com'
+        ]);
+        
+        $dataGroup->account_code = 'CHA';
+        $dataGroup->save();
+        
+        $this->assertEquals('CHA', $dataGroup->account_code);
+    }
+
+    /** @test */
+    public function additional_properties_are_saved_in_the_database(){
+        DataGroup::addProperty('account_code');
+        $dataGroup = factory(DataGroup::class)->create([
+            'name' => 'GroupName1',
+            'email' => 'email@email.com'
+        ]);
+
+        $dataGroup->account_code = 'CHA';
+        $dataGroup->save();
+        
+        $this->assertDatabaseHas('control_data_group', [
+            'name' => 'GroupName1',
+            'email' => 'email@email.com',
+            'additional_attributes' => '{"account_code":"CHA"}'
+        ]);
+    }
+    
+    /** @test */
+    public function additional_properties_are_appended_to_an_array(){
+        DataGroup::addProperty('account_code');
+        $dataGroup = factory(DataGroup::class)->create([
+            'name' => 'GroupName1',
+            'email' => 'email@email.com'
+        ]);
+
+        $dataGroup->account_code = 'CHA';
+        $dataGroup->save();
+        
+        $attributes = $dataGroup->toArray();
+        $this->assertArrayHasKey('name', $attributes);
+        $this->assertArrayHasKey('email', $attributes);
+        $this->assertArrayHasKey('account_code', $attributes);
+        $this->assertEquals('GroupName1', $attributes['name']);
+        $this->assertEquals('email@email.com', $attributes['email']);
+        $this->assertEquals('CHA', $attributes['account_code']);
+    }
 }

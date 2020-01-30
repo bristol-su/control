@@ -4,65 +4,68 @@
 namespace BristolSU\ControlDB\Contracts\Repositories;
 
 
-use BristolSU\ControlDB\Contracts\Models\Group as GroupModel;
-use BristolSU\ControlDB\Contracts\Models\Position as PositionModel;
 use BristolSU\ControlDB\Contracts\Models\Role as RoleModel;
-use BristolSU\ControlDB\Contracts\Models\User as UserModel;
 use Illuminate\Support\Collection;
 
 /**
  * Interface Role
- * @package BristolSU\ControlDB\Contracts\Repositories
  */
-abstract class Role
+interface Role
 {
 
     /**
      * Get a role by ID
      *
-     * @param $id
+     * @param int $id
      * @return RoleModel
      */
-    abstract public function getById($id): RoleModel;
-
-    /**
-     * Get all roles belonging to a user
-     *
-     * @param UserModel $user
-     * @return Collection
-     */
-    public function allThroughUser(UserModel $user): Collection {
-        return $user->roles();
-    }
+    public function getById(int $id): RoleModel;
 
     /**
      * Get all roles
      *
-     * @return Collection
+     * @return Collection|\BristolSU\ControlDB\Contracts\Models\Role[]
      */
-    abstract public function all(): Collection;
+    public function all(): Collection;
 
     /**
-     * Get all roles belonging to a group
-     *
-     * @param GroupModel $group
-     * @return Collection
+     * Get a role by data provider ID
+     * 
+     * @param int $dataProviderId
+     * @return RoleModel
      */
-    public function allThroughGroup(GroupModel $group): Collection {
-        return $group->roles();
-    }
+    public function getByDataProviderId(int $dataProviderId): RoleModel;
 
     /**
-     * Get all roles belonging to a position
-     *
-     * @param PositionModel $position
-     * @return Collection
+     * Create a new role
+     * 
+     * @param int $positionId
+     * @param int $groupId
+     * @param int $dataProviderId
+     * @return RoleModel
      */
-    public function allThroughPosition(PositionModel $position): Collection {
-        return $position->roles();
-    }
+    public function create(int $positionId, int $groupId, int $dataProviderId): RoleModel;
 
-    abstract public function create($positionId, $groupId, $dataProviderId): RoleModel;
+    /**
+     * Delete a role
+     * 
+     * @param int $id
+     */
+    public function delete(int $id): void;
+
+    /**
+     * Get all roles that belong to the given group
+     * 
+     * @param \BristolSU\ControlDB\Contracts\Models\Group $group
+     * @return Collection|RoleModel[]
+     */
+    public function allThroughGroup(\BristolSU\ControlDB\Contracts\Models\Group $group): Collection;
+
+    /**
+     * Get all roles that belong to the given position
+     * @param \BristolSU\ControlDB\Contracts\Models\Position $position
+     * @return Collection|RoleModel[]
+     */
+    public function allThroughPosition(\BristolSU\ControlDB\Contracts\Models\Position $position): Collection;
     
-    abstract public function delete(int $id);
 }

@@ -4,14 +4,15 @@
 namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
-use BristolSU\ControlDB\Contracts\Repositories\Group;
+use BristolSU\ControlDB\Contracts\Models\Group;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface GroupTag
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a Group Tag
  */
-interface GroupTag
+interface GroupTag extends Arrayable, Jsonable
 {
 
     /**
@@ -44,6 +45,7 @@ interface GroupTag
 
     /**
      * ID of the tag category
+     * 
      * @return int
      */
     public function categoryId(): int;
@@ -70,15 +72,45 @@ interface GroupTag
      */
     public function groups(): Collection;
 
-    public function setName(string $name);
+    /**
+     * Set the name of the tag
+     * 
+     * @param string $name
+     */
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    /**
+     * Set the description of the tag
+     * 
+     * @param string $description
+     */
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    /**
+     * Set the reference of the tag
+     * 
+     * @param string $reference
+     */
+    public function setReference(string $reference): void;
 
-    public function setTagCategoryId($categoryId);
+    /**
+     * Set the tag category ID
+     * 
+     * @param int $categoryId
+     */
+    public function setTagCategoryId(int $categoryId): void;
 
-    public function addGroup(Group $group);
+    /**
+     * Add a group to the tag
+     * 
+     * @param Group $group
+     */
+    public function addGroup(Group $group): void;
 
-    public function removeGroup(Group $group);
+    /**
+     * Remove a group from the tag
+     * 
+     * @param Group $group
+     */
+    public function removeGroup(Group $group): void;
 }

@@ -94,4 +94,20 @@ class UserTagTest extends TestCase
         $userTag->refresh();
         $this->assertTrue($userTag->trashed());
     }
+    
+    /** @test */
+    public function allThroughTagCategory_returns_all_tags_through_a_tag_category(){
+        $category = factory(UserTagCategory::class)->create();
+        $tags = factory(UserTag::class, 10)->create(['tag_category_id' => $category->id()]);
+        factory(UserTag::class, 10)->create();
+
+        $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
+        $tagsFromRepo = $userTagRepo->allThroughTagCategory($category);
+        $this->assertContainsOnlyInstancesOf(UserTag::class, $tagsFromRepo);
+        foreach($tags as $tag) {
+            $this->assertTrue($tag->is(
+                $tagsFromRepo->shift()
+            ));
+        }
+    }
 }

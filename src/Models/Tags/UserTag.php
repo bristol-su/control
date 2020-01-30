@@ -1,32 +1,46 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Models\Tags;
 
-
-use BristolSU\ControlDB\Models\User;
 use BristolSU\ControlDB\Scopes\UserTagScope;
+use BristolSU\ControlDB\Traits\Tags\UserTagTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 /**
  * Class UserTag
- * @package BristolSU\ControlDB\Models
  */
 class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
 {
+    use SoftDeletes, UserTagTrait;
 
-    use SoftDeletes;
-
-    protected $table = 'control_tags';
-    protected $guarded = [];
-
+    /**
+     * Boot the model
+     *
+     * - Add a global scope to only return user tags
+     */
     protected static function boot()
     {
         parent::boot();
         static::addGlobalScope(new UserTagScope());
     }
+
+    /**
+     * Table to use
+     *
+     * @var string
+     */
+    protected $table = 'control_tags';
+
+    /**
+     * Fillable properties
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'description', 'reference', 'tag_category_id'
+    ];
+
 
     /**
      * ID of the user tag
@@ -70,6 +84,7 @@ class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
 
     /**
      * ID of the tag category
+     *
      * @return int
      */
     public function categoryId(): int
@@ -78,78 +93,47 @@ class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
     }
 
     /**
-     * Full reference of the tag
+     * Set the name of the tag
      *
-     * This should be the tag category reference and the tag reference, separated with a period.
-     * @return string
+     * @param string $name
      */
-    public function fullReference(): string
-    {
-        return $this->category()->reference() . '.' . $this->reference;
-    }
-
-    /**
-     * Tag Category
-     *
-     * @return UserTagCategory
-     */
-    public function category(): \BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory
-    {
-        return $this->categoryRelationship;
-    }
-
-    /**
-     * Users who have this tag
-     *
-     * @return Collection
-     */
-    public function users(): Collection
-    {
-        return $this->userRelationship;
-    }
-
-    public function categoryRelationship()
-    {
-        return $this->belongsTo(UserTagCategory::class, 'tag_category_id');
-    }
-
-    public function userRelationship()
-    {
-        return $this->morphedByMany(User::class, 'taggable', 'control_taggables', 'tag_id',
-            'taggable_id');
-    }
-
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
         $this->save();
     }
 
-    public function setDescription(string $description)
+    /**
+     * Set the description of the tagTag Reference
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void
     {
         $this->description = $description;
         $this->save();
     }
 
-    public function setReference(string $reference)
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void
     {
         $this->reference = $reference;
         $this->save();
     }
 
-    public function setTagCategoryId($categoryId)
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
+    public function setTagCategoryId($categoryId): void
     {
-        $this->category_id = $categoryId;
+        $this->tag_category_id = $categoryId;
         $this->save();
     }
 
-    public function addUser(\BristolSU\ControlDB\Contracts\Models\User $user)
-    {
-        $this->userRelationship()->attach($user->id());
-    }
-
-    public function removeUser(\BristolSU\ControlDB\Contracts\Models\User $user)
-    {
-        $this->userRelationship()->detach($user->id());
-    }
 }

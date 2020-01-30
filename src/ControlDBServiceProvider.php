@@ -2,6 +2,8 @@
 
 namespace BristolSU\ControlDB;
 
+use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertySingletonStore;
+use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertyStore;
 use BristolSU\ControlDB\Commands\SeedDatabase;
 use BristolSU\ControlDB\Contracts\Repositories\DataUser as DataUserRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\DataGroup as DataGroupRepositoryContract;
@@ -11,6 +13,12 @@ use BristolSU\ControlDB\Contracts\Models\DataUser as DataUserContract;
 use BristolSU\ControlDB\Contracts\Models\DataGroup as DataGroupContract;
 use BristolSU\ControlDB\Contracts\Models\DataRole as DataRoleContract;
 use BristolSU\ControlDB\Contracts\Models\DataPosition as DataPositionContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\GroupGroupTag as GroupGroupTagContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\UserUserTag as UserUserTagContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\RoleRoleTag as RoleRoleTagContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\PositionPositionTag as PositionPositionTagContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup as UserGroupContract;
+use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole as UserRoleContract;
 use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\ControlDB\Models\DataGroup;
 use BristolSU\ControlDB\Models\DataRole;
@@ -32,6 +40,12 @@ use BristolSU\ControlDB\Repositories\DataGroup as DataGroupRepository;
 use BristolSU\ControlDB\Repositories\DataRole as DataRoleRepository;
 use BristolSU\ControlDB\Repositories\DataPosition as DataPositionRepository;
 use BristolSU\ControlDB\Repositories\Group as GroupRepository;
+use BristolSU\ControlDB\Repositories\Pivots\Tags\GroupGroupTag;
+use BristolSU\ControlDB\Repositories\Pivots\Tags\PositionPositionTag;
+use BristolSU\ControlDB\Repositories\Pivots\Tags\RoleRoleTag;
+use BristolSU\ControlDB\Repositories\Pivots\Tags\UserUserTag;
+use BristolSU\ControlDB\Repositories\Pivots\UserGroup;
+use BristolSU\ControlDB\Repositories\Pivots\UserRole;
 use BristolSU\ControlDB\Repositories\Position as PositionRepository;
 use BristolSU\ControlDB\Repositories\Role as RoleRepository;
 use BristolSU\ControlDB\Repositories\Tags\GroupTag as GroupTagRepository;
@@ -67,42 +81,55 @@ use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory as RoleTagCa
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag as UserTagRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\User as UserRepositoryContract;
+
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Factory;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-
-
-// Tag models (contracts)
-
-// Tag models
-
-// Tag repositories (contracts)
-
-// Tag repositories
 
 class ControlDBServiceProvider extends ServiceProvider
 {
-    // TODO Soon, the method of populating pivot tables (through eloquent relationships) needs to be abstracted away to allow for the relationships to stay in the db and the models to come from elsewhere.
 
     public function register()
     {
         $this->bindContracts();
         $this->registerCommands();
         $this->registerMigrations();
+        $this->registerConfig();
+        $this->registerFactories();
     }
 
     public function boot()
     {
-        Relation::morphMap([
-            'user' => UserModel::class,
-            'group' => GroupModel::class,
-            'role' => RoleModel::class,
-            'position' => PositionModel::class
-        ]);
-
         $this->app->make(Factory::class)->load(__DIR__ . '/../database/factories');
+        $this->setupRouteModelBinding();
+        $this->setupRoutes();
     }
 
+    /**
+     * Register config
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([__DIR__ .'/../config/config.php' => config_path('control.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            __DIR__ .'/../config/control.php', 'control'
+        );
+    }
+
+    /**
+     * Register factories in a non-production environment
+     *
+     * @throws BindingResolutionException
+     */
+    public function registerFactories()
+    {
+        if (!app()->environment('production')) {
+            $this->app->make(Factory::class)->load(__DIR__ .'/../database/factories');
+        }
+    }
+    
     public function registerMigrations()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -149,6 +176,17 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(RoleTagCategoryRepositoryContract::class, RoleTagCategoryRepository::class);
         $this->app->bind(PositionTagRepositoryContract::class, PositionTagRepository::class);
         $this->app->bind(PositionTagCategoryRepositoryContract::class, PositionTagCategoryRepository::class);
+        
+        // Additional Properties
+        $this->app->singleton(AdditionalPropertyStore::class, AdditionalPropertySingletonStore::class);
+        
+        // Pivot Repositories
+        $this->app->bind(UserGroupContract::class, UserGroup::class);
+        $this->app->bind(UserRoleContract::class, UserRole::class);
+        $this->app->bind(GroupGroupTagContract::class, GroupGroupTag::class);
+        $this->app->bind(UserUserTagContract::class, UserUserTag::class);
+        $this->app->bind(RoleRoleTagContract::class, RoleRoleTag::class);
+        $this->app->bind(PositionPositionTagContract::class, PositionPositionTag::class);
     }
 
     public function registerCommands()
@@ -156,6 +194,69 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->commands([
             SeedDatabase::class
         ]);
+    }
+
+    public function setupRouteModelBinding()
+    {
+        Route::model('control_group', GroupModel::class);
+        Route::model('control_role', RoleModel::class);
+        Route::model('control_user', UserModel::class);
+        Route::model('control_position', PositionModel::class);
+        Route::model('control_group_tag', GroupTagModel::class);
+        Route::model('control_role_tag', RoleTagModel::class);
+        Route::model('control_user_tag', UserTagModel::class);
+        Route::model('control_position_tag', PositionTagModel::class);
+        Route::model('control_group_tag_category', GroupTagCategoryModel::class);
+        Route::model('control_role_tag_category', RoleTagCategoryModel::class);
+        Route::model('control_user_tag_category', UserTagCategoryModel::class);
+        Route::model('control_position_tag_category', PositionTagCategoryModel::class);
+
+        Route::bind('control_group', function($id) {
+            return app(GroupRepositoryContract::class)->getById($id);
+        });
+        Route::bind('control_role', function($id) {
+            return app(RoleRepositoryContract::class)->getById($id);
+        });
+        Route::bind('control_user', function($id) {
+            return app(UserRepositoryContract::class)->getById($id);
+        });
+        Route::bind('control_position', function($id) {
+            return app(PositionRepositoryContract::class)->getById($id);
+        });
+
+        Route::bind('control_group_tag', function($id) {
+            return app(GroupTagRepositoryContract::class)->getById($id);
+        });
+        Route::bind('control_role_tag', function($id) {
+            return app(RoleTagRepositoryContract::class)->getById($id);
+        });
+        Route::bind('control_user_tag', function($id) {
+            return app(UserTagRepositoryContract::class)->getById($id);
+        });
+        Route::bind('control_position_tag', function($id) {
+            return app(PositionTagRepositoryContract::class)->getById($id);
+        });
+
+        Route::bind('control_group_tag_category', function($id) {
+            return app(GroupTagCategoryRepositoryContract::class)->getById($id);
+        });
+        Route::bind('control_role_tag_category', function($id) {
+            return app(RoleTagCategoryRepositoryContract::class)->getById($id);
+        });
+        Route::bind('control_user_tag_category', function($id) {
+            return app(UserTagCategoryRepositoryContract::class)->getById($id);
+        });
+        Route::bind('control_position_tag_category', function($id) {
+            return app(PositionTagCategoryRepositoryContract::class)->getById($id);
+        });
+    }
+
+    public function setupRoutes()
+    {
+        Route::prefix(config('control.api_prefix'))
+            ->middleware(config('control.api_middleware'))
+            ->namespace('BristolSU\ControlDB\Http\Controllers')
+            ->group(__DIR__ . '/../routes/api.php');
     }
 
 

@@ -5,13 +5,14 @@ namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
 use BristolSU\ControlDB\Contracts\Models\Position;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface PositionTag
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a Position Tag
  */
-interface PositionTag
+interface PositionTag extends Arrayable, Jsonable
 {
 
     /**
@@ -44,6 +45,7 @@ interface PositionTag
 
     /**
      * ID of the tag category
+     *
      * @return int
      */
     public function categoryId(): int;
@@ -64,21 +66,51 @@ interface PositionTag
     public function fullReference(): string;
 
     /**
-     * Positions that have this tag
+     * Positions who have this tag
      *
      * @return Collection
      */
     public function positions(): Collection;
 
-    public function setName(string $name);
+    /**
+     * Set the name of the tag
+     *
+     * @param string $name
+     */
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    /**
+     * Set the description of the tag
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void;
 
-    public function setTagCategoryId($categoryId);
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
+    public function setTagCategoryId(int $categoryId): void;
 
-    public function addPosition(Position $position);
+    /**
+     * Add a position to the tag
+     *
+     * @param Position $position
+     */
+    public function addPosition(Position $position): void;
 
-    public function removePosition(Position $position);
+    /**
+     * Remove a position from the tag
+     *
+     * @param Position $position
+     */
+    public function removePosition(Position $position): void;
 }

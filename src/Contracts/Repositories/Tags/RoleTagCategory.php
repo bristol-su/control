@@ -3,41 +3,29 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag as RoleTagModel;
 use BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
 use Illuminate\Support\Collection;
 
 /**
- * Interface RoleTag
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Manages role tag categories
  */
-abstract class RoleTagCategory
+interface RoleTagCategory
 {
 
     /**
      * Get all role tag categories
      *
-     * @return Collection
+     * @return Collection|RoleTagCategoryModel[]
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get the role tag category of a role tag
-     *
-     * @param RoleTagModel $role
-     * @return RoleTagCategoryModel
-     */
-    public function getThroughTag(RoleTagModel $role): RoleTagCategoryModel {
-        return $role->category();
-    }
+    public function all(): Collection;
 
     /**
      * Get a tag category by the reference
      *
-     * @param $reference
-     * @return mixed
+     * @param string $reference Reference of the tag
+     * @return RoleTagCategoryModel
      */
-    abstract public function getByReference(string $reference): RoleTagCategoryModel;
+    public function getByReference(string $reference): RoleTagCategoryModel;
 
     /**
      * Get a role tag category by id
@@ -45,9 +33,22 @@ abstract class RoleTagCategory
      * @param int $id
      * @return RoleTagCategoryModel
      */
-    abstract public function getById(int $id): RoleTagCategoryModel;
+    public function getById(int $id): RoleTagCategoryModel;
 
-    abstract public function delete(int $id);
+    /**
+     * Delete a role tag category
+     *
+     * @param int $id ID of the role tag category to delete
+     */
+    public function delete(int $id): void;
 
-    abstract public function create(string $name, string $description, string $reference): RoleTagCategoryModel;
+    /**
+     * Create a role tag category
+     *
+     * @param string $name Name of the role tag category
+     * @param string $description Description of the role tag category
+     * @param string $reference Reference of the role tag category
+     * @return RoleTagCategoryModel New role tag category
+     */
+    public function create(string $name, string $description, string $reference): RoleTagCategoryModel;
 }

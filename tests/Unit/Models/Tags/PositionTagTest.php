@@ -4,21 +4,13 @@
 namespace BristolSU\Tests\ControlDB\Unit\Models\Tags;
 
 
-use BristolSU\ControlDB\Models\Position;
-use BristolSU\ControlDB\Models\Role;
 use BristolSU\ControlDB\Models\Tags\PositionTag;
-use BristolSU\ControlDB\Models\Tags\PositionTagCategory;
-use BristolSU\ControlDB\Models\Group;
-use BristolSU\ControlDB\Models\User;
-use Illuminate\Support\Facades\DB;
+use BristolSU\ControlDB\Models\Tags\RoleTag;
 use BristolSU\Tests\ControlDB\TestCase;
 
 class PositionTagTest extends TestCase
 {
-    // TODO Test name method
-    // TODO Test description method
-    // TODO Test reference method
-    // TODO Test categoryId method
+
     /** @test */
     public function it_has_an_id_attribute(){
         $positionTag = factory(PositionTag::class)->create(['id' => 1]);
@@ -26,86 +18,66 @@ class PositionTagTest extends TestCase
     }
 
     /** @test */
-    public function category_relationship_returns_the_owning_category(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create();
-        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => $positionTagCategory->id]);
-
-        $this->assertInstanceOf(PositionTagCategory::class, $positionTag->categoryRelationship);
-        $this->assertTrue($positionTagCategory->is($positionTag->categoryRelationship));
+    public function it_has_a_name_attribute(){
+        $positionTag = factory(PositionTag::class)->create(['name' => 'Tag Name']);
+        $this->assertEquals('Tag Name', $positionTag->name());
     }
 
     /** @test */
-    public function category_returns_the_owning_category(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create();
-        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => $positionTagCategory->id]);
-
-        $this->assertInstanceOf(PositionTagCategory::class, $positionTag->category());
-        $this->assertTrue($positionTagCategory->is($positionTag->category()));
+    public function it_has_a_description_attribute(){
+        $positionTag = factory(PositionTag::class)->create(['description' => 'Tag Description']);
+        $this->assertEquals('Tag Description', $positionTag->description());
     }
 
+    /** @test */
+    public function it_has_a_reference_attribute(){
+        $positionTag = factory(PositionTag::class)->create(['reference' => 'tag_reference']);
+        $this->assertEquals('tag_reference', $positionTag->reference());
+    }
 
     /** @test */
-    public function position_relationship_returns_positions_with_the_tag(){
-        $positionTag = factory(PositionTag::class)->create();
-        // Models which could be linked to a tag. Positions, roles and positions should never be returned
-        $taggedPositions = factory(Position::class, 5)->create();
-        $untaggedPositions = factory(Position::class, 5)->create();
-        $groups = factory(Group::class, 5)->create();
-        $roles = factory(Role::class, 5)->create();
-        $users = factory(User::class, 5)->create();
+    public function it_has_a_category_id_attribute(){
+        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => 1]);
+        $this->assertEquals(1, $positionTag->categoryId());$tags = factory(PositionTag::class)->create();
+    }
 
-        DB::table('control_taggables')->insert($taggedPositions->map(function($position) use ($positionTag) {
-            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => 'position'];
-        })->toArray());
+    /** @test */
+    public function it_sets_a_name_attribute(){
+        $positionTag = factory(PositionTag::class)->create(['name' => 'Tag Name']);
+        $positionTag->setName('Tag Name2');
+        $this->assertEquals('Tag Name2', $positionTag->name());
+    }
 
-        $positionPositionRelationship = $positionTag->positionRelationship;
-        $this->assertEquals(5, $positionPositionRelationship->count());
-        foreach($taggedPositions as $position) {
-            $this->assertTrue($position->is($positionPositionRelationship->shift()));
+    /** @test */
+    public function it_sets_a_description_attribute(){
+        $positionTag = factory(PositionTag::class)->create(['description' => 'Tag Description']);
+        $positionTag->setDescription('Tag Description2');
+        $this->assertEquals('Tag Description2', $positionTag->description());
+    }
+
+    /** @test */
+    public function it_sets_a_reference_attribute(){
+        $positionTag = factory(PositionTag::class)->create(['reference' => 'tag_reference']);
+        $positionTag->setReference('tag_reference2');
+        $this->assertEquals('tag_reference2', $positionTag->reference());
+    }
+
+    /** @test */
+    public function it_sets_a_category_id_attribute(){
+        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => 1]);
+        $positionTag->setTagCategoryId(2);
+        $this->assertEquals(2, $positionTag->categoryId());
+    }
+
+    /** @test */
+    public function it_applies_the_scope(){
+        $tags = factory(PositionTag::class, 5)->create();
+        factory(RoleTag::class)->create();
+
+        $resolvedTags = PositionTag::all();
+        $this->assertEquals(5, $resolvedTags->count());
+        foreach($tags as $tag) {
+            $this->assertTrue($tag->is($resolvedTags->shift()));
         }
     }
-
-    /** @test */
-    public function position_relationship_can_be_used_to_tag_a_position(){
-        $positionTag = factory(PositionTag::class)->create();
-
-        $taggedPositions = factory(Position::class, 5)->make();
-        $positionTag->positionRelationship()->saveMany($taggedPositions);
-
-        $positionPositionRelationship = $positionTag->positionRelationship;
-        $this->assertEquals(5, $positionPositionRelationship->count());
-        foreach($taggedPositions as $position) {
-            $this->assertTrue($position->is($positionPositionRelationship->shift()));
-        }
-    }
-
-    /** @test */
-    public function position_returns_all_positions_tagged(){
-        $positionTag = factory(PositionTag::class)->create();
-        // Models which could be linked to a tag. Positions, roles and positions should never be returned
-        $taggedPositions = factory(Position::class, 5)->create();
-        $untaggedPositions = factory(Position::class, 5)->create();
-        $groups = factory(Group::class, 5)->create();
-        $roles = factory(Role::class, 5)->create();
-        $users = factory(User::class, 5)->create();
-
-        DB::table('control_taggables')->insert($taggedPositions->map(function($position) use ($positionTag) {
-            return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => 'position'];
-        })->toArray());
-
-        $positionPositionRelationship = $positionTag->positions();
-        $this->assertEquals(5, $positionPositionRelationship->count());
-        foreach($taggedPositions as $position) {
-            $this->assertTrue($position->is($positionPositionRelationship->shift()));
-        }
-    }
-
-    /** @test */
-    public function fullReference_returns_the_category_reference_and_the_tag_reference(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create(['reference' => 'categoryreference1']);
-        $positionTag = factory(PositionTag::class)->create(['reference' => 'tagreference1', 'tag_category_id' => $positionTagCategory->id]);
-
-        $this->assertEquals('categoryreference1.tagreference1', $positionTag->fullReference());
-    }
-
 }

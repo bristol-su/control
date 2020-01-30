@@ -94,4 +94,20 @@ class RoleTagTest extends TestCase
         $roleTag->refresh();
         $this->assertTrue($roleTag->trashed());
     }
+
+    /** @test */
+    public function allThroughTagCategory_returns_all_tags_through_a_tag_category(){
+        $category = factory(RoleTagCategory::class)->create();
+        $tags = factory(RoleTag::class, 10)->create(['tag_category_id' => $category->id()]);
+        factory(RoleTag::class, 10)->create();
+
+        $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
+        $tagsFromRepo = $roleTagRepo->allThroughTagCategory($category);
+        $this->assertContainsOnlyInstancesOf(RoleTag::class, $tagsFromRepo);
+        foreach($tags as $tag) {
+            $this->assertTrue($tag->is(
+                $tagsFromRepo->shift()
+            ));
+        }
+    }
 }

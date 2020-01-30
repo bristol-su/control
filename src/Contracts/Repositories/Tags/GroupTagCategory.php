@@ -1,43 +1,30 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagModel;
 use BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory as GroupTagCategoryModel;
 use Illuminate\Support\Collection;
 
 /**
- * Interface GroupTag
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Manages group tag categories
  */
-abstract class GroupTagCategory
+interface GroupTagCategory
 {
 
     /**
      * Get all group tag categories
      *
-     * @return Collection
+     * @return Collection|GroupTagCategoryModel[]
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get the group tag category of a group tag
-     *
-     * @param GroupTagModel $group
-     * @return GroupTagCategoryModel
-     */
-    public function getThroughTag(GroupTagModel $group): GroupTagCategoryModel {
-        return $group->category();
-    }
+    public function all(): Collection;
 
     /**
      * Get a tag category by the reference
      *
-     * @param $reference
-     * @return mixed
+     * @param string $reference Reference of the tag
+     * @return GroupTagCategoryModel
      */
-    abstract public function getByReference(string $reference): GroupTagCategoryModel;
+    public function getByReference(string $reference): GroupTagCategoryModel;
 
     /**
      * Get a group tag category by id
@@ -45,9 +32,22 @@ abstract class GroupTagCategory
      * @param int $id
      * @return GroupTagCategoryModel
      */
-    abstract public function getById(int $id): GroupTagCategoryModel;
+    public function getById(int $id): GroupTagCategoryModel;
 
-    abstract public function delete(int $id);
+    /**
+     * Delete a group tag category
+     * 
+     * @param int $id ID of the group tag category to delete
+     */
+    public function delete(int $id): void;
 
-    abstract public function create(string $name, string $description, string $reference): GroupTagCategoryModel;
+    /**
+     * Create a group tag category
+     * 
+     * @param string $name Name of the group tag category
+     * @param string $description Description of the group tag category
+     * @param string $reference Reference of the group tag category
+     * @return GroupTagCategoryModel New group tag category
+     */
+    public function create(string $name, string $description, string $reference): GroupTagCategoryModel;
 }

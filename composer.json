@@ -1,38 +1,42 @@
 {
-  "name": "bristol-su/control",
-  "description": "An implementation of the control contracts",
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Toby Twigger",
-      "email": "tt15951@my.bristol.ac.uk"
-    }
-  ],
-  "require": {
-    "orchestra/testbench": "^4.0",
-    "php": "^7.2"
-  },
-  "extra": {
-    "laravel": {
-      "dont-discover": [],
-      "providers": [
-        "BristolSU\\ControlDB\\ControlDBServiceProvider"
-      ]
-    }
-  },
-  "autoload": {
-    "psr-4": {
-      "BristolSU\\ControlDB\\": "src/"
+    "name": "bristol-su/control",
+    "description": "An implementation of the control contracts",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Toby Twigger",
+            "email": "tt15951@my.bristol.ac.uk"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "ext-json": "*"
     },
-    "classmap": [
-      "database/seeds/",
-      "database/factories/"
-    ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "BristolSU\\Tests\\ControlDB\\": "tests/"
+    "require-dev" : {
+        "orchestra/testbench": "^4.0",
+	"phpstan/phpstan": "^0.12.8"
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [],
+            "providers": [
+                "BristolSU\\ControlDB\\ControlDBServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "BristolSU\\ControlDB\\": "src/"
+        },
+        "classmap": [
+            "database/seeds/",
+            "database/factories/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BristolSU\\Tests\\ControlDB\\": "tests/"
+        }
     }
-  }
 }

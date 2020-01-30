@@ -1,23 +1,32 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Repositories;
 
-
-use BristolSU\ControlDB\Models\Position as PositionModel;
+use BristolSU\ControlDB\Contracts\Models\Position as PositionModel;
 use BristolSU\ControlDB\Contracts\Repositories\Position as PositionContract;
 use Illuminate\Support\Collection;
 
 /**
- * Class Position
- * @package BristolSU\ControlDB\Repositories
+ * Handles positions
  */
-class Position extends PositionContract
+class Position implements PositionContract
 {
 
+    /**
+     * Get a position by ID
+     *
+     * @param int $id ID of the position
+     * @return PositionModel
+     */
+    public function getById(int $id): PositionModel
+    {
+        return \BristolSU\ControlDB\Models\Position::where('id', $id)->firstOrFail();
+    }
 
     /**
-     * @inheritDoc
+     * Get all positions
+     *
+     * @return Collection|PositionModel[]
      */
     public function all(): Collection
     {
@@ -25,10 +34,36 @@ class Position extends PositionContract
     }
 
     /**
-     * @inheritDoc
+     * Create a new position
+     *
+     * @param int $dataProviderId
+     * @return PositionModel
      */
-    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Position
+    public function create(int $dataProviderId): PositionModel
     {
-        return \BristolSU\ControlDB\Models\Position::where('id', $id)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Position::create([
+            'data_provider_id' => $dataProviderId
+        ]);
     }
+
+    /**
+     * Delete a position by ID
+     *
+     * @param int $id
+     */
+    public function delete(int $id): void
+    {
+        \BristolSU\ControlDB\Models\Position::findOrFail($id)->delete();
+    }
+
+    /**
+     * Get a position by its data provider ID
+     *
+     * @param int $dataProviderId
+     * @return PositionModel
+     */
+    public function getByDataProviderId(int $dataProviderId): PositionModel {
+        return \BristolSU\ControlDB\Models\Position::where('data_provider_id', $dataProviderId)->firstOrFail();
+    }
+
 }

@@ -20,6 +20,7 @@ class CreateControlDataUserTable extends Migration
             $table->string('email')->nullable();
             $table->date('dob')->nullable();
             $table->string('preferred_name')->nullable();
+            $table->json('additional_attributes')->nullable()->default('[]');
             $table->timestamps();
             $table->softDeletes();
         });

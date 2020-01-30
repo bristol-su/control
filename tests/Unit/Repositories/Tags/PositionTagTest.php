@@ -5,6 +5,8 @@ namespace BristolSU\Tests\ControlDB\Unit\Repositories\Tags;
 use BristolSU\ControlDB\Models\Position;
 use BristolSU\ControlDB\Models\Tags\PositionTag;
 use BristolSU\ControlDB\Models\Tags\PositionTagCategory;
+use BristolSU\ControlDB\Models\Tags\UserTag;
+use BristolSU\ControlDB\Models\Tags\UserTagCategory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use BristolSU\Tests\ControlDB\TestCase;
@@ -94,5 +96,20 @@ class PositionTagTest extends TestCase
         $positionTag->refresh();
         $this->assertTrue($positionTag->trashed());
     }
+    
+    /** @test */
+    public function allThroughTagCategory_returns_all_tags_through_a_tag_category(){
+        $category = factory(PositionTagCategory::class)->create();
+        $tags = factory(PositionTag::class, 10)->create(['tag_category_id' => $category->id()]);
+        factory(PositionTag::class, 10)->create();
 
+        $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
+        $tagsFromRepo = $positionTagRepo->allThroughTagCategory($category);
+        $this->assertContainsOnlyInstancesOf(PositionTag::class, $tagsFromRepo);
+        foreach($tags as $tag) {
+            $this->assertTrue($tag->is(
+                $tagsFromRepo->shift()
+            ));
+        }
+    }
 }

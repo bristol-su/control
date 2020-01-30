@@ -2,44 +2,76 @@
 
 namespace BristolSU\Tests\ControlDB\Unit\Models\Tags;
 
-use BristolSU\ControlDB\Models\Tags\GroupTag;
 use BristolSU\ControlDB\Models\Tags\GroupTagCategory;
+use BristolSU\ControlDB\Models\Tags\UserTagCategory;
 use BristolSU\Tests\ControlDB\TestCase;
 
 class GroupTagCategoryTest extends TestCase
 {
-    // TODO Test ID method
-    // TODO Test name method
-    // TODO Test description method
-    // TODO Test reference method
     /** @test */
-    public function tagRelationship_returns_all_tags_related_to_the_category(){
-        $tagCategory1 = factory(GroupTagCategory::class)->create();
-        $tags1 = factory(GroupTag::class, 5)->create(['tag_category_id' => $tagCategory1->id]);
-        // Data that shouldn't be returned
-        $tagCategory2 = factory(GroupTagCategory::class)->create();
-        $tags2 = factory(GroupTag::class, 5)->create(['tag_category_id' => $tagCategory2->id]);
+    public function it_creates_a_tag_category_with_a_type_of_group(){
+        $category = factory(GroupTagCategory::class)->create();
+        $this->assertDatabaseHas('control_tag_categories', [
+            'id' => $category->id(),
+            'type' => 'group'
+        ]);
+    }
+    
+    /** @test */
+    public function it_only_retrieves_group_tag_categories(){
+        $tags = factory(GroupTagCategory::class, 5)->create();
+        factory(UserTagCategory::class)->create();
 
-        $tagsFromRelationship = $tagCategory1->tagRelationship;
-        $this->assertEquals(5, $tagsFromRelationship->count());
-        foreach($tags1 as $tag) {
-            $this->assertTrue($tag->is($tagsFromRelationship->shift()));
+        $resolvedTags = GroupTagCategory::all();
+        $this->assertEquals(5, $resolvedTags->count());
+        foreach($tags as $tag) {
+            $this->assertTrue($tag->is($resolvedTags->shift()));
         }
+    }
+    
+    /** @test */
+    public function id_returns_the_id(){
+        $category = factory(GroupTagCategory::class)->create(['id' => 1]);
+        $this->assertEquals(1, $category->id());
     }
 
     /** @test */
-    public function tags_returns_the_tag_relationship_result(){
-        $tagCategory1 = factory(GroupTagCategory::class)->create();
-        $tags1 = factory(GroupTag::class, 5)->create(['tag_category_id' => $tagCategory1->id]);
-        // Data that shouldn't be returned
-        $tagCategory2 = factory(GroupTagCategory::class)->create();
-        $tags2 = factory(GroupTag::class, 5)->create(['tag_category_id' => $tagCategory2->id]);
+    public function name_returns_the_name(){
+        $category = factory(GroupTagCategory::class)->create(['name' => 'name1']);
+        $this->assertEquals('name1', $category->name());
+    }
 
-        $tagsFromRelationship = $tagCategory1->tags();
-        $this->assertEquals(5, $tagsFromRelationship->count());
-        foreach($tags1 as $tag) {
-            $this->assertTrue($tag->is($tagsFromRelationship->shift()));
-        }
+    /** @test */
+    public function description_returns_the_description(){
+        $category = factory(GroupTagCategory::class)->create(['description' => 'Description']);
+        $this->assertEquals('Description', $category->description());
+    }
+
+    /** @test */
+    public function reference_returns_the_reference(){
+        $category = factory(GroupTagCategory::class)->create(['reference' => 'Reference']);
+        $this->assertEquals('Reference', $category->reference());
+    }
+
+    /** @test */
+    public function set_name_sets_the_name(){
+        $category = factory(GroupTagCategory::class)->create(['name' => 'name1']);
+        $category->setName('NewName');
+        $this->assertEquals('NewName', $category->name());
+    }
+
+    /** @test */
+    public function set_description_sets_the_description(){
+        $category = factory(GroupTagCategory::class)->create(['description' => 'description1']);
+        $category->setDescription('NewDescription');
+        $this->assertEquals('NewDescription', $category->description());
+    }
+
+    /** @test */
+    public function set_reference_sets_the_reference(){
+        $category = factory(GroupTagCategory::class)->create(['reference' => 'reference1']);
+        $category->setReference('NewReference');
+        $this->assertEquals('NewReference', $category->reference());
     }
 
 }

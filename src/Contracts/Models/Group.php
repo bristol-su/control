@@ -3,20 +3,15 @@
 namespace BristolSU\ControlDB\Contracts\Models;
 
 use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
-use BristolSU\ControlDB\Contracts\Models\User;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface Group
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a group
  */
-interface Group extends Authenticatable
+interface Group extends Arrayable, Jsonable
 {
-
-    public function data(): DataGroup;
-
-    public function dataProviderId();
 
     /**
      * ID of the group
@@ -26,11 +21,31 @@ interface Group extends Authenticatable
     public function id(): int;
 
     /**
+     * Get the ID of the data provider
+     * 
+     * @return int
+     */
+    public function dataProviderId(): int;
+
+    /**
+     * Set the data provider ID
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void;
+
+    /**
+     * Get the DataGroup attached to the group
+     *
+     * @return DataGroup
+     */
+    public function data(): DataGroup;
+
+    /**
      * Members of the group
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function members(): Collection;
 
     /**
@@ -38,7 +53,6 @@ interface Group extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function roles(): Collection;
 
     /**
@@ -46,21 +60,36 @@ interface Group extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function tags(): Collection;
 
-    // TODO Abstract!
-    public function addTag(GroupTag $groupTag);
+    /**
+     * Add a group tag to the group
+     * 
+     * @param GroupTag $groupTag
+     */
+    public function addTag(GroupTag $groupTag): void;
 
-    // TODO Abstract!
-    public function removeTag(GroupTag $groupTag);
+    /**
+     * Remove a group tag from the group
+     * 
+     * @param GroupTag $groupTag
+     */
+    public function removeTag(GroupTag $groupTag): void;
 
-    // TODO Abstract!
-    public function addUser(User $user);
+    /**
+     * Add a user to the group
+     * 
+     * @param User $user
+     */
+    public function addUser(User $user): void;
 
-    // TODO Abstract!
-    public function removeUser(User $user);
+    /**
+     * Remove a user from the group
+     * 
+     * @param User $user
+     */
+    public function removeUser(User $user): void;
 
-    public function setDataProviderId(int $dataProviderId);
+
 
 }

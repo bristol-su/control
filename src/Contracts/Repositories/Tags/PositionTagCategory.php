@@ -3,41 +3,29 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Tags\PositionTag as PositionTagModel;
 use BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory as PositionTagCategoryModel;
 use Illuminate\Support\Collection;
 
 /**
- * Interface PositionTag
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Manages position tag categories
  */
-abstract class PositionTagCategory
+interface PositionTagCategory
 {
 
     /**
      * Get all position tag categories
      *
-     * @return Collection
+     * @return Collection|PositionTagCategoryModel[]
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get the position tag category of a position tag
-     *
-     * @param PositionTagModel $position
-     * @return PositionTagCategoryModel
-     */
-    public function getThroughTag(PositionTagModel $position): PositionTagCategoryModel {
-        return $position->category();
-    }
+    public function all(): Collection;
 
     /**
      * Get a tag category by the reference
      *
-     * @param $reference
-     * @return mixed
+     * @param string $reference Reference of the tag
+     * @return PositionTagCategoryModel
      */
-    abstract public function getByReference(string $reference): PositionTagCategoryModel;
+    public function getByReference(string $reference): PositionTagCategoryModel;
 
     /**
      * Get a position tag category by id
@@ -45,9 +33,22 @@ abstract class PositionTagCategory
      * @param int $id
      * @return PositionTagCategoryModel
      */
-    abstract public function getById(int $id): PositionTagCategoryModel;
+    public function getById(int $id): PositionTagCategoryModel;
 
-    abstract public function delete(int $id);
+    /**
+     * Delete a position tag category
+     *
+     * @param int $id ID of the position tag category to delete
+     */
+    public function delete(int $id): void;
 
-    abstract public function create(string $name, string $description, string $reference): PositionTagCategoryModel;
+    /**
+     * Create a position tag category
+     *
+     * @param string $name Name of the position tag category
+     * @param string $description Description of the position tag category
+     * @param string $reference Reference of the position tag category
+     * @return PositionTagCategoryModel New position tag category
+     */
+    public function create(string $name, string $description, string $reference): PositionTagCategoryModel;
 }

@@ -1,31 +1,46 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Models\Tags;
 
-
-use BristolSU\ControlDB\Models\Position;
 use BristolSU\ControlDB\Scopes\PositionTagScope;
+use BristolSU\ControlDB\Traits\Tags\PositionTagTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 /**
  * Class PositionTag
- * @package BristolSU\ControlDB\Models
  */
 class PositionTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
 {
-    use SoftDeletes;
+    use SoftDeletes, PositionTagTrait;
 
-    protected $table = 'control_tags';
-    protected $guarded = [];
-
+    /**
+     * Boot the model
+     *
+     * - Add a global scope to only return position tags
+     */
     protected static function boot()
     {
         parent::boot();
         static::addGlobalScope(new PositionTagScope());
     }
+
+    /**
+     * Table to use
+     *
+     * @var string
+     */
+    protected $table = 'control_tags';
+
+    /**
+     * Fillable properties
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'description', 'reference', 'tag_category_id'
+    ];
+
 
     /**
      * ID of the position tag
@@ -69,6 +84,7 @@ class PositionTag extends Model implements \BristolSU\ControlDB\Contracts\Models
 
     /**
      * ID of the tag category
+     *
      * @return int
      */
     public function categoryId(): int
@@ -77,78 +93,47 @@ class PositionTag extends Model implements \BristolSU\ControlDB\Contracts\Models
     }
 
     /**
-     * Full reference of the tag
+     * Set the name of the tag
      *
-     * This should be the tag category reference and the tag reference, separated with a period.
-     * @return string
+     * @param string $name
      */
-    public function fullReference(): string
-    {
-        return $this->category()->reference() . '.' . $this->reference;
-    }
-
-    /**
-     * Tag Category
-     *
-     * @return PositionTagCategory
-     */
-    public function category(): \BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory
-    {
-        return $this->categoryRelationship;
-    }
-
-    /**
-     * Positions who have this tag
-     *
-     * @return Collection
-     */
-    public function positions(): Collection
-    {
-        return $this->positionRelationship;
-    }
-
-    public function categoryRelationship()
-    {
-        return $this->belongsTo(PositionTagCategory::class, 'tag_category_id');
-    }
-
-    public function positionRelationship()
-    {
-        return $this->morphedByMany(Position::class, 'taggable', 'control_taggables', 'tag_id',
-            'taggable_id');
-    }
-
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
         $this->save();
     }
 
-    public function setDescription(string $description)
+    /**
+     * Set the description of the tagTag Reference
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void
     {
         $this->description = $description;
         $this->save();
     }
 
-    public function setReference(string $reference)
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void
     {
         $this->reference = $reference;
         $this->save();
     }
 
-    public function setTagCategoryId($categoryId)
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
+    public function setTagCategoryId($categoryId): void
     {
-        $this->category_id = $categoryId;
+        $this->tag_category_id = $categoryId;
         $this->save();
     }
 
-    public function addPosition(\BristolSU\ControlDB\Contracts\Models\Position $position)
-    {
-        $this->positionRelationship()->attach($position->id());
-    }
-
-    public function removePosition(\BristolSU\ControlDB\Contracts\Models\Position $position)
-    {
-        $this->positionRelationship()->detach($position->id());
-    }
 }

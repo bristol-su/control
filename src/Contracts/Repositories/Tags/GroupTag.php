@@ -3,32 +3,20 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories\Tags;
 
-use BristolSU\ControlDB\Contracts\Models\Group;
 use Illuminate\Support\Collection;
 
 /**
- * Interface GroupTag
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Manages group tags
  */
-abstract class GroupTag
+interface GroupTag
 {
 
     /**
      * Get all group tags
      *
-     * @return Collection
+     * @return Collection|\BristolSU\ControlDB\Contracts\Models\Tags\GroupTag[]
      */
-    abstract public function all(): Collection;
-
-    /**
-     * Get all group tags which a group is tagged with
-     *
-     * @param Group $group
-     * @return Collection
-     */
-    public function allThroughGroup(Group $group): Collection {
-        return $group->tags();
-    }
+    public function all(): Collection;
 
     /**
      * Get a tag by the full reference
@@ -36,9 +24,9 @@ abstract class GroupTag
      * The full reference looks like 'tag_category_ref.tag_ref'
      *
      * @param string $reference
-     * @return mixed
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
      */
-    abstract public function getTagByFullReference(string $reference): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+    public function getTagByFullReference(string $reference): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 
     /**
      * Get a group tag by id
@@ -46,19 +34,31 @@ abstract class GroupTag
      * @param int $id
      * @return \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
      */
-    abstract public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 
     /**
-     * Get all group tags belonging to a group tag category
-     *
-     * @param  $groupTagCategory
-     * @return Collection
+     * Create a group tag
+     * 
+     * @param string $name Name of the tag
+     * @param string $description Description of the tag
+     * @param string $reference Reference for the tag
+     * @param int $tagCategoryId Category ID of the tag
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
      */
-    public function allThroughGroupTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory): Collection {
-        return $groupTagCategory->tags();
-    }
+    public function create(string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 
-    abstract public function create(string $name, string $description, string $reference, $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+    /**
+     * Delete a group tag
+     * 
+     * @param int $id ID of the tag to delete
+     */
+    public function delete(int $id): void;
 
-    abstract public function delete(int $id);
+    /**
+     * Get all tags through a tag category
+     * 
+     * @param \BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory
+     * @return Collection|GroupTag[] Tags with the given group tag category
+     */
+    public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory): Collection;
 }

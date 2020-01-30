@@ -5,41 +5,78 @@ namespace BristolSU\ControlDB\Contracts\Models;
 
 
 use BristolSU\ControlDB\Contracts\Models\Tags\RoleTag;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface Role
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a role
  */
-interface Role extends Authenticatable
+interface Role extends Arrayable, Jsonable
 {
 
     /**
-     * ID of the position
+     * Get the ID of the role
+     *
+     * @return int
+     */
+    public function id(): int;
+
+    /**
+     * ID of the position the role belongs to
      *
      * @return mixed
      */
-    public function positionId();
+    public function positionId(): int;
 
-    // TODO Abstract!
-    public function data(): DataRole;
+    /**
+     * ID of the role data provider
+     * 
+     * @return int
+     */
+    public function dataProviderId(): int;
 
-    public function dataProviderId();
-    
     /**
      * ID of the group
      *
      * @return mixed
      */
-    public function groupId();
+    public function groupId(): int;
 
+    /**
+     * Set the ID of the group the role belongs to
+     * 
+     * @param int $groupId
+     */
+    public function setGroupId(int $groupId): void;
+
+    /**
+     * Set the ID of the position the group belongs to
+     * 
+     * @param int $positionId
+     */
+    public function setPositionId(int $positionId): void;
+
+    /**
+     * Set the ID of the data provider
+     * 
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void;
+
+    /**
+     * Data associated with the role
+     *
+     * @return DataRole
+     */
+    public function data(): DataRole;
     /**
      * Position belonging to the role
      *
      * @return Position
      */
     public function position(): Position;
+
     /**
      * Group belonging to the role
      *
@@ -52,7 +89,6 @@ interface Role extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function users(): Collection;
 
     /**
@@ -60,32 +96,33 @@ interface Role extends Authenticatable
      *
      * @return Collection
      */
-    // TODO Abstract!
     public function tags(): Collection;
 
     /**
-     * Get the ID of the role
-     *
-     * @return int
+     * Add a tag to the role
+     * 
+     * @param RoleTag $roleTag
      */
-    public function id(): int;
+    public function addTag(RoleTag $roleTag): void;
 
-    public function setGroupId(int $groupId);
-    
-    public function setPositionId(int $positionId);
+    /**
+     * Remove a tag from the role
+     * 
+     * @param RoleTag $roleTag
+     */
+    public function removeTag(RoleTag $roleTag): void;
 
-    public function setDataProviderId(int $dataProviderId);
+    /**
+     * Add a user to the role
+     * 
+     * @param User $user
+     */
+    public function addUser(User $user): void;
 
-    // TODO Abstract!
-    public function addTag(RoleTag $roleTag);
-
-    // TODO Abstract!
-    public function removeTag(RoleTag $roleTag);
-
-
-    // TODO Abstract!
-    public function addUser(User $user);
-
-    // TODO Abstract!
-    public function removeUser(User $user);
+    /**
+     * Remove a user from the role
+     * 
+     * @param User $user
+     */
+    public function removeUser(User $user): void;
 }

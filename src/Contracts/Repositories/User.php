@@ -1,64 +1,50 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Contracts\Repositories;
 
-
-use BristolSU\ControlDB\Contracts\Models\Group as GroupModel;
-use BristolSU\ControlDB\Contracts\Models\Role as RoleModel;
-use BristolSU\ControlDB\Contracts\Models\User as UserModelContract;
+use BristolSU\ControlDB\Contracts\Models\User as UserModel;
 use Illuminate\Support\Collection;
 
 /**
- * Interface User
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Handles users
  */
-abstract class User
+interface User
 {
+    /**
+     * Get a user by ID
+     *
+     * @param int $id ID of the user
+     * @return UserModel
+     */
+    public function getById(int $id): UserModel;
 
     /**
-     * Get a user by their ID
+     * Get a user by its data provider ID
      *
-     * @param $id
-     * @return UserModelContract
+     * @param int $dataProviderId
+     * @return UserModel
      */
-    abstract public function getById(int $id): UserModelContract;
+    public function getByDataProviderId(int $dataProviderId): UserModel;
 
     /**
      * Get all users
      *
-     * @return Collection
+     * @return Collection|UserModel[]
      */
-    abstract public function all(): Collection;
+    public function all(): Collection;
 
     /**
-     * Create a user
+     * Create a new user
      *
-     * @param $dataProviderId
-     * @return UserModelContract
+     * @param int $dataProviderId
+     * @return UserModel
      */
-    abstract public function create($dataProviderId): UserModelContract;
-
-    abstract public function getByDataProviderId($dataProviderId): UserModelContract;
-    /**
-     * Get all users with a specific role
-     *
-     * @param RoleModel $role
-     * @return Collection
-     */
-    public function allThroughRole(RoleModel $role): Collection {
-        return $role->users();
-    }
+    public function create(int $dataProviderId): UserModel;
 
     /**
-     * Get all users of a group
+     * Delete a user by ID
      *
-     * @param GroupModel $group
-     * @return Collection
+     * @param int $id
      */
-    public function allThroughGroup(GroupModel $group): Collection {
-        return $group->members();
-    }
-    
-    abstract public function delete(int $id);
+    public function delete(int $id): void;
 }

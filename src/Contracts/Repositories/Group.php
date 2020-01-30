@@ -2,55 +2,51 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories;
 
-use BristolSU\ControlDB\Contracts\Models\User as UserModel;
 use BristolSU\ControlDB\Contracts\Models\Group as GroupModel;
-use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag as GroupTagModel;
 use Illuminate\Support\Collection;
 
 /**
- * Interface Group
- * @package BristolSU\ControlDB\Contracts\Repositories
+ * Handles groups
  */
-abstract class Group
+interface Group
 {
 
     /**
      * Get a group by ID
      *
-     * @param $id
+     * @param int $id ID of the group
      * @return GroupModel
      */
-    abstract public function getById(int $id): GroupModel;
+    public function getById(int $id): GroupModel;
 
     /**
-     * Get all groups with a specific tag
-     *
-     * @param GroupTagModel $groupTag
-     * @return Collection
+     * Get a group by its data provider ID
+     * 
+     * @param int $dataProviderId
+     * @return GroupModel
      */
-    public function getThroughTag(GroupTagModel $groupTag): Collection {
-        return $groupTag->groups();
-    }
+    public function getByDataProviderId(int $dataProviderId): GroupModel;
 
     /**
      * Get all groups
      *
-     * @return Collection
+     * @return Collection|GroupModel[]
      */
-    abstract public function all(): Collection;
+    public function all(): Collection;
 
     /**
-     * Get all groups the given user is a member of
-     *
-     * @param $id
-     * @return Collection
+     * Create a new group
+     * 
+     * @param int $dataProviderId
+     * @return GroupModel
      */
-    public function allThroughUser(UserModel $user): Collection {
-        return $user->groups();
-    }
+    public function create(int $dataProviderId): GroupModel;
 
-    abstract public function create(int $dataProviderId): GroupModel;
-    
-    abstract public function delete(int $id);
+    /**
+     * Delete a group by ID
+     * 
+     * @param int $id
+     */
+    public function delete(int $id): void;
 
 }

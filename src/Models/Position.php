@@ -4,42 +4,40 @@
 namespace BristolSU\ControlDB\Models;
 
 
-use BristolSU\ControlDB\Models\Tags\GroupTag;
-use BristolSU\ControlDB\Models\Tags\PositionTag;
+use BristolSU\ControlDB\Traits\PositionTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 /**
- * Class Position
- * @package BristolSU\ControlDB\Models
+ * Represents a position
  */
 class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Position
 {
-    use SoftDeletes;
+    use SoftDeletes, PositionTrait;
 
+    /**
+     * Table to use
+     *
+     * @var string
+     */
     protected $table = 'control_positions';
 
-    protected $guarded = [];
+    /**
+     * Fillable attributes
+     *
+     * @var array
+     */
+    protected $fillable = ['data_provider_id'];
 
+    /**
+     * Attributes to append when casting to an array
+     *
+     * @var array
+     */
     protected $appends = [
         'data'
     ];
 
-    public function getDataAttribute()
-    {
-        return $this->data();
-    }
-
-    public function data(): \BristolSU\ControlDB\Contracts\Models\DataPosition {
-        return app(\BristolSU\ControlDB\Contracts\Repositories\DataPosition::class)->getById($this->dataProviderId());
-    }
-
-    public function dataProviderId()
-    {
-        return $this->data_provider_id;
-    }
-    
     /**
      * ID of the position
      *
@@ -51,53 +49,34 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
     }
 
     /**
-     * Roles with this position
+     * ID of the data provider for the position
      *
-     * @return Collection
+     * @return int
      */
-    public function roles(): Collection
+    public function dataProviderId(): int
     {
-        return $this->roleRelationship;
+        return $this->data_provider_id;
     }
 
     /**
-     * Tags the position is tagged with
+     * Set the ID of the data provider
      *
-     * @return Collection
+     * @param int $dataProviderId
      */
-    public function tags(): Collection
-    {
-        return $this->tagRelationship;
-    }
-
-    public function roleRelationship()
-    {
-        return $this->hasMany(Role::class);
-    }
-
-    public function tagRelationship()
-    {
-        return $this->morphToMany(PositionTag::class,
-            'taggable',
-            'control_taggables',
-            'taggable_id',
-            'tag_id');
-    }
-
-    public function setDataProviderId(int $dataProviderId)
+    public function setDataProviderId(int $dataProviderId): void
     {
         $this->data_provider_id = $dataProviderId;
         $this->save();
     }
 
-    public function addTag(\BristolSU\ControlDB\Contracts\Models\Tags\PositionTag $roleTag)
+    /**
+     * Laravel integration for a data property
+     *
+     * @return \BristolSU\ControlDB\Contracts\Models\DataPosition
+     */
+    public function getDataAttribute(): \BristolSU\ControlDB\Contracts\Models\DataPosition
     {
-        $this->tagRelationship()->attach($roleTag->id());
-    }
-
-    public function removeTag(\BristolSU\ControlDB\Contracts\Models\Tags\PositionTag $roleTag)
-    {
-        $this->tagRelationship()->detach($roleTag->id());
+        return $this->data();
     }
 
 }

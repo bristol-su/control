@@ -2,10 +2,15 @@
 
 namespace BristolSU\ControlDB\Scopes;
 
+use BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory as UserTagCategoryModel;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Only retrieves tags with a tag category of type user.
+ */
 class UserTagScope implements Scope
 {
 
@@ -18,8 +23,10 @@ class UserTagScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereHas('categoryRelationship', function(Builder $builder) {
-            $builder->where('type', 'user');
+        $userTagCategories = app(UserTagCategory::class)->all()->map(function(UserTagCategoryModel $userTagCategory) {
+            return $userTagCategory->id();
         });
+        
+        $builder->whereIn('tag_category_id', $userTagCategories);
     }
 }

@@ -5,13 +5,14 @@ namespace BristolSU\ControlDB\Contracts\Models\Tags;
 
 
 use BristolSU\ControlDB\Contracts\Models\Role;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 
 /**
- * Interface RoleTag
- * @package BristolSU\ControlDB\Contracts\Models
+ * Represents a Role Tag
  */
-interface RoleTag
+interface RoleTag extends Arrayable, Jsonable
 {
 
     /**
@@ -44,6 +45,7 @@ interface RoleTag
 
     /**
      * ID of the tag category
+     *
      * @return int
      */
     public function categoryId(): int;
@@ -64,21 +66,51 @@ interface RoleTag
     public function fullReference(): string;
 
     /**
-     * Roles that have this tag
+     * Roles who have this tag
      *
      * @return Collection
      */
     public function roles(): Collection;
 
-    public function setName(string $name);
+    /**
+     * Set the name of the tag
+     *
+     * @param string $name
+     */
+    public function setName(string $name): void;
 
-    public function setDescription(string $description);
+    /**
+     * Set the description of the tag
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void;
 
-    public function setReference(string $reference);
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void;
 
-    public function setTagCategoryId($categoryId);
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
+    public function setTagCategoryId(int $categoryId): void;
 
-    public function addRole(Role $role);
+    /**
+     * Add a role to the tag
+     *
+     * @param Role $role
+     */
+    public function addRole(Role $role): void;
 
-    public function removeRole(Role $role);
+    /**
+     * Remove a role from the tag
+     *
+     * @param Role $role
+     */
+    public function removeRole(Role $role): void;
 }

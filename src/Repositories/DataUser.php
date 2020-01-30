@@ -1,23 +1,42 @@
 <?php
 
-
 namespace BristolSU\ControlDB\Repositories;
-
 
 class DataUser implements \BristolSU\ControlDB\Contracts\Repositories\DataUser
 {
 
-    public function getById($id): \BristolSU\ControlDB\Contracts\Models\DataUser
+    /**
+     * Get a data user by ID
+     *
+     * @param int $id
+     * @return \BristolSU\ControlDB\Contracts\Models\DataUser
+     */
+    public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\DataUser
     {
         return \BristolSU\ControlDB\Models\DataUser::findOrFail($id);
     }
 
-
+    /**
+     * Get a data user with the given attributes
+     *
+     * @param array $attributes
+     * @return \BristolSU\ControlDB\Contracts\Models\DataUser
+     */
     public function getWhere($attributes = []): \BristolSU\ControlDB\Contracts\Models\DataUser
     {
         return \BristolSU\ControlDB\Models\DataUser::where($attributes)->firstOrFail();
     }
 
+    /**
+     * Create a new data user
+     *
+     * @param string|null $firstName
+     * @param string|null $lastName
+     * @param string|null $email
+     * @param \DateTime|null $dob
+     * @param string|null $preferredName
+     * @return \BristolSU\ControlDB\Contracts\Models\DataUser
+     */
     public function create(?string $firstName = null, ?string $lastName = null, ?string $email = null, ?\DateTime $dob = null, ?string $preferredName = null): \BristolSU\ControlDB\Contracts\Models\DataUser
     {
         return \BristolSU\ControlDB\Models\DataUser::create([

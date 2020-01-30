@@ -3,33 +3,53 @@
 namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\RoleTagCategoryScope;
+use BristolSU\ControlDB\Traits\Tags\RoleTagCategoryTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 
 /**
- * Class RoleTag
- * @package BristolSU\ControlDB\Models
+ * Role Tag Category
  */
 class RoleTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\RoleTagCategory
 {
-    use SoftDeletes;
+    use SoftDeletes, RoleTagCategoryTrait;
 
+    /**
+     * Boot the model
+     *
+     * - Add a scope to only retrieve role tag categories
+     */
     protected static function boot()
     {
         parent::boot();
         static::addGlobalScope(new RoleTagCategoryScope());
+        static::creating(function($model) {
+            $model->type = 'role';
+        });
     }
 
+    /**
+     * Table to use
+     *
+     * @var string
+     */
     protected $table = 'control_tag_categories';
-    protected $guarded = [];
+
+    /**
+     * Fillable attributes
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'description', 'reference'
+    ];
 
     /**
      * ID of the tag category
      *
      * @return mixed
      */
-    public function id()
+    public function id(): int
     {
         return $this->id;
     }
@@ -65,33 +85,33 @@ class RoleTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
     }
 
     /**
-     * All tags under this tag category
+     * Set the name of the tag category
      *
-     * @return Collection
+     * @param string $name
      */
-    public function tags(): Collection
-    {
-        return $this->tagRelationship;
-    }
-
-    public function tagRelationship()
-    {
-        return $this->hasMany(RoleTag::class, 'tag_category_id');
-    }
-
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
         $this->save();
     }
 
-    public function setDescription(string $description)
+    /**
+     * Set the description of the tag category
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void
     {
         $this->description = $description;
         $this->save();
     }
 
-    public function setReference(string $reference)
+    /**
+     * Set the reference of the tag category
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void
     {
         $this->reference = $reference;
         $this->save();
