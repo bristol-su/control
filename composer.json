@@ -10,10 +10,12 @@
         }
     ],
     "require": {
-        "orchestra/testbench": "^4.0",
         "php": "^7.2",
-        "ext-json": "*",
-        "phpstan/phpstan": "^0.12.8"
+        "ext-json": "*"
+    },
+    "require-dev" : {
+        "orchestra/testbench": "^4.0",
+	"phpstan/phpstan": "^0.12.8"
     },
     "extra": {
         "laravel": {

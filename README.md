@@ -30,7 +30,6 @@
 
 [![Build][build-status-shield]][build-status-url]
 [![Code Quality][code-quality-shield]][code-quality-url]
-<!-- [![Coverage][coverage-shield]][coverage-url] -->
 [![Release][release-shield]][release-url]
 [![MIT License][license-shield]][license-url]
 
@@ -51,17 +50,19 @@
 
 ## About The Project
 
-The SDK makes up the core functionality of the [Bristol SU Portal](https://github.com/bristol-su/portal). 
+The control package provides a set of interfaces for creating a user management system, including groups and roles.
+
+It also provides a database implementation of these interfaces, leading to a zero-configuration package. Additionally, it provides a full API for accessing and changing data.
 
 ## Getting Started
 
-Usually, you will want to use the portal package. If you're building an integration with the portal, run the following command to install.
+Usually, you will want to use the portal package. This package is included with the SDK, but to pull it in alone, run
 
 ```sh
 composer require bristol-su/control
 ```
 
-See our [developer docs](https://docs.bristolsustaging.co.uk/books/module-development) for more information.
+See our [developer docs](https://docs.bristolsustaging.co.uk/books/framework-development/chapter/control) for more information.
 
 <!-- ROADMAP -->
 ## Roadmap

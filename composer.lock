@@ -4,8 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de3f88999491a0ad3566a4ee08a22024",
-    "packages": [
+    "content-hash": "054ee4e037d5e3290f4072e7d9315028",
+    "packages": [],
+    "packages-dev": [
         {
             "name": "doctrine/inflector",
             "version": "1.3.1",
@@ -403,16 +404,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.12.0",
+            "version": "v6.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "8e189a8dee7ff76bf50acb7e80aa1a36afaf54d4"
+                "reference": "f0059760814b76fb5f98bb80628607c7560ebe58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/8e189a8dee7ff76bf50acb7e80aa1a36afaf54d4",
-                "reference": "8e189a8dee7ff76bf50acb7e80aa1a36afaf54d4",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/f0059760814b76fb5f98bb80628607c7560ebe58",
+                "reference": "f0059760814b76fb5f98bb80628607c7560ebe58",
                 "shasum": ""
             },
             "require": {
@@ -546,7 +547,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-01-21T15:10:03+00:00"
+            "time": "2020-01-28T21:44:01+00:00"
         },
         {
             "name": "league/commonmark",
@@ -1095,22 +1096,22 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v4.5.0",
+            "version": "v4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "eb373f3e8d3b8ebc464f878db41ecc281a8c7547"
+                "reference": "0b537bf4d34a8da92759b79fcbe371e10b0135f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/eb373f3e8d3b8ebc464f878db41ecc281a8c7547",
-                "reference": "eb373f3e8d3b8ebc464f878db41ecc281a8c7547",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/0b537bf4d34a8da92759b79fcbe371e10b0135f0",
+                "reference": "0b537bf4d34a8da92759b79fcbe371e10b0135f0",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^6.9",
                 "mockery/mockery": "~1.2.3 || ^1.3.1",
-                "orchestra/testbench-core": "^4.5",
+                "orchestra/testbench-core": "^4.6",
                 "php": ">=7.2",
                 "phpunit/phpunit": "^8.3 || ^9.0"
             },
@@ -1141,24 +1142,24 @@
                 "orchestral",
                 "testing"
             ],
-            "time": "2020-01-07T22:50:40+00:00"
+            "time": "2020-01-29T23:03:49+00:00"
         },
         {
             "name": "orchestra/testbench-core",
-            "version": "v4.5.1",
+            "version": "v4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench-core.git",
-                "reference": "24ae854ca7a9895162557e6d113e64d0cb0667a3"
+                "reference": "6e6f1c330d37563d2ecca125d6b672e752ab88b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/24ae854ca7a9895162557e6d113e64d0cb0667a3",
-                "reference": "24ae854ca7a9895162557e6d113e64d0cb0667a3",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/6e6f1c330d37563d2ecca125d6b672e752ab88b5",
+                "reference": "6e6f1c330d37563d2ecca125d6b672e752ab88b5",
                 "shasum": ""
             },
             "require": {
-                "fzaninotto/faker": "^1.4",
+                "fzaninotto/faker": "^1.9.1",
                 "php": ">=7.2"
             },
             "require-dev": {
@@ -1206,7 +1207,7 @@
                 "orchestral",
                 "testing"
             ],
-            "time": "2020-01-21T03:11:28+00:00"
+            "time": "2020-01-29T22:59:50+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -4469,7 +4470,6 @@
             "time": "2019-11-24T13:36:37+00:00"
         }
     ],
-    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
