@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.1] - (02/02/2020)
 
-## [1.0] - (30/01/2020)
-
 ### Fixed
 - Removed default value for JSON column in database
+
+## [1.0] - (30/01/2020)
+
+### Added
+- API
+- model/repository implementations
+- model/repository contracts
 
 [Unreleased]: https://github.com/bristol-su/control/compare/v1.0...HEAD
 [1.0.1]: https://github.com/bristol-su/control/compare/v1.0...v1.0.1
