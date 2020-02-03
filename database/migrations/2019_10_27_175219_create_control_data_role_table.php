@@ -17,7 +17,7 @@ class CreateControlDataRoleTable extends Migration
             $table->bigIncrements('id');
             $table->string('role_name')->nullable();
             $table->string('email')->nullable();
-            $table->json('additional_attributes')->nullable()->default('[]');
+            $table->json('additional_attributes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

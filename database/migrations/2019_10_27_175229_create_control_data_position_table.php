@@ -17,7 +17,7 @@ class CreateControlDataPositionTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('description')->nullable();
-            $table->json('additional_attributes')->nullable()->default('[]');
+            $table->json('additional_attributes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
