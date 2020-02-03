@@ -56,7 +56,7 @@ trait HasAdditionalProperties
      */
     public function getAdditionalAttribute(string $key)
     {
-        return (array_key_exists($key, $this->{$this->getColumnName()}) 
+        return (array_key_exists($key, ($this->{$this->getColumnName()}??[])) 
             ? $this->{$this->getColumnName()}[$key] : null);
     }
 
@@ -68,7 +68,7 @@ trait HasAdditionalProperties
      */
     public function setAdditionalAttribute(string $key, $value)
     {
-        $this->attributes[$this->getColumnName()] = array_merge($this->{$this->getColumnName()}, [$key => $value]);
+        $this->attributes[$this->getColumnName()] = array_merge(($this->{$this->getColumnName()}??[]), [$key => $value]);
     }
 
     /**

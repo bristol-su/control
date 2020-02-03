@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - (03/02/2020)
+
+### Fixed
+- Default additional_attributes column to an empty array if null
+
 ## [1.0.1] - (02/02/2020)
 
 ### Fixed
@@ -19,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - model/repository implementations
 - model/repository contracts
 
-[Unreleased]: https://github.com/bristol-su/control/compare/v1.0...HEAD
+
+[Unreleased]: https://github.com/bristol-su/control/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/bristol-su/control/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/bristol-su/control/compare/v1.0...v1.0.1
 [1.0]: https://github.com/bristol-su/control/releases/tag/v1.0
