@@ -119,4 +119,55 @@ class RoleControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @test */
+    public function it_updates_a_role_with_additional_attributes()
+    {
+        DataRole::addProperty('student_id');
+        $dataRole = factory(DataRole::class)->create(['role_name' => 'Name1', 'email' => 'email@email.com', 'additional_attributes' => json_encode(['student_id' => 'xyz123'])]);
+        $role = factory(Role::class)->create(['data_provider_id' => $dataRole->id()]);
+
+        $this->assertDatabaseHas('control_data_role', [
+            'role_name' => 'Name1', 'email' => 'email@email.com', 'additional_attributes' => json_encode(['student_id' => 'xyz123'])
+        ]);
+
+        $response = $this->patchJson($this->apiUrl . '/role/' . $role->id(), [
+            'role_name' => 'Name2', 'email' => 'email2@email.com', 'student_id' => 'xzy789'
+        ]);
+
+        $response->assertJsonFragment([
+            'role_name' => 'Name2', 'email' => 'email2@email.com', 'student_id' => 'xzy789'
+        ]);
+
+        $this->assertDatabaseHas('control_data_role', [
+            'role_name' => 'Name2', 'email' => 'email2@email.com', 'additional_attributes' => json_encode(['student_id' => 'xzy789'])
+        ]);
+
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function it_creates_a_role_with_additional_attributes()
+    {
+        $group = factory(Group::class)->create();
+        $position = factory(Position::class)->create();
+        
+        DataRole::addProperty('account_code');
+        
+        $response = $this->postJson($this->apiUrl . '/role', [
+            'role_name' => 'Name2', 'email' => 'email2@email.com', 'account_code' => 'CHA', 'position_id' => $position->id(), 'group_id' => $group->id()
+        ]);
+        
+        $response->assertStatus(201);
+
+        $response->assertJsonFragment([
+            'role_name' => 'Name2', 'email' => 'email2@email.com', 'account_code' => 'CHA', 'position_id' => $position->id(), 'group_id' => $group->id()
+        ]);
+
+        $this->assertDatabaseHas('control_data_role', [
+            'role_name' => 'Name2', 'email' => 'email2@email.com', 'additional_attributes' => json_encode(['account_code' => 'CHA'])
+        ]);
+
+        $dataRole = DataRole::findOrFail($response->json('data.id'));
+        $response->assertJsonFragment(['id' => $dataRole->id()]);
+    }
 }

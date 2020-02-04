@@ -13,7 +13,7 @@ class StoreRoleRequest extends FormRequest
             'position_id' => 'required|integer|exists:control_positions,id',
             'group_id' => 'required|integer|exists:control_groups,id',
             'email' => 'nullable|string|email',
-            'position_name' => 'nullable|string|max:255',
+            'role_name' => 'nullable|string|max:255',
         ];
     }
 

@@ -13,13 +13,6 @@ trait HasAdditionalProperties
 {
 
     /**
-     * Holds the additional properties for the model
-     * 
-     * @var array
-     */
-    private $additionalProperties;
-
-    /**
      * Initialise the trait
      *
      * - Add all additional properties to the appends array
@@ -28,9 +21,8 @@ trait HasAdditionalProperties
      */
     public function initializeHasAdditionalProperties()
     {
-        $this->additionalProperties = (app(AdditionalPropertyStore::class)->getProperties(static::class) ?? []);
         if (is_subclass_of($this, Model::class)) {
-            $this->append($this->additionalProperties);
+            $this->append(static::getAdditionalAttributes());
             $this->addHidden($this->getColumnName());
             $this->casts[] = $this->getColumnName();
         } else {
@@ -48,6 +40,16 @@ trait HasAdditionalProperties
         app(AdditionalPropertyStore::class)->addProperty(static::class, $key);
     }
 
+    /**
+     * Get all additional attributes the model is using
+     * 
+     * @return array
+     */
+    public static function getAdditionalAttributes(): array
+    {
+        return (app(AdditionalPropertyStore::class)->getProperties(static::class) ?? []);
+    }
+    
     /**
      * Retrieve an additional attribute value
      * 
@@ -72,6 +74,18 @@ trait HasAdditionalProperties
     }
 
     /**
+     * Save an additional attribute value
+     *
+     * @param string $key Key of the attribute
+     * @param mixed $value Value of the attribute
+     */
+    public function saveAdditionalAttribute(string $key, $value)
+    {
+        $this->setAdditionalAttribute($key, $value);
+        $this->save();
+    }
+
+    /**
      * Override the default getAttribute function
      * 
      * Any time an attribute is retrieved, we will check if it's an additional property and return it if so
@@ -81,7 +95,7 @@ trait HasAdditionalProperties
      */
     public function getAttribute($key)
     {
-        if (in_array($key, $this->additionalProperties)) {
+        if (in_array($key, static::getAdditionalAttributes())) {
             return $this->getAdditionalAttribute($key);
         }
         return parent::getAttribute($key);
@@ -98,7 +112,7 @@ trait HasAdditionalProperties
      */
     public function setAttribute($key, $value)
     {
-        if (in_array($key, $this->additionalProperties)) {
+        if (in_array($key, static::getAdditionalAttributes())) {
             $this->setAdditionalAttribute($key, $value);
         } else {
             parent::setAttribute($key, $value);
@@ -146,7 +160,7 @@ trait HasAdditionalProperties
         // Check if the call was an accessor
         $additionalAccessors = array_map(function($propertyKey) {
             return 'get'.Str::studly($propertyKey).'Attribute';
-        }, $this->additionalProperties);
+        }, static::getAdditionalAttributes());
         if(in_array($method, $additionalAccessors)) {
             return $this->getAdditionalAttribute(
                 Str::snake(Str::substr(Str::substr($method, 3), 0, -9))
@@ -156,7 +170,7 @@ trait HasAdditionalProperties
         // Check if the call was a mutator
         $additionalAccessors = array_map(function($propertyKey) {
             return 'set'.Str::studly($propertyKey).'Attribute';
-        }, $this->additionalProperties);
+        }, static::getAdditionalAttributes());
         if(in_array($method, $additionalAccessors)) {
             $this->setAdditionalAttribute(
                 Str::snake(Str::substr(Str::substr($method, 3), 0, -9)), $args[0]

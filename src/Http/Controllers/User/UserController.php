@@ -56,6 +56,12 @@ class UserController extends Controller
             $request->input('preferred_name')
         );
 
+        foreach($dataUser->getAdditionalAttributes() as $additionalAttribute) {
+            if($request->has($additionalAttribute)) {
+                $dataUser->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
+            }
+        }
+        
         return $userRepository->create($dataUser->id());
     }
 
@@ -88,6 +94,11 @@ class UserController extends Controller
             $dataUser->setPreferredName($request->input('preferred_name'));
         }
 
+        foreach($dataUser->getAdditionalAttributes() as $additionalAttribute) {
+            if($request->has($additionalAttribute)) {
+                $dataUser->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
+            }
+        }
 
         return $user;
     }

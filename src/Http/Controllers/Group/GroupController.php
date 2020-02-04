@@ -2,6 +2,7 @@
 
 namespace BristolSU\ControlDB\Http\Controllers\Group;
 
+use BristolSU\ControlDB\Contracts\Models\DataGroup;
 use BristolSU\ControlDB\Http\Controllers\Controller;
 use BristolSU\ControlDB\Http\Requests\Api\Group\StoreGroupRequest;
 use BristolSU\ControlDB\Contracts\Models\Group;
@@ -52,6 +53,12 @@ class GroupController extends Controller
             $request->input('name'),
             $request->input('email')
         );
+        
+        foreach($dataGroup->getAdditionalAttributes() as $additionalAttribute) {
+            if($request->has($additionalAttribute)) {
+                $dataGroup->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
+            }
+        }
 
         return $groupRepository->create($dataGroup->id());
     }
@@ -74,6 +81,12 @@ class GroupController extends Controller
             $dataGroup->setEmail($request->input('email'));
         }
 
+        foreach($dataGroup->getAdditionalAttributes() as $additionalAttribute) {
+            if($request->has($additionalAttribute)) {
+                $dataGroup->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
+            }
+        }
+        
         return $group;
     }
 

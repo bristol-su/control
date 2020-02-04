@@ -51,7 +51,13 @@ class RoleController extends Controller
             $request->input('role_name'),
             $request->input('email')
         );
-
+        
+        foreach($dataRole->getAdditionalAttributes() as $additionalAttribute) {
+            if($request->has($additionalAttribute)) {
+                $dataRole->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
+            }
+        }
+        
         return $roleRepository->create($request->input('position_id'), $request->input('group_id'), $dataRole->id());
     }
 
@@ -82,7 +88,13 @@ class RoleController extends Controller
         if($request->input('group_id') !== null) {
             $role->setGroupId($request->input('group_id'));
         }
-
+        
+        foreach($dataRole->getAdditionalAttributes() as $additionalAttribute) {
+            if($request->has($additionalAttribute)) {
+                $dataRole->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
+            }
+        }
+        
         return $role;
     }
 
