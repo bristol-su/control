@@ -4,6 +4,8 @@
 namespace BristolSU\ControlDB\Repositories;
 
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class DataPosition implements \BristolSU\ControlDB\Contracts\Repositories\DataPosition
 {
 
@@ -19,14 +21,34 @@ class DataPosition implements \BristolSU\ControlDB\Contracts\Repositories\DataPo
     }
 
     /**
-     * Get a data position with the given attributes
+     * Get a data position with the given attributes, including additional attributes.
      *
      * @param array $attributes
      * @return \BristolSU\ControlDB\Contracts\Models\DataPosition
      */
     public function getWhere($attributes = []): \BristolSU\ControlDB\Contracts\Models\DataPosition
     {
-        return \BristolSU\ControlDB\Models\DataPosition::where($attributes)->firstOrFail();
+        $baseAttributes = $attributes;
+        $additionalAttributes = [];
+        foreach(\BristolSU\ControlDB\Models\DataPosition::getAdditionalAttributes() as $property) {
+            if(array_key_exists($property, $baseAttributes)) {
+                $additionalAttributes[$property] = $baseAttributes[$property];
+                unset($baseAttributes[$property]);
+            }
+        }
+        $users = \BristolSU\ControlDB\Models\DataPosition::where($baseAttributes)->get()->filter(function(\BristolSU\ControlDB\Models\DataPosition $dataPosition) use ($additionalAttributes) {
+            foreach($additionalAttributes as $additionalAttribute => $value) {
+                if($dataPosition->getAdditionalAttribute($additionalAttribute) !== $value) {
+                    return false;
+                }
+            }
+            return true;
+        })->values();
+
+        if($users->count() > 0) {
+            return $users->first();
+        }
+        throw (new ModelNotFoundException())->setModel(DataPosition::class);
     }
 
     /**
