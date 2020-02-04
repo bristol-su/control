@@ -88,7 +88,19 @@ class DataUserTest extends TestCase
         $this->assertEquals(Carbon::make('14-02-1990'), $dataUser->dob());
         $this->assertEquals('TobyT', $dataUser->preferredName());
     }
-    
-    
+
+    /** @test */
+    public function getWhere_also_searches_additional_attributes(){
+        DataUser::addProperty('student_id');
+        $dataUser1 = factory(DataUser::class)->create(['email' => 'email@email.com']);
+        $dataUser1->saveAdditionalAttribute('student_id', 'xy123');
+        $dataUser2 = factory(DataUser::class)->create(['email' => 'email@email.com']);
+        $dataUser2->saveAdditionalAttribute('student_id', 'xy1234');
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataUser();
+        $dbDataUser2 = $repository->getWhere(['email' => 'email@email.com', 'student_id' => 'xy1234']);
+
+        $this->assertTrue($dataUser2->is($dbDataUser2));
+    }
 
 }

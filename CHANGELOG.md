@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- DataGroupRepository::getWhere allows searching with additional attributes
+- DataUserRepository::getWhere allows searching with additional attributes
+- DataRoleRepository::getWhere allows searching with additional attributes
+- DataPositionRepository::getWhere allows searching with additional attributes
+
 ## [1.1] - (04/02/2020)
 
 ### Changed

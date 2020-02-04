@@ -82,7 +82,19 @@ class DataRoleTest extends TestCase
         $this->assertEquals('GrpRole_name', $dataRole->roleName());
         $this->assertEquals('email@email.com', $dataRole->email());
     }
-    
-    
+
+    /** @test */
+    public function getWhere_also_searches_additional_attributes(){
+        DataRole::addProperty('student_id');
+        $dataRole1 = factory(DataRole::class)->create(['email' => 'email@email.com']);
+        $dataRole1->saveAdditionalAttribute('student_id', 'xy123');
+        $dataRole2 = factory(DataRole::class)->create(['email' => 'email@email.com']);
+        $dataRole2->saveAdditionalAttribute('student_id', 'xy1234');
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataRole();
+        $dbDataRole2 = $repository->getWhere(['email' => 'email@email.com', 'student_id' => 'xy1234']);
+
+        $this->assertTrue($dataRole2->is($dbDataRole2));
+    }
 
 }

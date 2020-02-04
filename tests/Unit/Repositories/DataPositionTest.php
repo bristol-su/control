@@ -82,7 +82,19 @@ class DataPositionTest extends TestCase
         $this->assertEquals('GrpName', $dataPosition->name());
         $this->assertEquals('description1', $dataPosition->description());
     }
-    
-    
+
+    /** @test */
+    public function getWhere_also_searches_additional_attributes(){
+        DataPosition::addProperty('student_id');
+        $dataPosition1 = factory(DataPosition::class)->create(['name' => 'Name1']);
+        $dataPosition1->saveAdditionalAttribute('student_id', 'xy123');
+        $dataPosition2 = factory(DataPosition::class)->create(['name' => 'Name1']);
+        $dataPosition2->saveAdditionalAttribute('student_id', 'xy1234');
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
+        $dbDataPosition2 = $repository->getWhere(['name' => 'Name1', 'student_id' => 'xy1234']);
+
+        $this->assertTrue($dataPosition2->is($dbDataPosition2));
+    }
 
 }

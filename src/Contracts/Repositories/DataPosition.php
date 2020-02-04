@@ -17,7 +17,7 @@ interface DataPosition
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\DataPosition;
 
     /**
-     * Get a data position where the given attributes match
+     * Get a data position where the given attributes match, including additional attributes.
      *
      * @param array $attributes
      * @return \BristolSU\ControlDB\Contracts\Models\DataPosition

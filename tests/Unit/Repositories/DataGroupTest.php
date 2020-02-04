@@ -83,6 +83,18 @@ class DataGroupTest extends TestCase
         $this->assertEquals('email@email.com', $dataGroup->email());
     }
     
-    
+    /** @test */
+    public function getWhere_also_searches_additional_attributes(){
+        DataGroup::addProperty('student_id');
+        $dataGroup1 = factory(DataGroup::class)->create(['email' => 'email@email.com']);
+        $dataGroup1->saveAdditionalAttribute('student_id', 'xy123');
+        $dataGroup2 = factory(DataGroup::class)->create(['email' => 'email@email.com']);
+        $dataGroup2->saveAdditionalAttribute('student_id', 'xy1234');
+        
+        $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
+        $dbDataGroup2 = $repository->getWhere(['email' => 'email@email.com', 'student_id' => 'xy1234']);
+
+        $this->assertTrue($dataGroup2->is($dbDataGroup2));
+    }
 
 }

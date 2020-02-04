@@ -19,7 +19,7 @@ interface DataUser
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\DataUser;
 
     /**
-     * Get a data user where the given attributes match
+     * Get a data user where the given attributes match, including additional attributes.
      *
      * @param array $attributes
      * @return \BristolSU\ControlDB\Contracts\Models\DataUser

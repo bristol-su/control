@@ -17,7 +17,7 @@ interface DataRole
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\DataRole;
 
     /**
-     * Get a data role where the given attributes match
+     * Get a data role where the given attributes match, including additional attributes.
      *
      * @param array $attributes
      * @return \BristolSU\ControlDB\Contracts\Models\DataRole
