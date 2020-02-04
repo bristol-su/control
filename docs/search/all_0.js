@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['_24additionalproperties',['$additionalProperties',['../classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#af1a40a1af8fc7c54ce640a5cac66a1e1',1,'BristolSU::ControlDB::AdditionalProperties::HasAdditionalProperties']]],
   ['_24appends',['$appends',['../classBristolSU_1_1ControlDB_1_1Models_1_1Group.html#a6714b8a096e0b4c27416ba14748e28b5',1,'BristolSU\ControlDB\Models\Group\$appends()'],['../classBristolSU_1_1ControlDB_1_1Models_1_1Position.html#aa5078f94eceb5b32f5b3e545b2911644',1,'BristolSU\ControlDB\Models\Position\$appends()'],['../classBristolSU_1_1ControlDB_1_1Models_1_1Role.html#adb9496d097a02c2cbdec28bdfe374101',1,'BristolSU\ControlDB\Models\Role\$appends()'],['../classBristolSU_1_1ControlDB_1_1Models_1_1User.html#a6b0a37b17c94facf87ff6e17e2d20b7e',1,'BristolSU\ControlDB\Models\User\$appends()']]],
   ['_24casts',['$casts',['../classBristolSU_1_1ControlDB_1_1Models_1_1DataUser.html#ab742a2df2282bd68712f24cfd82c88fc',1,'BristolSU::ControlDB::Models::DataUser']]],
   ['_24description',['$description',['../classBristolSU_1_1ControlDB_1_1Commands_1_1SeedDatabase.html#ae14dbdefbb805430bd3aaf99f1b76105',1,'BristolSU::ControlDB::Commands::SeedDatabase']]],

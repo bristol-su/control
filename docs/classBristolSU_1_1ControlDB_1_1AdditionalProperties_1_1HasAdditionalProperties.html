@@ -66,7 +66,6 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties Class Reference</div>  </div>
@@ -81,6 +80,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6ca37f0e922860bed6e361c98c2ab376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c0011b4d2e806a0716257a1f26c529e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#a9c0011b4d2e806a0716257a1f26c529e">setAdditionalAttribute</a> (string $key, $value)</td></tr>
 <tr class="separator:a9c0011b4d2e806a0716257a1f26c529e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab6215593792fc0731e4b01c2b427558"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#aab6215593792fc0731e4b01c2b427558">saveAdditionalAttribute</a> (string $key, $value)</td></tr>
+<tr class="separator:aab6215593792fc0731e4b01c2b427558"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1eb54846b8bde41c06d3a2b84ad42cea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#a1eb54846b8bde41c06d3a2b84ad42cea">getAttribute</a> ($key)</td></tr>
 <tr class="separator:a1eb54846b8bde41c06d3a2b84ad42cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf647dc240525a23a0598f5a95dd0515"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#adf647dc240525a23a0598f5a95dd0515">setAttribute</a> ($key, $value)</td></tr>
@@ -94,16 +95,13 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aaede469acd1d0eba8001e0fe9ec3f4fd"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#aaede469acd1d0eba8001e0fe9ec3f4fd">addProperty</a> (string $key)</td></tr>
 <tr class="separator:aaede469acd1d0eba8001e0fe9ec3f4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6af4d47edb60316386cdf8b5a91d270f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#a6af4d47edb60316386cdf8b5a91d270f">getAdditionalAttributes</a> ()</td></tr>
+<tr class="separator:a6af4d47edb60316386cdf8b5a91d270f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a83d7053b8b58e240319cb58ccd1c20e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#a83d7053b8b58e240319cb58ccd1c20e6">getColumnName</a> ()</td></tr>
 <tr class="separator:a83d7053b8b58e240319cb58ccd1c20e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
-<tr class="memitem:af1a40a1af8fc7c54ce640a5cac66a1e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#af1a40a1af8fc7c54ce640a5cac66a1e1">$additionalProperties</a></td></tr>
-<tr class="separator:af1a40a1af8fc7c54ce640a5cac66a1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Allow a model to have any arbitrary properties, set at runtime </p>
@@ -146,9 +144,9 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mixed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00144">144</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00158">158</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
-<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00020">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\$additionalProperties</a>, <a class="el" href="HasAdditionalProperties_8php_source.html#l00057">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAdditionalAttribute()</a>, and <a class="el" href="HasAdditionalProperties_8php_source.html#l00069">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAdditionalAttribute()</a>.</p>
+<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00059">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAdditionalAttribute()</a>, and <a class="el" href="HasAdditionalProperties_8php_source.html#l00071">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAdditionalAttribute()</a>.</p>
 
 </div>
 </div>
@@ -183,7 +181,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00046">46</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00038">38</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
 </div>
 </div>
@@ -211,11 +209,40 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mixed Value of the attribute </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00057">57</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00059">59</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
-<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00129">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getColumnName()</a>.</p>
+<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00143">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getColumnName()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="HasAdditionalProperties_8php_source.html#l00144">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\__call()</a>, and <a class="el" href="HasAdditionalProperties_8php_source.html#l00082">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAttribute()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="HasAdditionalProperties_8php_source.html#l00158">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\__call()</a>, and <a class="el" href="HasAdditionalProperties_8php_source.html#l00096">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAttribute()</a>.</p>
+
+</div>
+</div>
+<a id="a6af4d47edb60316386cdf8b5a91d270f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6af4d47edb60316386cdf8b5a91d270f">&#9670;&nbsp;</a></span>getAdditionalAttributes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties::getAdditionalAttributes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get all additional attributes the model is using</p>
+<dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00048">48</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
 </div>
 </div>
@@ -236,9 +263,9 @@ Private Attributes</h2></td></tr>
 <p>Cast the additional attributes column to an array, or return an empty array by default.</p>
 <dl class="section return"><dt>Returns</dt><dd>array|mixed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00113">113</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00127">127</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
-<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00129">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getColumnName()</a>.</p>
+<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00143">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getColumnName()</a>.</p>
 
 </div>
 </div>
@@ -267,9 +294,9 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mixed Value of the property </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00082">82</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00096">96</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
-<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00057">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAdditionalAttribute()</a>.</p>
+<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00059">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAdditionalAttribute()</a>.</p>
 
 </div>
 </div>
@@ -298,9 +325,9 @@ Private Attributes</h2></td></tr>
 <p>Get the name of the additional attributes column</p>
 <dl class="section return"><dt>Returns</dt><dd>string Name of the additional attributes column </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00129">129</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00143">143</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="HasAdditionalProperties_8php_source.html#l00057">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAdditionalAttribute()</a>, <a class="el" href="HasAdditionalProperties_8php_source.html#l00113">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAdditionalAttributesAttribute()</a>, <a class="el" href="HasAdditionalProperties_8php_source.html#l00029">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\initializeHasAdditionalProperties()</a>, and <a class="el" href="HasAdditionalProperties_8php_source.html#l00069">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAdditionalAttribute()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="HasAdditionalProperties_8php_source.html#l00059">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAdditionalAttribute()</a>, <a class="el" href="HasAdditionalProperties_8php_source.html#l00127">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getAdditionalAttributesAttribute()</a>, <a class="el" href="HasAdditionalProperties_8php_source.html#l00022">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\initializeHasAdditionalProperties()</a>, and <a class="el" href="HasAdditionalProperties_8php_source.html#l00071">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAdditionalAttribute()</a>.</p>
 
 </div>
 </div>
@@ -325,9 +352,49 @@ Private Attributes</h2></td></tr>
 <li>Cast the additional_properties column to an array </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00029">29</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00022">22</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
-<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00129">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getColumnName()</a>.</p>
+<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00143">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getColumnName()</a>.</p>
+
+</div>
+</div>
+<a id="aab6215593792fc0731e4b01c2b427558"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab6215593792fc0731e4b01c2b427558">&#9670;&nbsp;</a></span>saveAdditionalAttribute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties::saveAdditionalAttribute </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>$key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Save an additional attribute value</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$key</td><td>Key of the attribute </td></tr>
+    <tr><td class="paramtype">mixed</td><td class="paramname">$value</td><td>Value of the attribute </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00082">82</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+
+<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00071">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAdditionalAttribute()</a>.</p>
 
 </div>
 </div>
@@ -365,11 +432,11 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00069">69</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00071">71</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
-<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00129">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getColumnName()</a>.</p>
+<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00143">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\getColumnName()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="HasAdditionalProperties_8php_source.html#l00144">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\__call()</a>, and <a class="el" href="HasAdditionalProperties_8php_source.html#l00099">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAttribute()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="HasAdditionalProperties_8php_source.html#l00158">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\__call()</a>, <a class="el" href="HasAdditionalProperties_8php_source.html#l00082">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\saveAdditionalAttribute()</a>, and <a class="el" href="HasAdditionalProperties_8php_source.html#l00113">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAttribute()</a>.</p>
 
 </div>
 </div>
@@ -409,36 +476,9 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>mixed Value of the property </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00099">99</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00113">113</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
 
-<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00069">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAdditionalAttribute()</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="af1a40a1af8fc7c54ce640a5cac66a1e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1a40a1af8fc7c54ce640a5cac66a1e1">&#9670;&nbsp;</a></span>$additionalProperties</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties::$additionalProperties</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="HasAdditionalProperties_8php_source.html#l00020">20</a> of file <a class="el" href="HasAdditionalProperties_8php_source.html">HasAdditionalProperties.php</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="HasAdditionalProperties_8php_source.html#l00144">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\__call()</a>.</p>
+<p class="reference">References <a class="el" href="HasAdditionalProperties_8php_source.html#l00071">BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAdditionalAttribute()</a>.</p>
 
 </div>
 </div>

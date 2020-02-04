@@ -51,6 +51,11 @@ class PositionController extends Controller
             $request->input('name'),
             $request->input('description')
         );
+        foreach($dataPosition->getAdditionalAttributes() as $additionalAttribute) {
+            if($request->has($additionalAttribute)) {
+                $dataPosition->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
+            }
+        }
 
         return $positionRepository->create($dataPosition->id());
     }
@@ -74,7 +79,12 @@ class PositionController extends Controller
         if($request->input('description') !== null) {
             $dataPosition->setDescription($request->input('description'));
         }
-
+        foreach($dataPosition->getAdditionalAttributes() as $additionalAttribute) {
+            if($request->has($additionalAttribute)) {
+                $dataPosition->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
+            }
+        }
+        
         return $position;
     }
 

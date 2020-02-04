@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['saveadditionalattribute',['saveAdditionalAttribute',['../classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#aab6215593792fc0731e4b01c2b427558',1,'BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\saveAdditionalAttribute()'],['../interfaceBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1ImplementsAdditionalProperties.html#a5d4d938c0a678cd4c48916958baab67c',1,'BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties\saveAdditionalAttribute()']]],
   ['seeddatabase',['SeedDatabase',['../classBristolSU_1_1ControlDB_1_1Commands_1_1SeedDatabase.html',1,'BristolSU::ControlDB::Commands']]],
   ['seeddatabase_2ephp',['SeedDatabase.php',['../SeedDatabase_8php.html',1,'']]],
   ['setadditionalattribute',['setAdditionalAttribute',['../classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html#a9c0011b4d2e806a0716257a1f26c529e',1,'BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties\setAdditionalAttribute()'],['../interfaceBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1ImplementsAdditionalProperties.html#a1f3570f41cf76eb4f589b3cea3f2c30d',1,'BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties\setAdditionalAttribute()']]],

@@ -16,6 +16,13 @@ interface ImplementsAdditionalProperties
     public static function addProperty(string $key): void;
 
     /**
+     * Get all additional attributes the model is using
+     *
+     * @return array
+     */
+    public static function getAdditionalAttributes(): array;
+    
+    /**
      * Retrieve an additional attribute value
      *
      * @param string $key Key of the attribute
@@ -30,5 +37,13 @@ interface ImplementsAdditionalProperties
      * @param mixed $value Value of the attribute
      */
     public function setAdditionalAttribute(string $key, $value);
+
+    /**
+     * Save an additional attribute value
+     *
+     * @param string $key Key of the attribute
+     * @param mixed $value Value of the attribute
+     */
+    public function saveAdditionalAttribute(string $key, $value);
 
 }
