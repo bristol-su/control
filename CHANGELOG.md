@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2] - (04/02/2020)
+
 ### Changed
 - DataGroupRepository::getWhere allows searching with additional attributes
 - DataUserRepository::getWhere allows searching with additional attributes
@@ -46,7 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - model/repository contracts
 
 
-[Unreleased]: https://github.com/bristol-su/control/compare/v1.1...HEAD
+[Unreleased]: https://github.com/bristol-su/control/compare/v1.2...HEAD
+[1.2]: https://github.com/bristol-su/control/compare/v1.1...v1.2
 [1.1]: https://github.com/bristol-su/control/compare/v1.0.2...v1.1
 [1.0.2]: https://github.com/bristol-su/control/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/bristol-su/control/compare/v1.0...v1.0.1
