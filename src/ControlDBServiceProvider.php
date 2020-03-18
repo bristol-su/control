@@ -111,7 +111,7 @@ class ControlDBServiceProvider extends ServiceProvider
      */
     protected function registerConfig()
     {
-        $this->publishes([__DIR__ .'/../config/config.php' => config_path('control.php'),
+        $this->publishes([__DIR__ .'/../config/control.php' => config_path('control.php'),
         ], 'config');
         $this->mergeConfigFrom(
             __DIR__ .'/../config/control.php', 'control'
