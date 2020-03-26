@@ -101,7 +101,6 @@ class ControlDBServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->app->make(Factory::class)->load(__DIR__ . '/../database/factories');
         $this->setupRouteModelBinding();
         $this->setupRoutes();
     }
@@ -125,7 +124,7 @@ class ControlDBServiceProvider extends ServiceProvider
      */
     public function registerFactories()
     {
-        if (!app()->environment('production')) {
+        if (!app()->environment('production') && class_exists(\Faker\Factory::class)) {
             $this->app->make(Factory::class)->load(__DIR__ .'/../database/factories');
         }
     }

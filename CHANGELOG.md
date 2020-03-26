@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.2] - (26/03/2020)
+
+### Removed
+- Always loading control factories
+
+### Changed
+- Only load control factories when the faker class exists
+
 ## [1.2.1] - (18/03/2020)
 
 ### Added
