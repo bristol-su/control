@@ -4,6 +4,7 @@ namespace BristolSU\ControlDB;
 
 use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertySingletonStore;
 use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertyStore;
+use BristolSU\ControlDB\Cache\Role;
 use BristolSU\ControlDB\Commands\SeedDatabase;
 use BristolSU\ControlDB\Contracts\Repositories\DataUser as DataUserRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\DataGroup as DataGroupRepositoryContract;
@@ -82,6 +83,7 @@ use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag as UserTagRepository
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\User as UserRepositoryContract;
 
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Facades\Route;
@@ -186,6 +188,10 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(UserUserTagContract::class, UserUserTag::class);
         $this->app->bind(RoleRoleTagContract::class, RoleRoleTag::class);
         $this->app->bind(PositionPositionTagContract::class, PositionPositionTag::class);
+        
+        $this->app->extend(RoleRepositoryContract::class, function(RoleRepositoryContract $service, $app) {
+            return new Role($service, $app->make(Repository::class));
+        });
     }
 
     public function registerCommands()
