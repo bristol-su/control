@@ -20,7 +20,7 @@ class Group implements GroupContract
      */
     public function getById(int $id): GroupModel
     {
-        return \BristolSU\ControlDB\Models\Group::where('id', $id)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Group::findOrFail($id);
     }
 
     /**

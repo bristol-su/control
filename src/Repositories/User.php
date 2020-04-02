@@ -20,7 +20,7 @@ class User implements UserContract
      */
     public function getById(int $id): UserModel
     {
-        return \BristolSU\ControlDB\Models\User::where('id', $id)->firstOrFail();
+        return \BristolSU\ControlDB\Models\User::findOrFail($id);
     }
 
     /**

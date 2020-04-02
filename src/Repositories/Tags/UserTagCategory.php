@@ -42,7 +42,7 @@ class UserTagCategory implements UserTagCategoryContract
      */
     public function getById(int $id): UserTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\UserTagCategory::where('id', $id)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Tags\UserTagCategory::findOrFail($id);
     }
 
     /**

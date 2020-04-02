@@ -20,7 +20,7 @@ class Position implements PositionContract
      */
     public function getById(int $id): PositionModel
     {
-        return \BristolSU\ControlDB\Models\Position::where('id', $id)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Position::findOrFail($id);
     }
 
     /**

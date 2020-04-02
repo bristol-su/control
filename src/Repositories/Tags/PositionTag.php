@@ -52,7 +52,7 @@ class PositionTag implements PositionTagContract
      */
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
     {
-        return PositionTagModel::where('id', $id)->firstOrFail();
+        return PositionTagModel::findOrFail($id);
     }
 
     /**
