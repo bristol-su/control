@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Updated repositories to use findOrFail
 
+### Added
+- Role Caching
+
 ## [1.2.2] - (26/03/2020)
 
 ### Removed
