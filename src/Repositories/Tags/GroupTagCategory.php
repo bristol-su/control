@@ -42,7 +42,7 @@ class GroupTagCategory implements GroupTagCategoryContract
      */
     public function getById(int $id): GroupTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::where('id', $id)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Tags\GroupTagCategory::findOrFail($id);
     }
 
     /**

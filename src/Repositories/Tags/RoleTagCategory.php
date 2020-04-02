@@ -42,7 +42,7 @@ class RoleTagCategory implements RoleTagCategoryContract
      */
     public function getById(int $id): RoleTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::where('id', $id)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Tags\RoleTagCategory::findOrFail($id);
     }
 
     /**

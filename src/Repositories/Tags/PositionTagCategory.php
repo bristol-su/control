@@ -42,7 +42,7 @@ class PositionTagCategory implements PositionTagCategoryContract
      */
     public function getById(int $id): PositionTagCategoryModel
     {
-        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::where('id', $id)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Tags\PositionTagCategory::findOrFail($id);
     }
 
     /**

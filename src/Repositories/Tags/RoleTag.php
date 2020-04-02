@@ -52,7 +52,7 @@ class RoleTag implements RoleTagContract
      */
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\RoleTag
     {
-        return RoleTagModel::where('id', $id)->firstOrFail();
+        return RoleTagModel::findOrFail($id);
     }
 
     /**

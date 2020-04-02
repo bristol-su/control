@@ -52,7 +52,7 @@ class UserTag implements UserTagContract
      */
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
     {
-        return UserTagModel::where('id', $id)->firstOrFail();
+        return UserTagModel::findOrFail($id);
     }
 
     /**

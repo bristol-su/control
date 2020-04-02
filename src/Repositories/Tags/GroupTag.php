@@ -52,7 +52,7 @@ class GroupTag implements GroupTagContract
      */
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
     {
-        return GroupTagModel::where('id', $id)->firstOrFail();
+        return GroupTagModel::findOrFail($id);
     }
 
     /**

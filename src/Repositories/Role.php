@@ -24,7 +24,7 @@ class Role implements RoleContract
      */
     public function getById(int $id): \BristolSU\ControlDB\Contracts\Models\Role
     {
-        return \BristolSU\ControlDB\Models\Role::where('id', $id)->firstOrFail();
+        return \BristolSU\ControlDB\Models\Role::findOrFail($id);
     }
 
     /**
