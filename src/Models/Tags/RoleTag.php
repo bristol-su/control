@@ -41,7 +41,20 @@ class RoleTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
         'name', 'description', 'reference', 'tag_category_id'
     ];
 
+    /**
+     * Append the full reference
+     *
+     * @var array Attributes to append
+     */
+    protected $appends = [
+        'full_reference'
+    ];
 
+    public function getFullReferenceAttribute()
+    {
+        return $this->fullReference();
+    }
+    
     /**
      * ID of the role tag
      *
