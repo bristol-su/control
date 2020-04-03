@@ -4,7 +4,10 @@
 namespace BristolSU\Tests\ControlDB\Unit\Models\Tags;
 
 
+use BristolSU\ControlDB\Models\Tags\GroupTag;
+use BristolSU\ControlDB\Models\Tags\GroupTagCategory;
 use BristolSU\ControlDB\Models\Tags\PositionTag;
+use BristolSU\ControlDB\Models\Tags\PositionTagCategory;
 use BristolSU\ControlDB\Models\Tags\RoleTag;
 use BristolSU\Tests\ControlDB\TestCase;
 
@@ -79,5 +82,16 @@ class PositionTagTest extends TestCase
         foreach($tags as $tag) {
             $this->assertTrue($tag->is($resolvedTags->shift()));
         }
+    }
+
+    /** @test */
+    public function it_appends_the_full_reference_to_the_tag(){
+        $tagCategory = factory(PositionTagCategory::class)->create(['reference' => 'cat_ref']);
+        $tag = factory(PositionTag::class)->create(['reference' => 'tag_ref', 'tag_category_id' => $tagCategory->id]);
+
+        $array =  $tag->toArray();
+
+        $this->assertArrayHasKey('full_reference', $array);
+        $this->assertEquals('cat_ref.tag_ref', $array['full_reference']);
     }
 }

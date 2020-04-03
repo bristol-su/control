@@ -1,7 +1,7 @@
 var searchData=
 [
   ['readme_2emd',['README.md',['../README_8md.html',1,'']]],
-  ['role_2ephp',['Role.php',['../Contracts_2Models_2Role_8php.html',1,'(Global Namespace)'],['../Contracts_2Repositories_2Role_8php.html',1,'(Global Namespace)'],['../Models_2Role_8php.html',1,'(Global Namespace)'],['../Repositories_2Role_8php.html',1,'(Global Namespace)']]],
+  ['role_2ephp',['Role.php',['../Cache_2Role_8php.html',1,'(Global Namespace)'],['../Contracts_2Models_2Role_8php.html',1,'(Global Namespace)'],['../Contracts_2Repositories_2Role_8php.html',1,'(Global Namespace)'],['../Models_2Role_8php.html',1,'(Global Namespace)'],['../Repositories_2Role_8php.html',1,'(Global Namespace)']]],
   ['rolecontroller_2ephp',['RoleController.php',['../RoleController_8php.html',1,'']]],
   ['rolegroupcontroller_2ephp',['RoleGroupController.php',['../RoleGroupController_8php.html',1,'']]],
   ['rolepositioncontroller_2ephp',['RolePositionController.php',['../RolePositionController_8php.html',1,'']]],
