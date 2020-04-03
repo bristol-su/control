@@ -36,7 +36,6 @@ class PositionTraitTest extends TestCase
                 'taggable_id' => $position->id,
                 'taggable_type' => 'position'
             ]);
-            $this->assertDatabaseHas('control_tags', $tag->toArray());
         }
 
         foreach($tags as $tag) {

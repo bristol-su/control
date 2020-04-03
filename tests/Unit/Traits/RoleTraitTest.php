@@ -66,7 +66,6 @@ class RoleTraitTest extends TestCase
                 'taggable_id' => $role->id,
                 'taggable_type' => 'role'
             ]);
-            $this->assertDatabaseHas('control_tags', $tag->toArray());
         }
 
         foreach($tags as $tag) {

@@ -63,7 +63,6 @@ class GroupTraitTest extends TestCase
                 'taggable_id' => $group->id,
                 'taggable_type' => 'group'
             ]);
-            $this->assertDatabaseHas('control_tags', $tag->toArray());
         }
 
         foreach($tags as $tag) {
@@ -154,7 +153,6 @@ class GroupTraitTest extends TestCase
                 'taggable_id' => $group->id,
                 'taggable_type' => 'group'
             ]);
-            $this->assertDatabaseHas('control_tags', $tag->toArray());
         }
     }
     

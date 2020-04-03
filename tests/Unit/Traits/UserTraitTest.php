@@ -191,7 +191,6 @@ class UserTraitTest extends TestCase
                 'taggable_id' => $user->id,
                 'taggable_type' => 'user'
             ]);
-            $this->assertDatabaseHas('control_tags', $tag->toArray());
         }
 
         foreach($tags as $tag) {
