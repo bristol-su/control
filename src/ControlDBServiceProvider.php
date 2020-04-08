@@ -20,6 +20,8 @@ use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\RoleRoleTag as RoleRo
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\PositionPositionTag as PositionPositionTagContract;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup as UserGroupContract;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole as UserRoleContract;
+use BristolSU\ControlDB\Export\ExportControlCommand;
+use BristolSU\ControlDB\Export\ExportManager;
 use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\ControlDB\Models\DataGroup;
 use BristolSU\ControlDB\Models\DataRole;
@@ -99,6 +101,10 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->registerMigrations();
         $this->registerConfig();
         $this->registerFactories();
+        
+        $this->app->singleton('control-exporter', function() {
+            return new ExportManager($this->app);
+        });
     }
 
     public function boot()
@@ -197,7 +203,8 @@ class ControlDBServiceProvider extends ServiceProvider
     public function registerCommands()
     {
         $this->commands([
-            SeedDatabase::class
+            SeedDatabase::class,
+            ExportControlCommand::class
         ]);
     }
 
