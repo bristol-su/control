@@ -13,9 +13,9 @@
         "php": "^7.2",
         "ext-json": "*"
     },
-    "require-dev" : {
+    "require-dev": {
         "orchestra/testbench": "^4.0",
-	"phpstan/phpstan": "^0.12.8"
+        "phpstan/phpstan": "^0.12.8"
     },
     "extra": {
         "laravel": {
