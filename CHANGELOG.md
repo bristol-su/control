@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v2.0]
+## [2.0] - (22/04/2020)
 
 ### Added
 - \BristolSU\ControlDB\Contracts\Repositories\User::paginate()
