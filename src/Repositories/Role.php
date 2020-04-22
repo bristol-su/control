@@ -94,4 +94,27 @@ class Role implements RoleContract
     {
         return \BristolSU\ControlDB\Models\Role::where('position_id', $position->id())->get();
     }
+
+    /**
+     * Paginate through all the roles
+     *
+     * @param int $page The page number to return
+     * @param int $perPage The number of results to return per page
+     *
+     * @return Collection|RoleModel[]
+     */
+    public function paginate(int $page, int $perPage): Collection
+    {
+        return \BristolSU\ControlDB\Models\Role::paginate($perPage, ['*'], 'page', $page)->getCollection();
+    }
+
+    /**
+     * Get the number of roles
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return \BristolSU\ControlDB\Models\Role::count();
+    }
 }

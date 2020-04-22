@@ -15,11 +15,11 @@ class RoleTagCategoryRoleTagController extends Controller
      * Get all tags belonging to the role tag category
      * 
      * @param RoleTagCategory $roleTagCategory
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(RoleTagCategory $roleTagCategory)
     {
-        return $roleTagCategory->tags();
+        return $this->paginate($roleTagCategory->tags());
     }
 
 }

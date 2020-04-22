@@ -16,11 +16,11 @@ class GroupUserController extends Controller
      * Get all users from a group
      * 
      * @param Group $group
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(Group $group)
     {
-        return $group->members();
+        return $this->paginate($group->members());
     }
 
     /**

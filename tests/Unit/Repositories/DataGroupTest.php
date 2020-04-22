@@ -97,4 +97,19 @@ class DataGroupTest extends TestCase
         $this->assertTrue($dataGroup2->is($dbDataGroup2));
     }
 
+    /** @test */
+    public function getAllWhere_returns_all_model_matching_the_attributes(){
+        DataGroup::addProperty('additionalAttr');
+        $attributes = ['email' => 'email@email.com', 'additional_attributes' => json_encode(['additionalAttr' => 15])];
+
+        $dataGroups = factory(DataGroup::class, 2)->create($attributes);
+        factory(DataGroup::class, 4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
+        $dbDataGroup = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(2, $dbDataGroup->count());
+        $this->assertTrue($dataGroups[0]->is($dbDataGroup[0]));
+        $this->assertTrue($dataGroups[1]->is($dbDataGroup[1]));
+    }
 }

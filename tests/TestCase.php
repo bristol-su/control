@@ -4,6 +4,7 @@ namespace BristolSU\Tests\ControlDB;
 
 use BristolSU\ControlDB\ControlDBServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\TestResponse;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -18,6 +19,7 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
         $this->withFactories(__DIR__ . '/../database/factories');
+        $this->setupPagination();
     }
 
     public function getEnvironmentSetUp($app)
@@ -43,5 +45,10 @@ abstract class TestCase extends BaseTestCase
         return [
             ControlDBServiceProvider::class,
         ];
+    }
+
+    private function setupPagination()
+    {
+        TestResponse::mixin(new TestResponseMixin());
     }
 }

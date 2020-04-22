@@ -16,11 +16,11 @@ class PositionPositionTagController extends Controller
      * Get all tags belonging to the current position
      * 
      * @param Position $position
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(Position $position)
     {
-        return $position->tags();
+        return $this->paginate($position->tags());
     }
 
     /**

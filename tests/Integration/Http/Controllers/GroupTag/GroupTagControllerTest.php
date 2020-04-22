@@ -15,8 +15,9 @@ class GroupTagControllerTest extends TestCase
         $response = $this->getJson($this->apiUrl . '/group-tag');
         $response->assertStatus(200);
 
-        $response->assertJsonCount(5);
-        foreach($response->json() as $groupTagThroughApi) {
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(5);
+        foreach($response->paginatedJson() as $groupTagThroughApi) {
             $this->assertArrayHasKey('id', $groupTagThroughApi);
             $this->assertEquals($groupTags->shift()->id(), $groupTagThroughApi['id']);
         }

@@ -12,18 +12,34 @@ class RoleControllerTest extends TestCase
 {
 
     /** @test */
-    public function it_returns_all_roles(){
+    public function it_returns_all_roles()
+    {
         $roles = factory(Role::class, 5)->create();
         $response = $this->getJson($this->apiUrl . '/role');
         $response->assertStatus(200);
-
-        $response->assertJsonCount(5);
-        foreach($response->json() as $roleThroughApi) {
+        
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(5);
+        foreach ($response->paginatedJson() as $roleThroughApi) {
             $this->assertArrayHasKey('id', $roleThroughApi);
             $this->assertEquals($roles->shift()->id(), $roleThroughApi['id']);
         }
     }
 
+    /** @test */
+    public function it_limits_roles_by_the_pagination_options(){
+        $roles = factory(Role::class, 50)->create();
+        $response = $this->getJson($this->apiUrl . '/role?page=2&per_page=15');
+        $response->assertStatus(200);
+
+        $response->assertJsonCount(15, 'data');
+        $paginatedRoles = $roles->slice(15, 15)->values();
+        foreach ($response->json()['data'] as $roleThroughApi) {
+            $this->assertArrayHasKey('id', $roleThroughApi);
+            $this->assertEquals($paginatedRoles->shift()->id(), $roleThroughApi['id']);
+        }
+    }
+    
     /** @test */
     public function it_returns_a_single_role(){
         $dataRole = factory(DataRole::class)->create();

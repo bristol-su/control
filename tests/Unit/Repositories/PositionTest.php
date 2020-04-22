@@ -96,4 +96,31 @@ class PositionTest extends TestCase
         $this->assertTrue($position->trashed());
     }
 
+    /** @test */
+    public function count_returns_the_number_of_positions(){
+        $positions = factory(Position::class, 18)->create();
+        $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
+
+        $this->assertEquals(18, $positionRepo->count());
+    }
+
+    /** @test */
+    public function paginate_returns_the_number_of_positions_specified_for_the_given_page(){
+        $positions = factory(Position::class, 40)->create();
+        $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
+
+        $paginatedPositions = $positionRepo->paginate(2, 10);
+        $this->assertEquals(10, $paginatedPositions->count());
+        $this->assertTrue($positions[10]->is($paginatedPositions->shift()));
+        $this->assertTrue($positions[11]->is($paginatedPositions->shift()));
+        $this->assertTrue($positions[12]->is($paginatedPositions->shift()));
+        $this->assertTrue($positions[13]->is($paginatedPositions->shift()));
+        $this->assertTrue($positions[14]->is($paginatedPositions->shift()));
+        $this->assertTrue($positions[15]->is($paginatedPositions->shift()));
+        $this->assertTrue($positions[16]->is($paginatedPositions->shift()));
+        $this->assertTrue($positions[17]->is($paginatedPositions->shift()));
+        $this->assertTrue($positions[18]->is($paginatedPositions->shift()));
+        $this->assertTrue($positions[19]->is($paginatedPositions->shift()));
+    }
+
 }

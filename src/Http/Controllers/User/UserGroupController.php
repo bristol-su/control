@@ -18,11 +18,11 @@ class UserGroupController extends Controller
      * Get all groups that belong to a user
      * 
      * @param User $user
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(User $user)
     {
-        return $user->groups();
+        return $this->paginate($user->groups());
     }
 
     /**

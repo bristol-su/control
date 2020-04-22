@@ -18,11 +18,11 @@ class GroupTagController extends Controller
      * Get all group tags
      * 
      * @param GroupTagRepository $groupTagRepository
-     * @return GroupTag[]|\Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(GroupTagRepository $groupTagRepository)
     {
-        return $groupTagRepository->all();
+        return $this->paginate($groupTagRepository->all());
     }
 
     /**

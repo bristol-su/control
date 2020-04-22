@@ -25,9 +25,10 @@ class GroupUserControllerTest extends TestCase
         
         $response = $this->getJson($this->apiUrl . '/group/' . $group->id() . '/user');
         $response->assertStatus(200);
-        
-        $response->assertJsonCount(5);
-        foreach($response->json() as $userThroughApi) {
+        $response->assertPaginatedResponse();
+
+        $response->assertPaginatedJsonCount(5, 'data');
+        foreach($response->paginatedJson() as $userThroughApi) {
             $this->assertArrayHasKey('id', $userThroughApi);
             $this->assertEquals($users->shift()->id(), $userThroughApi['id']);
         }

@@ -18,11 +18,11 @@ class UserRoleController extends Controller
      * Get all roles that belong to a user
      *
      * @param User $user
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(User $user)
     {
-        return $user->roles();
+        return $this->paginate($user->roles());
     }
 
     /**

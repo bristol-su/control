@@ -6,6 +6,7 @@ use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\ControlDB\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use BristolSU\Tests\ControlDB\TestCase;
+use Illuminate\Support\Collection;
 
 class UserTest extends TestCase
 {
@@ -94,6 +95,33 @@ class UserTest extends TestCase
 
         $user->refresh();
         $this->assertTrue($user->trashed());
+    }
+    
+    /** @test */
+    public function count_returns_the_number_of_users(){
+        $users = factory(User::class, 18)->create();
+        $userRepo = new \BristolSU\ControlDB\Repositories\User();
+        
+        $this->assertEquals(18, $userRepo->count());
+    }
+    
+    /** @test */
+    public function paginate_returns_the_number_of_users_specified_for_the_given_page(){
+        $users = factory(User::class, 40)->create();
+        $userRepo = new \BristolSU\ControlDB\Repositories\User();
+
+        $paginatedUsers = $userRepo->paginate(2, 10);
+        $this->assertEquals(10, $paginatedUsers->count());
+        $this->assertTrue($users[10]->is($paginatedUsers->shift()));
+        $this->assertTrue($users[11]->is($paginatedUsers->shift()));
+        $this->assertTrue($users[12]->is($paginatedUsers->shift()));
+        $this->assertTrue($users[13]->is($paginatedUsers->shift()));
+        $this->assertTrue($users[14]->is($paginatedUsers->shift()));
+        $this->assertTrue($users[15]->is($paginatedUsers->shift()));
+        $this->assertTrue($users[16]->is($paginatedUsers->shift()));
+        $this->assertTrue($users[17]->is($paginatedUsers->shift()));
+        $this->assertTrue($users[18]->is($paginatedUsers->shift()));
+        $this->assertTrue($users[19]->is($paginatedUsers->shift()));
     }
 
 }

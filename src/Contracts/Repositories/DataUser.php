@@ -4,6 +4,8 @@
 namespace BristolSU\ControlDB\Contracts\Repositories;
 
 
+use Illuminate\Support\Collection;
+
 /**
  * Handle attributes of a user
  */
@@ -26,6 +28,14 @@ interface DataUser
      */
     public function getWhere($attributes = []): \BristolSU\ControlDB\Contracts\Models\DataUser;
 
+    /**
+     * Get all data users where the given attributes match, including additional attributes.
+     *
+     * @param array $attributes
+     * @return Collection|\BristolSU\ControlDB\Contracts\Models\DataUser[]
+     */
+    public function getAllWhere($attributes = []): Collection;
+    
     /**
      * Create a data user with the given attributes
      * 

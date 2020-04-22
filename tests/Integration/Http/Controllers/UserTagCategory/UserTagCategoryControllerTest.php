@@ -13,9 +13,9 @@ class UserTagCategoryControllerTest extends TestCase
         $userTagCategories = factory(UserTagCategory::class, 5)->create();
         $response = $this->getJson($this->apiUrl . '/user-tag-category');
         $response->assertStatus(200);
-
-        $response->assertJsonCount(5);
-        foreach($response->json() as $userTagCategoryThroughApi) {
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(5);
+        foreach($response->paginatedJson() as $userTagCategoryThroughApi) {
             $this->assertArrayHasKey('id', $userTagCategoryThroughApi);
             $this->assertEquals($userTagCategories->shift()->id(), $userTagCategoryThroughApi['id']);
         }

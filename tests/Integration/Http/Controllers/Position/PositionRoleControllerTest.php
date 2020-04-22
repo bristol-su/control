@@ -17,9 +17,9 @@ class PositionRoleControllerTest extends TestCase
         
         $response = $this->getJson($this->apiUrl . '/position/' . $position->id() . '/role');
         $response->assertStatus(200);
-        
-        $response->assertJsonCount(5);
-        foreach($response->json() as $roleThroughApi) {
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(5);
+        foreach($response->paginatedJson() as $roleThroughApi) {
             $this->assertArrayHasKey('id', $roleThroughApi);
             $this->assertEquals($roles->shift()->id(), $roleThroughApi['id']);
         }

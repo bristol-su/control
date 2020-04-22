@@ -6,6 +6,7 @@ use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\ControlDB\Models\User;
 use BristolSU\Tests\ControlDB\TestCase;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class UserControllerTest extends TestCase
 {
@@ -16,14 +17,29 @@ class UserControllerTest extends TestCase
         $users = factory(User::class, 5)->create();
         $response = $this->getJson($this->apiUrl . '/user');
         $response->assertStatus(200);
+        $response->assertPaginatedResponse();
 
-        $response->assertJsonCount(5);
-        foreach ($response->json() as $userThroughApi) {
+        $response->assertPaginatedJsonCount(5);
+        foreach ($response->paginatedJson() as $userThroughApi) {
             $this->assertArrayHasKey('id', $userThroughApi);
             $this->assertEquals($users->shift()->id(), $userThroughApi['id']);
         }
     }
 
+    /** @test */
+    public function it_limits_users_by_the_pagination_options(){
+        $users = factory(User::class, 50)->create();
+        $response = $this->getJson($this->apiUrl . '/user?page=2&per_page=15');
+        $response->assertStatus(200);
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(15);
+        $paginatedUsers = $users->slice(15, 15)->values();
+        foreach ($response->paginatedJson() as $userThroughApi) {
+            $this->assertArrayHasKey('id', $userThroughApi);
+            $this->assertEquals($paginatedUsers->shift()->id(), $userThroughApi['id']);
+        }
+    }
+    
     /** @test */
     public function it_returns_a_single_user()
     {

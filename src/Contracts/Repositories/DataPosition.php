@@ -2,6 +2,8 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories;
 
+use Illuminate\Support\Collection;
+
 /**
  * Handle attributes of a position
  */
@@ -32,4 +34,12 @@ interface DataPosition
      * @return \BristolSU\ControlDB\Contracts\Models\DataPosition
      */
     public function create(?string $name = null, ?string $description = null): \BristolSU\ControlDB\Contracts\Models\DataPosition;
+
+    /**
+     * Get all data positions where the given attributes match, including additional attributes.
+     *
+     * @param array $attributes
+     * @return Collection|\BristolSU\ControlDB\Contracts\Models\DataPosition[]
+     */
+    public function getAllWhere($attributes = []): Collection;
 }

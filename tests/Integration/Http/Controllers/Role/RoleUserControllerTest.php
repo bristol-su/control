@@ -25,9 +25,10 @@ class RoleUserControllerTest extends TestCase
         
         $response = $this->getJson($this->apiUrl . '/role/' . $role->id() . '/user');
         $response->assertStatus(200);
-        
-        $response->assertJsonCount(5);
-        foreach($response->json() as $userThroughApi) {
+        $response->assertPaginatedResponse();
+
+        $response->assertPaginatedJsonCount(5);
+        foreach($response->paginatedJson() as $userThroughApi) {
             $this->assertArrayHasKey('id', $userThroughApi);
             $this->assertEquals($users->shift()->id(), $userThroughApi['id']);
         }

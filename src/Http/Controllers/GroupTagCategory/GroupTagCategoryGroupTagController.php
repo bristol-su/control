@@ -15,11 +15,11 @@ class GroupTagCategoryGroupTagController extends Controller
      * Get all tags belonging to the group tag category
      * 
      * @param GroupTagCategory $groupTagCategory
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(GroupTagCategory $groupTagCategory)
     {
-        return $groupTagCategory->tags();
+        return $this->paginate($groupTagCategory->tags());
     }
 
 }

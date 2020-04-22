@@ -2,6 +2,8 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories;
 
+use Illuminate\Support\Collection;
+
 /**
  * Handle attributes of a role
  */
@@ -23,7 +25,15 @@ interface DataRole
      * @return \BristolSU\ControlDB\Contracts\Models\DataRole
      */
     public function getWhere($attributes = []): \BristolSU\ControlDB\Contracts\Models\DataRole;
-
+    
+    /**
+     * Get all data roles where the given attributes match, including additional attributes.
+     *
+     * @param array $attributes
+     * @return Collection|\BristolSU\ControlDB\Contracts\Models\DataRole[]
+     */
+    public function getAllWhere($attributes = []): Collection;
+    
     /**
      * Create a data position with the given attributes
      * 

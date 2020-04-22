@@ -97,4 +97,19 @@ class DataPositionTest extends TestCase
         $this->assertTrue($dataPosition2->is($dbDataPosition2));
     }
 
+    /** @test */
+    public function getAllWhere_returns_all_model_matching_the_attributes(){
+        DataPosition::addProperty('additionalAttr');
+        $attributes = ['name' => 'abc123', 'additional_attributes' => json_encode(['additionalAttr' => 15])];
+
+        $dataPositions = factory(DataPosition::class, 2)->create($attributes);
+        factory(DataPosition::class, 4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
+        $dbDataPosition = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(2, $dbDataPosition->count());
+        $this->assertTrue($dataPositions[0]->is($dbDataPosition[0]));
+        $this->assertTrue($dataPositions[1]->is($dbDataPosition[1]));
+    }
 }

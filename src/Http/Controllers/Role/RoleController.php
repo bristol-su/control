@@ -8,6 +8,9 @@ use BristolSU\ControlDB\Http\Requests\Api\Role\UpdateRoleRequest;
 use BristolSU\ControlDB\Contracts\Repositories\DataRole as DataRoleRepository;
 use BristolSU\ControlDB\Contracts\Repositories\Role as RoleRepository;
 use BristolSU\ControlDB\Contracts\Models\Role;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Handle roles
@@ -17,13 +20,20 @@ class RoleController extends Controller
 
     /**
      * Get all roles
-     * 
+     *
+     * @param Request $request
      * @param RoleRepository $roleRepository
-     * @return Role[]|\Illuminate\Support\Collection
+     * @return LengthAwarePaginator
      */
-    public function index(RoleRepository $roleRepository)
+    public function index(Request $request, RoleRepository $roleRepository)
     {
-        return $roleRepository->all();
+        $perPage = $request->input('per_page', 10);
+        $page = $request->input('page', 1);
+
+        return $this->paginationResponse(
+            $roleRepository->paginate($page, $perPage),
+            $roleRepository->count()
+        );
     }
 
     /**

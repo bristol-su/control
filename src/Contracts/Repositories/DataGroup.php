@@ -2,6 +2,8 @@
 
 namespace BristolSU\ControlDB\Contracts\Repositories;
 
+use Illuminate\Support\Collection;
+
 /**
  * Handle attributes of a group
  */
@@ -24,6 +26,13 @@ interface DataGroup
      */
     public function getWhere($attributes = []): \BristolSU\ControlDB\Contracts\Models\DataGroup;
 
+    /**
+     * Get all data groups where the given attributes match, including additional attributes.
+     *
+     * @param array $attributes
+     * @return Collection|\BristolSU\ControlDB\Contracts\Models\DataGroup[]
+     */
+    public function getAllWhere($attributes = []): Collection;
     /**
      * Create a group with the given attributes
      * 

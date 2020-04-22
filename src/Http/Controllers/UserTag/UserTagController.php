@@ -18,11 +18,11 @@ class UserTagController extends Controller
      * Get all user tags
      * 
      * @param UserTagRepository $userTagRepository
-     * @return UserTag[]|\Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(UserTagRepository $userTagRepository)
     {
-        return $userTagRepository->all();
+        return $this->paginate($userTagRepository->all());
     }
 
     /**

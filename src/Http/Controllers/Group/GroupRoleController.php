@@ -15,11 +15,11 @@ class GroupRoleController extends Controller
      * Get all roles belonging to this group
      * 
      * @param Group $group
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(Group $group)
     {
-        return $group->roles();
+        return $this->paginate($group->roles());
     }
 
 }

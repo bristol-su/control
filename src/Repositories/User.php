@@ -66,4 +66,28 @@ class User implements UserContract
         return \BristolSU\ControlDB\Models\User::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
 
+    /**
+     * Paginate through all the users
+     *
+     * @param int $page The page number to return
+     * @param int $perPage The number of results to return per page
+     *
+     * @return Collection|UserModel[]
+     */
+    public function paginate(int $page, int $perPage): Collection
+    {
+        return \BristolSU\ControlDB\Models\User::paginate($perPage, ['*'], 'page', $page)->getCollection();
+    }
+
+    /**
+     * Get the number of users
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return \BristolSU\ControlDB\Models\User::count();
+    }
+
+
 }

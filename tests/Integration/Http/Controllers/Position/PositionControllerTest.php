@@ -8,17 +8,32 @@ use BristolSU\Tests\ControlDB\TestCase;
 
 class PositionControllerTest extends TestCase
 {
-
     /** @test */
-    public function it_returns_all_positions(){
+    public function it_returns_all_positions()
+    {
         $positions = factory(Position::class, 5)->create();
         $response = $this->getJson($this->apiUrl . '/position');
         $response->assertStatus(200);
-
-        $response->assertJsonCount(5);
-        foreach($response->json() as $positionThroughApi) {
+        
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(5);
+        foreach ($response->paginatedJson() as $positionThroughApi) {
             $this->assertArrayHasKey('id', $positionThroughApi);
             $this->assertEquals($positions->shift()->id(), $positionThroughApi['id']);
+        }
+    }
+
+    /** @test */
+    public function it_limits_positions_by_the_pagination_options(){
+        $positions = factory(Position::class, 50)->create();
+        $response = $this->getJson($this->apiUrl . '/position?page=2&per_page=15');
+        $response->assertStatus(200);
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(15);
+        $paginatedPositions = $positions->slice(15, 15)->values();
+        foreach ($response->paginatedJson() as $positionThroughApi) {
+            $this->assertArrayHasKey('id', $positionThroughApi);
+            $this->assertEquals($paginatedPositions->shift()->id(), $positionThroughApi['id']);
         }
     }
 

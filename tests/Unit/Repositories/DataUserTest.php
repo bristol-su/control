@@ -28,6 +28,22 @@ class DataUserTest extends TestCase
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $repository->getById(1);
     }
+
+    /** @test */
+    public function getAllWhere_returns_all_model_matching_the_attributes(){
+        DataUser::addProperty('additionalAttr');
+        $attributes = ['email' => 'email@email.com', 'additional_attributes' => json_encode(['additionalAttr' => 15])];
+
+        $dataUsers = factory(DataUser::class, 2)->create($attributes);
+        factory(DataUser::class, 4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataUser();
+        $dbDataUser = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(2, $dbDataUser->count());
+        $this->assertTrue($dataUsers[0]->is($dbDataUser[0]));
+        $this->assertTrue($dataUsers[1]->is($dbDataUser[1]));
+    }
     
     /** @test */
     public function getWhere_returns_the_first_model_matching_the_attributes(){

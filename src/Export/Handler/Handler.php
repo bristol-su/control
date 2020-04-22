@@ -5,6 +5,7 @@ namespace BristolSU\ControlDB\Export\Handler;
 use BristolSU\ControlDB\Export\FormattedItem;
 use BristolSU\ControlDB\Export\Formatter\Formatter;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 abstract class Handler
 {
@@ -40,7 +41,10 @@ abstract class Handler
         }
         $formattedItems = $this->prepareItems($items);
         foreach($this->getFormatters() as $formatter) {
+            $time=-hrtime(true);
             $formattedItems = $formatter->format($formattedItems);
+            $time+=hrtime(true);
+            $this->logTime(class_basename($formatter), $time / 1e+9);
         }
         $this->save($formattedItems);
     }
@@ -76,5 +80,12 @@ abstract class Handler
             return $this->config[$key];
         }
         return $default;
+    }
+
+    private function logTime(string $formatter, float $time)
+    {
+        if(config('control.log-formatters')) {
+            Log::info(sprintf('Formatter [%s] took %.2f s to run', $formatter, $time));
+        }
     }
 }

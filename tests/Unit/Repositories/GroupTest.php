@@ -96,4 +96,31 @@ class GroupTest extends TestCase
         $this->assertTrue($group->trashed());
     }
 
+    /** @test */
+    public function count_returns_the_number_of_groups(){
+        $groups = factory(Group::class, 18)->create();
+        $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
+
+        $this->assertEquals(18, $groupRepo->count());
+    }
+
+    /** @test */
+    public function paginate_returns_the_number_of_groups_specified_for_the_given_page(){
+        $groups = factory(Group::class, 40)->create();
+        $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
+
+        $paginatedGroups = $groupRepo->paginate(2, 10);
+        $this->assertEquals(10, $paginatedGroups->count());
+        $this->assertTrue($groups[10]->is($paginatedGroups->shift()));
+        $this->assertTrue($groups[11]->is($paginatedGroups->shift()));
+        $this->assertTrue($groups[12]->is($paginatedGroups->shift()));
+        $this->assertTrue($groups[13]->is($paginatedGroups->shift()));
+        $this->assertTrue($groups[14]->is($paginatedGroups->shift()));
+        $this->assertTrue($groups[15]->is($paginatedGroups->shift()));
+        $this->assertTrue($groups[16]->is($paginatedGroups->shift()));
+        $this->assertTrue($groups[17]->is($paginatedGroups->shift()));
+        $this->assertTrue($groups[18]->is($paginatedGroups->shift()));
+        $this->assertTrue($groups[19]->is($paginatedGroups->shift()));
+    }
+    
 }

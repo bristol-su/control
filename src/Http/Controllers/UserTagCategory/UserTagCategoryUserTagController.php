@@ -15,11 +15,11 @@ class UserTagCategoryUserTagController extends Controller
      * Get all tags belonging to the user tag category
      * 
      * @param UserTagCategory $userTagCategory
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(UserTagCategory $userTagCategory)
     {
-        return $userTagCategory->tags();
+        return $this->paginate($userTagCategory->tags());
     }
 
 }

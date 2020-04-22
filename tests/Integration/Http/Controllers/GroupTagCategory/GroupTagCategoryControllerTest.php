@@ -13,9 +13,9 @@ class GroupTagCategoryControllerTest extends TestCase
         $groupTagCategories = factory(GroupTagCategory::class, 5)->create();
         $response = $this->getJson($this->apiUrl . '/group-tag-category');
         $response->assertStatus(200);
-
-        $response->assertJsonCount(5);
-        foreach($response->json() as $groupTagCategoryThroughApi) {
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(5);
+        foreach($response->paginatedJson() as $groupTagCategoryThroughApi) {
             $this->assertArrayHasKey('id', $groupTagCategoryThroughApi);
             $this->assertEquals($groupTagCategories->shift()->id(), $groupTagCategoryThroughApi['id']);
         }

@@ -67,5 +67,22 @@ interface Role
      * @return Collection|RoleModel[]
      */
     public function allThroughPosition(\BristolSU\ControlDB\Contracts\Models\Position $position): Collection;
+
+    /**
+     * Paginate through all the roles
+     *
+     * @param int $page The page number to return
+     * @param int $perPage The number of results to return per page
+     *
+     * @return Collection|RoleModel[]
+     */
+    public function paginate(int $page, int $perPage): Collection;
+
+    /**
+     * Get the number of roles
+     *
+     * @return int
+     */
+    public function count(): int;
     
 }
