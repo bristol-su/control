@@ -98,6 +98,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adb9c89ede362fc22f51c975af3dbb5f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d000b2b6076d92727e814b88997238b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Position.html#a4d000b2b6076d92727e814b88997238b">getByDataProviderId</a> (int $dataProviderId)</td></tr>
 <tr class="separator:a4d000b2b6076d92727e814b88997238b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99b9c819c0df3a416425a2d29fdde5ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Position.html#a99b9c819c0df3a416425a2d29fdde5ae">paginate</a> (int $page, int $perPage)</td></tr>
+<tr class="separator:a99b9c819c0df3a416425a2d29fdde5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d59e03054cee3182961e7e39a9e021d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Position.html#a4d59e03054cee3182961e7e39a9e021d">count</a> ()</td></tr>
+<tr class="separator:a4d59e03054cee3182961e7e39a9e021d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles positions </p>
@@ -124,6 +128,29 @@ Public Member Functions</h2></td></tr>
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Position.html#a402a2872ea53772bcdec7ba85748bf52">BristolSU\ControlDB\Contracts\Repositories\Position</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="Repositories_2Position_8php_source.html#l00031">31</a> of file <a class="el" href="Repositories_2Position_8php_source.html">Position.php</a>.</p>
+
+</div>
+</div>
+<a id="a4d59e03054cee3182961e7e39a9e021d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d59e03054cee3182961e7e39a9e021d">&#9670;&nbsp;</a></span>count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Repositories\Position::count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the number of positions</p>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+<p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Position.html#a9b679567bf92c9132f60449cff63f158">BristolSU\ControlDB\Contracts\Repositories\Position</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="Repositories_2Position_8php_source.html#l00087">87</a> of file <a class="el" href="Repositories_2Position_8php_source.html">Position.php</a>.</p>
 
 </div>
 </div>
@@ -243,6 +270,47 @@ Public Member Functions</h2></td></tr>
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Position.html#a34f7bb9906df49909d6b50832d487d99">BristolSU\ControlDB\Contracts\Repositories\Position</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="Repositories_2Position_8php_source.html#l00021">21</a> of file <a class="el" href="Repositories_2Position_8php_source.html">Position.php</a>.</p>
+
+</div>
+</div>
+<a id="a99b9c819c0df3a416425a2d29fdde5ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99b9c819c0df3a416425a2d29fdde5ae">&#9670;&nbsp;</a></span>paginate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Repositories\Position::paginate </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>$page</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>$perPage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Paginate through all the positions</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$page</td><td>The page number to return </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$perPage</td><td>The number of results to return per page</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Collection|PositionModel[] </dd></dl>
+
+<p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Position.html#a40b035938947b296dced1a50af46c4ec">BristolSU\ControlDB\Contracts\Repositories\Position</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="Repositories_2Position_8php_source.html#l00077">77</a> of file <a class="el" href="Repositories_2Position_8php_source.html">Position.php</a>.</p>
 
 </div>
 </div>

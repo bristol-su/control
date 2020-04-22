@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['hasadditionalproperties',['HasAdditionalProperties',['../classBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1HasAdditionalProperties.html',1,'BristolSU::ControlDB::AdditionalProperties']]]
+  ['formatteditem',['FormattedItem',['../classBristolSU_1_1ControlDB_1_1Export_1_1FormattedItem.html',1,'BristolSU::ControlDB::Export']]],
+  ['formatter',['Formatter',['../classBristolSU_1_1ControlDB_1_1Export_1_1Formatter_1_1Formatter.html',1,'BristolSU::ControlDB::Export::Formatter']]]
 ];

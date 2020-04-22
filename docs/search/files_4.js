@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['hasadditionalproperties_2ephp',['HasAdditionalProperties.php',['../HasAdditionalProperties_8php.html',1,'']]]
+  ['formatteditem_2ephp',['FormattedItem.php',['../FormattedItem_8php.html',1,'']]],
+  ['formatter_2ephp',['Formatter.php',['../Formatter_8php.html',1,'']]]
 ];
