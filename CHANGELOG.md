@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v2.0]
+
 ### Added
 - \BristolSU\ControlDB\Contracts\Repositories\User::paginate()
 - \BristolSU\ControlDB\Contracts\Repositories\User::count()
@@ -134,7 +136,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - model/repository contracts
 
 
-[Unreleased]: https://github.com/bristol-su/control/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/bristol-su/control/compare/v2.0...HEAD
+[2.0]: https://github.com/bristol-su/control/compare/v1.3.0...v2.0
 [1.3.0]: https://github.com/bristol-su/control/compare/v1.2.4...v1.3.0
 [1.2.4]: https://github.com/bristol-su/control/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/bristol-su/control/compare/v1.2.2...v1.2.3
