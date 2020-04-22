@@ -2,12 +2,14 @@
 
 namespace BristolSU\ControlDB\Http\Controllers\Group;
 
-use BristolSU\ControlDB\Contracts\Models\DataGroup;
 use BristolSU\ControlDB\Http\Controllers\Controller;
 use BristolSU\ControlDB\Http\Requests\Api\Group\StoreGroupRequest;
 use BristolSU\ControlDB\Contracts\Models\Group;
 use BristolSU\ControlDB\Contracts\Repositories\DataGroup as DataGroupRepository;
 use BristolSU\ControlDB\Contracts\Repositories\Group as GroupRepository;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Handles groups
@@ -17,13 +19,41 @@ class GroupController extends Controller
 
     /**
      * Get all groups
-     * 
+     *
+     * @param Request $request
      * @param GroupRepository $groupRepository
-     * @return Group[]|\Illuminate\Support\Collection
+     * @return LengthAwarePaginator
      */
-    public function index(GroupRepository $groupRepository)
+    public function index(Request $request, GroupRepository $groupRepository)
     {
-        return $groupRepository->all();
+        $perPage = request()->input('per_page', 10);
+        $page = request()->input('page', 1);
+        
+        return $this->paginationResponse(
+            $groupRepository->paginate($page, $perPage),
+            $groupRepository->count()
+        );
+    }
+
+    public function search(Request $request, GroupRepository $groupRepository, DataGroupRepository $dataGroupRepository)
+    {
+        $search = [];
+        if($request->has('name')) {
+            $search['name'] = $request->input('name');
+        }
+        if($request->has('email')) {
+            $search['email'] = $request->input('email');
+        }
+        $dataGroups = $dataGroupRepository->getAllWhere($search);
+        $groups = new Collection();
+        foreach($dataGroups as $dataGroup) {
+            $group = $dataGroup->group();
+            if($group !== null) {
+                $groups->push($group);
+            }
+        }
+
+        return $this->paginate($groups);
     }
 
     /**

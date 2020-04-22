@@ -18,11 +18,11 @@ class PositionTagController extends Controller
      * Get all position tags
      * 
      * @param PositionTagRepository $positionTagRepository
-     * @return PositionTag[]|\Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(PositionTagRepository $positionTagRepository)
     {
-        return $positionTagRepository->all();
+        return $this->paginate($positionTagRepository->all());
     }
 
     /**

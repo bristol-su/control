@@ -16,9 +16,10 @@ class UserTagCategoryUserTagControllerTest extends TestCase
 
         $response = $this->getJson($this->apiUrl . '/user-tag-category/' . $userTagCategory->id() . '/user-tag');
         $response->assertStatus(200);
+        $response->assertPaginatedResponse();
 
-        $response->assertJsonCount(5);
-        foreach($response->json() as $userTagThroughApi) {
+        $response->assertPaginatedJsonCount(5);
+        foreach($response->paginatedJson() as $userTagThroughApi) {
             $this->assertArrayHasKey('id', $userTagThroughApi);
             $this->assertEquals($userTags->shift()->id(), $userTagThroughApi['id']);
         }

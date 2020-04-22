@@ -15,11 +15,11 @@ class PositionRoleController extends Controller
      * Get all roles which have the given position
      * 
      * @param Position $position
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(Position $position)
     {
-        return $position->roles();
+        return $this->paginate($position->roles());
     }
 
 }

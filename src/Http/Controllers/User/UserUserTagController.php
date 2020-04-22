@@ -16,11 +16,12 @@ class UserUserTagController extends Controller
      * Get all tags belonging to the current user
      *
      * @param User $user
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(User $user)
     {
-        return $user->tags();
+        return $this->paginate($user->tags());
+        
     }
 
     /**

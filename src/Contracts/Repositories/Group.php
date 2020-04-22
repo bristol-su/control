@@ -49,4 +49,20 @@ interface Group
      */
     public function delete(int $id): void;
 
+    /**
+     * Paginate through all the groups
+     *
+     * @param int $page The page number to return
+     * @param int $perPage The number of results to return per page
+     *
+     * @return Collection|GroupModel[]
+     */
+    public function paginate(int $page, int $perPage): Collection;
+
+    /**
+     * Get the number of groups
+     *
+     * @return int
+     */
+    public function count(): int;
 }

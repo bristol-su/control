@@ -132,4 +132,31 @@ class RoleTest extends TestCase
         }
     }
 
+    /** @test */
+    public function count_returns_the_number_of_roles(){
+        $roles = factory(Role::class, 18)->create();
+        $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
+
+        $this->assertEquals(18, $roleRepo->count());
+    }
+
+    /** @test */
+    public function paginate_returns_the_number_of_roles_specified_for_the_given_page(){
+        $roles = factory(Role::class, 40)->create();
+        $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
+
+        $paginatedRoles = $roleRepo->paginate(2, 10);
+        $this->assertEquals(10, $paginatedRoles->count());
+        $this->assertTrue($roles[10]->is($paginatedRoles->shift()));
+        $this->assertTrue($roles[11]->is($paginatedRoles->shift()));
+        $this->assertTrue($roles[12]->is($paginatedRoles->shift()));
+        $this->assertTrue($roles[13]->is($paginatedRoles->shift()));
+        $this->assertTrue($roles[14]->is($paginatedRoles->shift()));
+        $this->assertTrue($roles[15]->is($paginatedRoles->shift()));
+        $this->assertTrue($roles[16]->is($paginatedRoles->shift()));
+        $this->assertTrue($roles[17]->is($paginatedRoles->shift()));
+        $this->assertTrue($roles[18]->is($paginatedRoles->shift()));
+        $this->assertTrue($roles[19]->is($paginatedRoles->shift()));
+    }
+
 }

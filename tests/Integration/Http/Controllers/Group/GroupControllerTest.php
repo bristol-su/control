@@ -4,6 +4,7 @@ namespace BristolSU\Tests\ControlDB\Integration\Http\Controllers\Group;
 
 use BristolSU\ControlDB\Models\DataGroup;
 use BristolSU\ControlDB\Models\Group;
+use BristolSU\ControlDB\Models\Position;
 use BristolSU\Tests\ControlDB\TestCase;
 
 class GroupControllerTest extends TestCase
@@ -16,10 +17,25 @@ class GroupControllerTest extends TestCase
         $response = $this->getJson($this->apiUrl . '/group');
         $response->assertStatus(200);
 
-        $response->assertJsonCount(5);
-        foreach ($response->json() as $groupThroughApi) {
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(5);
+        foreach ($response->paginatedJson() as $groupThroughApi) {
             $this->assertArrayHasKey('id', $groupThroughApi);
             $this->assertEquals($groups->shift()->id(), $groupThroughApi['id']);
+        }
+    }
+
+    /** @test */
+    public function it_limits_groups_by_the_pagination_options(){
+        $groups = factory(Group::class, 50)->create();
+        $response = $this->getJson($this->apiUrl . '/group?page=2&per_page=15');
+        $response->assertStatus(200);
+
+        $response->assertPaginatedJsonCount(15);
+        $paginatedGroups = $groups->slice(15, 15)->values();
+        foreach ($response->paginatedJson() as $groupThroughApi) {
+            $this->assertArrayHasKey('id', $groupThroughApi);
+            $this->assertEquals($paginatedGroups->shift()->id(), $groupThroughApi['id']);
         }
     }
 

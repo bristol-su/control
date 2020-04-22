@@ -48,4 +48,20 @@ interface Position
      */
     public function delete(int $id): void;
 
+    /**
+     * Paginate through all the positions
+     *
+     * @param int $page The page number to return
+     * @param int $perPage The number of results to return per page
+     *
+     * @return Collection|PositionModel[]
+     */
+    public function paginate(int $page, int $perPage): Collection;
+
+    /**
+     * Get the number of positions
+     *
+     * @return int
+     */
+    public function count(): int;
 }

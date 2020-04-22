@@ -84,4 +84,27 @@ class Role implements RoleRepositoryContract
     {
         return $this->roleRepository->allThroughPosition($position);
     }
+
+    /**
+     * Paginate through all the roles
+     *
+     * @param int $page The page number to return
+     * @param int $perPage The number of results to return per page
+     *
+     * @return Collection|RoleModel[]
+     */
+    public function paginate(int $page, int $perPage): Collection
+    {
+        return $this->roleRepository->paginate($page, $perPage);
+    }
+
+    /**
+     * Get the number of roles
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->roleRepository->count();
+    }
 }

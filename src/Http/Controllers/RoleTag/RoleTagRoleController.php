@@ -15,11 +15,11 @@ class RoleTagRoleController extends Controller
      * Get all roles with the given tag
      * 
      * @param RoleTag $roleTag
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(RoleTag $roleTag)
     {
-        return $roleTag->roles();
+        return $this->paginate($roleTag->roles());
     }
 
     /**

@@ -25,9 +25,10 @@ class PositionTagPositionControllerTest extends TestCase
 
         $response = $this->getJson($this->apiUrl . '/position-tag/' . $positionTag->id() . '/position');
         $response->assertStatus(200);
+        $response->assertPaginatedResponse();
 
-        $response->assertJsonCount(5);
-        foreach ($response->json() as $positionThroughApi) {
+        $response->assertPaginatedJsonCount(5);
+        foreach ($response->paginatedJson() as $positionThroughApi) {
             $this->assertArrayHasKey('id', $positionThroughApi);
             $this->assertEquals($positions->shift()->id(), $positionThroughApi['id']);
         }

@@ -14,9 +14,10 @@ class PositionTagControllerTest extends TestCase
         $positionTags = factory(PositionTag::class, 5)->create();
         $response = $this->getJson($this->apiUrl . '/position-tag');
         $response->assertStatus(200);
+        $response->assertPaginatedResponse();
 
-        $response->assertJsonCount(5);
-        foreach($response->json() as $positionTagThroughApi) {
+        $response->assertPaginatedJsonCount(5);
+        foreach($response->paginatedJson() as $positionTagThroughApi) {
             $this->assertArrayHasKey('id', $positionTagThroughApi);
             $this->assertEquals($positionTags->shift()->id(), $positionTagThroughApi['id']);
         }

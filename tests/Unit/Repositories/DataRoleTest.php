@@ -97,4 +97,20 @@ class DataRoleTest extends TestCase
         $this->assertTrue($dataRole2->is($dbDataRole2));
     }
 
+    /** @test */
+    public function getAllWhere_returns_all_model_matching_the_attributes(){
+        DataRole::addProperty('additionalAttr');
+        $attributes = ['email' => 'email@email.com', 'additional_attributes' => json_encode(['additionalAttr' => 15])];
+
+        $dataRoles = factory(DataRole::class, 2)->create($attributes);
+        factory(DataRole::class, 4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataRole();
+        $dbDataRole = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(2, $dbDataRole->count());
+        $this->assertTrue($dataRoles[0]->is($dbDataRole[0]));
+        $this->assertTrue($dataRoles[1]->is($dbDataRole[1]));
+    }
+
 }

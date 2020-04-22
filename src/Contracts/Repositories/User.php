@@ -47,4 +47,22 @@ interface User
      * @param int $id
      */
     public function delete(int $id): void;
+
+    /**
+     * Paginate through all the users
+     * 
+     * @param int $page The page number to return
+     * @param int $perPage The number of results to return per page
+     * 
+     * @return Collection|UserModel[]
+     */
+    public function paginate(int $page, int $perPage): Collection;
+
+    /**
+     * Get the number of users
+     * 
+     * @return int
+     */
+    public function count(): int;
+    
 }

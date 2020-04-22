@@ -4,6 +4,7 @@ namespace BristolSU\ControlDB\Repositories;
 
 use DateTime;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Collection;
 
 class DataUser implements \BristolSU\ControlDB\Contracts\Repositories\DataUser
 {
@@ -27,22 +28,7 @@ class DataUser implements \BristolSU\ControlDB\Contracts\Repositories\DataUser
      */
     public function getWhere($attributes = []): \BristolSU\ControlDB\Contracts\Models\DataUser
     {
-        $baseAttributes = $attributes;
-        $additionalAttributes = [];
-        foreach (\BristolSU\ControlDB\Models\DataUser::getAdditionalAttributes() as $property) {
-            if (array_key_exists($property, $baseAttributes)) {
-                $additionalAttributes[$property] = $baseAttributes[$property];
-                unset($baseAttributes[$property]);
-            }
-        }
-        $users = \BristolSU\ControlDB\Models\DataUser::where($baseAttributes)->get()->filter(function (\BristolSU\ControlDB\Models\DataUser $dataUser) use ($additionalAttributes) {
-            foreach ($additionalAttributes as $additionalAttribute => $value) {
-                if ($dataUser->getAdditionalAttribute($additionalAttribute) !== $value) {
-                    return false;
-                }
-            }
-            return true;
-        })->values();
+        $users = $this->getAllWhere($attributes);
 
         if ($users->count() > 0) {
             return $users->first();
@@ -69,5 +55,36 @@ class DataUser implements \BristolSU\ControlDB\Contracts\Repositories\DataUser
             'dob' => $dob,
             'preferred_name' => $preferredName
         ]);
+    }
+
+    /**
+     * Get all data users where the given attributes match, including additional attributes.
+     *
+     * @param array $attributes
+     * @return Collection
+     */
+    public function getAllWhere($attributes = []): Collection
+    {
+        $baseAttributes = $attributes;
+        $additionalAttributes = [];
+        foreach (\BristolSU\ControlDB\Models\DataUser::getAdditionalAttributes() as $property) {
+            if (array_key_exists($property, $baseAttributes)) {
+                $additionalAttributes[$property] = $baseAttributes[$property];
+                unset($baseAttributes[$property]);
+            }
+        }
+        return \BristolSU\ControlDB\Models\DataUser::where(function($query) use ($baseAttributes) {
+            foreach($baseAttributes as $key => $value) {
+                $query = $query->orWhere($key, 'LIKE', '%' . $value . '%');
+            }
+            return $query;
+        })->get()->filter(function (\BristolSU\ControlDB\Models\DataUser $dataUser) use ($additionalAttributes) {
+            foreach ($additionalAttributes as $additionalAttribute => $value) {
+                if ($dataUser->getAdditionalAttribute($additionalAttribute) !== $value) {
+                    return false;
+                }
+            }
+            return true;
+        })->values();
     }
 }

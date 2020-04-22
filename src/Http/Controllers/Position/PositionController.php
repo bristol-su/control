@@ -8,6 +8,9 @@ use BristolSU\ControlDB\Http\Requests\Api\Position\UpdatePositionRequest;
 use BristolSU\ControlDB\Contracts\Models\Position;
 use BristolSU\ControlDB\Contracts\Repositories\DataPosition as DataPositionRepository;
 use BristolSU\ControlDB\Contracts\Repositories\Position as PositionRepository;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Handles a position model
@@ -17,13 +20,41 @@ class PositionController extends Controller
 
     /**
      * Get all positions
-     * 
+     *
+     * @param Request $request
      * @param PositionRepository $positionRepository
-     * @return Position[]|\Illuminate\Support\Collection
+     * @return LengthAwarePaginator
      */
-    public function index(PositionRepository $positionRepository)
+    public function index(Request $request, PositionRepository $positionRepository)
     {
-        return $positionRepository->all();
+        $perPage = $request->input('per_page', 10);
+        $page = $request->input('page', 1);
+
+        return $this->paginationResponse(
+            $positionRepository->paginate($page, $perPage),
+            $positionRepository->count()
+        );
+    }
+
+    public function search(Request $request, PositionRepository $positionRepository, DataPositionRepository $dataPositionRepository)
+    {
+
+        $search = [];
+        if($request->has('name')) {
+            $search['name'] = $request->input('name');
+        }
+        if($request->has('description')) {
+            $search['description'] = $request->input('description');
+        }
+        $dataPositions = $dataPositionRepository->getAllWhere($search);
+        $positions = new Collection();
+        foreach($dataPositions as $dataPosition) {
+            $position = $dataPosition->position();
+            if($position !== null) {
+                $positions->push($position);
+            }
+        }
+        return $this->paginate($positions);
     }
 
     /**

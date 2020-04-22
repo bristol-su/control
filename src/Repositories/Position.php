@@ -66,4 +66,27 @@ class Position implements PositionContract
         return \BristolSU\ControlDB\Models\Position::where('data_provider_id', $dataProviderId)->firstOrFail();
     }
 
+    /**
+     * Paginate through all the positions
+     *
+     * @param int $page The page number to return
+     * @param int $perPage The number of results to return per page
+     *
+     * @return Collection|PositionModel[]
+     */
+    public function paginate(int $page, int $perPage): Collection
+    {
+        return \BristolSU\ControlDB\Models\Position::paginate($perPage, ['*'], 'page', $page)->getCollection();
+    }
+
+    /**
+     * Get the number of positions
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return \BristolSU\ControlDB\Models\Position::count();
+    }
+    
 }

@@ -14,9 +14,9 @@ class RoleTagControllerTest extends TestCase
         $roleTags = factory(RoleTag::class, 5)->create();
         $response = $this->getJson($this->apiUrl . '/role-tag');
         $response->assertStatus(200);
-
-        $response->assertJsonCount(5);
-        foreach($response->json() as $roleTagThroughApi) {
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(5);
+        foreach($response->paginatedJson() as $roleTagThroughApi) {
             $this->assertArrayHasKey('id', $roleTagThroughApi);
             $this->assertEquals($roleTags->shift()->id(), $roleTagThroughApi['id']);
         }

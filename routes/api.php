@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Group')->group(function() {
+    Route::get('group/search', 'GroupController@search');
     Route::apiResource('group', 'GroupController')->parameter('group', 'control_group');
     Route::apiResource('group.tag', 'GroupGroupTagController')->only(['index', 'update', 'destroy'])->parameters(['group' => 'control_group', 'tag' => 'control_group_tag']);
     Route::apiResource('group.user', 'GroupUserController')->only(['index', 'update', 'destroy'])->parameters(['group' => 'control_group', 'user' => 'control_user']);
@@ -21,6 +22,7 @@ Route::namespace('Group')->group(function() {
 });
 
 Route::namespace('User')->group(function() {
+    Route::get('user/search', 'UserController@search');
     Route::apiResource('user', 'UserController')->parameter('user', 'control_user');
     Route::apiResource('user.tag', 'UserUserTagController')->only(['index', 'update', 'destroy'])->parameters(['user' => 'control_user', 'tag' => 'control_user_tag']);
     Route::apiResource('user.role', 'UserRoleController')->only(['index', 'update', 'destroy'])->parameters(['user' => 'control_user', 'role' => 'control_role']);
@@ -36,6 +38,7 @@ Route::namespace('Role')->group(function() {
 });
 
 Route::namespace('Position')->group(function() {
+    Route::get('position/search', 'PositionController@search');
     Route::apiResource('position', 'PositionController')->parameter('position', 'control_position');
     Route::apiResource('position.tag', 'PositionPositionTagController')->only(['index', 'update', 'destroy'])->parameters(['position' => 'control_position', 'tag' => 'control_position_tag']);
     Route::apiResource('position.role', 'PositionRoleController')->only(['index'])->parameters(['position' => 'control_position']);

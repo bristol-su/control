@@ -14,8 +14,9 @@ class PositionTagCategoryControllerTest extends TestCase
         $response = $this->getJson($this->apiUrl . '/position-tag-category');
         $response->assertStatus(200);
 
-        $response->assertJsonCount(5);
-        foreach($response->json() as $positionTagCategoryThroughApi) {
+        $response->assertPaginatedResponse();
+        $response->assertPaginatedJsonCount(5);
+        foreach($response->paginatedJson() as $positionTagCategoryThroughApi) {
             $this->assertArrayHasKey('id', $positionTagCategoryThroughApi);
             $this->assertEquals($positionTagCategories->shift()->id(), $positionTagCategoryThroughApi['id']);
         }

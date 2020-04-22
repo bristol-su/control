@@ -5,6 +5,8 @@ namespace BristolSU\ControlDB\Http\Controllers\Group;
 use BristolSU\ControlDB\Http\Controllers\Controller;
 use BristolSU\ControlDB\Contracts\Models\Group;
 use BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Handles a group tags link to a group
@@ -14,13 +16,13 @@ class GroupGroupTagController extends Controller
 
     /**
      * Get all group tags through a group
-     * 
+     *
      * @param Group $group
-     * @return \Illuminate\Support\Collection
+     * @return LengthAwarePaginator
      */
     public function index(Group $group)
     {
-        return $group->tags();
+        return $this->paginate($group->tags());
     }
 
     /**

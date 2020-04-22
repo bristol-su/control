@@ -7,6 +7,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- \BristolSU\ControlDB\Contracts\Repositories\User::paginate()
+- \BristolSU\ControlDB\Contracts\Repositories\User::count()
+- \BristolSU\ControlDB\Contracts\Repositories\DataUser::getAllWhere()
+- \BristolSU\ControlDB\Contracts\Repositories\Group::paginate()
+- \BristolSU\ControlDB\Contracts\Repositories\Group::count()
+- \BristolSU\ControlDB\Contracts\Repositories\DataGroup::getAllWhere()
+- \BristolSU\ControlDB\Contracts\Repositories\Role::paginate()
+- \BristolSU\ControlDB\Contracts\Repositories\Role::count()
+- \BristolSU\ControlDB\Contracts\Repositories\DataRole::getAllWhere()
+- \BristolSU\ControlDB\Contracts\Repositories\Position::paginate()
+- \BristolSU\ControlDB\Contracts\Repositories\Position::count()
+- \BristolSU\ControlDB\Contracts\Repositories\DataPosition::getAllWhere()
+- \BristolSU\ControlDB\Http\Controllers\Controller::paginate to slice and paginate through a list of items
+- \BristolSU\ControlDB\Http\Controllers\Controller::paginationResponse to paginate through a sliced list of items
+- Add timings of formatters to logs when exporting
+
+### Changed
+- \BristolSU\ControlDB\Http\Controllers\Group\GroupController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\Group\GroupGroupTagController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\Group\GroupRoleController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\Group\GroupUserController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\GroupTag\GroupTagController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\GroupTag\GroupTagGroupController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\GroupTagCategory\GroupTagCategoryController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\GroupTagCategory\GroupTagCategoryGroupTagController::index returns a LengthAwarePaginator
+
+- \BristolSU\ControlDB\Http\Controllers\Position\PositionController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\Position\PositionPositionTagController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\Position\PositionRoleController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\PositionTag\PositionTagController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\PositionTag\PositionTagPositionController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\PositionTagCategory\PositionTagCategoryController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\PositionTagCategory\PositionTagCategoryPositionTagController::index returns a LengthAwarePaginator
+
+- \BristolSU\ControlDB\Http\Controllers\Role\RoleController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\Role\RoleRoleTagController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\Role\RoleUserController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\RoleTag\RoleTagController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\RoleTag\RoleTagRoleController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\RoleTagCategory\RoleTagCategoryController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\RoleTagCategory\RoleTagCategoryRoleTagController::index returns a LengthAwarePaginator
+
+- \BristolSU\ControlDB\Http\Controllers\User\UserController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\User\UserGroupController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\User\UserRoleController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\User\UserUserTagController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\UserTag\UserTagController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\UserTag\UserTagUserController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\UserTagCategory\UserTagCategoryController::index returns a LengthAwarePaginator
+- \BristolSU\ControlDB\Http\Controllers\UserTagCategory\UserTagCategoryUserTagController::index returns a LengthAwarePaginator
+
 ## [1.3.0] - (08/04/2020)
 
 ### Added

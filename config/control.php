@@ -5,7 +5,7 @@ return [
     'api_middleware' => [
         'api'
     ],
-    
+    'log-formatters' => env('LOG_CONTROL_FORMATTERS', false),
     'export' => [
 
         /*

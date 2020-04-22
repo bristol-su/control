@@ -18,11 +18,11 @@ class RoleUserController extends Controller
      * Get all users belonging to a group
      * 
      * @param Role $role
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(Role $role)
     {
-        return $role->users();
+        return $this->paginate($role->users());
     }
 
     /**

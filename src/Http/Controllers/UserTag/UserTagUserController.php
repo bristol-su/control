@@ -15,11 +15,11 @@ class UserTagUserController extends Controller
      * Get all users with the given tag
      * 
      * @param UserTag $userTag
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(UserTag $userTag)
     {
-        return $userTag->users();
+        return $this->paginate($userTag->users());
     }
 
     /**

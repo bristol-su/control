@@ -15,11 +15,11 @@ class PositionTagCategoryPositionTagController extends Controller
      * Get all tags belonging to the position tag category
      * 
      * @param PositionTagCategory $positionTagCategory
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function index(PositionTagCategory $positionTagCategory)
     {
-        return $positionTagCategory->tags();
+        return $this->paginate($positionTagCategory->tags());
     }
 
 }

@@ -15,7 +15,6 @@ class RoleTagRoleTagCategoryControllerTest extends TestCase
         $tag = factory(RoleTag::class)->create(['id' => 20, 'tag_category_id' => $tagCategory->id()]);
         
         $response = $this->getJson($this->apiUrl . '/role-tag/' . $tag->id() . '/role-tag-category');
-        
         $response->assertStatus(200);
         $response->assertJsonFragment(['id' => $tagCategory->id()]);
     }
