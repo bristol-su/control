@@ -94,10 +94,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4d265341afa017af78ff6d25f2f4894b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbca0b619719777845e9043f506e2a6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1DataGroup.html#acbca0b619719777845e9043f506e2a6f">create</a> (?string $name=null, ?string $email=null)</td></tr>
 <tr class="separator:acbca0b619719777845e9043f506e2a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa35e75a03c9215a9956063fca1d27f9f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1DataGroup.html#aa35e75a03c9215a9956063fca1d27f9f">getAllWhere</a> ($attributes=[])</td></tr>
+<tr class="separator:aa35e75a03c9215a9956063fca1d27f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="Repositories_2DataGroup_8php_source.html#l00007">7</a> of file <a class="el" href="Repositories_2DataGroup_8php_source.html">DataGroup.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2DataGroup_8php_source.html#l00008">8</a> of file <a class="el" href="Repositories_2DataGroup_8php_source.html">DataGroup.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="acbca0b619719777845e9043f506e2a6f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acbca0b619719777845e9043f506e2a6f">&#9670;&nbsp;</a></span>create()</h2>
@@ -136,7 +138,41 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1DataGroup.html#a5330e5b8992d7855d43fcb2f422f73f5">BristolSU\ControlDB\Contracts\Repositories\DataGroup</a>.</p>
 
+<p class="definition">Definition at line <a class="el" href="Repositories_2DataGroup_8php_source.html#l00045">45</a> of file <a class="el" href="Repositories_2DataGroup_8php_source.html">DataGroup.php</a>.</p>
+
+</div>
+</div>
+<a id="aa35e75a03c9215a9956063fca1d27f9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa35e75a03c9215a9956063fca1d27f9f">&#9670;&nbsp;</a></span>getAllWhere()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Repositories\DataGroup::getAllWhere </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$attributes</em> = <code>[]</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get all data groups where the given attributes match, including additional attributes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$attributes</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Collection </dd></dl>
+
+<p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1DataGroup.html#a70d9eb2a60805d9e19a22aab57c91092">BristolSU\ControlDB\Contracts\Repositories\DataGroup</a>.</p>
+
 <p class="definition">Definition at line <a class="el" href="Repositories_2DataGroup_8php_source.html#l00059">59</a> of file <a class="el" href="Repositories_2DataGroup_8php_source.html">DataGroup.php</a>.</p>
+
+<p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1ImplementsAdditionalProperties.html#afc666ebc82a1a4694390b3a8e5cd0437">BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties\getAdditionalAttributes()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="Repositories_2DataGroup_8php_source.html#l00028">BristolSU\ControlDB\Repositories\DataGroup\getWhere()</a>.</p>
 
 </div>
 </div>
@@ -166,7 +202,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1DataGroup.html#ad02964ac8e64bca3bd63d6d97c4d9945">BristolSU\ControlDB\Contracts\Repositories\DataGroup</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2DataGroup_8php_source.html#l00016">16</a> of file <a class="el" href="Repositories_2DataGroup_8php_source.html">DataGroup.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2DataGroup_8php_source.html#l00017">17</a> of file <a class="el" href="Repositories_2DataGroup_8php_source.html">DataGroup.php</a>.</p>
 
 </div>
 </div>
@@ -196,9 +232,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1DataGroup.html#a07f04e0ff9336a3be3d55b242db64a62">BristolSU\ControlDB\Contracts\Repositories\DataGroup</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Repositories_2DataGroup_8php_source.html#l00027">27</a> of file <a class="el" href="Repositories_2DataGroup_8php_source.html">DataGroup.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Repositories_2DataGroup_8php_source.html#l00028">28</a> of file <a class="el" href="Repositories_2DataGroup_8php_source.html">DataGroup.php</a>.</p>
 
-<p class="reference">References <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1AdditionalProperties_1_1ImplementsAdditionalProperties.html#afc666ebc82a1a4694390b3a8e5cd0437">BristolSU\ControlDB\AdditionalProperties\ImplementsAdditionalProperties\getAdditionalAttributes()</a>.</p>
+<p class="reference">References <a class="el" href="Repositories_2DataGroup_8php_source.html#l00059">BristolSU\ControlDB\Repositories\DataGroup\getAllWhere()</a>.</p>
 
 </div>
 </div>

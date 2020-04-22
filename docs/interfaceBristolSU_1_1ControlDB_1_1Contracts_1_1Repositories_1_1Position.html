@@ -90,6 +90,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af191986bb92d602a6edc7618fc7a2bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8406728338fc8124e761cbf05fdcdb5b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Position.html#a8406728338fc8124e761cbf05fdcdb5b">delete</a> (int $id)</td></tr>
 <tr class="separator:a8406728338fc8124e761cbf05fdcdb5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40b035938947b296dced1a50af46c4ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Position.html#a40b035938947b296dced1a50af46c4ec">paginate</a> (int $page, int $perPage)</td></tr>
+<tr class="separator:a40b035938947b296dced1a50af46c4ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b679567bf92c9132f60449cff63f158"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Position.html#a9b679567bf92c9132f60449cff63f158">count</a> ()</td></tr>
+<tr class="separator:a9b679567bf92c9132f60449cff63f158"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles positions </p>
@@ -114,6 +118,27 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Collection|PositionModel[] </dd></dl>
 
 <p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Position.html#ae368c60bc01460937769245445c2f10e">BristolSU\ControlDB\Repositories\Position</a>.</p>
+
+</div>
+</div>
+<a id="a9b679567bf92c9132f60449cff63f158"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b679567bf92c9132f60449cff63f158">&#9670;&nbsp;</a></span>count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Contracts\Repositories\Position::count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the number of positions</p>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+<p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Position.html#a4d59e03054cee3182961e7e39a9e021d">BristolSU\ControlDB\Repositories\Position</a>.</p>
 
 </div>
 </div>
@@ -225,6 +250,45 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>PositionModel </dd></dl>
 
 <p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Position.html#a3ce54372a656729bbb07869ea5ff4cec">BristolSU\ControlDB\Repositories\Position</a>.</p>
+
+</div>
+</div>
+<a id="a40b035938947b296dced1a50af46c4ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40b035938947b296dced1a50af46c4ec">&#9670;&nbsp;</a></span>paginate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Contracts\Repositories\Position::paginate </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>$page</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>$perPage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Paginate through all the positions</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$page</td><td>The page number to return </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$perPage</td><td>The number of results to return per page</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Collection|PositionModel[] </dd></dl>
+
+<p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Position.html#a99b9c819c0df3a416425a2d29fdde5ae">BristolSU\ControlDB\Repositories\Position</a>.</p>
 
 </div>
 </div>

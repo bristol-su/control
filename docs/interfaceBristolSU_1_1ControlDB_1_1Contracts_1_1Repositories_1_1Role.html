@@ -95,6 +95,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6a3505bebe6473b16023332bc6733cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a910444076187d3f01cccfdde746802c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Role.html#a910444076187d3f01cccfdde746802c2">allThroughPosition</a> (\<a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Models_1_1Position.html">BristolSU\ControlDB\Contracts\Models\Position</a> $position)</td></tr>
 <tr class="separator:a910444076187d3f01cccfdde746802c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab24a4ae094bc510b920d1a0f39a5df0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Role.html#ab24a4ae094bc510b920d1a0f39a5df0a">paginate</a> (int $page, int $perPage)</td></tr>
+<tr class="separator:ab24a4ae094bc510b920d1a0f39a5df0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e71d446f09b579b9f769049bcf2af80"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Role.html#a5e71d446f09b579b9f769049bcf2af80">count</a> ()</td></tr>
+<tr class="separator:a5e71d446f09b579b9f769049bcf2af80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface <a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Role.html">Role</a> </p>
@@ -170,6 +174,27 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Collection|RoleModel[] </dd></dl>
+
+</div>
+</div>
+<a id="a5e71d446f09b579b9f769049bcf2af80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e71d446f09b579b9f769049bcf2af80">&#9670;&nbsp;</a></span>count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Contracts\Repositories\Role::count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the number of roles</p>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+<p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Role.html#aa9abe673e628c612de056e987a09493d">BristolSU\ControlDB\Repositories\Role</a>, and <a class="el" href="classBristolSU_1_1ControlDB_1_1Cache_1_1Role.html#a8322b098d773399583b06417127377ab">BristolSU\ControlDB\Cache\Role</a>.</p>
 
 </div>
 </div>
@@ -299,6 +324,45 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>RoleModel </dd></dl>
 
 <p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Cache_1_1Role.html#a2b00f402e2ccd3cdf0d856d60eb198a9">BristolSU\ControlDB\Cache\Role</a>, and <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Role.html#a19f350ef093000ebc9bab17938d863f3">BristolSU\ControlDB\Repositories\Role</a>.</p>
+
+</div>
+</div>
+<a id="ab24a4ae094bc510b920d1a0f39a5df0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab24a4ae094bc510b920d1a0f39a5df0a">&#9670;&nbsp;</a></span>paginate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Contracts\Repositories\Role::paginate </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>$page</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>$perPage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Paginate through all the roles</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$page</td><td>The page number to return </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$perPage</td><td>The number of results to return per page</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Collection|RoleModel[] </dd></dl>
+
+<p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Role.html#a0352a08ace673e7884a7f0266ea82b47">BristolSU\ControlDB\Repositories\Role</a>, and <a class="el" href="classBristolSU_1_1ControlDB_1_1Cache_1_1Role.html#a0802f0f1f16f79202452664f0542ebc8">BristolSU\ControlDB\Cache\Role</a>.</p>
 
 </div>
 </div>

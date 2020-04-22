@@ -1,25 +1,5 @@
 var searchData=
 [
-  ['position_2ephp',['Position.php',['../Contracts_2Models_2Position_8php.html',1,'(Global Namespace)'],['../Contracts_2Repositories_2Position_8php.html',1,'(Global Namespace)'],['../Models_2Position_8php.html',1,'(Global Namespace)'],['../Repositories_2Position_8php.html',1,'(Global Namespace)']]],
-  ['positioncontroller_2ephp',['PositionController.php',['../PositionController_8php.html',1,'']]],
-  ['positionpositiontag_2ephp',['PositionPositionTag.php',['../Contracts_2Repositories_2Pivots_2Tags_2PositionPositionTag_8php.html',1,'(Global Namespace)'],['../Models_2Pivots_2Tags_2PositionPositionTag_8php.html',1,'(Global Namespace)'],['../Repositories_2Pivots_2Tags_2PositionPositionTag_8php.html',1,'(Global Namespace)']]],
-  ['positionpositiontagcontroller_2ephp',['PositionPositionTagController.php',['../PositionPositionTagController_8php.html',1,'']]],
-  ['positionpositiontagscope_2ephp',['PositionPositionTagScope.php',['../PositionPositionTagScope_8php.html',1,'']]],
-  ['positionrolecontroller_2ephp',['PositionRoleController.php',['../PositionRoleController_8php.html',1,'']]],
-  ['positiontag_2ephp',['PositionTag.php',['../Contracts_2Models_2Tags_2PositionTag_8php.html',1,'(Global Namespace)'],['../Contracts_2Repositories_2Tags_2PositionTag_8php.html',1,'(Global Namespace)'],['../Models_2Tags_2PositionTag_8php.html',1,'(Global Namespace)'],['../Repositories_2Tags_2PositionTag_8php.html',1,'(Global Namespace)']]],
-  ['positiontagcategory_2ephp',['PositionTagCategory.php',['../Contracts_2Models_2Tags_2PositionTagCategory_8php.html',1,'(Global Namespace)'],['../Contracts_2Repositories_2Tags_2PositionTagCategory_8php.html',1,'(Global Namespace)'],['../Models_2Tags_2PositionTagCategory_8php.html',1,'(Global Namespace)'],['../Repositories_2Tags_2PositionTagCategory_8php.html',1,'(Global Namespace)']]],
-  ['positiontagcategorycontroller_2ephp',['PositionTagCategoryController.php',['../PositionTagCategoryController_8php.html',1,'']]],
-  ['positiontagcategorypositiontagcontroller_2ephp',['PositionTagCategoryPositionTagController.php',['../PositionTagCategoryPositionTagController_8php.html',1,'']]],
-  ['positiontagcategoryscope_2ephp',['PositionTagCategoryScope.php',['../PositionTagCategoryScope_8php.html',1,'']]],
-  ['positiontagcategorystorerequest_2ephp',['PositionTagCategoryStoreRequest.php',['../PositionTagCategoryStoreRequest_8php.html',1,'']]],
-  ['positiontagcategorytrait_2ephp',['PositionTagCategoryTrait.php',['../PositionTagCategoryTrait_8php.html',1,'']]],
-  ['positiontagcategoryupdaterequest_2ephp',['PositionTagCategoryUpdateRequest.php',['../PositionTagCategoryUpdateRequest_8php.html',1,'']]],
-  ['positiontagcontroller_2ephp',['PositionTagController.php',['../PositionTagController_8php.html',1,'']]],
-  ['positiontagpositioncontroller_2ephp',['PositionTagPositionController.php',['../PositionTagPositionController_8php.html',1,'']]],
-  ['positiontagpositiontagcategorycontroller_2ephp',['PositionTagPositionTagCategoryController.php',['../PositionTagPositionTagCategoryController_8php.html',1,'']]],
-  ['positiontagscope_2ephp',['PositionTagScope.php',['../PositionTagScope_8php.html',1,'']]],
-  ['positiontagstorerequest_2ephp',['PositionTagStoreRequest.php',['../PositionTagStoreRequest_8php.html',1,'']]],
-  ['positiontagtrait_2ephp',['PositionTagTrait.php',['../PositionTagTrait_8php.html',1,'']]],
-  ['positiontagupdaterequest_2ephp',['PositionTagUpdateRequest.php',['../PositionTagUpdateRequest_8php.html',1,'']]],
-  ['positiontrait_2ephp',['PositionTrait.php',['../PositionTrait_8php.html',1,'']]]
+  ['handler_2ephp',['Handler.php',['../Handler_8php.html',1,'']]],
+  ['hasadditionalproperties_2ephp',['HasAdditionalProperties.php',['../HasAdditionalProperties_8php.html',1,'']]]
 ];

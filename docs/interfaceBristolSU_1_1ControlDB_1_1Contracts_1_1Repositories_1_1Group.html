@@ -90,6 +90,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a188cd460e56e99821ac819dace5f7e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3144246dad52a12a28c7b46d034fde51"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Group.html#a3144246dad52a12a28c7b46d034fde51">delete</a> (int $id)</td></tr>
 <tr class="separator:a3144246dad52a12a28c7b46d034fde51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3428ec42726f1b52ac142fa311164949"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Group.html#a3428ec42726f1b52ac142fa311164949">paginate</a> (int $page, int $perPage)</td></tr>
+<tr class="separator:a3428ec42726f1b52ac142fa311164949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdd8c29751bb016e6c54ed2b409400b5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1Group.html#abdd8c29751bb016e6c54ed2b409400b5">count</a> ()</td></tr>
+<tr class="separator:abdd8c29751bb016e6c54ed2b409400b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles groups </p>
@@ -114,6 +118,27 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Collection|GroupModel[] </dd></dl>
 
 <p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html#a47657f57ab558d74544239f098f336be">BristolSU\ControlDB\Repositories\Group</a>.</p>
+
+</div>
+</div>
+<a id="abdd8c29751bb016e6c54ed2b409400b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdd8c29751bb016e6c54ed2b409400b5">&#9670;&nbsp;</a></span>count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Contracts\Repositories\Group::count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the number of groups</p>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+<p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html#a665d2219b3c75182bae1015c93b0ca7f">BristolSU\ControlDB\Repositories\Group</a>.</p>
 
 </div>
 </div>
@@ -225,6 +250,45 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>GroupModel </dd></dl>
 
 <p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html#af358cb684e1c12a14cb34ef50595b5e5">BristolSU\ControlDB\Repositories\Group</a>.</p>
+
+</div>
+</div>
+<a id="a3428ec42726f1b52ac142fa311164949"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3428ec42726f1b52ac142fa311164949">&#9670;&nbsp;</a></span>paginate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Contracts\Repositories\Group::paginate </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>$page</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>$perPage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Paginate through all the groups</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$page</td><td>The page number to return </td></tr>
+    <tr><td class="paramtype">int</td><td class="paramname">$perPage</td><td>The number of results to return per page</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Collection|GroupModel[] </dd></dl>
+
+<p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1Group.html#ac3111b1676ddaf689bae1ae895f71676">BristolSU\ControlDB\Repositories\Group</a>.</p>
 
 </div>
 </div>

@@ -84,13 +84,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a932f07cf5e645f43e6ca18dd7a7181f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1023664dff47ed48bf6f7d9a88034bd6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1DataUser.html#a1023664dff47ed48bf6f7d9a88034bd6">getWhere</a> ($attributes=[])</td></tr>
 <tr class="separator:a1023664dff47ed48bf6f7d9a88034bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8513b4cd5035ba1d089477e54647e3b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1DataUser.html#a8513b4cd5035ba1d089477e54647e3b6">getAllWhere</a> ($attributes=[])</td></tr>
+<tr class="separator:a8513b4cd5035ba1d089477e54647e3b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f195cfa0d1aeb90928774e1d1b0c87d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfaceBristolSU_1_1ControlDB_1_1Contracts_1_1Repositories_1_1DataUser.html#a3f195cfa0d1aeb90928774e1d1b0c87d">create</a> (?string $firstName=null, ?string $lastName=null, ?string $email=null, ?\DateTime $dob=null, ?string $preferredName=null)</td></tr>
 <tr class="separator:a3f195cfa0d1aeb90928774e1d1b0c87d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handle attributes of a user </p>
 
-<p class="definition">Definition at line <a class="el" href="Contracts_2Repositories_2DataUser_8php_source.html#l00010">10</a> of file <a class="el" href="Contracts_2Repositories_2DataUser_8php_source.html">DataUser.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Contracts_2Repositories_2DataUser_8php_source.html#l00012">12</a> of file <a class="el" href="Contracts_2Repositories_2DataUser_8php_source.html">DataUser.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3f195cfa0d1aeb90928774e1d1b0c87d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3f195cfa0d1aeb90928774e1d1b0c87d">&#9670;&nbsp;</a></span>create()</h2>
@@ -147,6 +149,34 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a8513b4cd5035ba1d089477e54647e3b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8513b4cd5035ba1d089477e54647e3b6">&#9670;&nbsp;</a></span>getAllWhere()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BristolSU\ControlDB\Contracts\Repositories\DataUser::getAllWhere </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$attributes</em> = <code>[]</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get all data users where the given attributes match, including additional attributes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">array</td><td class="paramname">$attributes</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Collection|[] </dd></dl>
+
+<p>Implemented in <a class="el" href="classBristolSU_1_1ControlDB_1_1Repositories_1_1DataUser.html#a24e3c0fcd559f5a0774af6a498fa717b">BristolSU\ControlDB\Repositories\DataUser</a>.</p>
 
 </div>
 </div>

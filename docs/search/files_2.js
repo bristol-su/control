@@ -7,5 +7,6 @@ var searchData=
   ['datarole_2ephp',['DataRole.php',['../Contracts_2Models_2DataRole_8php.html',1,'(Global Namespace)'],['../Contracts_2Repositories_2DataRole_8php.html',1,'(Global Namespace)'],['../Models_2DataRole_8php.html',1,'(Global Namespace)'],['../Repositories_2DataRole_8php.html',1,'(Global Namespace)']]],
   ['dataroletrait_2ephp',['DataRoleTrait.php',['../DataRoleTrait_8php.html',1,'']]],
   ['datauser_2ephp',['DataUser.php',['../Contracts_2Models_2DataUser_8php.html',1,'(Global Namespace)'],['../Contracts_2Repositories_2DataUser_8php.html',1,'(Global Namespace)'],['../Models_2DataUser_8php.html',1,'(Global Namespace)'],['../Repositories_2DataUser_8php.html',1,'(Global Namespace)']]],
-  ['datausertrait_2ephp',['DataUserTrait.php',['../DataUserTrait_8php.html',1,'']]]
+  ['datausertrait_2ephp',['DataUserTrait.php',['../DataUserTrait_8php.html',1,'']]],
+  ['dumphandler_2ephp',['DumpHandler.php',['../DumpHandler_8php.html',1,'']]]
 ];
