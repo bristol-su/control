@@ -23,6 +23,8 @@ class RoleObserverClearCache
     {
         $this->cache->forget(RoleCache::class . '@count');
         $this->cache->forget(RoleCache::class . '@getByDataProviderId:' . $roleModel->dataProviderId());
+        $this->cache->forget(RoleCache::class . '@allThroughGroup:' . $roleModel->groupId());
+        $this->cache->forget(RoleCache::class . '@allThroughPosition:' . $roleModel->positionId());
     }
 
     public function delete(RoleModel $role)
