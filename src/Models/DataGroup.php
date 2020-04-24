@@ -12,7 +12,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\DataGroup
 {
-    use SoftDeletes, HasAdditionalProperties, DataGroupTrait;
+    use SoftDeletes, HasAdditionalProperties, DataGroupTrait {
+        setName as baseSetName;
+        setEmail as baseSetEmail;
+    }
 
     /**
      * Define the table to use
@@ -67,8 +70,8 @@ class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\D
      */
     public function setName(?string $name): void
     {
-        $this->name = $name;
-        $this->save();
+        $this->baseSetName($name);
+        $this->refresh();
     }
 
     /**
@@ -78,7 +81,10 @@ class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\D
      */
     public function setEmail(?string $email): void
     {
-        $this->email = $email;
-        $this->save();
+        $this->baseSetEmail($email);
+        $this->refresh();
+
     }
+
+
 }

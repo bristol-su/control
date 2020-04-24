@@ -31,7 +31,7 @@ class PositionTest extends TestCase
     /** @test */
     public function a_data_provider_id_can_set_on_from_the_model(){
         $position = factory(Position::class)->create([
-            'data_provider_id' => 5
+            'data_provider_id' => 1
         ]);
 
         $position->setDataProviderId(5);

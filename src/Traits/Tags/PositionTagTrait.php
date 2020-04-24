@@ -4,6 +4,7 @@ namespace BristolSU\ControlDB\Traits\Tags;
 
 use BristolSU\ControlDB\Contracts\Models\Position;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\PositionPositionTag;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTagCategory;
 use Illuminate\Support\Collection;
 
@@ -64,4 +65,43 @@ trait PositionTagTrait
         app(PositionPositionTag::class)->removeTagFromPosition($this, $position);
     }
 
+    /**
+     * Set the name of the tag
+     *
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        app(PositionTag::class)->update($this->id(), $name, $this->description(), $this->reference(), $this->categoryId());
+    }
+
+    /**
+     * Set the description of the Tag
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        app(PositionTag::class)->update($this->id(), $this->name(), $description, $this->reference(), $this->categoryId());
+    }
+
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void
+    {
+        app(PositionTag::class)->update($this->id(), $this->name(), $this->description(), $reference, $this->categoryId());
+    }
+
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
+    public function setTagCategoryId($categoryId): void
+    {
+        app(PositionTag::class)->update($this->id(), $this->name(), $this->description(), $this->reference(), $categoryId);
+    }
 }

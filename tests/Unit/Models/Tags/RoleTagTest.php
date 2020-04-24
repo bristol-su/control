@@ -67,9 +67,11 @@ class RoleTagTest extends TestCase
 
     /** @test */
     public function it_sets_a_category_id_attribute(){
-        $roleTag = factory(RoleTag::class)->create(['tag_category_id' => 1]);
-        $roleTag->setTagCategoryId(2);
-        $this->assertEquals(2, $roleTag->categoryId());
+        $tagCategory1 = factory(RoleTagCategory::class)->create();
+        $tagCategory2 = factory(RoleTagCategory::class)->create();
+        $roleTag = factory(RoleTag::class)->create(['tag_category_id' => $tagCategory1->id]);
+        $roleTag->setTagCategoryId($tagCategory2->id);
+        $this->assertEquals($tagCategory2->id, $roleTag->categoryId());
     }
 
     /** @test */

@@ -12,7 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class GroupTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory
 {
-    use SoftDeletes, GroupTagCategoryTrait;
+    use SoftDeletes, GroupTagCategoryTrait {
+        setName as baseSetName;
+        setDescription as baseSetDescription;
+        setReference as baseSetReference;
+    }
 
     /**
      * Boot the model
@@ -86,34 +90,35 @@ class GroupTagCategory extends Model implements \BristolSU\ControlDB\Contracts\M
 
     /**
      * Set the name of the tag category
-     * 
+     *
      * @param string $name
      */
     public function setName(string $name): void
     {
-        $this->name = $name;
-        $this->save();
+        $this->baseSetName($name);
+        $this->refresh();
     }
 
     /**
      * Set the description of the tag category
-     * 
+     *
      * @param string $description
      */
     public function setDescription(string $description): void
     {
-        $this->description = $description;
-        $this->save();
+        $this->baseSetDescription($description);
+        $this->refresh();
     }
 
     /**
      * Set the reference of the tag category
-     * 
+     *
      * @param string $reference
      */
     public function setReference(string $reference): void
     {
-        $this->reference = $reference;
-        $this->save();
+        $this->baseSetReference($reference);
+        $this->refresh();
     }
+    
 }

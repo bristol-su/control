@@ -82,4 +82,21 @@ class DataRole implements \BristolSU\ControlDB\Contracts\Repositories\DataRole
             return true;
         })->values();
     }
+
+    /**
+     * Update a data position with the given attributes
+     *
+     * @param int $id
+     * @param string|null $roleName Custom name for the role
+     * @param string|null $email Email of the role
+     * @return \BristolSU\ControlDB\Contracts\Models\DataRole
+     */
+    public function update(int $id, ?string $roleName = null, ?string $email = null): \BristolSU\ControlDB\Contracts\Models\DataRole
+    {
+        $dataRole = $this->getById($id)->fill([
+            'role_name' => $roleName, 'email' => $email
+        ]);
+        $dataRole->save();
+        return $dataRole;
+    }
 }

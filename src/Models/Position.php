@@ -13,7 +13,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Position
 {
-    use SoftDeletes, PositionTrait;
+    use SoftDeletes, PositionTrait {
+        setDataProviderId as baseSetDataProviderId;
+    }
 
     /**
      * Table to use
@@ -59,17 +61,6 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
     }
 
     /**
-     * Set the ID of the data provider
-     *
-     * @param int $dataProviderId
-     */
-    public function setDataProviderId(int $dataProviderId): void
-    {
-        $this->data_provider_id = $dataProviderId;
-        $this->save();
-    }
-
-    /**
      * Laravel integration for a data property
      *
      * @return \BristolSU\ControlDB\Contracts\Models\DataPosition
@@ -78,5 +69,17 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
     {
         return $this->data();
     }
+
+    /**
+     * Set the ID of the data provider
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void
+    {
+        $this->baseSetDataProviderId($dataProviderId);
+        $this->refresh();
+    }
+
 
 }

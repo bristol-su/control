@@ -9,6 +9,7 @@ use BristolSU\ControlDB\Contracts\Models\User;
 use BristolSU\ControlDB\Contracts\Repositories\DataRole as DataRoleRepository;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\RoleRoleTag;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole;
+use BristolSU\ControlDB\Contracts\Repositories\Role;
 use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Position;
 use Illuminate\Support\Collection;
@@ -27,6 +28,36 @@ trait RoleTrait
     public function data(): DataRoleModel
     {
         return app(DataRoleRepository::class)->getById($this->dataProviderId());
+    }
+
+    /**
+     * Set the ID of the data provider
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void
+    {
+        app(Role::class)->update($this->id(), $this->positionId(), $this->groupId(), $dataProviderId);
+    }
+
+    /**
+     * Set a group ID
+     *
+     * @param int $groupId
+     */
+    public function setGroupId(int $groupId): void
+    {
+        app(Role::class)->update($this->id(), $this->positionId(), $groupId, $this->dataProviderId());
+    }
+
+    /**
+     * Set a position ID
+     *
+     * @param int $positionId
+     */
+    public function setPositionId(int $positionId): void
+    {
+        app(Role::class)->update($this->id(), $positionId, $this->groupId(), $this->dataProviderId());
     }
 
     /**

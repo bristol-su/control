@@ -2,11 +2,9 @@
 
 namespace BristolSU\Tests\ControlDB\Unit\Traits;
 
-use BristolSU\ControlDB\Models\DataGroup;
 use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Role;
-use BristolSU\ControlDB\Models\Tags\GroupTag;
 use BristolSU\ControlDB\Models\Tags\UserTag;
 use BristolSU\ControlDB\Models\User;
 use BristolSU\Tests\ControlDB\TestCase;

@@ -3,6 +3,7 @@
 namespace BristolSU\ControlDB\Traits;
 
 use BristolSU\ControlDB\Contracts\Models\DataGroup;
+use BristolSU\ControlDB\Contracts\Repositories\Group;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\GroupGroupTag;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup;
 use BristolSU\ControlDB\Contracts\Repositories\Role;
@@ -22,6 +23,16 @@ trait GroupTrait
     public function data(): DataGroup
     {
         return app(\BristolSU\ControlDB\Contracts\Repositories\DataGroup::class)->getById($this->dataProviderId());
+    }
+
+    /**
+     * Set the ID of the data provider
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void
+    {
+        app(Group::class)->update($this->id(), $dataProviderId);
     }
 
     /**

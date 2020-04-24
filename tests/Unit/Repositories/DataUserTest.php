@@ -12,17 +12,19 @@ class DataUserTest extends TestCase
 {
 
     /** @test */
-    public function getById_returns_a_data_user_by_id(){
+    public function getById_returns_a_data_user_by_id()
+    {
         $dataUser = factory(DataUser::class)->create(['id' => 1]);
-        
+
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dbDataUser = $repository->getById(1);
-        
+
         $this->assertTrue($dataUser->is($dbDataUser));
     }
-    
+
     /** @test */
-    public function getById_throws_a_ModelNotFoundException_if_the_data_user_is_not_found(){
+    public function getById_throws_a_ModelNotFoundException_if_the_data_user_is_not_found()
+    {
         $this->expectException(ModelNotFoundException::class);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
@@ -30,7 +32,8 @@ class DataUserTest extends TestCase
     }
 
     /** @test */
-    public function getAllWhere_returns_all_model_matching_the_attributes(){
+    public function getAllWhere_returns_all_model_matching_the_attributes()
+    {
         DataUser::addProperty('additionalAttr');
         $attributes = ['email' => 'email@email.com', 'additional_attributes' => json_encode(['additionalAttr' => 15])];
 
@@ -44,23 +47,25 @@ class DataUserTest extends TestCase
         $this->assertTrue($dataUsers[0]->is($dbDataUser[0]));
         $this->assertTrue($dataUsers[1]->is($dbDataUser[1]));
     }
-    
+
     /** @test */
-    public function getWhere_returns_the_first_model_matching_the_attributes(){
+    public function getWhere_returns_the_first_model_matching_the_attributes()
+    {
         $attributes = ['email' => 'email@email.com'];
 
         $dataUser = factory(DataUser::class)->create($attributes);
-        
+
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dbDataUser = $repository->getWhere($attributes);
-        
+
         $this->assertTrue($dataUser->is($dbDataUser));
     }
 
     /** @test */
-    public function getWhere_throws_a_ModelNotFoundException_if_a_data_user_is_not_found(){
+    public function getWhere_throws_a_ModelNotFoundException_if_a_data_user_is_not_found()
+    {
         $this->expectException(ModelNotFoundException::class);
-        
+
         $attributes = ['email' => 'email@email.com'];
 
         $dataUser = factory(DataUser::class)->create();
@@ -68,12 +73,13 @@ class DataUserTest extends TestCase
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dbDataUser = $repository->getWhere($attributes);
     }
-    
+
     /** @test */
-    public function create_creates_a_new_data_user(){
+    public function create_creates_a_new_data_user()
+    {
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dataUser = $repository->create('FirstName', 'Lastname', 'email@email.com', Carbon::make('14-02-1990'), 'TobyT');
-        
+
         $this->assertDatabaseHas('control_data_user', [
             'first_name' => 'FirstName',
             'last_name' => 'Lastname',
@@ -82,22 +88,24 @@ class DataUserTest extends TestCase
             'preferred_name' => 'TobyT'
         ]);
     }
-    
+
     /** @test */
-    public function create_can_be_called_with_no_arguments(){
+    public function create_can_be_called_with_no_arguments()
+    {
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dataUser = $repository->create();
 
         $this->assertEquals(1, DB::table('control_data_user')->count());
     }
-    
+
     /** @test */
-    public function create_returns_the_created_model(){
+    public function create_returns_the_created_model()
+    {
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dataUser = $repository->create('FirstName', 'Lastname', 'email@email.com', Carbon::make('14-02-1990'), 'TobyT');
-        
+
         $this->assertInstanceOf(DataUser::class, $dataUser);
-        
+
         $this->assertEquals('FirstName', $dataUser->firstName());
         $this->assertEquals('Lastname', $dataUser->lastName());
         $this->assertEquals('email@email.com', $dataUser->email());
@@ -106,7 +114,8 @@ class DataUserTest extends TestCase
     }
 
     /** @test */
-    public function getWhere_also_searches_additional_attributes(){
+    public function getWhere_also_searches_additional_attributes()
+    {
         DataUser::addProperty('student_id');
         $dataUser1 = factory(DataUser::class)->create(['email' => 'email@email.com']);
         $dataUser1->saveAdditionalAttribute('student_id', 'xy123');
@@ -117,6 +126,74 @@ class DataUserTest extends TestCase
         $dbDataUser2 = $repository->getWhere(['email' => 'email@email.com', 'student_id' => 'xy1234']);
 
         $this->assertTrue($dataUser2->is($dbDataUser2));
+    }
+
+    /** @test */
+    public function update_updates_a_user()
+    {
+        $dataUser = factory(DataUser::class)->create([
+            'first_name' => 'Toby',
+            'last_name' => 'Twigger',
+            'email' => 'support@example.com',
+            'dob' => Carbon::create(1850, 12, 20),
+            'preferred_name' => 'Toby T'
+        ]);
+        $this->assertDatabaseHas('control_data_user', [
+            'id' => $dataUser->id(),
+            'first_name' => 'Toby',
+            'last_name' => 'Twigger',
+            'email' => 'support@example.com',
+            'dob' => '1850-12-20 00:00:00',
+            'preferred_name' => 'Toby T'
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\DataUser();
+        $repository->update($dataUser->id(), 'Toby2', 'Twigger2', 'support@example2.com', 
+            Carbon::create(1950, 8, 15), 'Toby T2');
+        $this->assertDatabaseMissing('control_data_user', [
+            'id' => $dataUser->id(),
+            'first_name' => 'Toby',
+            'last_name' => 'Twigger',
+            'email' => 'support@example.com',
+            'dob' => '1850-12-20 00:00:00',
+            'preferred_name' => 'Toby T'
+        ]);
+        $this->assertDatabaseHas('control_data_user', [
+            'id' => $dataUser->id(),
+            'first_name' => 'Toby2',
+            'last_name' => 'Twigger2',
+            'email' => 'support@example2.com',
+            'dob' => '1950-08-15 00:00:00',
+            'preferred_name' => 'Toby T2'
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_user()
+    {
+        $dataUser = factory(DataUser::class)->create([
+            'first_name' => 'Toby',
+            'last_name' => 'Twigger',
+            'email' => 'support@example.com',
+            'dob' => Carbon::create(1850, 12, 20),
+            'preferred_name' => 'Toby T'
+        ]);
+        $this->assertEquals('Toby', $dataUser->firstName());
+        $this->assertEquals('Twigger', $dataUser->lastName());
+        $this->assertEquals('support@example.com', $dataUser->email());
+        $this->assertTrue(Carbon::create(1850, 12, 20)->equalTo($dataUser->dob()));
+        $this->assertEquals('Toby T', $dataUser->preferredName());
+        
+        $repository = new \BristolSU\ControlDB\Repositories\DataUser();
+        $updatedUser = $repository->update($dataUser->id(), 'Toby2', 'Twigger2', 'support@example2.com',
+            Carbon::create(1950, 8, 15), 'Toby T2');
+
+        $this->assertEquals('Toby2', $updatedUser->firstName());
+        $this->assertEquals('Twigger2', $updatedUser->lastName());
+        $this->assertEquals('support@example2.com', $updatedUser->email());
+        $this->assertTrue(Carbon::create(1950, 8, 15)->equalTo($updatedUser->dob()));
+        $this->assertEquals('Toby T2', $updatedUser->preferredName());
+
     }
 
 }

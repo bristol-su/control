@@ -15,7 +15,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\DataRole
 {
-    use SoftDeletes, HasAdditionalProperties, DataRoleTrait;
+    use SoftDeletes, HasAdditionalProperties, DataRoleTrait {
+        setRoleName as baseSetRoleName;
+        setEmail as baseSetEmail;
+    }
 
     /**
      * The table to use
@@ -43,16 +46,7 @@ class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
         return $this->id;
     }
 
-    /**
-     * Set the email of the role
-     * 
-     * @param string|null $email
-     */
-    public function setEmail(?string $email): void
-    {
-        $this->email = $email;
-        $this->save();
-    }
+
 
     /**
      * Get the email of the role
@@ -65,17 +59,6 @@ class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
     }
 
     /**
-     * Set a name for the role
-     * 
-     * @param string|null $roleName
-     */
-    public function setRoleName(?string $roleName): void
-    {
-        $this->role_name = $roleName;
-        $this->save();
-    }
-
-    /**
      * Get the name for the role
      * 
      * @return string|null
@@ -84,4 +67,28 @@ class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
     {
         return $this->role_name;
     }
+
+    /**
+     * Set the email of the role
+     *
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
+    {
+        $this->baseSetEmail($email);
+        $this->refresh();
+    }
+
+    /**
+     * Set a name for the role
+     *
+     * @param string|null $roleName
+     */
+    public function setRoleName(?string $roleName): void
+    {
+        $this->baseSetRoleName($roleName);
+        $this->refresh();
+    }
+
+
 }

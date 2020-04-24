@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Repositories to cache all get repository calls
+- Observer framework for repositories
+- Clear cache when needed
+- Cascade deletes to preserve data integrity
+
 ## [2.0] - (22/04/2020)
 
 ### Added

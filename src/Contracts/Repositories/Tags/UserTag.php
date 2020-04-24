@@ -60,4 +60,16 @@ interface UserTag
      * @return Collection|UserTag[] Tags with the given user tag category
      */
     public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory $userTagCategory): Collection;
+
+    /**
+     * Update a user tag
+     *
+     * @param int $id
+     * @param string $name Name of the tag
+     * @param string $description Description of the tag
+     * @param string $reference Reference for the tag
+     * @param int $tagCategoryId Category ID of the tag
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
+     */
+    public function update(int $id, string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\UserTag;
 }

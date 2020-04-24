@@ -30,9 +30,9 @@ class UserTest extends TestCase
             'data_provider_id' => 5
         ]);
 
-        $user->setDataProviderId(5);
+        $user->setDataProviderId(6);
 
-        $this->assertEquals(5, $user->dataProviderId());
+        $this->assertEquals(6, $user->dataProviderId());
     }
 
     /** @test */

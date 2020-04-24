@@ -67,9 +67,11 @@ class PositionTagTest extends TestCase
 
     /** @test */
     public function it_sets_a_category_id_attribute(){
-        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => 1]);
-        $positionTag->setTagCategoryId(2);
-        $this->assertEquals(2, $positionTag->categoryId());
+        $tagCategory1 = factory(PositionTagCategory::class)->create();
+        $tagCategory2 = factory(PositionTagCategory::class)->create();
+        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => $tagCategory1->id]);
+        $positionTag->setTagCategoryId($tagCategory2->id);
+        $this->assertEquals($tagCategory2->id, $positionTag->categoryId());
     }
 
     /** @test */

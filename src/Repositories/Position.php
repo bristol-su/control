@@ -88,5 +88,18 @@ class Position implements PositionContract
     {
         return \BristolSU\ControlDB\Models\Position::count();
     }
-    
+
+    /**
+     * Update the position model
+     *
+     * @param int $id
+     * @param int $dataProviderId New data provider ID
+     * @return PositionModel
+     */
+    public function update(int $id, int $dataProviderId): PositionModel
+    {
+        $position = $this->getById($id)->fill(['data_provider_id' => $dataProviderId]);
+        $position->save();
+        return $position;
+    }
 }

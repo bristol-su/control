@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
 {
-    use SoftDeletes, GroupTrait;
+    use SoftDeletes, GroupTrait {
+        setDataProviderId as baseSetDataProviderId;
+    }
 
     /**
      * Table to use
@@ -55,17 +57,6 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
     {
         return $this->data_provider_id;
     }
-
-    /**
-     * Set the ID of the data provider
-     * 
-     * @param int $dataProviderId
-     */
-    public function setDataProviderId(int $dataProviderId): void
-    {
-        $this->data_provider_id = $dataProviderId;
-        $this->save();
-    }
     
     /**
      * Laravel integration for a data property
@@ -76,4 +67,17 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
     {
         return $this->data();
     }
+
+    /**
+     * Set the ID of the data provider
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void
+    {
+        $this->baseSetDataProviderId($dataProviderId);
+        $this->refresh();
+    }
+
+
 }

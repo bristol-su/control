@@ -42,6 +42,15 @@ interface Position
     public function create(int $dataProviderId): PositionModel;
 
     /**
+     * Update the position model
+     *
+     * @param int $id
+     * @param int $dataProviderId New data provider ID
+     * @return PositionModel
+     */
+    public function update(int $id, int $dataProviderId): PositionModel;
+    
+    /**
      * Delete a position by ID
      *
      * @param int $id

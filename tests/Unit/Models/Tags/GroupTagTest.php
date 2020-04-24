@@ -65,9 +65,11 @@ class GroupTagTest extends TestCase
 
     /** @test */
     public function it_sets_a_category_id_attribute(){
-        $groupTag = factory(GroupTag::class)->create(['tag_category_id' => 1]);
-        $groupTag->setTagCategoryId(2);
-        $this->assertEquals(2, $groupTag->categoryId());
+        $tagCategory1 = factory(GroupTagCategory::class)->create();
+        $tagCategory2 = factory(GroupTagCategory::class)->create();
+        $groupTag = factory(GroupTag::class)->create(['tag_category_id' => $tagCategory1->id]);
+        $groupTag->setTagCategoryId($tagCategory2->id);
+        $this->assertEquals($tagCategory2->id, $groupTag->categoryId());
     }
 
     /** @test */

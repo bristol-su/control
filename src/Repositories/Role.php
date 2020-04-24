@@ -117,4 +117,20 @@ class Role implements RoleContract
     {
         return \BristolSU\ControlDB\Models\Role::count();
     }
+
+    /**
+     * Update the role model
+     *
+     * @param int $id
+     * @param int $positionId
+     * @param int $groupId
+     * @param int $dataProviderId New data provider ID
+     * @return RoleModel
+     */
+    public function update(int $id, int $positionId, int $groupId, int $dataProviderId): RoleModel
+    {
+        $role = $this->getById($id)->fill(['position_id' => $positionId, 'group_id' => $groupId, 'data_provider_id' => $dataProviderId]);
+        $role->save();
+        return $role;
+    }
 }

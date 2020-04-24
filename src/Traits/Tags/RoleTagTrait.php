@@ -4,6 +4,7 @@ namespace BristolSU\ControlDB\Traits\Tags;
 
 use BristolSU\ControlDB\Contracts\Models\Role;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\RoleRoleTag;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTag;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory;
 use Illuminate\Support\Collection;
 
@@ -64,4 +65,43 @@ trait RoleTagTrait
         app(RoleRoleTag::class)->removeTagFromRole($this, $role);
     }
 
+    /**
+     * Set the name of the tag
+     *
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        app(RoleTag::class)->update($this->id(), $name, $this->description(), $this->reference(), $this->categoryId());
+    }
+
+    /**
+     * Set the description of the Tag
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        app(RoleTag::class)->update($this->id(), $this->name(), $description, $this->reference(), $this->categoryId());
+    }
+
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void
+    {
+        app(RoleTag::class)->update($this->id(), $this->name(), $this->description(), $reference, $this->categoryId());
+    }
+
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
+    public function setTagCategoryId($categoryId): void
+    {
+        app(RoleTag::class)->update($this->id(), $this->name(), $this->description(), $this->reference(), $categoryId);
+    }
 }

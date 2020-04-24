@@ -12,7 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class UserTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory
 {
-    use SoftDeletes, UserTagCategoryTrait;
+    use SoftDeletes, UserTagCategoryTrait {
+        setName as baseSetName;
+        setDescription as baseSetDescription;
+        setReference as baseSetReference;
+    }
 
     /**
      * Boot the model
@@ -91,8 +95,8 @@ class UserTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
      */
     public function setName(string $name): void
     {
-        $this->name = $name;
-        $this->save();
+        $this->baseSetName($name);
+        $this->refresh();
     }
 
     /**
@@ -102,8 +106,8 @@ class UserTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
      */
     public function setDescription(string $description): void
     {
-        $this->description = $description;
-        $this->save();
+        $this->baseSetDescription($description);
+        $this->refresh();
     }
 
     /**
@@ -113,7 +117,9 @@ class UserTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
      */
     public function setReference(string $reference): void
     {
-        $this->reference = $reference;
-        $this->save();
+        $this->baseSetReference($reference);
+        $this->refresh();
     }
+
+
 }

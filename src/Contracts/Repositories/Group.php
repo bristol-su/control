@@ -43,6 +43,15 @@ interface Group
     public function create(int $dataProviderId): GroupModel;
 
     /**
+     * Update the group model
+     *
+     * @param int $id
+     * @param int $dataProviderId New data provider ID
+     * @return GroupModel
+     */
+    public function update(int $id, int $dataProviderId): GroupModel;
+    
+    /**
      * Delete a group by ID
      * 
      * @param int $id

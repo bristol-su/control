@@ -71,5 +71,22 @@ class GroupTagCategory implements GroupTagCategoryContract
     {
         $this->getById($id)->delete();
     }
-    
+
+    /**
+     * Update a group tag category
+     *
+     * @param int $id
+     * @param string $name Name of the group tag category
+     * @param string $description Description of the group tag category
+     * @param string $reference Reference of the group tag category
+     * @return GroupTagCategoryModel New group tag category
+     */
+    public function update(int $id, string $name, string $description, string $reference): GroupTagCategoryModel
+    {
+        $groupTagCategory = $this->getById($id)->fill([
+            'name' => $name, 'description' => $description, 'reference' => $reference
+        ]);
+        $groupTagCategory->save();
+        return $groupTagCategory;
+    }
 }

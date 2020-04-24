@@ -72,4 +72,21 @@ class UserTagCategory implements UserTagCategoryContract
         $this->getById($id)->delete();
     }
 
+    /**
+     * Update a user tag category
+     *
+     * @param int $id
+     * @param string $name Name of the user tag category
+     * @param string $description Description of the user tag category
+     * @param string $reference Reference of the user tag category
+     * @return UserTagCategoryModel Updated user tag category
+     */
+    public function update(int $id, string $name, string $description, string $reference): UserTagCategoryModel
+    {
+        $userTagCategory = $this->getById($id)->fill([
+            'name' => $name, 'description' => $description, 'reference' => $reference
+        ]);
+        $userTagCategory->save();
+        return $userTagCategory;
+    }
 }

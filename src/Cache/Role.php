@@ -30,7 +30,7 @@ class Role implements RoleRepositoryContract
      */
     public function getById(int $id): RoleModel
     {
-        return $this->cache->remember(static::class . '@getById:' . $id, 5000, function() use ($id) {
+        return $this->cache->rememberForever(static::class . '@getById:' . $id, function() use ($id) {
             return $this->roleRepository->getById($id);
         });
     }
@@ -48,7 +48,7 @@ class Role implements RoleRepositoryContract
      */
     public function getByDataProviderId(int $dataProviderId): RoleModel
     {
-        return $this->cache->remember(static::class . '@getByDataProviderId:' . $dataProviderId, 5000, function() use ($dataProviderId) {
+        return $this->cache->rememberForever(static::class . '@getByDataProviderId:' . $dataProviderId, function() use ($dataProviderId) {
             return $this->roleRepository->getByDataProviderId($dataProviderId);
         });
     }
@@ -74,7 +74,9 @@ class Role implements RoleRepositoryContract
      */
     public function allThroughGroup(\BristolSU\ControlDB\Contracts\Models\Group $group): Collection
     {
-        return $this->roleRepository->allThroughGroup($group);
+        return $this->cache->rememberForever(static::class . '@allThroughGroup:' . $group->id(), function() use ($group) {
+            return $this->roleRepository->allThroughGroup($group);
+        });
     }
 
     /**
@@ -82,7 +84,9 @@ class Role implements RoleRepositoryContract
      */
     public function allThroughPosition(\BristolSU\ControlDB\Contracts\Models\Position $position): Collection
     {
-        return $this->roleRepository->allThroughPosition($position);
+        return $this->cache->rememberForever(static::class . '@allThroughPosition:' . $position->id(), function() use ($position) {
+            return $this->roleRepository->allThroughPosition($position);
+        });
     }
 
     /**
@@ -105,6 +109,23 @@ class Role implements RoleRepositoryContract
      */
     public function count(): int
     {
-        return $this->roleRepository->count();
+        return $this->cache->rememberForever(static::class . '@count', function() {
+            return $this->roleRepository->count();
+        });
+        
+    }
+
+    /**
+     * Update the role model
+     *
+     * @param int $id
+     * @param int $positionId
+     * @param int $groupId
+     * @param int $dataProviderId New data provider ID
+     * @return RoleModel
+     */
+    public function update(int $id, int $positionId, int $groupId, int $dataProviderId): RoleModel
+    {
+        return $this->roleRepository->update($id, $positionId, $groupId, $dataProviderId);
     }
 }

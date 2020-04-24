@@ -4,6 +4,7 @@ namespace BristolSU\ControlDB\Traits\Tags;
 
 use BristolSU\ControlDB\Contracts\Models\Group;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\GroupGroupTag;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory;
 use Illuminate\Support\Collection;
 
@@ -62,6 +63,46 @@ trait GroupTagTrait
     public function removeGroup(Group $group): void
     {
         app(GroupGroupTag::class)->removeTagFromGroup($this, $group);
+    }
+
+    /**
+     * Set the name of the tag
+     *
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        app(GroupTag::class)->update($this->id(), $name, $this->description(), $this->reference(), $this->categoryId());
+    }
+
+    /**
+     * Set the description of the Tag
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        app(GroupTag::class)->update($this->id(), $this->name(), $description, $this->reference(), $this->categoryId());
+    }
+
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void
+    {
+        app(GroupTag::class)->update($this->id(), $this->name(), $this->description(), $reference, $this->categoryId());
+    }
+
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
+    public function setTagCategoryId($categoryId): void
+    {
+        app(GroupTag::class)->update($this->id(), $this->name(), $this->description(), $this->reference(), $categoryId);
     }
     
 }

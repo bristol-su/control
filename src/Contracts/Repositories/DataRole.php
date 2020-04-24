@@ -35,11 +35,21 @@ interface DataRole
     public function getAllWhere($attributes = []): Collection;
     
     /**
-     * Create a data position with the given attributes
+     * Create a data role with the given attributes
      * 
      * @param string|null $roleName Custom name for the role
      * @param string|null $email Email of the role
      * @return \BristolSU\ControlDB\Contracts\Models\DataRole
      */
     public function create(?string $roleName = null, ?string $email = null): \BristolSU\ControlDB\Contracts\Models\DataRole;
+
+    /**
+     * Update a data role with the given attributes
+     *
+     * @param int $id
+     * @param string|null $roleName Custom name for the role
+     * @param string|null $email Email of the role
+     * @return \BristolSU\ControlDB\Contracts\Models\DataRole
+     */
+    public function update(int $id, ?string $roleName = null, ?string $email = null): \BristolSU\ControlDB\Contracts\Models\DataRole;
 }

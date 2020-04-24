@@ -7,6 +7,7 @@ namespace BristolSU\ControlDB\Traits;
 use BristolSU\ControlDB\Contracts\Models\DataPosition as DataPositionModel;
 use BristolSU\ControlDB\Contracts\Repositories\DataPosition as DataPositionRepository;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\PositionPositionTag;
+use BristolSU\ControlDB\Contracts\Repositories\Position;
 use Illuminate\Support\Collection;
 
 /**
@@ -23,6 +24,16 @@ trait PositionTrait
     public function data(): DataPositionModel
     {
         return app(DataPositionRepository::class)->getById($this->dataProviderId());
+    }
+
+    /**
+     * Set the ID of the data provider
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void
+    {
+        app(Position::class)->update($this->id(), $dataProviderId);
     }
 
     /**

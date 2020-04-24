@@ -31,7 +31,7 @@ class GroupTest extends TestCase
     /** @test */
     public function a_data_provider_id_can_set_on_from_the_model(){
         $group = factory(Group::class)->create([
-            'data_provider_id' => 5
+            'data_provider_id' => 2
         ]);
         
         $group->setDataProviderId(5);

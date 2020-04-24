@@ -123,4 +123,39 @@ class PositionTest extends TestCase
         $this->assertTrue($positions[19]->is($paginatedPositions->shift()));
     }
 
+    /** @test */
+    public function update_updates_a_position(){
+        $dataPosition1 = factory(DataPosition::class)->create();
+        $dataPosition2 = factory(DataPosition::class)->create();
+        $position = factory(Position::class)->create(['data_provider_id' => $dataPosition1->id()]);
+
+        $this->assertDatabaseHas('control_positions', [
+            'id' => $position->id(), 'data_provider_id' => $dataPosition1->id()
+        ]);
+
+        $repository = new \BristolSU\ControlDB\Repositories\Position();
+        $repository->update($position->id(), $dataPosition2->id());
+
+        $this->assertDatabaseMissing('control_positions', [
+            'id' => $position->id(), 'data_provider_id' => $dataPosition1->id()
+        ]);
+        $this->assertDatabaseHas('control_positions', [
+            'id' => $position->id(), 'data_provider_id' => $dataPosition2->id()
+        ]);
+    }
+
+    /** @test */
+    public function update_returns_the_updated_position(){
+        $dataPosition1 = factory(DataPosition::class)->create();
+        $dataPosition2 = factory(DataPosition::class)->create();
+        $position = factory(Position::class)->create(['data_provider_id' => $dataPosition1->id()]);
+
+        $this->assertEquals($dataPosition1->id(), $position->dataProviderId());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Position();
+        $updatedPosition = $repository->update($position->id(), $dataPosition2->id());
+
+        $this->assertEquals($dataPosition2->id(), $updatedPosition->dataProviderId());
+    }
+    
 }
