@@ -330,13 +330,13 @@ class ControlDBServiceProvider extends ServiceProvider
         Observe::attach(UserTagCategoryRepositoryContract::class, UserTagCategoryObserverClearCache::class);
         Observe::attach(PositionTagCategoryRepositoryContract::class, PositionTagCategoryObserverClearCache::class);
 
-        Observe::attach(UserGroup::class, UserGroupObserverClearCache::class);
-        Observe::attach(UserRole::class, UserRoleObserverClearCache::class);
+        Observe::attach(UserGroupContract::class, UserGroupObserverClearCache::class);
+        Observe::attach(UserRoleContract::class, UserRoleObserverClearCache::class);
 
-        Observe::attach(GroupGroupTag::class, GroupGroupTagObserverClearCache::class);
-        Observe::attach(UserUserTag::class, UserUserTagObserverClearCache::class);
-        Observe::attach(RoleRoleTag::class, RoleRoleTagObserverClearCache::class);
-        Observe::attach(PositionPositionTag::class, PositionPositionTagObserverClearCache::class);
+        Observe::attach(GroupGroupTagContract::class, GroupGroupTagObserverClearCache::class);
+        Observe::attach(UserUserTagContract::class, UserUserTagObserverClearCache::class);
+        Observe::attach(RoleRoleTagContract::class, RoleRoleTagObserverClearCache::class);
+        Observe::attach(PositionPositionTagContract::class, PositionPositionTagObserverClearCache::class);
 
         Observe::attach(GroupTagRepositoryContract::class, GroupTagObserverCascadeDelete::class);
         Observe::attach(UserTagRepositoryContract::class, UserTagObserverCascadeDelete::class);
