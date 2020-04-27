@@ -35,6 +35,18 @@ interface DataPosition
      */
     public function create(?string $name = null, ?string $description = null): \BristolSU\ControlDB\Contracts\Models\DataPosition;
 
+
+    /**
+     * Update a data position with the given attributes
+     *
+     * @param int $id
+     * @param string|null $name Name of the position
+     * @param string|null $description Description of the position
+     * @return \BristolSU\ControlDB\Contracts\Models\DataPosition
+     */
+    public function update(int $id, ?string $name = null, ?string $description = null): \BristolSU\ControlDB\Contracts\Models\DataPosition;
+
+    
     /**
      * Get all data positions where the given attributes match, including additional attributes.
      *

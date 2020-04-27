@@ -67,9 +67,11 @@ class UserTagTest extends TestCase
 
     /** @test */
     public function it_sets_a_category_id_attribute(){
-        $userTag = factory(UserTag::class)->create(['tag_category_id' => 1]);
-        $userTag->setTagCategoryId(2);
-        $this->assertEquals(2, $userTag->categoryId());
+        $tagCategory1 = factory(UserTagCategory::class)->create();
+        $tagCategory2 = factory(UserTagCategory::class)->create();
+        $userTag = factory(UserTag::class)->create(['tag_category_id' => $tagCategory1->id]);
+        $userTag->setTagCategoryId($tagCategory2->id);
+        $this->assertEquals($tagCategory2->id, $userTag->categoryId());
     }
 
     /** @test */

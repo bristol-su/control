@@ -76,7 +76,7 @@ class DataRoleTest extends TestCase
             'role_name' => 'Role1'
         ]);
 
-        $dataRole->setroleName('Role2');
+        $dataRole->setRoleName('Role2');
         
         $this->assertEquals('Role2', $dataRole->roleName());
     }

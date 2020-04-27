@@ -72,4 +72,21 @@ class PositionTagCategory implements PositionTagCategoryContract
         $this->getById($id)->delete();
     }
 
+    /**
+     * Update a position tag category
+     *
+     * @param int $id
+     * @param string $name Name of the position tag category
+     * @param string $description Description of the position tag category
+     * @param string $reference Reference of the position tag category
+     * @return PositionTagCategoryModel Updated position tag category
+     */
+    public function update(int $id, string $name, string $description, string $reference): PositionTagCategoryModel
+    {
+        $positionTagCategory = $this->getById($id)->fill([
+            'name' => $name, 'description' => $description, 'reference' => $reference
+        ]);
+        $positionTagCategory->save();
+        return $positionTagCategory;
+    }
 }

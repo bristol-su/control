@@ -15,7 +15,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\DataUser
 {
-    use SoftDeletes, HasAdditionalProperties, DataUserTrait;
+    use SoftDeletes, HasAdditionalProperties, DataUserTrait {
+        setFirstName as baseSetFirstName;
+        setLastName as baseSetLastName;
+        setEmail as baseSetEmail;
+        setDob as baseSetDob;
+        setPreferredName as baseSetPreferredName;
+    }
 
     /**
      * The table to use
@@ -109,53 +115,53 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
      */
     public function setFirstName(?string $firstName): void
     {
-        $this->first_name = $firstName;
-        $this->save();
+        $this->baseSetFirstName($firstName);
+        $this->refresh();
     }
 
     /**
      * Set the users last name
-     * 
+     *
      * @param string|null $lastName
      */
     public function setLastName(?string $lastName): void
     {
-        $this->last_name = $lastName;
-        $this->save();
+        $this->baseSetLastName($lastName);
+        $this->refresh();
     }
 
     /**
      * Set the users email
-     * 
+     *
      * @param string|null $email
      */
     public function setEmail(?string $email): void
     {
-        $this->email = $email;
-        $this->save();
+        $this->baseSetEmail($email);
+        $this->refresh();
     }
 
     /**
      * Set the date of birth attribute
-     * 
+     *
      * @param DateTime|null $dob
      */
     public function setDob(?DateTime $dob): void
     {
-        $this->dob = $dob;
-        $this->save();
+        $this->baseSetDob($dob);
+        $this->refresh();
     }
 
     /**
      * Set the preferred name for the user
-     * 
+     *
      * @param string|null $name
      */
     public function setPreferredName(?string $name): void
     {
-        $this->preferred_name = $name;
-        $this->save();
+        $this->baseSetPreferredName($name);
+        $this->refresh();
     }
-    
+
 
 }

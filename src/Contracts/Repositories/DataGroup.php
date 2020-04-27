@@ -33,6 +33,7 @@ interface DataGroup
      * @return Collection|\BristolSU\ControlDB\Contracts\Models\DataGroup[]
      */
     public function getAllWhere($attributes = []): Collection;
+
     /**
      * Create a group with the given attributes
      * 
@@ -41,4 +42,15 @@ interface DataGroup
      * @return \BristolSU\ControlDB\Contracts\Models\DataGroup
      */
     public function create(?string $name = null, ?string $email = null): \BristolSU\ControlDB\Contracts\Models\DataGroup;
+
+
+    /**
+     * Update a group with the given attributes
+     *
+     * @param int $id
+     * @param string|null $name Name of the group
+     * @param string|null $email Email of the group
+     * @return \BristolSU\ControlDB\Contracts\Models\DataGroup
+     */
+    public function update(int $id, ?string $name = null, ?string $email = null): \BristolSU\ControlDB\Contracts\Models\DataGroup;
 }

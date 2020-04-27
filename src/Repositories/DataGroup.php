@@ -80,4 +80,21 @@ class DataGroup implements \BristolSU\ControlDB\Contracts\Repositories\DataGroup
             return true;
         })->values();
     }
+
+    /**
+     * Update a group with the given attributes
+     *
+     * @param int $id
+     * @param string|null $name Name of the group
+     * @param string|null $email Email of the group
+     * @return \BristolSU\ControlDB\Contracts\Models\DataGroup
+     */
+    public function update(int $id, ?string $name = null, ?string $email = null): \BristolSU\ControlDB\Contracts\Models\DataGroup
+    {
+        $dataGroup = $this->getById($id)->fill([
+            'name' => $name, 'email' => $email
+        ]);
+        $dataGroup->save();
+        return $dataGroup;
+    }
 }

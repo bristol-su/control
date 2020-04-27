@@ -14,7 +14,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
 {
 
-    use SoftDeletes, RoleTrait;
+    use SoftDeletes, RoleTrait {
+        setDataProviderId as baseSetDataProviderId;
+        setGroupId as baseSetGroupId;
+        setPositionId as baseSetPositionId;
+    }
 
     /**
      * Table to use
@@ -60,17 +64,6 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
     }
 
     /**
-     * Set the ID of the data provider
-     *
-     * @param int $dataProviderId
-     */
-    public function setDataProviderId(int $dataProviderId): void
-    {
-        $this->data_provider_id = $dataProviderId;
-        $this->save();
-    }
-
-    /**
      * Laravel integration for a data property
      *
      * @return \BristolSU\ControlDB\Contracts\Models\DataRole
@@ -101,24 +94,37 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
     }
 
     /**
+     * Set the ID of the data provider
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void
+    {
+        $this->baseSetDataProviderId($dataProviderId);
+        $this->refresh();
+    }
+
+    /**
      * Set a group ID
-     * 
+     *
      * @param int $groupId
      */
     public function setGroupId(int $groupId): void
     {
-        $this->group_id = $groupId;
-        $this->save();    
+        $this->baseSetGroupId($groupId);
+        $this->refresh();
     }
 
     /**
      * Set a position ID
-     * 
+     *
      * @param int $positionId
      */
     public function setPositionId(int $positionId): void
     {
-        $this->position_id = $positionId;
-        $this->save();    
+        $this->baseSetPositionId($positionId);
+        $this->refresh();
     }
+
+
 }

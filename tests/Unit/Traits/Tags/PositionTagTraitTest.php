@@ -90,4 +90,58 @@ class PositionTagTraitTest extends TestCase
         $this->assertEquals('categoryreference1.tagreference1', $positionTag->fullReference());
     }
 
+
+    /** @test */
+    public function setName_updates_the_position_tag_name()
+    {
+        $positionTag = factory(PositionTag::class)->create();
+
+        $positionTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag::class);
+        $positionTagRepository->update($positionTag->id(), 'NewName', $positionTag->description(), $positionTag->reference(), $positionTag->categoryId())
+            ->shouldBeCalled()->willReturn($positionTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag::class, $positionTagRepository->reveal());
+
+        $positionTag->setName('NewName');
+    }
+
+    /** @test */
+    public function setDescription_updates_the_position_tag_description()
+    {
+        $positionTag = factory(PositionTag::class)->create();
+
+        $positionTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag::class);
+        $positionTagRepository->update($positionTag->id(), $positionTag->name(), 'NewDescription', $positionTag->reference(), $positionTag->categoryId())
+            ->shouldBeCalled()->willReturn($positionTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag::class, $positionTagRepository->reveal());
+
+        $positionTag->setDescription('NewDescription');
+    }
+
+    /** @test */
+    public function setReference_updates_the_position_tag_reference()
+    {
+        $positionTag = factory(PositionTag::class)->create();
+
+        $positionTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag::class);
+        $positionTagRepository->update($positionTag->id(), $positionTag->name(), $positionTag->description(), 'NewReference', $positionTag->categoryId())
+            ->shouldBeCalled()->willReturn($positionTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag::class, $positionTagRepository->reveal());
+
+        $positionTag->setReference('NewReference');
+    }
+
+    /** @test */
+    public function setTagCategoryId_updates_the_position_tag_category_id()
+    {
+        $positionTag = factory(PositionTag::class)->create();
+        $positionTagCategory = factory(PositionTagCategory::class)->create();
+
+        $positionTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag::class);
+        $positionTagRepository->update($positionTag->id(), $positionTag->name(), $positionTag->description(), $positionTag->reference(), $positionTagCategory->id())
+            ->shouldBeCalled()->willReturn($positionTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag::class, $positionTagRepository->reveal());
+
+        $positionTag->setTagCategoryId($positionTagCategory->id());
+    }
+
 }

@@ -5,6 +5,7 @@ namespace BristolSU\ControlDB\Traits;
 
 
 use BristolSU\ControlDB\Contracts\Models\Group;
+use BristolSU\ControlDB\Contracts\Repositories\DataGroup;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
@@ -25,5 +26,25 @@ trait DataGroupTrait
         } catch (ModelNotFoundException $e) {
             return null;
         }
+    }
+
+    /**
+     * Set the name of the group
+     *
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        app(DataGroup::class)->update($this->id(), $name, $this->email());
+    }
+
+    /**
+     * Set the email of the group
+     *
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
+    {
+        app(DataGroup::class)->update($this->id(), $this->name(), $email);
     }
 }

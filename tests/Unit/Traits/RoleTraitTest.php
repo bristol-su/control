@@ -167,5 +167,46 @@ class RoleTraitTest extends TestCase
         $this->assertInstanceOf(Position::class, $positionThroughRole);
         $this->assertTrue($position->is($positionThroughRole));
     }
-    
+
+    /** @test */
+    public function setDataProviderId_updates_the_data_provider_id()
+    {
+        $oldDataRole = factory(DataRole::class)->create();
+        $newDataRole = factory(DataRole::class)->create();
+        $role = factory(Role::class)->create(['data_provider_id' => $oldDataRole->id()]);
+
+        $roleRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Role::class);
+        $roleRepo->update($role->id(), $role->positionId(), $role->groupId(), $newDataRole->id())->shouldBeCalled()->willReturn($role);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Role::class, $roleRepo->reveal());
+
+        $role->setDataProviderId($newDataRole->id());
+    }
+
+    /** @test */
+    public function setGroupId_updates_the_group_id()
+    {
+        $oldGroup = factory(Group::class)->create();
+        $newGroup = factory(Group::class)->create();
+        $role = factory(Role::class)->create(['group_id' => $oldGroup->id()]);
+
+        $roleRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Role::class);
+        $roleRepo->update($role->id(), $role->positionId(), $newGroup->id(), $role->dataProviderId())->shouldBeCalled()->willReturn($role);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Role::class, $roleRepo->reveal());
+
+        $role->setGroupId($newGroup->id());
+    }
+
+    /** @test */
+    public function setPositionId_updates_the_position_id()
+    {
+        $oldPosition = factory(Position::class)->create();
+        $newPosition = factory(Position::class)->create();
+        $role = factory(Role::class)->create(['position_id' => $oldPosition->id()]);
+
+        $roleRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Role::class);
+        $roleRepo->update($role->id(), $newPosition->id(), $role->groupId(), $role->dataProviderId())->shouldBeCalled()->willReturn($role);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Role::class, $roleRepo->reveal());
+
+        $role->setPositionId($newPosition->id());
+    }
 }

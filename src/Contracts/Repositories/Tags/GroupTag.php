@@ -48,6 +48,18 @@ interface GroupTag
     public function create(string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
 
     /**
+     * Update a group tag
+     *
+     * @param int $id
+     * @param string $name Name of the tag
+     * @param string $description Description of the tag
+     * @param string $reference Reference for the tag
+     * @param int $tagCategoryId Category ID of the tag
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
+     */
+    public function update(int $id, string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag;
+
+    /**
      * Delete a group tag
      * 
      * @param int $id ID of the tag to delete
@@ -58,7 +70,7 @@ interface GroupTag
      * Get all tags through a tag category
      * 
      * @param \BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory
-     * @return Collection|GroupTag[] Tags with the given group tag category
+     * @return Collection|\BristolSU\ControlDB\Contracts\Models\Tags\GroupTag[] Tags with the given group tag category
      */
     public function allThroughTagCategory(\BristolSU\ControlDB\Contracts\Models\Tags\GroupTagCategory $groupTagCategory): Collection;
 }

@@ -112,4 +112,49 @@ class DataPositionTest extends TestCase
         $this->assertTrue($dataPositions[0]->is($dbDataPosition[0]));
         $this->assertTrue($dataPositions[1]->is($dbDataPosition[1]));
     }
+
+    /** @test */
+    public function update_updates_a_position()
+    {
+        $dataPosition = factory(DataPosition::class)->create([
+            'name' => 'Toby',
+            'description' => 'description_example.com',
+        ]);
+        $this->assertDatabaseHas('control_data_position', [
+            'id' => $dataPosition->id(),
+            'name' => 'Toby',
+            'description' => 'description_example.com',
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
+        $repository->update($dataPosition->id(), 'Toby2',  'description_example2.com');
+        $this->assertDatabaseMissing('control_data_position', [
+            'id' => $dataPosition->id(),
+            'name' => 'Toby',
+            'description' => 'description_example.com',
+        ]);
+        $this->assertDatabaseHas('control_data_position', [
+            'id' => $dataPosition->id(),
+            'name' => 'Toby2',
+            'description' => 'description_example2.com',
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_position()
+    {
+        $dataPosition = factory(DataPosition::class)->create([
+            'name' => 'Toby',
+            'description' => 'description_example.com',
+        ]);
+        $this->assertEquals('Toby', $dataPosition->name());
+        $this->assertEquals('description_example.com', $dataPosition->description());
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
+        $updatedPosition = $repository->update($dataPosition->id(), 'Toby2', 'description_example2.com');
+
+        $this->assertEquals('Toby2', $updatedPosition->name());
+        $this->assertEquals('description_example2.com', $updatedPosition->description());
+
+    }
 }

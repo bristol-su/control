@@ -110,4 +110,66 @@ class RoleTagTest extends TestCase
             ));
         }
     }
+
+    /** @test */
+    public function update_updates_a_role_tag_category()
+    {
+        $oldTagCategory = factory(RoleTagCategory::class)->create();
+        $newTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTag = factory(RoleTag::class)->create([
+            'name' => 'TagName',
+            'description' => 'TagDesc',
+            'reference' => 'ref',
+            'tag_category_id' => $oldTagCategory->id
+        ]);
+        $this->assertDatabaseHas('control_tags', [
+            'id' => $roleTag->id(),
+            'name' => 'TagName',
+            'description' => 'TagDesc',
+            'reference' => 'ref',
+            'tag_category_id' => (string) $oldTagCategory->id,
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
+        $repository->update($roleTag->id(), 'TagName2',  'TagDesc2', 'ref2', $newTagCategory->id());
+        $this->assertDatabaseMissing('control_tags', [
+            'id' => $roleTag->id(),
+            'name' => 'TagName',
+            'description' => 'TagDesc',
+            'reference' => 'ref',
+            'tag_category_id' => (string) $oldTagCategory->id,
+        ]);
+        $this->assertDatabaseHas('control_tags', [
+            'id' => $roleTag->id(),
+            'name' => 'TagName2',
+            'description' => 'TagDesc2',
+            'reference' => 'ref2',
+            'tag_category_id' => (string) $newTagCategory->id,
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_role_tag_category()
+    {
+        $oldTagCategory = factory(RoleTagCategory::class)->create();
+        $newTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTag = factory(RoleTag::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'tag_category_id' => $oldTagCategory->id()
+        ]);
+        $this->assertEquals('TagCategoryName', $roleTag->name());
+        $this->assertEquals('TagCategoryDesc', $roleTag->description());
+        $this->assertEquals('ref', $roleTag->reference());
+        $this->assertEquals($oldTagCategory->id(), $roleTag->categoryId());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
+        $updatedRoleTag = $repository->update($roleTag->id(), 'TagCategoryName2', 'TagCategoryDesc2', 'ref2', $newTagCategory->id());
+
+        $this->assertEquals('TagCategoryName2', $updatedRoleTag->name());
+        $this->assertEquals('TagCategoryDesc2', $updatedRoleTag->description());
+        $this->assertEquals('ref2', $updatedRoleTag->reference());
+        $this->assertEquals($newTagCategory->id(), $updatedRoleTag->categoryId());
+    }
 }

@@ -66,10 +66,10 @@ class RoleTest extends TestCase
     /** @test */
     public function a_data_provider_id_can_be_retrieved_from_the_model(){
         $role = factory(Role::class)->create([
-            'data_provider_id' => 5
+            'data_provider_id' => 2
         ]);
 
-        $this->assertEquals(5, $role->dataProviderId());
+        $this->assertEquals(2, $role->dataProviderId());
     }
 
     /** @test */

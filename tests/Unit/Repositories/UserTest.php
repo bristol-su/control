@@ -123,5 +123,39 @@ class UserTest extends TestCase
         $this->assertTrue($users[18]->is($paginatedUsers->shift()));
         $this->assertTrue($users[19]->is($paginatedUsers->shift()));
     }
+    
+    /** @test */
+    public function update_updates_a_user(){
+        $dataUser1 = factory(DataUser::class)->create();
+        $dataUser2 = factory(DataUser::class)->create();
+        $user = factory(User::class)->create(['data_provider_id' => $dataUser1->id()]);
+        
+        $this->assertDatabaseHas('control_users', [
+            'id' => $user->id(), 'data_provider_id' => $dataUser1->id()
+        ]);
+        
+        $repository = new \BristolSU\ControlDB\Repositories\User();
+        $repository->update($user->id(), $dataUser2->id());
 
+        $this->assertDatabaseMissing('control_users', [
+            'id' => $user->id(), 'data_provider_id' => $dataUser1->id()
+        ]);
+        $this->assertDatabaseHas('control_users', [
+            'id' => $user->id(), 'data_provider_id' => $dataUser2->id()
+        ]);
+    }
+
+    /** @test */
+    public function update_returns_the_updated_user(){
+        $dataUser1 = factory(DataUser::class)->create();
+        $dataUser2 = factory(DataUser::class)->create();
+        $user = factory(User::class)->create(['data_provider_id' => $dataUser1->id()]);
+
+        $this->assertEquals($dataUser1->id(), $user->dataProviderId());
+        
+        $repository = new \BristolSU\ControlDB\Repositories\User();
+        $updatedUser = $repository->update($user->id(), $dataUser2->id());
+
+        $this->assertEquals($dataUser2->id(), $updatedUser->dataProviderId());
+    }
 }

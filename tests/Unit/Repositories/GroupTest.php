@@ -122,5 +122,40 @@ class GroupTest extends TestCase
         $this->assertTrue($groups[18]->is($paginatedGroups->shift()));
         $this->assertTrue($groups[19]->is($paginatedGroups->shift()));
     }
+
+    /** @test */
+    public function update_updates_a_group(){
+        $dataGroup1 = factory(DataGroup::class)->create();
+        $dataGroup2 = factory(DataGroup::class)->create();
+        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup1->id()]);
+
+        $this->assertDatabaseHas('control_groups', [
+            'id' => $group->id(), 'data_provider_id' => $dataGroup1->id()
+        ]);
+
+        $repository = new \BristolSU\ControlDB\Repositories\Group();
+        $repository->update($group->id(), $dataGroup2->id());
+
+        $this->assertDatabaseMissing('control_groups', [
+            'id' => $group->id(), 'data_provider_id' => $dataGroup1->id()
+        ]);
+        $this->assertDatabaseHas('control_groups', [
+            'id' => $group->id(), 'data_provider_id' => $dataGroup2->id()
+        ]);
+    }
+
+    /** @test */
+    public function update_returns_the_updated_group(){
+        $dataGroup1 = factory(DataGroup::class)->create();
+        $dataGroup2 = factory(DataGroup::class)->create();
+        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup1->id()]);
+
+        $this->assertEquals($dataGroup1->id(), $group->dataProviderId());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Group();
+        $updatedGroup = $repository->update($group->id(), $dataGroup2->id());
+
+        $this->assertEquals($dataGroup2->id(), $updatedGroup->dataProviderId());
+    }
     
 }

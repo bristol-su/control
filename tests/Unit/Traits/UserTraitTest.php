@@ -2,11 +2,9 @@
 
 namespace BristolSU\Tests\ControlDB\Unit\Traits;
 
-use BristolSU\ControlDB\Models\DataGroup;
 use BristolSU\ControlDB\Models\DataUser;
 use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Role;
-use BristolSU\ControlDB\Models\Tags\GroupTag;
 use BristolSU\ControlDB\Models\Tags\UserTag;
 use BristolSU\ControlDB\Models\User;
 use BristolSU\Tests\ControlDB\TestCase;
@@ -204,5 +202,19 @@ class UserTraitTest extends TestCase
                 'taggable_type' => 'user'
             ]);
         }
+    }
+
+    /** @test */
+    public function setDataProviderId_updates_the_data_provider_id()
+    {
+        $oldDataUser = factory(DataUser::class)->create();
+        $newDataUser = factory(DataUser::class)->create();
+        $user = factory(User::class)->create(['data_provider_id' => $oldDataUser->id()]);
+
+        $userRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\User::class);
+        $userRepo->update($user->id(), $newDataUser->id())->shouldBeCalled()->willReturn($user);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\User::class, $userRepo->reveal());
+
+        $user->setDataProviderId($newDataUser->id());
     }
 }

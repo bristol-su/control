@@ -94,4 +94,23 @@ class RoleTag implements RoleTagContract
     {
         return \BristolSU\ControlDB\Models\Tags\RoleTag::where('tag_category_id', $roleTagCategory->id())->get();
     }
+
+    /**
+     * Update a role tag
+     *
+     * @param int $id
+     * @param string $name Name of the tag
+     * @param string $description Description of the tag
+     * @param string $reference Reference for the tag
+     * @param int $tagCategoryId Category ID of the tag
+     * @return \BristolSU\ControlDB\Contracts\Models\Tags\RoleTag
+     */
+    public function update(int $id, string $name, string $description, string $reference, int $tagCategoryId): \BristolSU\ControlDB\Contracts\Models\Tags\RoleTag
+    {
+        $roleTag = $this->getById($id)->fill([
+            'name' => $name, 'description' => $description, 'reference' => $reference, 'tag_category_id' => $tagCategoryId
+        ]);
+        $roleTag->save();
+        return $roleTag;
+    }
 }

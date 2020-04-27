@@ -4,7 +4,8 @@ namespace BristolSU\ControlDB;
 
 use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertySingletonStore;
 use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertyStore;
-use BristolSU\ControlDB\Cache\Role;
+use BristolSU\ControlDB\Bootstrap\RegistersCachedRepositories;
+use BristolSU\ControlDB\Bootstrap\RegistersObserverFramework;
 use BristolSU\ControlDB\Commands\SeedDatabase;
 use BristolSU\ControlDB\Contracts\Repositories\DataUser as DataUserRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\DataGroup as DataGroupRepositoryContract;
@@ -38,6 +39,42 @@ use BristolSU\ControlDB\Models\Tags\RoleTagCategory as RoleTagCategoryModel;
 use BristolSU\ControlDB\Models\Tags\UserTag as UserTagModel;
 use BristolSU\ControlDB\Models\Tags\UserTagCategory as UserTagCategoryModel;
 use BristolSU\ControlDB\Models\User as UserModel;
+use BristolSU\ControlDB\Observers\DataGroupObserverClearCache;
+use BristolSU\ControlDB\Observers\DataPositionObserverClearCache;
+use BristolSU\ControlDB\Observers\DataRoleObserverClearCache;
+use BristolSU\ControlDB\Observers\DataUserObserverClearCache;
+use BristolSU\ControlDB\Observers\GroupObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\GroupObserverClearCache;
+use BristolSU\ControlDB\Observers\NotifyObservers\Framework\Observe;
+use BristolSU\ControlDB\Observers\NotifyObservers\Framework\ObserverStore;
+use BristolSU\ControlDB\Observers\Pivots\Tags\GroupGroupTagObserverClearCache;
+use BristolSU\ControlDB\Observers\Pivots\Tags\PositionPositionTagObserverClearCache;
+use BristolSU\ControlDB\Observers\Pivots\Tags\RoleRoleTagObserverClearCache;
+use BristolSU\ControlDB\Observers\Pivots\Tags\UserUserTagObserverClearCache;
+use BristolSU\ControlDB\Observers\Pivots\UserGroupObserverClearCache;
+use BristolSU\ControlDB\Observers\Pivots\UserRoleObserverClearCache;
+use BristolSU\ControlDB\Observers\PositionObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\PositionObserverClearCache;
+use BristolSU\ControlDB\Observers\RoleObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\RoleObserverClearCache;
+use BristolSU\ControlDB\Observers\Tags\GroupTagCategoryObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\Tags\GroupTagCategoryObserverClearCache;
+use BristolSU\ControlDB\Observers\Tags\GroupTagObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\Tags\GroupTagObserverClearCache;
+use BristolSU\ControlDB\Observers\Tags\PositionTagCategoryObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\Tags\PositionTagCategoryObserverClearCache;
+use BristolSU\ControlDB\Observers\Tags\PositionTagObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\Tags\PositionTagObserverClearCache;
+use BristolSU\ControlDB\Observers\Tags\RoleTagCategoryObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\Tags\RoleTagCategoryObserverClearCache;
+use BristolSU\ControlDB\Observers\Tags\RoleTagObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\Tags\RoleTagObserverClearCache;
+use BristolSU\ControlDB\Observers\Tags\UserTagCategoryObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\Tags\UserTagCategoryObserverClearCache;
+use BristolSU\ControlDB\Observers\Tags\UserTagObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\Tags\UserTagObserverClearCache;
+use BristolSU\ControlDB\Observers\UserObserverCascadeDelete;
+use BristolSU\ControlDB\Observers\UserObserverClearCache;
 use BristolSU\ControlDB\Repositories\DataUser as DataUserRepository;
 use BristolSU\ControlDB\Repositories\DataGroup as DataGroupRepository;
 use BristolSU\ControlDB\Repositories\DataRole as DataRoleRepository;
@@ -84,8 +121,6 @@ use BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory as RoleTagCa
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag as UserTagRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory as UserTagCategoryRepositoryContract;
 use BristolSU\ControlDB\Contracts\Repositories\User as UserRepositoryContract;
-
-use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Facades\Route;
@@ -93,15 +128,17 @@ use Illuminate\Support\ServiceProvider;
 
 class ControlDBServiceProvider extends ServiceProvider
 {
-
+    use RegistersCachedRepositories, RegistersObserverFramework;
+    
     public function register()
     {
         $this->bindContracts();
+        $this->registerObserversFramework($this->app);
+        $this->registerCachedRepositories($this->app);
         $this->registerCommands();
         $this->registerMigrations();
         $this->registerConfig();
         $this->registerFactories();
-        
         $this->app->singleton('control-exporter', function() {
             return new ExportManager($this->app);
         });
@@ -111,6 +148,7 @@ class ControlDBServiceProvider extends ServiceProvider
     {
         $this->setupRouteModelBinding();
         $this->setupRoutes();
+        $this->setupObservers();
     }
 
     /**
@@ -195,16 +233,15 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(RoleRoleTagContract::class, RoleRoleTag::class);
         $this->app->bind(PositionPositionTagContract::class, PositionPositionTag::class);
         
-        $this->app->extend(RoleRepositoryContract::class, function(RoleRepositoryContract $service, $app) {
-            return new Role($service, $app->make(Repository::class));
-        });
+        $this->app->singleton(ObserverStore::class);
+
     }
 
     public function registerCommands()
     {
         $this->commands([
             SeedDatabase::class,
-            ExportControlCommand::class
+            ExportControlCommand::class,
         ]);
     }
 
@@ -269,6 +306,52 @@ class ControlDBServiceProvider extends ServiceProvider
             ->middleware(config('control.api_middleware'))
             ->namespace('BristolSU\ControlDB\Http\Controllers')
             ->group(__DIR__ . '/../routes/api.php');
+    }
+
+    private function setupObservers()
+    {
+        Observe::attach(RoleRepositoryContract::class, RoleObserverClearCache::class);
+        Observe::attach(UserRepositoryContract::class, UserObserverClearCache::class);
+        Observe::attach(GroupRepositoryContract::class, GroupObserverClearCache::class);
+        Observe::attach(PositionRepositoryContract::class, PositionObserverClearCache::class);
+
+        Observe::attach(DataUserRepositoryContract::class, DataUserObserverClearCache::class);
+        Observe::attach(DataGroupRepositoryContract::class, DataGroupObserverClearCache::class);
+        Observe::attach(DataRoleRepositoryContract::class, DataRoleObserverClearCache::class);
+        Observe::attach(DataPositionRepositoryContract::class, DataPositionObserverClearCache::class);
+
+        Observe::attach(GroupTagRepositoryContract::class, GroupTagObserverClearCache::class);
+        Observe::attach(RoleTagRepositoryContract::class, RoleTagObserverClearCache::class);
+        Observe::attach(UserTagRepositoryContract::class, UserTagObserverClearCache::class);
+        Observe::attach(PositionTagRepositoryContract::class, PositionTagObserverClearCache::class);
+        
+        Observe::attach(GroupTagCategoryRepositoryContract::class, GroupTagCategoryObserverClearCache::class);
+        Observe::attach(RoleTagCategoryRepositoryContract::class, RoleTagCategoryObserverClearCache::class);
+        Observe::attach(UserTagCategoryRepositoryContract::class, UserTagCategoryObserverClearCache::class);
+        Observe::attach(PositionTagCategoryRepositoryContract::class, PositionTagCategoryObserverClearCache::class);
+
+        Observe::attach(UserGroupContract::class, UserGroupObserverClearCache::class);
+        Observe::attach(UserRoleContract::class, UserRoleObserverClearCache::class);
+
+        Observe::attach(GroupGroupTagContract::class, GroupGroupTagObserverClearCache::class);
+        Observe::attach(UserUserTagContract::class, UserUserTagObserverClearCache::class);
+        Observe::attach(RoleRoleTagContract::class, RoleRoleTagObserverClearCache::class);
+        Observe::attach(PositionPositionTagContract::class, PositionPositionTagObserverClearCache::class);
+
+        Observe::attach(GroupTagRepositoryContract::class, GroupTagObserverCascadeDelete::class);
+        Observe::attach(UserTagRepositoryContract::class, UserTagObserverCascadeDelete::class);
+        Observe::attach(RoleTagRepositoryContract::class, RoleTagObserverCascadeDelete::class);
+        Observe::attach(PositionTagRepositoryContract::class, PositionTagObserverCascadeDelete::class);
+        
+        Observe::attach(GroupTagCategoryRepositoryContract::class, GroupTagCategoryObserverCascadeDelete::class);
+        Observe::attach(UserTagCategoryRepositoryContract::class, UserTagCategoryObserverCascadeDelete::class);
+        Observe::attach(RoleTagCategoryRepositoryContract::class, RoleTagCategoryObserverCascadeDelete::class);
+        Observe::attach(PositionTagCategoryRepositoryContract::class, PositionTagCategoryObserverCascadeDelete::class);
+
+        Observe::attach(RoleRepositoryContract::class, RoleObserverCascadeDelete::class);
+        Observe::attach(UserRepositoryContract::class, UserObserverCascadeDelete::class);
+        Observe::attach(GroupRepositoryContract::class, GroupObserverCascadeDelete::class);
+        Observe::attach(PositionRepositoryContract::class, PositionObserverCascadeDelete::class);
     }
 
 

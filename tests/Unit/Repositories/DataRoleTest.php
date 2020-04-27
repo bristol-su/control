@@ -113,4 +113,49 @@ class DataRoleTest extends TestCase
         $this->assertTrue($dataRoles[1]->is($dbDataRole[1]));
     }
 
+    /** @test */
+    public function update_updates_a_role()
+    {
+        $dataRole = factory(DataRole::class)->create([
+            'role_name' => 'Toby',
+            'email' => 'support@example.com',
+        ]);
+        $this->assertDatabaseHas('control_data_role', [
+            'id' => $dataRole->id(),
+            'role_name' => 'Toby',
+            'email' => 'support@example.com',
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\DataRole();
+        $repository->update($dataRole->id(), 'Toby2',  'support@example2.com');
+        $this->assertDatabaseMissing('control_data_role', [
+            'id' => $dataRole->id(),
+            'role_name' => 'Toby',
+            'email' => 'support@example.com',
+        ]);
+        $this->assertDatabaseHas('control_data_role', [
+            'id' => $dataRole->id(),
+            'role_name' => 'Toby2',
+            'email' => 'support@example2.com',
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_role()
+    {
+        $dataRole = factory(DataRole::class)->create([
+            'role_name' => 'Toby',
+            'email' => 'support@example.com',
+        ]);
+        $this->assertEquals('Toby', $dataRole->roleName());
+        $this->assertEquals('support@example.com', $dataRole->email());
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataRole();
+        $updatedRole = $repository->update($dataRole->id(), 'Toby2', 'support@example2.com');
+
+        $this->assertEquals('Toby2', $updatedRole->roleName());
+        $this->assertEquals('support@example2.com', $updatedRole->email());
+
+    }
+
 }

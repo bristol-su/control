@@ -6,8 +6,6 @@ use BristolSU\ControlDB\Contracts\Repositories\Group;
 use BristolSU\ControlDB\Contracts\Repositories\Position;
 use BristolSU\ControlDB\Contracts\Repositories\Role;
 use BristolSU\ControlDB\Contracts\Repositories\User;
-use BristolSU\ControlDB\Export\Formatter\Role\SortByGroupName;
-use BristolSU\ControlDB\Export\Formatter\Shared\SortByColumn;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 
@@ -46,8 +44,11 @@ class ExportControlCommand extends Command
      */
     public function handle()
     {
+        $time=-hrtime(true);
         Exporter::driver($this->option('exporter'))->export($this->exportData());
         $this->info('Export complete');
+        $time+=hrtime(true);
+        $this->info(sprintf('Export took %.2f s to run', $time / 1e+9));
     }
 
     private function exportData()

@@ -51,4 +51,15 @@ interface RoleTagCategory
      * @return RoleTagCategoryModel New role tag category
      */
     public function create(string $name, string $description, string $reference): RoleTagCategoryModel;
+
+    /**
+     * Update a role tag category
+     *
+     * @param int $id
+     * @param string $name Name of the role tag category
+     * @param string $description Description of the role tag category
+     * @param string $reference Reference of the role tag category
+     * @return RoleTagCategoryModel Updated role tag category
+     */
+    public function update(int $id, string $name, string $description, string $reference): RoleTagCategoryModel;
 }

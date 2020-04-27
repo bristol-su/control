@@ -4,6 +4,7 @@ namespace BristolSU\ControlDB\Traits\Tags;
 
 use BristolSU\ControlDB\Contracts\Models\User;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\UserUserTag;
+use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag;
 use BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory;
 use Illuminate\Support\Collection;
 
@@ -64,4 +65,44 @@ trait UserTagTrait
         app(UserUserTag::class)->removeTagFromUser($this, $user);
     }
 
+    /**
+     * Set the name of the tag
+     *
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        app(UserTag::class)->update($this->id(), $name, $this->description(), $this->reference(), $this->categoryId());
+    }
+
+    /**
+     * Set the description of the Tag
+     *
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        app(UserTag::class)->update($this->id(), $this->name(), $description, $this->reference(), $this->categoryId());
+    }
+
+    /**
+     * Set the reference of the tag
+     *
+     * @param string $reference
+     */
+    public function setReference(string $reference): void
+    {
+        app(UserTag::class)->update($this->id(), $this->name(), $this->description(), $reference, $this->categoryId());
+    }
+
+    /**
+     * Set the tag category ID
+     *
+     * @param int $categoryId
+     */
+    public function setTagCategoryId($categoryId): void
+    {
+        app(UserTag::class)->update($this->id(), $this->name(), $this->description(), $this->reference(), $categoryId);
+    }
+    
 }

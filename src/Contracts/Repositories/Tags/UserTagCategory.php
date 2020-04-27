@@ -51,4 +51,15 @@ interface UserTagCategory
      * @return UserTagCategoryModel New user tag category
      */
     public function create(string $name, string $description, string $reference): UserTagCategoryModel;
+
+    /**
+     * Update a user tag category
+     *
+     * @param int $id
+     * @param string $name Name of the user tag category
+     * @param string $description Description of the user tag category
+     * @param string $reference Reference of the user tag category
+     * @return UserTagCategoryModel Updated user tag category
+     */
+    public function update(int $id, string $name, string $description, string $reference): UserTagCategoryModel;
 }

@@ -5,6 +5,7 @@ namespace BristolSU\ControlDB\Traits;
 
 
 use BristolSU\ControlDB\Contracts\Models\Role;
+use BristolSU\ControlDB\Contracts\Repositories\DataRole;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
@@ -25,5 +26,27 @@ trait DataRoleTrait
         } catch (ModelNotFoundException $e) {
             return null;
         }
+    }
+
+    /**
+     * Set the email of the role
+     *
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
+    {
+        app(DataRole::class)->update($this->id(), $this->roleName(), $email);
+    }
+
+
+    /**
+     * Set a name for the role
+     *
+     * @param string|null $roleName
+     */
+    public function setRoleName(?string $roleName): void
+    {
+        app(DataRole::class)->update($this->id(), $roleName, $this->email());
+
     }
 }

@@ -10,9 +10,10 @@ class SimpleGroupFormatter extends Formatter
 
     public function formatItem(FormattedItem $formattedItem): FormattedItem
     {
+        $groupData = $formattedItem->original()->data();
         $formattedItem->addRow('Group ID', $formattedItem->original()->id());
-        $formattedItem->addRow('Group Name', $formattedItem->original()->data()->name());
-        $formattedItem->addRow('Group Email', $formattedItem->original()->data()->email());    
+        $formattedItem->addRow('Group Name', $groupData->name());
+        $formattedItem->addRow('Group Email', $groupData->email());    
         return $formattedItem;
     }
 

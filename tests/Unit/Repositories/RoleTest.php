@@ -159,4 +159,51 @@ class RoleTest extends TestCase
         $this->assertTrue($roles[19]->is($paginatedRoles->shift()));
     }
 
+    /** @test */
+    public function update_updates_a_role(){
+        $dataRole1 = factory(DataRole::class)->create();
+        $dataRole2 = factory(DataRole::class)->create();
+        $position1 = factory(Position::class)->create();
+        $position2 = factory(Position::class)->create();
+        $group1 = factory(Group::class)->create();
+        $group2 = factory(Group::class)->create();
+        $role = factory(Role::class)->create(['data_provider_id' => $dataRole1->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()]);
+
+        $this->assertDatabaseHas('control_roles', [
+            'id' => $role->id(), 'data_provider_id' => $dataRole1->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()
+        ]);
+
+        $repository = new \BristolSU\ControlDB\Repositories\Role();
+        $repository->update($role->id(), $position2->id(), $group2->id(), $dataRole2->id());
+
+        $this->assertDatabaseMissing('control_roles', [
+            'id' => $role->id(), 'data_provider_id' => $dataRole1->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()
+        ]);
+        $this->assertDatabaseHas('control_roles', [
+            'id' => $role->id(), 'data_provider_id' => $dataRole2->id(), 'position_id' => $position2->id(), 'group_id' => $group2->id()
+        ]);
+    }
+
+    /** @test */
+    public function update_returns_the_updated_role(){
+        $dataRole1 = factory(DataRole::class)->create();
+        $dataRole2 = factory(DataRole::class)->create();
+        $position1 = factory(Position::class)->create();
+        $position2 = factory(Position::class)->create();
+        $group1 = factory(Group::class)->create();
+        $group2 = factory(Group::class)->create();
+        $role = factory(Role::class)->create(['data_provider_id' => $dataRole1->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()]);
+
+        $this->assertEquals($dataRole1->id(), $role->dataProviderId());
+        $this->assertEquals($position1->id(), $role->positionId());
+        $this->assertEquals($group1->id(), $role->groupId());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Role();
+        $updatedRole = $repository->update($role->id(), $position2->id(), $group2->id(), $dataRole2->id());
+
+        $this->assertEquals($dataRole2->id(), $updatedRole->dataProviderId());
+        $this->assertEquals($position2->id(), $updatedRole->positionId());
+        $this->assertEquals($group2->id(), $updatedRole->groupId());
+    }
+    
 }

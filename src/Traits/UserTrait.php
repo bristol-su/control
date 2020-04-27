@@ -9,6 +9,7 @@ use BristolSU\ControlDB\Contracts\Models\Role;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\UserUserTag;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole;
+use BristolSU\ControlDB\Contracts\Repositories\User;
 use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Tags\UserTag;
 use Illuminate\Support\Collection;
@@ -28,6 +29,16 @@ trait UserTrait
         return app(\BristolSU\ControlDB\Contracts\Repositories\DataUser::class)->getById($this->dataProviderId());
     }
 
+    /**
+     * Set the ID of the data provider
+     *
+     * @param int $dataProviderId
+     */
+    public function setDataProviderId(int $dataProviderId): void
+    {
+        app(User::class)->update($this->id(), $dataProviderId);
+    }
+    
     /**
      * Tags the user is tagged with
      *

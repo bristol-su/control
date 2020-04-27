@@ -12,7 +12,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory
 {
-    use SoftDeletes, PositionTagCategoryTrait;
+    use SoftDeletes, PositionTagCategoryTrait {
+        setName as baseSetName;
+        setDescription as baseSetDescription;
+        setReference as baseSetReference;
+    }
 
     /**
      * Boot the model
@@ -91,8 +95,8 @@ class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contract
      */
     public function setName(string $name): void
     {
-        $this->name = $name;
-        $this->save();
+        $this->baseSetName($name);
+        $this->refresh();
     }
 
     /**
@@ -102,8 +106,8 @@ class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contract
      */
     public function setDescription(string $description): void
     {
-        $this->description = $description;
-        $this->save();
+        $this->baseSetDescription($description);
+        $this->refresh();
     }
 
     /**
@@ -113,7 +117,8 @@ class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contract
      */
     public function setReference(string $reference): void
     {
-        $this->reference = $reference;
-        $this->save();
+        $this->baseSetReference($reference);
+        $this->refresh();
     }
+    
 }

@@ -22,4 +22,26 @@ class DataPositionTraitTest extends TestCase
         $dataPosition = factory(DataPosition::class)->create();
         $this->assertNull($dataPosition->position());
     }
+
+    /** @test */
+    public function setName_updates_the_name()
+    {
+        $dataPosition = factory(DataPosition::class)->create(['description' => 'description']);
+        $dataPositionRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\DataPosition::class);
+        $dataPositionRepo->update($dataPosition->id(), 'NewName', 'description')->shouldBeCalled()->willReturn($dataPosition);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\DataPosition::class, $dataPositionRepo->reveal());
+
+        $dataPosition->setName('NewName');
+    }
+
+    /** @test */
+    public function setDescription_updates_the_description()
+    {
+        $dataPosition = factory(DataPosition::class)->create(['name' => 'name1']);
+        $dataPositionRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\DataPosition::class);
+        $dataPositionRepo->update($dataPosition->id(), 'name1', 'description2')->shouldBeCalled()->willReturn($dataPosition);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\DataPosition::class, $dataPositionRepo->reveal());
+
+        $dataPosition->setDescription('description2');
+    }
 }

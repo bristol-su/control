@@ -87,4 +87,28 @@ class DataUser implements \BristolSU\ControlDB\Contracts\Repositories\DataUser
             return true;
         })->values();
     }
+
+    /**
+     * Update a data user
+     *
+     * @param int $id
+     * @param string|null $firstName
+     * @param string|null $lastName
+     * @param string|null $email
+     * @param \DateTime|null $dob
+     * @param string|null $preferredName
+     * @return \BristolSU\ControlDB\Contracts\Models\DataUser
+     */
+    public function update(int $id, ?string $firstName = null, ?string $lastName = null, ?string $email = null, ?\DateTime $dob = null, ?string $preferredName = null): \BristolSU\ControlDB\Contracts\Models\DataUser
+    {
+        $dataUser = $this->getById($id)->fill([
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $email,
+            'dob' => $dob,
+            'preferred_name' => $preferredName
+        ]);
+        $dataUser->save();
+        return $dataUser;
+    }
 }

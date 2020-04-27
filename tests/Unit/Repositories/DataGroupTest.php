@@ -112,4 +112,49 @@ class DataGroupTest extends TestCase
         $this->assertTrue($dataGroups[0]->is($dbDataGroup[0]));
         $this->assertTrue($dataGroups[1]->is($dbDataGroup[1]));
     }
+
+    /** @test */
+    public function update_updates_a_group()
+    {
+        $dataGroup = factory(DataGroup::class)->create([
+            'name' => 'Toby',
+            'email' => 'support@example.com',
+        ]);
+        $this->assertDatabaseHas('control_data_group', [
+            'id' => $dataGroup->id(),
+            'name' => 'Toby',
+            'email' => 'support@example.com',
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
+        $repository->update($dataGroup->id(), 'Toby2',  'support@example2.com');
+        $this->assertDatabaseMissing('control_data_group', [
+            'id' => $dataGroup->id(),
+            'name' => 'Toby',
+            'email' => 'support@example.com',
+        ]);
+        $this->assertDatabaseHas('control_data_group', [
+            'id' => $dataGroup->id(),
+            'name' => 'Toby2',
+            'email' => 'support@example2.com',
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_group()
+    {
+        $dataGroup = factory(DataGroup::class)->create([
+            'name' => 'Toby',
+            'email' => 'support@example.com',
+        ]);
+        $this->assertEquals('Toby', $dataGroup->name());
+        $this->assertEquals('support@example.com', $dataGroup->email());
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
+        $updatedGroup = $repository->update($dataGroup->id(), 'Toby2', 'support@example2.com');
+
+        $this->assertEquals('Toby2', $updatedGroup->name());
+        $this->assertEquals('support@example2.com', $updatedGroup->email());
+
+    }
 }

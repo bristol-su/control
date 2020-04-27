@@ -14,7 +14,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Models\DataPosition
 {
-    use SoftDeletes, HasAdditionalProperties, DataPositionTrait;
+    use SoftDeletes, HasAdditionalProperties, DataPositionTrait {
+        setName as baseSetName;
+        setDescription as baseSetDescription;
+    }
 
     /**
      * Defines the table
@@ -69,8 +72,8 @@ class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Model
      */
     public function setName(?string $name): void
     {
-        $this->name = $name;
-        $this->save();
+        $this->baseSetName($name);
+        $this->refresh();
     }
 
     /**
@@ -80,7 +83,9 @@ class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Model
      */
     public function setDescription(?string $description): void
     {
-        $this->description = $description;
-        $this->save();
+        $this->baseSetDescription($description);
+        $this->refresh();
     }
+
+
 }

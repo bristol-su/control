@@ -89,4 +89,17 @@ class Group implements GroupContract
         return \BristolSU\ControlDB\Models\Group::count();
     }
 
+    /**
+     * Update the group model
+     *
+     * @param int $id
+     * @param int $dataProviderId New data provider ID
+     * @return GroupModel
+     */
+    public function update(int $id, int $dataProviderId): GroupModel
+    {
+        $group = $this->getById($id)->fill(['data_provider_id' => $dataProviderId]);
+        $group->save();
+        return $group;
+    }
 }

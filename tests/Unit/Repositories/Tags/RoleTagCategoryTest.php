@@ -92,4 +92,58 @@ class RoleTagCategoryTest extends TestCase
         $this->assertTrue($roleTagCategory->trashed());
     }
 
+    /** @test */
+    public function update_updates_a_role_tag_category()
+    {
+        $roleTagCategory = factory(RoleTagCategory::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+        ]);
+        $this->assertDatabaseHas('control_tag_categories', [
+            'id' => $roleTagCategory->id(),
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'type' => 'role'
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
+        $repository->update($roleTagCategory->id(), 'TagCategoryName2',  'TagCategoryDesc2', 'ref2');
+        $this->assertDatabaseMissing('control_tag_categories', [
+            'id' => $roleTagCategory->id(),
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'type' => 'role'
+        ]);
+        $this->assertDatabaseHas('control_tag_categories', [
+            'id' => $roleTagCategory->id(),
+            'name' => 'TagCategoryName2',
+            'description' => 'TagCategoryDesc2',
+            'reference' => 'ref2',
+            'type' => 'role'
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_role_tag_category()
+    {
+        $roleTagCategory = factory(RoleTagCategory::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+        ]);
+        $this->assertEquals('TagCategoryName', $roleTagCategory->name());
+        $this->assertEquals('TagCategoryDesc', $roleTagCategory->description());
+        $this->assertEquals('ref', $roleTagCategory->reference());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
+        $updatedRoleTagCategory = $repository->update($roleTagCategory->id(), 'TagCategoryName2', 'TagCategoryDesc2', 'ref2');
+
+        $this->assertEquals('TagCategoryName2', $updatedRoleTagCategory->name());
+        $this->assertEquals('TagCategoryDesc2', $updatedRoleTagCategory->description());
+        $this->assertEquals('ref2', $updatedRoleTagCategory->reference());
+
+    }
 }

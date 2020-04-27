@@ -90,4 +90,17 @@ class User implements UserContract
     }
 
 
+    /**
+     * Update the user model
+     *
+     * @param int $id
+     * @param int $dataProviderId New data provider ID
+     * @return UserModel
+     */
+    public function update(int $id, int $dataProviderId): UserModel
+    {
+        $user = $this->getById($id)->fill(['data_provider_id' => $dataProviderId]);
+        $user->save();
+        return $user;
+    }
 }

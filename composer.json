@@ -10,12 +10,13 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
         "ext-json": "*"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
-        "phpstan/phpstan": "^0.12.8"
+        "phpstan/phpstan": "^0.12.8",
+        "phpspec/prophecy-phpunit": "2.0.0"
     },
     "extra": {
         "laravel": {

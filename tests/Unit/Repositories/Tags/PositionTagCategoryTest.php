@@ -92,5 +92,60 @@ class PositionTagCategoryTest extends TestCase
         $this->assertTrue($positionTagCategory->trashed());
     }
 
+    /** @test */
+    public function update_updates_a_position_tag_category()
+    {
+        $positionTagCategory = factory(PositionTagCategory::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+        ]);
+        $this->assertDatabaseHas('control_tag_categories', [
+            'id' => $positionTagCategory->id(),
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'type' => 'position'
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
+        $repository->update($positionTagCategory->id(), 'TagCategoryName2',  'TagCategoryDesc2', 'ref2');
+        $this->assertDatabaseMissing('control_tag_categories', [
+            'id' => $positionTagCategory->id(),
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'type' => 'position'
+        ]);
+        $this->assertDatabaseHas('control_tag_categories', [
+            'id' => $positionTagCategory->id(),
+            'name' => 'TagCategoryName2',
+            'description' => 'TagCategoryDesc2',
+            'reference' => 'ref2',
+            'type' => 'position'
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_position_tag_category()
+    {
+        $positionTagCategory = factory(PositionTagCategory::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+        ]);
+        $this->assertEquals('TagCategoryName', $positionTagCategory->name());
+        $this->assertEquals('TagCategoryDesc', $positionTagCategory->description());
+        $this->assertEquals('ref', $positionTagCategory->reference());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
+        $updatedPositionTagCategory = $repository->update($positionTagCategory->id(), 'TagCategoryName2', 'TagCategoryDesc2', 'ref2');
+
+        $this->assertEquals('TagCategoryName2', $updatedPositionTagCategory->name());
+        $this->assertEquals('TagCategoryDesc2', $updatedPositionTagCategory->description());
+        $this->assertEquals('ref2', $updatedPositionTagCategory->reference());
+
+    }
+
 
 }

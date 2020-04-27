@@ -114,4 +114,66 @@ class GroupTagTest extends TestCase
         }
     }
 
+    /** @test */
+    public function update_updates_a_group_tag_category()
+    {
+        $oldTagCategory = factory(GroupTagCategory::class)->create();
+        $newTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTag = factory(GroupTag::class)->create([
+            'name' => 'TagName',
+            'description' => 'TagDesc',
+            'reference' => 'ref',
+            'tag_category_id' => $oldTagCategory->id
+        ]);
+        $this->assertDatabaseHas('control_tags', [
+            'id' => $groupTag->id(),
+            'name' => 'TagName',
+            'description' => 'TagDesc',
+            'reference' => 'ref',
+            'tag_category_id' => (string) $oldTagCategory->id,
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
+        $repository->update($groupTag->id(), 'TagName2',  'TagDesc2', 'ref2', $newTagCategory->id());
+        $this->assertDatabaseMissing('control_tags', [
+            'id' => $groupTag->id(),
+            'name' => 'TagName',
+            'description' => 'TagDesc',
+            'reference' => 'ref',
+            'tag_category_id' => (string) $oldTagCategory->id,
+        ]);
+        $this->assertDatabaseHas('control_tags', [
+            'id' => $groupTag->id(),
+            'name' => 'TagName2',
+            'description' => 'TagDesc2',
+            'reference' => 'ref2',
+            'tag_category_id' => (string) $newTagCategory->id,
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_group_tag_category()
+    {
+        $oldTagCategory = factory(GroupTagCategory::class)->create();
+        $newTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTag = factory(GroupTag::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'tag_category_id' => $oldTagCategory->id()
+        ]);
+        $this->assertEquals('TagCategoryName', $groupTag->name());
+        $this->assertEquals('TagCategoryDesc', $groupTag->description());
+        $this->assertEquals('ref', $groupTag->reference());
+        $this->assertEquals($oldTagCategory->id(), $groupTag->categoryId());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
+        $updatedGroupTag = $repository->update($groupTag->id(), 'TagCategoryName2', 'TagCategoryDesc2', 'ref2', $newTagCategory->id());
+
+        $this->assertEquals('TagCategoryName2', $updatedGroupTag->name());
+        $this->assertEquals('TagCategoryDesc2', $updatedGroupTag->description());
+        $this->assertEquals('ref2', $updatedGroupTag->reference());
+        $this->assertEquals($newTagCategory->id(), $updatedGroupTag->categoryId());
+    }
+    
 }

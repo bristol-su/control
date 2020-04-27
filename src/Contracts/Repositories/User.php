@@ -49,6 +49,15 @@ interface User
     public function delete(int $id): void;
 
     /**
+     * Update the user model
+     *
+     * @param int $id
+     * @param int $dataProviderId New data provider ID
+     * @return UserModel
+     */
+    public function update(int $id, int $dataProviderId): UserModel;
+    
+    /**
      * Paginate through all the users
      * 
      * @param int $page The page number to return

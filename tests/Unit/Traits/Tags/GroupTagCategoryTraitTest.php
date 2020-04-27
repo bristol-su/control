@@ -22,4 +22,45 @@ class GroupTagCategoryTraitTest extends TestCase
             $this->assertTrue($tag->is($tagsFromRelationship->shift()));
         }
     }
+
+    /** @test */
+    public function setName_updates_the_group_tag_category_name()
+    {
+        $groupTagCategory = factory(GroupTagCategory::class)->create();
+
+        $groupTagCategoryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory::class);
+        $groupTagCategoryRepository->update($groupTagCategory->id(), 'NewName', $groupTagCategory->description(), $groupTagCategory->reference())
+            ->shouldBeCalled()->willReturn($groupTagCategory);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory::class, $groupTagCategoryRepository->reveal());
+
+        $groupTagCategory->setName('NewName');
+    }
+
+    /** @test */
+    public function setDescription_updates_the_group_tag_category_description()
+    {
+        $groupTagCategory = factory(GroupTagCategory::class)->create();
+
+        $groupTagCategoryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory::class);
+        $groupTagCategoryRepository->update($groupTagCategory->id(), $groupTagCategory->name(), 'NewDescription', $groupTagCategory->reference())
+            ->shouldBeCalled()->willReturn($groupTagCategory);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory::class, $groupTagCategoryRepository->reveal());
+
+        $groupTagCategory->setDescription('NewDescription');
+    }
+
+    /** @test */
+    public function setReference_updates_the_group_tag_category_reference()
+    {
+        $groupTagCategory = factory(GroupTagCategory::class)->create();
+
+        $groupTagCategoryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory::class);
+        $groupTagCategoryRepository->update($groupTagCategory->id(), $groupTagCategory->name(), $groupTagCategory->description(), 'NewReference')
+            ->shouldBeCalled()->willReturn($groupTagCategory);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTagCategory::class, $groupTagCategoryRepository->reveal());
+
+        $groupTagCategory->setReference('NewReference');
+    }
+    
+    
 }

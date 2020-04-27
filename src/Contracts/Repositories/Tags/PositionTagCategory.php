@@ -51,4 +51,15 @@ interface PositionTagCategory
      * @return PositionTagCategoryModel New position tag category
      */
     public function create(string $name, string $description, string $reference): PositionTagCategoryModel;
+
+    /**
+     * Update a position tag category
+     *
+     * @param int $id
+     * @param string $name Name of the position tag category
+     * @param string $description Description of the position tag category
+     * @param string $reference Reference of the position tag category
+     * @return PositionTagCategoryModel Updated position tag category
+     */
+    public function update(int $id, string $name, string $description, string $reference): PositionTagCategoryModel;
 }

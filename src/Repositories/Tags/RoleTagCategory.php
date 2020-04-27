@@ -72,4 +72,21 @@ class RoleTagCategory implements RoleTagCategoryContract
         $this->getById($id)->delete();
     }
 
+    /**
+     * Update a role tag category
+     *
+     * @param int $id
+     * @param string $name Name of the role tag category
+     * @param string $description Description of the role tag category
+     * @param string $reference Reference of the role tag category
+     * @return RoleTagCategoryModel Updated role tag category
+     */
+    public function update(int $id, string $name, string $description, string $reference): RoleTagCategoryModel
+    {
+        $roleTagCategory = $this->getById($id)->fill([
+            'name' => $name, 'description' => $description, 'reference' => $reference
+        ]);
+        $roleTagCategory->save();
+        return $roleTagCategory;
+    }
 }

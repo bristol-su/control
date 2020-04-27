@@ -54,6 +54,17 @@ interface Role
     public function delete(int $id): void;
 
     /**
+     * Update the role model
+     *
+     * @param int $id
+     * @param int $positionId
+     * @param int $groupId
+     * @param int $dataProviderId New data provider ID
+     * @return RoleModel
+     */
+    public function update(int $id, int $positionId, int $groupId, int $dataProviderId): RoleModel;
+    
+    /**
      * Get all roles that belong to the given group
      * 
      * @param \BristolSU\ControlDB\Contracts\Models\Group $group

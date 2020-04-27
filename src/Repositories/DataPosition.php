@@ -82,4 +82,21 @@ class DataPosition implements \BristolSU\ControlDB\Contracts\Repositories\DataPo
             return true;
         })->values();
     }
+
+    /**
+     * Update a data position with the given attributes
+     *
+     * @param int $id
+     * @param string|null $name Name of the position
+     * @param string|null $description Description of the position
+     * @return \BristolSU\ControlDB\Contracts\Models\DataPosition
+     */
+    public function update(int $id, ?string $name = null, ?string $description = null): \BristolSU\ControlDB\Contracts\Models\DataPosition
+    {
+        $dataPosition = $this->getById($id)->fill([
+            'name' => $name, 'description' => $description
+        ]);  
+        $dataPosition->save();
+        return $dataPosition;
+    }
 }
