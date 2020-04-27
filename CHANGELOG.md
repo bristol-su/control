@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1] - (27/04/2020)
+
 ### Added
 - Repositories to cache all get repository calls
 - Observer framework for repositories
@@ -142,7 +144,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - model/repository contracts
 
 
-[Unreleased]: https://github.com/bristol-su/control/compare/v2.0...HEAD
+[Unreleased]: https://github.com/bristol-su/control/compare/v2.1...HEAD
+[2.1]: https://github.com/bristol-su/control/compare/v2.0...v2.1
 [2.0]: https://github.com/bristol-su/control/compare/v1.3.0...v2.0
 [1.3.0]: https://github.com/bristol-su/control/compare/v1.2.4...v1.3.0
 [1.2.4]: https://github.com/bristol-su/control/compare/v1.2.3...v1.2.4
