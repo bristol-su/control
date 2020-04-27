@@ -45,7 +45,7 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
      * @var array 
      */
     protected $casts = [
-        'dob' => 'date:d-m-Y'
+        'dob' => 'datetime'
     ];
     
     /**

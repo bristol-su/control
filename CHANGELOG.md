@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.1] - (27/04/2020)
+
+### Changed
+- Return date format of Y-m-d h:i:s for data user date of birth
+
 ## [2.1] - (27/04/2020)
 
 ### Added
@@ -145,6 +150,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 [Unreleased]: https://github.com/bristol-su/control/compare/v2.1...HEAD
+[2.1.1]: https://github.com/bristol-su/control/compare/v2.1...v2.1.1
 [2.1]: https://github.com/bristol-su/control/compare/v2.0...v2.1
 [2.0]: https://github.com/bristol-su/control/compare/v1.3.0...v2.0
 [1.3.0]: https://github.com/bristol-su/control/compare/v1.2.4...v1.3.0
