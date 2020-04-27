@@ -203,4 +203,18 @@ class UserTraitTest extends TestCase
             ]);
         }
     }
+
+    /** @test */
+    public function setDataProviderId_updates_the_data_provider_id()
+    {
+        $oldDataUser = factory(DataUser::class)->create();
+        $newDataUser = factory(DataUser::class)->create();
+        $user = factory(User::class)->create(['data_provider_id' => $oldDataUser->id()]);
+
+        $userRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\User::class);
+        $userRepo->update($user->id(), $newDataUser->id())->shouldBeCalled()->willReturn($user);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\User::class, $userRepo->reveal());
+
+        $user->setDataProviderId($newDataUser->id());
+    }
 }

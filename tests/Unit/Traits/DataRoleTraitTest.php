@@ -22,4 +22,26 @@ class DataRoleTraitTest extends TestCase
         $dataRole = factory(DataRole::class)->create();
         $this->assertNull($dataRole->role());
     }
+
+    /** @test */
+    public function setRoleName_updates_the_roleName()
+    {
+        $dataRole = factory(DataRole::class)->create(['email' => 'email@example.com']);
+        $dataRoleRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\DataRole::class);
+        $dataRoleRepo->update($dataRole->id(), 'NewRoleName', 'email@example.com')->shouldBeCalled()->willReturn($dataRole);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\DataRole::class, $dataRoleRepo->reveal());
+
+        $dataRole->setRoleName('NewRoleName');
+    }
+
+    /** @test */
+    public function setEmail_updates_the_email()
+    {
+        $dataRole = factory(DataRole::class)->create(['role_name' => 'roleName1']);
+        $dataRoleRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\DataRole::class);
+        $dataRoleRepo->update($dataRole->id(), 'roleName1', 'email2@example.com')->shouldBeCalled()->willReturn($dataRole);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\DataRole::class, $dataRoleRepo->reveal());
+
+        $dataRole->setEmail('email2@example.com');
+    }
 }

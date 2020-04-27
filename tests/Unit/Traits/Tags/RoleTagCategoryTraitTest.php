@@ -22,4 +22,43 @@ class RoleTagCategoryTraitTest extends TestCase
             $this->assertTrue($tag->is($tagsFromRelationship->shift()));
         }
     }
+
+    /** @test */
+    public function setName_updates_the_role_tag_category_name()
+    {
+        $roleTagCategory = factory(RoleTagCategory::class)->create();
+
+        $roleTagCategooryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory::class);
+        $roleTagCategooryRepository->update($roleTagCategory->id(), 'NewName', $roleTagCategory->description(), $roleTagCategory->reference())
+            ->shouldBeCalled()->willReturn($roleTagCategory);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory::class, $roleTagCategooryRepository->reveal());
+
+        $roleTagCategory->setName('NewName');
+    }
+
+    /** @test */
+    public function setDescription_updates_the_role_tag_category_description()
+    {
+        $roleTagCategory = factory(RoleTagCategory::class)->create();
+
+        $roleTagCategooryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory::class);
+        $roleTagCategooryRepository->update($roleTagCategory->id(), $roleTagCategory->name(), 'NewDescription', $roleTagCategory->reference())
+            ->shouldBeCalled()->willReturn($roleTagCategory);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory::class, $roleTagCategooryRepository->reveal());
+
+        $roleTagCategory->setDescription('NewDescription');
+    }
+
+    /** @test */
+    public function setReference_updates_the_role_tag_category_reference()
+    {
+        $roleTagCategory = factory(RoleTagCategory::class)->create();
+
+        $roleTagCategooryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory::class);
+        $roleTagCategooryRepository->update($roleTagCategory->id(), $roleTagCategory->name(), $roleTagCategory->description(), 'NewReference')
+            ->shouldBeCalled()->willReturn($roleTagCategory);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTagCategory::class, $roleTagCategooryRepository->reveal());
+
+        $roleTagCategory->setReference('NewReference');
+    }
 }

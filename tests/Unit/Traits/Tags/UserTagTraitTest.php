@@ -90,4 +90,58 @@ class UserTagTraitTest extends TestCase
         $this->assertEquals('categoryreference1.tagreference1', $userTag->fullReference());
     }
 
+
+    /** @test */
+    public function setName_updates_the_user_tag_name()
+    {
+        $userTag = factory(UserTag::class)->create();
+
+        $userTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class);
+        $userTagRepository->update($userTag->id(), 'NewName', $userTag->description(), $userTag->reference(), $userTag->categoryId())
+            ->shouldBeCalled()->willReturn($userTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class, $userTagRepository->reveal());
+
+        $userTag->setName('NewName');
+    }
+
+    /** @test */
+    public function setDescription_updates_the_user_tag_description()
+    {
+        $userTag = factory(UserTag::class)->create();
+
+        $userTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class);
+        $userTagRepository->update($userTag->id(), $userTag->name(), 'NewDescription', $userTag->reference(), $userTag->categoryId())
+            ->shouldBeCalled()->willReturn($userTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class, $userTagRepository->reveal());
+
+        $userTag->setDescription('NewDescription');
+    }
+
+    /** @test */
+    public function setReference_updates_the_user_tag_reference()
+    {
+        $userTag = factory(UserTag::class)->create();
+
+        $userTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class);
+        $userTagRepository->update($userTag->id(), $userTag->name(), $userTag->description(), 'NewReference', $userTag->categoryId())
+            ->shouldBeCalled()->willReturn($userTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class, $userTagRepository->reveal());
+
+        $userTag->setReference('NewReference');
+    }
+
+    /** @test */
+    public function setTagCategoryId_updates_the_user_tag_category_id()
+    {
+        $userTag = factory(UserTag::class)->create();
+        $userTagCategory = factory(UserTagCategory::class)->create();
+
+        $userTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class);
+        $userTagRepository->update($userTag->id(), $userTag->name(), $userTag->description(), $userTag->reference(), $userTagCategory->id())
+            ->shouldBeCalled()->willReturn($userTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class, $userTagRepository->reveal());
+
+        $userTag->setTagCategoryId($userTagCategory->id());
+    }
+    
 }

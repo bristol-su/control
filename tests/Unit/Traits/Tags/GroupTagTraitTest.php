@@ -90,4 +90,57 @@ class GroupTagTraitTest extends TestCase
         $this->assertEquals('categoryreference1.tagreference1', $groupTag->fullReference());
     }
 
+    /** @test */
+    public function setName_updates_the_group_tag_name()
+    {
+        $groupTag = factory(GroupTag::class)->create();
+
+        $groupTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag::class);
+        $groupTagRepository->update($groupTag->id(), 'NewName', $groupTag->description(), $groupTag->reference(), $groupTag->categoryId())
+            ->shouldBeCalled()->willReturn($groupTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag::class, $groupTagRepository->reveal());
+
+        $groupTag->setName('NewName');
+    }
+
+    /** @test */
+    public function setDescription_updates_the_group_tag_description()
+    {
+        $groupTag = factory(GroupTag::class)->create();
+
+        $groupTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag::class);
+        $groupTagRepository->update($groupTag->id(), $groupTag->name(), 'NewDescription', $groupTag->reference(), $groupTag->categoryId())
+            ->shouldBeCalled()->willReturn($groupTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag::class, $groupTagRepository->reveal());
+
+        $groupTag->setDescription('NewDescription');
+    }
+
+    /** @test */
+    public function setReference_updates_the_group_tag_reference()
+    {
+        $groupTag = factory(GroupTag::class)->create();
+
+        $groupTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag::class);
+        $groupTagRepository->update($groupTag->id(), $groupTag->name(), $groupTag->description(), 'NewReference', $groupTag->categoryId())
+            ->shouldBeCalled()->willReturn($groupTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag::class, $groupTagRepository->reveal());
+
+        $groupTag->setReference('NewReference');
+    }
+
+    /** @test */
+    public function setTagCategoryId_updates_the_group_tag_category_id()
+    {
+        $groupTag = factory(GroupTag::class)->create();
+        $groupTagCategory = factory(GroupTagCategory::class)->create();
+
+        $groupTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag::class);
+        $groupTagRepository->update($groupTag->id(), $groupTag->name(), $groupTag->description(), $groupTag->reference(), $groupTagCategory->id())
+            ->shouldBeCalled()->willReturn($groupTag);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag::class, $groupTagRepository->reveal());
+
+        $groupTag->setTagCategoryId($groupTagCategory->id());
+    }
+
 }

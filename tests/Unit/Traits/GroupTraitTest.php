@@ -155,5 +155,19 @@ class GroupTraitTest extends TestCase
             ]);
         }
     }
+
+    /** @test */
+    public function setDataProviderId_updates_the_data_provider_id()
+    {
+        $oldDataGroup = factory(DataGroup::class)->create();
+        $newDataGroup = factory(DataGroup::class)->create();
+        $group = factory(Group::class)->create(['data_provider_id' => $oldDataGroup->id()]);
+        
+        $groupRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Group::class);
+        $groupRepo->update($group->id(), $newDataGroup->id())->shouldBeCalled()->willReturn($group);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Group::class, $groupRepo->reveal());
+
+        $group->setDataProviderId($newDataGroup->id());
+    }
     
 }

@@ -18,8 +18,9 @@ class ObserverStore
     public function detach($notifier, $observer): void
     {
         if (array_key_exists($notifier, $this->observers)) {
-            if (array_key_exists($observer, $this->observers[$notifier])) {
-                unset($this->observers[$notifier][$observer]);
+            if (($key = array_search($observer, $this->observers[$notifier])) !== false) {
+                unset($this->observers[$notifier][$key]);
+                $this->observers[$notifier] = array_values($this->observers[$notifier]);
             }
         }
     }

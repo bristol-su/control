@@ -92,5 +92,59 @@ class UserTagCategoryTest extends TestCase
         $this->assertTrue($userTagCategory->trashed());
     }
 
+    /** @test */
+    public function update_updates_a_user_tag_category()
+    {
+        $userTagCategory = factory(UserTagCategory::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+        ]);
+        $this->assertDatabaseHas('control_tag_categories', [
+            'id' => $userTagCategory->id(),
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'type' => 'user'
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
+        $repository->update($userTagCategory->id(), 'TagCategoryName2',  'TagCategoryDesc2', 'ref2');
+        $this->assertDatabaseMissing('control_tag_categories', [
+            'id' => $userTagCategory->id(),
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'type' => 'user'
+        ]);
+        $this->assertDatabaseHas('control_tag_categories', [
+            'id' => $userTagCategory->id(),
+            'name' => 'TagCategoryName2',
+            'description' => 'TagCategoryDesc2',
+            'reference' => 'ref2',
+            'type' => 'user'
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_user_tag_category()
+    {
+        $userTagCategory = factory(UserTagCategory::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+        ]);
+        $this->assertEquals('TagCategoryName', $userTagCategory->name());
+        $this->assertEquals('TagCategoryDesc', $userTagCategory->description());
+        $this->assertEquals('ref', $userTagCategory->reference());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
+        $updatedUserTagCategory = $repository->update($userTagCategory->id(), 'TagCategoryName2', 'TagCategoryDesc2', 'ref2');
+
+        $this->assertEquals('TagCategoryName2', $updatedUserTagCategory->name());
+        $this->assertEquals('TagCategoryDesc2', $updatedUserTagCategory->description());
+        $this->assertEquals('ref2', $updatedUserTagCategory->reference());
+
+    }
 
 }

@@ -93,4 +93,58 @@ class GroupTagCategoryTest extends TestCase
         $this->assertTrue($groupTagCategory->trashed());
     }
 
+    /** @test */
+    public function update_updates_a_group_tag_category()
+    {
+        $groupTagCategory = factory(GroupTagCategory::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+        ]);
+        $this->assertDatabaseHas('control_tag_categories', [
+            'id' => $groupTagCategory->id(),
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'type' => 'group'
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\GroupTagCategory();
+        $repository->update($groupTagCategory->id(), 'TagCategoryName2',  'TagCategoryDesc2', 'ref2');
+        $this->assertDatabaseMissing('control_tag_categories', [
+            'id' => $groupTagCategory->id(),
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'type' => 'group'
+        ]);
+        $this->assertDatabaseHas('control_tag_categories', [
+            'id' => $groupTagCategory->id(),
+            'name' => 'TagCategoryName2',
+            'description' => 'TagCategoryDesc2',
+            'reference' => 'ref2',
+            'type' => 'group'
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_group_tag_category()
+    {
+        $groupTagCategory = factory(GroupTagCategory::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+        ]);
+        $this->assertEquals('TagCategoryName', $groupTagCategory->name());
+        $this->assertEquals('TagCategoryDesc', $groupTagCategory->description());
+        $this->assertEquals('ref', $groupTagCategory->reference());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\GroupTagCategory();
+        $updatedGroupTagCategory = $repository->update($groupTagCategory->id(), 'TagCategoryName2', 'TagCategoryDesc2', 'ref2');
+
+        $this->assertEquals('TagCategoryName2', $updatedGroupTagCategory->name());
+        $this->assertEquals('TagCategoryDesc2', $updatedGroupTagCategory->description());
+        $this->assertEquals('ref2', $updatedGroupTagCategory->reference());
+
+    }
 }

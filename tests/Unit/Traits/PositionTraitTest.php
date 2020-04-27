@@ -97,4 +97,18 @@ class PositionTraitTest extends TestCase
         }
     }
 
+    /** @test */
+    public function setDataProviderId_updates_the_data_provider_id()
+    {
+        $oldDataPosition = factory(DataPosition::class)->create();
+        $newDataPosition = factory(DataPosition::class)->create();
+        $position = factory(Position::class)->create(['data_provider_id' => $oldDataPosition->id()]);
+
+        $positionRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Position::class);
+        $positionRepo->update($position->id(), $newDataPosition->id())->shouldBeCalled()->willReturn($position);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Position::class, $positionRepo->reveal());
+
+        $position->setDataProviderId($newDataPosition->id());
+    }
+    
 }

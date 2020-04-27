@@ -23,4 +23,43 @@ class UserTagCategoryTraitTest extends TestCase
             $this->assertTrue($tag->is($tagsFromRelationship->shift()));
         }
     }
+
+    /** @test */
+    public function setName_updates_the_user_tag_category_name()
+    {
+        $userTagCategory = factory(UserTagCategory::class)->create();
+
+        $userTagCategooryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class);
+        $userTagCategooryRepository->update($userTagCategory->id(), 'NewName', $userTagCategory->description(), $userTagCategory->reference())
+            ->shouldBeCalled()->willReturn($userTagCategory);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class, $userTagCategooryRepository->reveal());
+
+        $userTagCategory->setName('NewName');
+    }
+
+    /** @test */
+    public function setDescription_updates_the_user_tag_category_description()
+    {
+        $userTagCategory = factory(UserTagCategory::class)->create();
+
+        $userTagCategooryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class);
+        $userTagCategooryRepository->update($userTagCategory->id(), $userTagCategory->name(), 'NewDescription', $userTagCategory->reference())
+            ->shouldBeCalled()->willReturn($userTagCategory);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class, $userTagCategooryRepository->reveal());
+
+        $userTagCategory->setDescription('NewDescription');
+    }
+
+    /** @test */
+    public function setReference_updates_the_user_tag_category_reference()
+    {
+        $userTagCategory = factory(UserTagCategory::class)->create();
+
+        $userTagCategooryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class);
+        $userTagCategooryRepository->update($userTagCategory->id(), $userTagCategory->name(), $userTagCategory->description(), 'NewReference')
+            ->shouldBeCalled()->willReturn($userTagCategory);
+        $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class, $userTagCategooryRepository->reveal());
+
+        $userTagCategory->setReference('NewReference');
+    }
 }

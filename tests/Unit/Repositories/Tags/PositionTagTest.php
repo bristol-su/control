@@ -112,4 +112,66 @@ class PositionTagTest extends TestCase
             ));
         }
     }
+
+    /** @test */
+    public function update_updates_a_position_tag_category()
+    {
+        $oldTagCategory = factory(PositionTagCategory::class)->create();
+        $newTagCategory = factory(PositionTagCategory::class)->create();
+        $positionTag = factory(PositionTag::class)->create([
+            'name' => 'TagName',
+            'description' => 'TagDesc',
+            'reference' => 'ref',
+            'tag_category_id' => $oldTagCategory->id
+        ]);
+        $this->assertDatabaseHas('control_tags', [
+            'id' => $positionTag->id(),
+            'name' => 'TagName',
+            'description' => 'TagDesc',
+            'reference' => 'ref',
+            'tag_category_id' => (string) $oldTagCategory->id,
+        ]);
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
+        $repository->update($positionTag->id(), 'TagName2',  'TagDesc2', 'ref2', $newTagCategory->id());
+        $this->assertDatabaseMissing('control_tags', [
+            'id' => $positionTag->id(),
+            'name' => 'TagName',
+            'description' => 'TagDesc',
+            'reference' => 'ref',
+            'tag_category_id' => (string) $oldTagCategory->id,
+        ]);
+        $this->assertDatabaseHas('control_tags', [
+            'id' => $positionTag->id(),
+            'name' => 'TagName2',
+            'description' => 'TagDesc2',
+            'reference' => 'ref2',
+            'tag_category_id' => (string) $newTagCategory->id,
+        ]);
+
+    }
+
+    /** @test */
+    public function update_returns_the_updated_position_tag_category()
+    {
+        $oldTagCategory = factory(PositionTagCategory::class)->create();
+        $newTagCategory = factory(PositionTagCategory::class)->create();
+        $positionTag = factory(PositionTag::class)->create([
+            'name' => 'TagCategoryName',
+            'description' => 'TagCategoryDesc',
+            'reference' => 'ref',
+            'tag_category_id' => $oldTagCategory->id()
+        ]);
+        $this->assertEquals('TagCategoryName', $positionTag->name());
+        $this->assertEquals('TagCategoryDesc', $positionTag->description());
+        $this->assertEquals('ref', $positionTag->reference());
+        $this->assertEquals($oldTagCategory->id(), $positionTag->categoryId());
+
+        $repository = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
+        $updatedPositionTag = $repository->update($positionTag->id(), 'TagCategoryName2', 'TagCategoryDesc2', 'ref2', $newTagCategory->id());
+
+        $this->assertEquals('TagCategoryName2', $updatedPositionTag->name());
+        $this->assertEquals('TagCategoryDesc2', $updatedPositionTag->description());
+        $this->assertEquals('ref2', $updatedPositionTag->reference());
+        $this->assertEquals($newTagCategory->id(), $updatedPositionTag->categoryId());
+    }
 }
