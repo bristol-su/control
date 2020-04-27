@@ -107,7 +107,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function a_dob_can_be_retrieved_from_the_model()
     {
-        $dob = Carbon::now()->subYears(22);
+        $dob = Carbon::create(1902, 12, 22, 00, 00, 00);
         $dataUser = factory(DataUser::class)->create([
             'dob' => $dob
         ]);

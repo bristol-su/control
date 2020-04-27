@@ -69,7 +69,7 @@ class UserControllerTest extends TestCase
         ]);
 
         $response->assertJsonFragment([
-            'first_name' => 'Jayne', 'last_name' => 'Smith', 'email' => 'email2@email.com', 'dob' => '14-02-1910', 'preferred_name' => 'Jack'
+            'first_name' => 'Jayne', 'last_name' => 'Smith', 'email' => 'email2@email.com', 'dob' => '1910-02-14 00:00:00', 'preferred_name' => 'Jack'
         ]);
 
         $this->assertDatabaseHas('control_data_user', [
@@ -90,7 +90,7 @@ class UserControllerTest extends TestCase
         $response->assertStatus(201);
 
         $response->assertJsonFragment([
-            'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '14-02-1908', 'preferred_name' => 'JJ'
+            'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '1908-02-14 00:00:00', 'preferred_name' => 'JJ'
         ]);
 
         $this->assertDatabaseHas('control_data_user', [
@@ -142,7 +142,7 @@ class UserControllerTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJsonFragment([
-            'first_name' => 'Jayne', 'last_name' => 'Smith', 'email' => 'email2@email.com', 'dob' => '14-02-1910', 'preferred_name' => 'Jack', 'student_id' => 'xyz789'
+            'first_name' => 'Jayne', 'last_name' => 'Smith', 'email' => 'email2@email.com', 'dob' => '1910-02-14 00:00:00', 'preferred_name' => 'Jack', 'student_id' => 'xyz789'
         ]);
 
         $this->assertDatabaseHas('control_data_user', [
@@ -164,7 +164,7 @@ class UserControllerTest extends TestCase
         $response->assertStatus(201);
 
         $response->assertJsonFragment([
-            'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '14-02-1908', 'preferred_name' => 'JJ', 'student_id' => 'xyz1234'
+            'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '1908-02-14 00:00:00', 'preferred_name' => 'JJ', 'student_id' => 'xyz1234'
         ]);
 
         $this->assertDatabaseHas('control_data_user', [
