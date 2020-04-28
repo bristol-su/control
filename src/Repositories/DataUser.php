@@ -75,7 +75,7 @@ class DataUser implements \BristolSU\ControlDB\Contracts\Repositories\DataUser
         }
         return \BristolSU\ControlDB\Models\DataUser::where(function($query) use ($baseAttributes) {
             foreach($baseAttributes as $key => $value) {
-                $query = $query->orWhere($key, 'LIKE', '%' . $value . '%');
+                $query = $query->where($key, 'LIKE', '%' . $value . '%');
             }
             return $query;
         })->get()->filter(function (\BristolSU\ControlDB\Models\DataUser $dataUser) use ($additionalAttributes) {

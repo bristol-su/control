@@ -42,6 +42,42 @@ class DataGroupTest extends TestCase
     }
 
     /** @test */
+    public function getAllWhere_returns_models_matching_all_base_attributes()
+    {
+        $attributes = ['email' => 'email@email.com', 'name' => 'Toby'];
+
+        $dataGroups = factory(DataGroup::class, 2)->create($attributes);
+        $otherGroups = factory(DataGroup::class, 2)->create(['email' => 'email@email.com', 'name' => 'Tobasy']);
+        $otherGroups2 = factory(DataGroup::class, 2)->create(['email' => 'email2@email.com', 'name' => 'Toby']);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
+        $dbDataGroup = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(2, $dbDataGroup->count());
+        $this->assertTrue($dataGroups[0]->is($dbDataGroup[0]));
+        $this->assertTrue($dataGroups[1]->is($dbDataGroup[1]));
+    }
+
+    /** @test */
+    public function getAllWhere_returns_fields_containing()
+    {
+        $attributes = ['email' => 'email@email.com', 'name' => 'Toby'];
+
+        $dataGroups = factory(DataGroup::class, 2)->create($attributes);
+        $otherGroups = factory(DataGroup::class, 2)->create(['email' => 'email@email.com', 'name' => 'Toby2']);
+        $otherGroups2 = factory(DataGroup::class, 2)->create(['email' => 'email2@email.com', 'name' => 'Toby']);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
+        $dbDataGroup = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(4, $dbDataGroup->count());
+        $this->assertTrue($dataGroups[0]->is($dbDataGroup[0]));
+        $this->assertTrue($dataGroups[1]->is($dbDataGroup[1]));
+        $this->assertTrue($otherGroups[0]->is($dbDataGroup[2]));
+        $this->assertTrue($otherGroups[1]->is($dbDataGroup[3]));
+    }
+
+    /** @test */
     public function getWhere_throws_a_ModelNotFoundException_if_a_data_group_is_not_found(){
         $this->expectException(ModelNotFoundException::class);
         

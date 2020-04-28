@@ -49,6 +49,41 @@ class DataUserTest extends TestCase
     }
 
     /** @test */
+    public function getAllWhere_returns_models_matching_all_base_attributes()
+    {
+        $attributes = ['email' => 'email@email.com', 'first_name' => 'Toby'];
+
+        $dataUsers = factory(DataUser::class, 2)->create($attributes);
+        $otherUsers = factory(DataUser::class, 2)->create(['email' => 'email@email.com', 'first_name' => 'Tobasy']);
+        $otherUsers2 = factory(DataUser::class, 2)->create(['email' => 'email2@email.com', 'first_name' => 'Tobasy']);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataUser();
+        $dbDataUser = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(2, $dbDataUser->count());
+        $this->assertTrue($dataUsers[0]->is($dbDataUser[0]));
+        $this->assertTrue($dataUsers[1]->is($dbDataUser[1]));
+    }
+    
+    /** @test */
+    public function getAllWhere_matches_fields_containing(){
+        $attributes = ['email' => 'email@email.com', 'first_name' => 'Toby'];
+
+        $dataUsers = factory(DataUser::class, 2)->create($attributes);
+        $otherUsers = factory(DataUser::class, 2)->create(['email' => 'email@email.com', 'first_name' => 'Toby2']);
+        $otherUsers2 = factory(DataUser::class, 2)->create(['email' => 'email2@email.com', 'first_name' => 'Tobasy']);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataUser();
+        $dbDataUser = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(4, $dbDataUser->count());
+        $this->assertTrue($dataUsers[0]->is($dbDataUser[0]));
+        $this->assertTrue($dataUsers[1]->is($dbDataUser[1]));
+        $this->assertTrue($otherUsers[0]->is($dbDataUser[2]));
+        $this->assertTrue($otherUsers[1]->is($dbDataUser[3]));
+    }
+
+    /** @test */
     public function getWhere_returns_the_first_model_matching_the_attributes()
     {
         $attributes = ['email' => 'email@email.com'];

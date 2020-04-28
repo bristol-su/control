@@ -68,7 +68,7 @@ class DataGroup implements \BristolSU\ControlDB\Contracts\Repositories\DataGroup
         }
         return \BristolSU\ControlDB\Models\DataGroup::where(function($query) use ($baseAttributes) {
             foreach($baseAttributes as $key => $value) {
-                $query = $query->orWhere($key, 'LIKE', '%' . $value . '%');
+                $query = $query->where($key, 'LIKE', '%' . $value . '%');
             }
             return $query;
         })->get()->filter(function (\BristolSU\ControlDB\Models\DataGroup $dataGroup) use ($additionalAttributes) {
