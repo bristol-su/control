@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.2] - (28/04/2020)
+
+### Fixed
+- DataUser::getAllWhere matched any base attributes not all base attributes
+- DataGroup::getAllWhere matched any base attributes not all base attributes
+- DataRole::getAllWhere matched any base attributes not all base attributes
+- DataPosition::getAllWhere matched any base attributes not all base attributes
+
 ## [2.1.1] - (27/04/2020)
 
 ### Changed
@@ -149,7 +157,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - model/repository contracts
 
 
-[Unreleased]: https://github.com/bristol-su/control/compare/v2.1...HEAD
+[Unreleased]: https://github.com/bristol-su/control/compare/v2.1.2...HEAD
+[2.1.2]: https://github.com/bristol-su/control/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/bristol-su/control/compare/v2.1...v2.1.1
 [2.1]: https://github.com/bristol-su/control/compare/v2.0...v2.1
 [2.0]: https://github.com/bristol-su/control/compare/v1.3.0...v2.0

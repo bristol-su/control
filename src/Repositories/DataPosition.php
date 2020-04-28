@@ -70,7 +70,7 @@ class DataPosition implements \BristolSU\ControlDB\Contracts\Repositories\DataPo
         }
         return \BristolSU\ControlDB\Models\DataPosition::where(function($query) use ($baseAttributes) {
             foreach($baseAttributes as $key => $value) {
-                $query = $query->orWhere($key, 'LIKE', '%' . $value . '%');
+                $query = $query->where($key, 'LIKE', '%' . $value . '%');
             }
             return $query;
         })->get()->filter(function (\BristolSU\ControlDB\Models\DataPosition $dataPosition) use ($additionalAttributes) {

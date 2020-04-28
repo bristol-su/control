@@ -52,7 +52,43 @@ class DataRoleTest extends TestCase
         $repository = new \BristolSU\ControlDB\Repositories\DataRole();
         $dbDataRole = $repository->getWhere($attributes);
     }
-    
+
+    /** @test */
+    public function getAllWhere_returns_models_matching_all_base_attributes()
+    {
+        $attributes = ['email' => 'email@email.com', 'role_name' => 'Toby'];
+
+        $dataRoles = factory(DataRole::class, 2)->create($attributes);
+        $otherRoles = factory(DataRole::class, 2)->create(['email' => 'email@email.com', 'role_name' => 'Tobasy']);
+        $otherRoles2 = factory(DataRole::class, 2)->create(['email' => 'email2@email.com', 'role_name' => 'Toby']);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataRole();
+        $dbDataRole = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(2, $dbDataRole->count());
+        $this->assertTrue($dataRoles[0]->is($dbDataRole[0]));
+        $this->assertTrue($dataRoles[1]->is($dbDataRole[1]));
+    }
+
+    /** @test */
+    public function getAllWhere_matches_fields_containing()
+    {
+        $attributes = ['email' => 'email@email.com', 'role_name' => 'Toby'];
+
+        $dataRoles = factory(DataRole::class, 2)->create($attributes);
+        $otherRoles = factory(DataRole::class, 2)->create(['email' => 'email@email.com', 'role_name' => 'Toby2']);
+        $otherRoles2 = factory(DataRole::class, 2)->create(['email' => 'email2@email.com', 'role_name' => 'Toby']);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataRole();
+        $dbDataRole = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(4, $dbDataRole->count());
+        $this->assertTrue($dataRoles[0]->is($dbDataRole[0]));
+        $this->assertTrue($dataRoles[1]->is($dbDataRole[1]));
+        $this->assertTrue($otherRoles[0]->is($dbDataRole[2]));
+        $this->assertTrue($otherRoles[1]->is($dbDataRole[3]));
+    }
+
     /** @test */
     public function create_creates_a_new_data_role(){
         $repository = new \BristolSU\ControlDB\Repositories\DataRole();

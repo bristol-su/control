@@ -42,6 +42,42 @@ class DataPositionTest extends TestCase
     }
 
     /** @test */
+    public function getAllWhere_returns_models_matching_all_base_attributes()
+    {
+        $attributes = ['description' => 'desc', 'name' => 'Toby'];
+
+        $dataPositions = factory(DataPosition::class, 2)->create($attributes);
+        $otherPositions = factory(DataPosition::class, 2)->create(['description' => 'desc', 'name' => 'Tobasy']);
+        $otherPositions2 = factory(DataPosition::class, 2)->create(['description' => 'des2c', 'name' => 'Toby']);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
+        $dbDataPosition = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(2, $dbDataPosition->count());
+        $this->assertTrue($dataPositions[0]->is($dbDataPosition[0]));
+        $this->assertTrue($dataPositions[1]->is($dbDataPosition[1]));
+    }
+
+    /** @test */
+    public function getAllWhere_matches_fields_containing()
+    {
+        $attributes = ['description' => 'desc', 'name' => 'Toby'];
+
+        $dataPositions = factory(DataPosition::class, 2)->create($attributes);
+        $otherPositions = factory(DataPosition::class, 2)->create(['description' => 'desc', 'name' => 'Toby2']);
+        $otherPositions2 = factory(DataPosition::class, 2)->create(['description' => 'des2c', 'name' => 'Toby']);
+
+        $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
+        $dbDataPosition = $repository->getAllWhere($attributes);
+
+        $this->assertEquals(4, $dbDataPosition->count());
+        $this->assertTrue($dataPositions[0]->is($dbDataPosition[0]));
+        $this->assertTrue($dataPositions[1]->is($dbDataPosition[1]));
+        $this->assertTrue($otherPositions[0]->is($dbDataPosition[2]));
+        $this->assertTrue($otherPositions[1]->is($dbDataPosition[3]));
+    }
+
+    /** @test */
     public function getWhere_throws_a_ModelNotFoundException_if_a_data_position_is_not_found(){
         $this->expectException(ModelNotFoundException::class);
         
