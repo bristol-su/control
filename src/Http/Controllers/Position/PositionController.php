@@ -100,16 +100,15 @@ class PositionController extends Controller
      * @param DataPositionRepository $dataPositionRepository
      * @return Position
      */
-    public function update(Position $position, UpdatePositionRequest $request, PositionRepository $positionRepository, DataPositionRepository $dataPositionRepository)
+    public function update(Position $position, UpdatePositionRequest $request, DataPositionRepository $dataPositionRepository)
     {
         $dataPosition = $position->data();
-
-        if($request->input('name') !== null) {
-            $dataPosition->setName($request->input('name'));
-        }
-        if($request->input('description') !== null) {
-            $dataPosition->setDescription($request->input('description'));
-        }
+        $dataPositionRepository->update(
+            $dataPosition->id(),
+            $request->input('name', $dataPosition->name()),
+            $request->input('description', $dataPosition->description())
+        );
+        
         foreach($dataPosition->getAdditionalAttributes() as $additionalAttribute) {
             if($request->has($additionalAttribute)) {
                 $dataPosition->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
