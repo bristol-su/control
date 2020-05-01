@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.3] - (01/05/2020)
+
+### Changed
+- Passing null to DataUserController::update sets a field to null
+- Passing null to DataGroupController::update sets a field to null
+- Passing null to DataRoleController::update sets a field to null
+- Passing null to DataPositionController::update sets a field to null
+
+### Fixed
+- DataUserNotify notified create method on updating
+
 ## [2.1.2] - (28/04/2020)
 
 ### Fixed
@@ -157,7 +168,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - model/repository contracts
 
 
-[Unreleased]: https://github.com/bristol-su/control/compare/v2.1.2...HEAD
+[Unreleased]: https://github.com/bristol-su/control/compare/v2.1.3...HEAD
+[2.1.3]: https://github.com/bristol-su/control/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/bristol-su/control/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/bristol-su/control/compare/v2.1...v2.1.1
 [2.1]: https://github.com/bristol-su/control/compare/v2.0...v2.1

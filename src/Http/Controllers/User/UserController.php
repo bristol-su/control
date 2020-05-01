@@ -112,29 +112,22 @@ class UserController extends Controller
     {
         $dataUser = $user->data();
 
-        if($request->input('first_name') !== null) {
-            $dataUser->setFirstName($request->input('first_name'));
-        }
-        if($request->input('last_name') !== null) {
-            $dataUser->setLastName($request->input('last_name'));
-        }
-        if($request->input('email') !== null) {
-            $dataUser->setEmail($request->input('email'));
-        }
-        if($request->input('dob') !== null) {
-            $dataUser->setDob(Carbon::make($request->input('dob')));
-        }
-        if($request->input('preferred_name') !== null) {
-            $dataUser->setPreferredName($request->input('preferred_name'));
-        }
-
+        $dataUserRepository->update(
+            $dataUser->id(),
+            $request->input('first_name', $dataUser->firstName()),
+            $request->input('last_name', $dataUser->lastName()),
+            $request->input('email', $dataUser->email()),
+            ($request->has('dob') ? Carbon::make($request->input('dob')) :  $dataUser->dob()),
+            $request->input('preferred_name', $dataUser->preferredName()),
+        );
+        
         foreach($dataUser->getAdditionalAttributes() as $additionalAttribute) {
             if($request->has($additionalAttribute)) {
                 $dataUser->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
             }
         }
 
-        return $user;
+        return $userRepository->getById($user->id());
     }
 
     /**

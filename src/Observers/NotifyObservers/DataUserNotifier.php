@@ -88,7 +88,7 @@ class DataUserNotifier extends Notifier implements DataUserRepository
     {
         $oldDataUser = $this->getById($id);
         $newDataUser = $this->dataUserRepository->update($id, $firstName, $lastName, $email, $dob, $preferredName);
-        $this->notify('create', $oldDataUser, $newDataUser);
+        $this->notify('update', $oldDataUser, $newDataUser);
         return $newDataUser;
     }
 }

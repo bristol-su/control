@@ -83,21 +83,19 @@ class RoleController extends Controller
     public function update(Role $role, UpdateRoleRequest $request, RoleRepository $roleRepository, DataRoleRepository $dataRoleRepository)
     {
         $dataRole = $role->data();
-
-        if($request->input('role_name') !== null) {
-            $dataRole->setRoleName($request->input('role_name'));
-        }
-        if($request->input('email') !== null) {
-            $dataRole->setEmail($request->input('email'));
-        }
-
-        if($request->input('position_id') !== null) {
-            $role->setPositionId($request->input('position_id'));
-        }
-
-        if($request->input('group_id') !== null) {
-            $role->setGroupId($request->input('group_id'));
-        }
+        
+        $dataRoleRepository->update(
+            $dataRole->id(),
+            $request->input('role_name', $dataRole->roleName()),
+            $request->input('email', $dataRole->email()),
+        );
+        
+        $roleRepository->update(
+            $role->id(),
+            $request->input('position_id', $role->positionId()),
+            $request->input('group_id', $role->groupId()),
+            $dataRole->id()
+        );
         
         foreach($dataRole->getAdditionalAttributes() as $additionalAttribute) {
             if($request->has($additionalAttribute)) {
@@ -105,7 +103,7 @@ class RoleController extends Controller
             }
         }
         
-        return $role;
+        return $roleRepository->getById($role->id());
     }
 
     /**

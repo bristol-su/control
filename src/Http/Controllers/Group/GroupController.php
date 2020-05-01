@@ -101,16 +101,15 @@ class GroupController extends Controller
      * @param StoreGroupRequest $request
      * @return Group
      */
-    public function update(Group $group, StoreGroupRequest $request)
+    public function update(Group $group, StoreGroupRequest $request, DataGroupRepository $dataGroupRepository)
     {
         $dataGroup = $group->data();
-        if($request->input('name') !== null) {
-            $dataGroup->setName($request->input('name'));
-        }
-        if($request->input('email') !== null) {
-            $dataGroup->setEmail($request->input('email'));
-        }
-
+        $dataGroupRepository->update(
+            $group->dataProviderId(),
+            $request->input('name', $dataGroup->name()),
+            $request->input('email', $dataGroup->email())
+        );
+        
         foreach($dataGroup->getAdditionalAttributes() as $additionalAttribute) {
             if($request->has($additionalAttribute)) {
                 $dataGroup->saveAdditionalAttribute($additionalAttribute, $request->input($additionalAttribute));
