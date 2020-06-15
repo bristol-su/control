@@ -2,6 +2,7 @@
 
 namespace BristolSU\ControlDB\Export;
 
+use BristolSU\ControlDB\Export\Handler\Airtable\AirtableHandler;
 use BristolSU\ControlDB\Export\Handler\DumpHandler;
 use BristolSU\ControlDB\Export\Handler\Handler;
 use BristolSU\ControlDB\Export\Handler\SaveCsvHandler;
@@ -163,6 +164,11 @@ class ExportManager
     public function createSaveCsvDriver(array $config)
     {
         return new SaveCsvHandler($config);
+    }
+
+    public function createAirtableDriver(array $config)
+    {
+        return new AirtableHandler($config);
     }
 
     protected function formatters()

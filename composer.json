@@ -10,8 +10,9 @@
         }
     ],
     "require": {
-        "php": "^7.3",
-        "ext-json": "*"
+        "php": "^7.4",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.5"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",

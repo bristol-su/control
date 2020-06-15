@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.4] - (15/06/2020)
+
+### Added
+- Added the Airtable export handler for exporting control
+
 ## [2.1.3] - (01/05/2020)
 
 ### Changed
@@ -168,7 +173,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - model/repository contracts
 
 
-[Unreleased]: https://github.com/bristol-su/control/compare/v2.1.3...HEAD
+[Unreleased]: https://github.com/bristol-su/control/compare/v2.1.4...HEAD
+[2.1.4]: https://github.com/bristol-su/control/compare/v2.1.3...v2.1.4
 [2.1.3]: https://github.com/bristol-su/control/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/bristol-su/control/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/bristol-su/control/compare/v2.1...v2.1.1
