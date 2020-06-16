@@ -166,11 +166,6 @@ class ExportManager
         return new SaveCsvHandler($config);
     }
 
-    public function createAirtableDriver(array $config)
-    {
-        return new AirtableHandler($config);
-    }
-
     protected function formatters()
     {
         return $this->formatters;
