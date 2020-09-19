@@ -59,6 +59,17 @@ class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contract
     }
 
     /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
+    /**
      * Name of the tag category
      *
      * @return string
@@ -120,5 +131,5 @@ class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contract
         $this->baseSetReference($reference);
         $this->refresh();
     }
-    
+
 }

@@ -49,6 +49,17 @@ class RoleTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
     ];
 
     /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
+    /**
      * ID of the tag category
      *
      * @return mixed
@@ -120,5 +131,5 @@ class RoleTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
         $this->baseSetReference($reference);
         $this->refresh();
     }
-    
+
 }

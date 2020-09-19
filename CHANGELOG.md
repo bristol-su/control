@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Upgrades to allow Laravel 8
+
 ## [2.1.3] - (01/05/2020)
 
 ### Changed

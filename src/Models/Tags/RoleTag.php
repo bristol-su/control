@@ -59,7 +59,18 @@ class RoleTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
     {
         return $this->fullReference();
     }
-    
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
     /**
      * ID of the role tag
      *

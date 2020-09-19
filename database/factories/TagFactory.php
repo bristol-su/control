@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Factories;
+
 $factory->define(\BristolSU\ControlDB\Models\Tags\GroupTag::class, function(\Faker\Generator $faker) {
     return [
         'name' => $faker->word,

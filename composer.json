@@ -1,44 +1,44 @@
 {
-    "name": "bristol-su/control",
-    "description": "An implementation of the control contracts",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Toby Twigger",
-            "email": "tt15951@my.bristol.ac.uk"
-        }
-    ],
-    "require": {
-        "php": "^7.3",
-        "ext-json": "*"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^4.0",
-        "phpstan/phpstan": "^0.12.8",
-        "phpspec/prophecy-phpunit": "2.0.0",
-        "brianium/paratest": "^4.0"
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": [],
-            "providers": [
-                "BristolSU\\ControlDB\\ControlDBServiceProvider"
-            ]
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "BristolSU\\ControlDB\\": "src/"
-        },
-        "classmap": [
-            "database/seeds/",
-            "database/factories/"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "BristolSU\\Tests\\ControlDB\\": "tests/"
-        }
+  "name": "bristol-su/control",
+  "description": "An implementation of the control contracts",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Toby Twigger",
+      "email": "tt15951@my.bristol.ac.uk"
     }
+  ],
+  "require": {
+    "php": "^7.3",
+    "ext-json": "*",
+    "laravel/framework": "^8.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.0",
+    "phpstan/phpstan": "^0.12.8",
+    "phpspec/prophecy-phpunit": "2.0.0",
+    "brianium/paratest": "^4.0",
+    "laravel/legacy-factories": "^1.0"
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": [],
+      "providers": [
+        "BristolSU\\ControlDB\\ControlDBServiceProvider"
+      ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "BristolSU\\ControlDB\\": "src/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BristolSU\\Tests\\ControlDB\\": "tests/"
+    }
+  }
 }

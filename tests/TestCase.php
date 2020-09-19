@@ -4,16 +4,16 @@ namespace BristolSU\Tests\ControlDB;
 
 use BristolSU\ControlDB\ControlDBServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Testing\TestResponse;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 abstract class TestCase extends BaseTestCase
 {
     use DatabaseTransactions, ProphecyTrait;
-    
+
     public $apiUrl = 'api/control';
-    
+
     public function setUp(): void
     {
         parent::setUp();
