@@ -1,0 +1,56 @@
+= Integrations
+
+To allow for custom integrations to be built, Control is built on a set
+of interfaces.
+
+== Repositories
+
+There is a repository per model, which allows us to create, retrieve,
+update and delete any models. These should always be used for any
+interaction with single Control models or retrieving relationship models
+when the relationship is a many-to-one, since new implementations can be
+built and bound to the container, then resolved without changing any
+code. This means that the portal can handle any integrations if they
+implement the correct repository contract.
+
+== Models
+
+The repositories will often return model implementations, which also
+extend a specific interface to allow us to control how the data is
+stored and retrieved. These models implement methods around data
+storage, i.e. id(), name() etc. They also implement helpful methods to
+do with retrieving relationships. Of course, this doesn't sound great as
+all models should retrieve relationships the same way (using the correct
+repository). Therefore, for each model, we provide a 'ModelTrait' class
+to implement the common functionality
+
+== Data Models
+
+You will notice that for each of the four core models (group, user, role
+and position), there is a 'data' version, which holds any identifiable
+information about the model. This reduces the normal models to linking
+to the data model, and all identifiable data is kept in the data model.
+By default, each data model registers a few optional fields which could
+apply. For example, user defines name, dob and email fields. Group
+defines a name and description field.
+
+== Additional Properties
+
+Of course, you may have a use case where you need another bit of data on
+the data model, for example we need a student ID in the user model. This
+is what additional properties are for. Each of the four data models
+implement 'ImplementsAdditionalProperties', which requires a few methods
+around adding possible additional properties, and getting/setting the
+additional properties. By default, using the 'HasAdditionalProperties'
+trait will implement these methods for an eloquent model.
+
+== Pivots
+
+There are essentially 6 different pivoted relationships. These are
+controlled by their own repository, allowing us to change, for example,
+the role and user implementation, but still use the database for
+connecting the two.
+
+== Tags
+
+Can use the command to seed fake data
