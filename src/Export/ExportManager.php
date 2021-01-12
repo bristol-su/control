@@ -2,6 +2,7 @@
 
 namespace BristolSU\ControlDB\Export;
 
+use BristolSU\ControlDB\Export\Handler\Airtable\AirtableHandler;
 use BristolSU\ControlDB\Export\Handler\DumpHandler;
 use BristolSU\ControlDB\Export\Handler\Handler;
 use BristolSU\ControlDB\Export\Handler\SaveCsvHandler;

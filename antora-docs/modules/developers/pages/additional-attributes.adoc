@@ -1,0 +1,36 @@
+= Additional Attributes
+
+To increase the flexibility of the Data Provider, we'd like to add
+arbitrary properties. These can't be defined as their own column in the
+database, because at some point they will be settable through the UI.
+Therefore, we use the 'HasAdditionalProperties' trait.
+
+This trait relies on storing the additional properties in a single
+column, a JSON column called 'additional_attributes'.
+
+....
+$table->json('additional_attributes')->nullable()->default('[]');
+....
+
+In the service provider, we define the additional properties the model
+can handle. This is done through the `+Model::addProperty($key)+` method
+call. Two methods are then defined, `+getAdditionalAttribute($key)+` and
+`+setAdditionalAttribute($key, $value)+`. These retrieve the
+additional_attributes, using the defined mutator to ensure it is an
+array, then return or set the correct values.
+
+To let us keep doing things the 'Laravel' way, we also override the get
+and setAttribute functions. Before the default implementations of these
+methods are called, we check to see if the user is getting or setting an
+'additional property'. If they are, we pass the method call onto the
+corresponding set or get additionalAttribute function, otherwise we
+continue with the default method call.
+
+Finally, we want to automatically enter these parameters into the model
+when cast to an array. To do that, the trait automatically adds
+additional properties to the appends array. We then define a __call
+method, which handles the method call if it's an accessor or mutator
+attempt for an additional property.
+
+Other models must define the get and setAdditonalAttribte methods, and
+return the additional attributes when casted to an array or a string.

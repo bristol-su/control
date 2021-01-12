@@ -1,0 +1,871 @@
+= API
+
+By pulling the control package into your project, no matter what
+integration you're using, we provide a ready-made full REST Api for
+managing users. We do this by building an API on top of the repository
+and model contracts, therefore the API holds independently of the
+repository or model implementation logic.
+
+Scopes for authorization are still to be set up. For now, if
+authenticated, all routes are available.
+
+A https://www.getpostman.com/[Postman] collection covering the below
+requests can be found here:
+https://www.getpostman.com/collections/e1df9930bd973737707c
+
+A swagger.json definition can be seen here:
+https://bristol-su.github.io/control-api-docs/#/
+
+== Group
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a group*
+
+GET
+
+/group
+
+Get all groups
+
+GET
+
+/group/\{id}
+
+Get a group by ID
+
+POST
+
+/group
+
+Create a group. Accepts a name and email
+
+PUT/PATCH
+
+/group/\{id}
+
+Update the group. Accepts a name and email
+
+DELETE
+
+/group/\{id}
+
+Delete a group
+
+*Tagging Groups*
+
+GET
+
+/group/\{id}/tag
+
+Get all tags belonging to the group
+
+PUT/PATCH
+
+/group/\{id}/tag/\{id}
+
+Tag the group with the tag
+
+DELETE
+
+/group/\{id}/tag/\{id}
+
+Delete the tag from the group
+
+*Managing user memberships with groups*
+
+GET
+
+/group/\{id}/user
+
+Get all users belonging to the group
+
+PUT/PATCH
+
+/group/\{id}/user/\{id}
+
+Associate the user with the group
+
+DELETE
+
+/group/\{id}/user/\{id}
+
+Delete the user from the group
+
+*Manage roles associated with the group*
+
+GET
+
+/group/\{id}/role
+
+Get all roles belonging to the group
+
+== User
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a user*
+
+GET
+
+/user
+
+Get all users
+
+GET
+
+/user/\{id}
+
+Get a user by ID
+
+POST
+
+/user
+
+Create a user. Accepts a first name, last name, dob, email and preferred
+name
+
+PUT/PATCH
+
+/user/\{id}
+
+Update the user. Accepts a first name, last name, dob, email and
+preferred name
+
+DELETE
+
+/user/\{id}
+
+Delete a user
+
+*Tagging Users*
+
+GET
+
+/user/\{id}/tag
+
+Get all tags belonging to the user
+
+PUT/PATCH
+
+/user/\{id}/tag/\{id}
+
+Tag the user with the tag
+
+DELETE
+
+/user/\{id}/tag/\{id}
+
+Delete the tag from the user
+
+*Managing groups memberships of users*
+
+GET
+
+/user/\{id}/group
+
+Get all groups the user is a member of
+
+PUT/PATCH
+
+/user/\{id}/group/\{id}
+
+Associate the user with a group
+
+DELETE
+
+/user/\{id}/group/\{id}
+
+Delete the user from a group
+
+*Manage roles associated with the user*
+
+GET
+
+/user/\{id}/role
+
+Get all roles belonging to the user
+
+PUT/PATCH
+
+/user/\{id}/role/\{id}
+
+Associate the role with the user
+
+DELETE
+
+/user/\{id}/role/\{id}
+
+Remove the role from the user
+
+== Role
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a role*
+
+GET
+
+/role
+
+Get all roles
+
+GET
+
+/role/\{id}
+
+Get a role by ID
+
+POST
+
+/role
+
+Create a role. Accepts a position_id, group_id, position name and email
+
+PUT/PATCH
+
+/role/\{id}
+
+Update the role. Accepts a position_id, group_id, position name and
+email
+
+DELETE
+
+/role/\{id}
+
+Delete a role
+
+*Tagging Roles +
+*
+
+GET
+
+/role/\{id}/tag
+
+Get all tags belonging to the role
+
+PUT/PATCH
+
+/role/\{id}/tag/\{id}
+
+Tag the role with the tag
+
+DELETE
+
+/role/\{id}/tag/\{id}
+
+Delete the tag from the role
+
+*Managing users who own a role +
+*
+
+GET
+
+/role/\{id}/user
+
+Get all users the role belongs to
+
+PUT/PATCH
+
+/role/\{id}/user/\{id}
+
+Associate the role with a user
+
+DELETE
+
+/role/\{id}/user/\{id}
+
+Remove a role from the user
+
+*Group belonging to the role +
+*
+
+GET
+
+/role/\{id}/group
+
+Get the group the role belongs to
+
+*Position belonging to the role +
+*
+
+GET
+
+/role/\{id}/position
+
+Get all position the role belongs to
+
+== Position
+
+The position API is still in development
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a position +
+*
+
+GET
+
+/position
+
+Get all positions
+
+GET
+
+/position/\{id}
+
+Get a position by ID
+
+POST
+
+/position
+
+Create a position. Accepts a name and description
+
+PUT/PATCH
+
+/position/\{id}
+
+Update the position. Accepts a name and description
+
+DELETE
+
+/position/\{id}
+
+Delete a position
+
+*Tagging Positions +
+*
+
+GET
+
+/position/\{id}/tag
+
+Get all tags belonging to the position
+
+PUT/PATCH
+
+/position/\{id}/tag/\{id}
+
+Tag the position with the tag
+
+DELETE
+
+/position/\{id}/tag/\{id}
+
+Delete the tag from the position
+
+*Managing roles who use the position +
+*
+
+GET
+
+/position/\{id}/role
+
+Get all roles that use the position
+
+== Group Tags
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a group tag +
+*
+
+GET
+
+/group-tag
+
+Get all group tags
+
+GET
+
+/group-tag/\{id}
+
+Get a group tag by ID
+
+POST
+
+/group-tag
+
+Create a group tag. Accepts a name, description, reference and tag
+category id
+
+PUT/PATCH
+
+/group-tag/\{id}
+
+Update the group tag. Accepts a name, description, reference and tag
+category id
+
+DELETE
+
+/group-tag/\{id}
+
+Delete a group tag
+
+*Tagging Groups +
+*
+
+GET
+
+/group-tag/\{id}/group
+
+Get all groups belonging to the group tag
+
+PUT/PATCH
+
+/group-tag/\{id}/group/\{id}
+
+Tag the group with the group tag
+
+DELETE
+
+/group-tag/\{id}/group/\{id}
+
+Delete the group from the group tag
+
+*Group Tag Category*
+
+GET
+
+/group-tag/\{id}/group-tag-category
+
+Get the group tag category for the tag
+
+== Group Tag Categories
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a group tag category +
+*
+
+GET
+
+/group-tag-category
+
+Get all group tag categories
+
+GET
+
+/group-tag-category/\{id}
+
+Get a group tag category by ID
+
+POST
+
+/group-tag-category
+
+Create a group tag category. Accepts a name, description and reference
+
+PUT/PATCH
+
+/group-tag-category/\{id}
+
+Update the group tag category. Accepts a name, description and reference
+
+DELETE
+
+/group-tag-category/\{id}
+
+Delete a group tag cagegory
+
+*Manage Group Tags +
+*
+
+GET
+
+/group-tag-category/\{id}/group-tag
+
+Get all group tags belonging to the group tag category
+
+== User Tags
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a user tag +
+*
+
+GET
+
+/user-tag
+
+Get all user tags
+
+GET
+
+/user-tag/\{id}
+
+Get a user tag by ID
+
+POST
+
+/user-tag
+
+Create a user tag. Accepts a name, description, reference and tag
+category id
+
+PUT/PATCH
+
+/user-tag/\{id}
+
+Update the user tag. Accepts a name, description, reference and tag
+category id
+
+DELETE
+
+/user-tag/\{id}
+
+Delete a user tag
+
+*Tagging users +
+*
+
+GET
+
+/user-tag/\{id}/user
+
+Get all users belonging to the user tag
+
+PUT/PATCH
+
+/user-tag/\{id}/user/\{id}
+
+Tag the user with the user tag
+
+DELETE
+
+/user-tag/\{id}/user/\{id}
+
+Delete the user from the user tag
+
+*User Tag Category*
+
+GET
+
+/user-tag/\{id}/user-tag-category
+
+Get the user tag category for the tag
+
+== User Tag Categories
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a user tag category +
+*
+
+GET
+
+/user-tag-category
+
+Get all user tag categories
+
+GET
+
+/user-tag-category/\{id}
+
+Get a user tag category by ID
+
+POST
+
+/user-tag-category
+
+Create a user tag category. Accepts a name, description and reference
+
+PUT/PATCH
+
+/user-tag-category/\{id}
+
+Update the user tag category. Accepts a name, description and reference
+
+DELETE
+
+/user-tag-category/\{id}
+
+Delete a user tag cagegory
+
+*Manage user Tags +
+*
+
+GET
+
+/user-tag-category/\{id}/user-tag
+
+Get all user tags belonging to the user tag category
+
+== Position Tags
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a position tag +
+*
+
+GET
+
+/position-tag
+
+Get all position tags
+
+GET
+
+/position-tag/\{id}
+
+Get a position tag by ID
+
+POST
+
+/position-tag
+
+Create a position tag. Accepts a name, description, reference and tag
+category id
+
+PUT/PATCH
+
+/position-tag/\{id}
+
+Update the position tag. Accepts a name, description, reference and tag
+category id
+
+DELETE
+
+/position-tag/\{id}
+
+Delete a position tag
+
+*Tagging positions +
+*
+
+GET
+
+/position-tag/\{id}/position
+
+Get all positions belonging to the position tag
+
+PUT/PATCH
+
+/position-tag/\{id}/position/\{id}
+
+Tag the position with the position tag
+
+DELETE
+
+/position-tag/\{id}/position/\{id}
+
+Delete the position from the position tag
+
+*Position Tag Category*
+
+GET
+
+/position-tag/\{id}/position-tag-category
+
+Get the position tag category for the tag
+
+== Position Tag Categories
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a position tag category +
+*
+
+GET
+
+/position-tag-category
+
+Get all position tag categories
+
+GET
+
+/position-tag-category/\{id}
+
+Get a position tag category by ID
+
+POST
+
+/position-tag-category
+
+Create a position tag category. Accepts a name, description and
+reference
+
+PUT/PATCH
+
+/position-tag-category/\{id}
+
+Update the position tag category. Accepts a name, description and
+reference
+
+DELETE
+
+/position-tag-category/\{id}
+
+Delete a position tag cagegory
+
+*Manage position Tags +
+*
+
+GET
+
+/position-tag-category/\{id}/position-tag
+
+Get all position tags belonging to the position tag category
+
+== Role Tags
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a role tag +
+*
+
+GET
+
+/role-tag
+
+Get all role tags
+
+GET
+
+/role-tag/\{id}
+
+Get a role tag by ID
+
+POST
+
+/role-tag
+
+Create a role tag. Accepts a name, description, reference and tag
+category id
+
+PUT/PATCH
+
+/role-tag/\{id}
+
+Update the role tag. Accepts a name, description, reference and tag
+category id
+
+DELETE
+
+/role-tag/\{id}
+
+Delete a role tag
+
+*Tagging roles +
+*
+
+GET
+
+/role-tag/\{id}/role
+
+Get all roles belonging to the role tag
+
+PUT/PATCH
+
+/role-tag/\{id}/role/\{id}
+
+Tag the role with the role tag
+
+DELETE
+
+/role-tag/\{id}/role/\{id}
+
+Delete the role from the role tag
+
+*Role Tag Category*
+
+GET
+
+/role-tag/\{id}/role-tag-category
+
+Get the role tag category for the tag
+
+== Role Tag Categories
+
+*Method*
+
+*Endpoint*
+
+*Description*
+
+*Standard REST endpoints for a role tag category +
+*
+
+GET
+
+/role-tag-category
+
+Get all role tag categories
+
+GET
+
+/role-tag-category/\{id}
+
+Get a role tag category by ID
+
+POST
+
+/role-tag-category
+
+Create a role tag category. Accepts a name, description and reference
+
+PUT/PATCH
+
+/role-tag-category/\{id}
+
+Update the role tag category. Accepts a name, description and reference
+
+DELETE
+
+/role-tag-category/\{id}
+
+Delete a role tag cagegory
+
+*Manage role Tags +
+*
+
+GET
+
+/role-tag-category/\{id}/role-tag
+
+Get all role tags belonging to the role tag category

@@ -1,4 +1,4 @@
-x   # Changelog
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -8,7 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-- Upgrades to allow Laravel 8
+- Upgrades to use Laravel 8
+
+## [2.1.5] - (16/06/2020)
+
+### Removed
+- Removed the AirTable integration since it is now provided by an external package
+
+## [2.1.4] - (15/06/2020)
+
+### Added
+- Added the Airtable export handler for exporting control
 
 ## [2.1.3] - (01/05/2020)
 
@@ -171,7 +181,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - model/repository contracts
 
 
-[Unreleased]: https://github.com/bristol-su/control/compare/v2.1.3...HEAD
+[Unreleased]: https://github.com/bristol-su/control/compare/v2.1.5...HEAD
+[2.1.5]: https://github.com/bristol-su/control/compare/v2.1.4...v2.1.5
+[2.1.4]: https://github.com/bristol-su/control/compare/v2.1.3...v2.1.4
 [2.1.3]: https://github.com/bristol-su/control/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/bristol-su/control/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/bristol-su/control/compare/v2.1...v2.1.1

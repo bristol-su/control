@@ -1,0 +1,78 @@
+= Introduction
+
+Control is the user management system for the Bristol SU Portal. The
+complexity of the user management structure was borne from the
+student-led society hierarchical structure. A student-led society is
+called a group. A group has many members, which are users. Additionally,
+a group has many roles, which may be occupied by a number of users. In
+reality, this allows us to assign users to committee roles (for example,
+a President, Secretary, Treasurer etc), as well as allow users to be
+members of groups.
+
+When worded in this way, the group system seems very restrictive for
+non-unions or non-group services. However, there is no requirement that
+says a group must be a student-led society. For example, a group may be
+a department in an office. Each individual could have a different role,
+or some individuals may be members and a hierarchical structure can be
+built above them (e.g. line manager, budget holder etc). Similarly, a
+group could represent a house for a letting agent. Tenants would be
+'members' of the group, and the agent responsible for the house could
+hold a role in the group.
+
+In this way, a huge amount of additional flexibility and customization
+can be achieved over a simple user model. Activities can be made open to
+only those in a role, or a role with a specific position. Services can
+be set up to require different steps to be completed by different
+people, which would not be as achievable or scalable than a simple user
+model.
+
+The following diagram shows the relationships between Users, Groups and
+Roles.
+
+image::model-relations.png[]
+
+The relationship between Users, Groups and
+Roles.
+
+Each of these models can also be tagged. A tag is a simple model with a
+name and a reference. For example, we may want to tag a group with the
+'High Risk' tag, to represent a high financial risk. In this way, we can
+make an annual budget mandatory for any high risk groups. However, there
+could be a situation where we have another 'High Risk' tag, meaning a
+group regularly does high risk activities. Obviously we need to separate
+out these tags so no confusion occurs. To do this, we use tag
+categories. These are parent tags, which hold many child tags which are
+then applied to a model. For example, we could create a 'Financial Risk'
+category and a 'Physical risk' category, and assign them to the correct
+tags to reduce confusion.
+
+We also need a human-friendly way of referencing the tags. Instead of
+saying 'High Financial Risk', which will only work for some tags, or
+'High Risk with a category of Financial Risk', we say
+'financial_risk.high' (Financial Risk 'dot' High). This structure comes
+from a 'reference' of both the category and tag. The reference must be
+unique, and is thought of as a unique ID. Since both the parent and
+child have a different reference, we join the references with a dot to
+create the unique tag reference. In this way, we can reference both high
+risk tags as
+
+'financial_risk.high'
+
+'physical_risk.high'
+
+Another important part of the user management structure is the idea of a
+'Data Provider'. Many unions and other companies have a database of user
+information, or for data protection reasons outsource the storing of
+data to a third party. The portal therefore provides a structure to
+allow integration with these providers, without enforcing their use. The
+four base models (User, Group, Role and Position) all hold very little
+information. In fact, they only hold relations to one another and a data
+provider ID. This means that, in the case of a data breach, there is no
+identifiable data held in the platform. In order to get the identifiable
+information for use, we call the data() function on any model. This will
+return a second model, whose purpose is to store information such as
+names, emails, dates of birth etc.
+
+Using this method provides no disadvantage for data stored in the
+database, but allows for external data providers to be slotted into
+place and used to retrieve the data.

@@ -12,3 +12,4 @@ phpunit.xml export-ignore
 Doxyfile export-ignore
 doxygen-filters.php export-ignore
 composer.lock export-ignore
+/antora-docs export-ignore
