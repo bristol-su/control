@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Factories;
+
 $factory->define(\BristolSU\ControlDB\Models\Role::class, function(\Faker\Generator $faker) {
     return [
         'position_id' => function() {

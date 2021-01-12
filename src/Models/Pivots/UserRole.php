@@ -14,13 +14,13 @@ class UserRole extends Model
 
     /**
      * Fillable attributes
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $fillable = [
         'user_id', 'role_id'
     ];
-    
+
     /**
      * Indicates if the IDs are auto-incrementing.
      *
@@ -30,9 +30,20 @@ class UserRole extends Model
 
     /**
      * Define the table to use
-     * 
-     * @var string 
+     *
+     * @var string
      */
     public $table = 'control_role_user';
-    
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
 }

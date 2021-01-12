@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Factories;
+
 $factory->define(\BristolSU\ControlDB\Models\DataUser::class, function(\Faker\Generator $faker) {
     return [
         'first_name' => $faker->firstName,

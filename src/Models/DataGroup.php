@@ -4,6 +4,7 @@ namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
 use BristolSU\ControlDB\Traits\DataGroupTrait;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -19,19 +20,30 @@ class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\D
 
     /**
      * Define the table to use
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $table = 'control_data_group';
 
     /**
      * Define fillable attributes
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $fillable = [
         'name', 'email'
     ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * Gets the ID of the group
@@ -45,7 +57,7 @@ class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\D
 
     /**
      * Gets the name of the group
-     * 
+     *
      * @return string|null
      */
     public function name(): ?string
@@ -55,7 +67,7 @@ class DataGroup extends Model implements \BristolSU\ControlDB\Contracts\Models\D
 
     /**
      * Gets the email of the group
-     * 
+     *
      * @return string|null
      */
     public function email(): ?string

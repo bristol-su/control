@@ -171,7 +171,9 @@ class ControlDBServiceProvider extends ServiceProvider
     public function registerFactories()
     {
         if (!app()->environment('production') && class_exists(\Faker\Factory::class)) {
-            $this->app->make(Factory::class)->load(__DIR__ .'/../database/factories');
+            $this->app->extend(Factory::class, function(Factory $factory, $app) {
+                return $factory->load(__DIR__ .'/../database/factories');
+            });
         }
     }
     
