@@ -10,15 +10,15 @@
     }
   ],
   "require": {
-    "php": "^7.3",
+    "php": "^8.0",
     "ext-json": "*",
     "laravel/framework": "^8.0"
   },
   "require-dev": {
     "orchestra/testbench": "^6.0",
     "phpstan/phpstan": "^0.12.8",
-    "phpspec/prophecy-phpunit": "2.0.0",
-    "brianium/paratest": "^4.0",
+    "phpspec/prophecy-phpunit": "2.0.1",
+    "brianium/paratest": "^6.0",
     "laravel/legacy-factories": "^1.0"
   },
   "extra": {
