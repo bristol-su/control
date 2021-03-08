@@ -8,6 +8,8 @@ use BristolSU\ControlDB\Contracts\Models\DataPosition as DataPositionModel;
 use BristolSU\ControlDB\Contracts\Repositories\DataPosition as DataPositionRepository;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\PositionPositionTag;
 use BristolSU\ControlDB\Contracts\Repositories\Position;
+use BristolSU\ControlDB\Models\Dummy\DataPositionDummy;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 /**
@@ -23,7 +25,10 @@ trait PositionTrait
      */
     public function data(): DataPositionModel
     {
-        return app(DataPositionRepository::class)->getById($this->dataProviderId());
+        try {
+            return app(\BristolSU\ControlDB\Contracts\Repositories\DataPosition::class)->getById($this->dataProviderId());
+        } catch (ModelNotFoundException $e) { }
+        return new DataPositionDummy($this->dataProviderId());
     }
 
     /**

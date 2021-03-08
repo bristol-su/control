@@ -10,8 +10,10 @@ use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\UserUserTag;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole;
 use BristolSU\ControlDB\Contracts\Repositories\User;
+use BristolSU\ControlDB\Models\Dummy\DataUserDummy;
 use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Tags\UserTag;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 /**
@@ -26,7 +28,10 @@ trait UserTrait
      * @return DataUser
      */
     public function data(): DataUser {
-        return app(\BristolSU\ControlDB\Contracts\Repositories\DataUser::class)->getById($this->dataProviderId());
+        try {
+            return app(\BristolSU\ControlDB\Contracts\Repositories\DataUser::class)->getById($this->dataProviderId());
+        } catch (ModelNotFoundException $e) { }
+        return new DataUserDummy($this->dataProviderId());
     }
 
     /**

@@ -3,10 +3,13 @@
 namespace BristolSU\ControlDB\Traits;
 
 use BristolSU\ControlDB\Contracts\Models\DataGroup;
+use BristolSU\ControlDB\Contracts\Repositories\DataGroup as DataGroupRepository;
 use BristolSU\ControlDB\Contracts\Repositories\Group;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\GroupGroupTag;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup;
 use BristolSU\ControlDB\Contracts\Repositories\Role;
+use BristolSU\ControlDB\Models\Dummy\DataGroupDummy;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 /**
@@ -22,7 +25,10 @@ trait GroupTrait
      */
     public function data(): DataGroup
     {
-        return app(\BristolSU\ControlDB\Contracts\Repositories\DataGroup::class)->getById($this->dataProviderId());
+        try {
+            return app(DataGroupRepository::class)->getById($this->dataProviderId());
+        } catch (ModelNotFoundException $e) { }
+        return new DataGroupDummy($this->dataProviderId());
     }
 
     /**
