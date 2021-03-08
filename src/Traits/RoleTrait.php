@@ -10,8 +10,10 @@ use BristolSU\ControlDB\Contracts\Repositories\DataRole as DataRoleRepository;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\RoleRoleTag;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole;
 use BristolSU\ControlDB\Contracts\Repositories\Role;
+use BristolSU\ControlDB\Models\Dummy\DataRoleDummy;
 use BristolSU\ControlDB\Models\Group;
 use BristolSU\ControlDB\Models\Position;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 /**
@@ -27,7 +29,10 @@ trait RoleTrait
      */
     public function data(): DataRoleModel
     {
-        return app(DataRoleRepository::class)->getById($this->dataProviderId());
+        try {
+            return app(\BristolSU\ControlDB\Contracts\Repositories\DataRole::class)->getById($this->dataProviderId());
+        } catch (ModelNotFoundException $e) { }
+        return new DataRoleDummy($this->dataProviderId());
     }
 
     /**
