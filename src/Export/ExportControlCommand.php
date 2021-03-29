@@ -45,68 +45,16 @@ class ExportControlCommand extends Command
      */
     public function handle()
     {
-        $time=-hrtime(true);
-        foreach($this->exportData() as $collection) {
-            Exporter::driver($this->option('exporter'))->export($collection);
+        $type = $this->argument('type');
+        if(!in_array(
+            $type,
+            ['user', 'group', 'role', 'position']
+        )) {
+            throw new InvalidArgumentException(sprintf('The type option %s is not allowed.', $type));
         }
-        $this->info('Export complete');
-        $time+=hrtime(true);
-        $this->info(sprintf('Export took %.2f s to run', $time / 1e+9));
-    }
+        ExportControlJob::dispatch(1, $type, $this->option('exporter'));
 
-    /**
-     * @return \Generator|Collection[]
-     */
-    private function exportData()
-    {
-        $page = 1;
-        $complete = false;
-
-        switch($this->argument('type')) {
-            case 'user':
-                while ($complete === false) {
-                    $result = app(User::class)->paginate($page, 100);
-                    if($result->count() > 0) {
-                        yield $result;
-                    } else {
-                        $complete = true;
-                    }
-                }
-                break;
-            case 'group':
-                while ($complete === false) {
-                    $result = app(Group::class)->paginate($page, 20);
-                    if($result->count() > 0) {
-                        yield $result;
-                    } else {
-                        $complete = true;
-                    }
-                }
-                break;
-            case 'role':
-                while ($complete === false) {
-                    $result = app(Role::class)->paginate($page, 20);
-                    if($result->count() > 0) {
-                        yield $result;
-                    } else {
-                        $complete = true;
-                    }
-                }
-                break;
-            case 'position':
-                while ($complete === false) {
-                    $result = app(Position::class)->paginate($page, 20);
-                    if($result->count() > 0) {
-                        yield $result;
-                    } else {
-                        $complete = true;
-                    }
-                }
-                break;
-            default:
-                throw new InvalidArgumentException(sprintf('The type option %s is not allowed.', $this->argument('type')));
-                break;
-        }
+        $this->info('Export running in the background.');
     }
 
 }
