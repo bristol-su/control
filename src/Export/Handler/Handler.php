@@ -21,7 +21,7 @@ abstract class Handler
 
     /**
      * Prepare items by transforming them to formattable items
-     * 
+     *
      * @param $items
      * @return FormattedItem[]
      */
@@ -33,19 +33,21 @@ abstract class Handler
         }
         return $formattedItems;
     }
-    
+
     public function export($items = [])
     {
         if($items instanceof Collection) {
             $items = $items->all();
         }
         $formattedItems = $this->prepareItems($items);
+        \Log::info('Formatting ' . count($formattedItems) . ' items.');
         foreach($this->getFormatters() as $formatter) {
             $time=-hrtime(true);
             $formattedItems = $formatter->format($formattedItems);
             $time+=hrtime(true);
             $this->logTime(class_basename($formatter), $time / 1e+9);
         }
+        \Log::info('Saving ' . count($formattedItems) . ' items.');
         $this->save($formattedItems);
     }
 
@@ -61,7 +63,7 @@ abstract class Handler
             throw new \Exception(sprintf('Formatter %s does not exist', $className));
         }, array_keys($this->config('formatters', [])));
     }
-    
+
     /**
      * @param FormattedItem[] $items
      * @return mixed
@@ -71,7 +73,7 @@ abstract class Handler
     /**
      * @param string $key
      * @param null $default
-     * 
+     *
      * @return mixed|null
      */
     protected function config(string $key, $default = null)
