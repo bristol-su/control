@@ -38,7 +38,6 @@ class ExportControlJob implements ShouldQueue
     {
         $exportData = $this->exportData();
         if($exportData->count() > 0) {
-\Log::info('Running a new command');
             Exporter::driver($this->driver)->export($exportData);
             ExportControlJob::dispatch($this->page + 1, $this->type, $this->driver);
         }

@@ -40,14 +40,12 @@ abstract class Handler
             $items = $items->all();
         }
         $formattedItems = $this->prepareItems($items);
-        \Log::info('Formatting ' . count($formattedItems) . ' items.');
         foreach($this->getFormatters() as $formatter) {
             $time=-hrtime(true);
             $formattedItems = $formatter->format($formattedItems);
             $time+=hrtime(true);
             $this->logTime(class_basename($formatter), $time / 1e+9);
         }
-        \Log::info('Saving ' . count($formattedItems) . ' items.');
         $this->save($formattedItems);
     }
 
