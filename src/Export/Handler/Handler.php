@@ -21,7 +21,7 @@ abstract class Handler
 
     /**
      * Prepare items by transforming them to formattable items
-     * 
+     *
      * @param $items
      * @return FormattedItem[]
      */
@@ -33,7 +33,7 @@ abstract class Handler
         }
         return $formattedItems;
     }
-    
+
     public function export($items = [])
     {
         if($items instanceof Collection) {
@@ -61,7 +61,7 @@ abstract class Handler
             throw new \Exception(sprintf('Formatter %s does not exist', $className));
         }, array_keys($this->config('formatters', [])));
     }
-    
+
     /**
      * @param FormattedItem[] $items
      * @return mixed
@@ -71,7 +71,7 @@ abstract class Handler
     /**
      * @param string $key
      * @param null $default
-     * 
+     *
      * @return mixed|null
      */
     protected function config(string $key, $default = null)

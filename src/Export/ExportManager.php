@@ -27,7 +27,7 @@ class ExportManager
      * @var array
      */
     protected $customCreators = [];
-    
+
     protected $formatters = [];
 
     /**
@@ -76,7 +76,6 @@ class ExportManager
         if (method_exists($this, $driverMethod)) {
             return $this->{$driverMethod}($config);
         }
-
         throw new InvalidArgumentException("Driver [{$config['driver']}] is not supported.");
     }
 
@@ -90,7 +89,7 @@ class ExportManager
     {
         return $this->customCreators[$config['driver']]($this->container, $config);
     }
-    
+
     /**
      * Get the export connection configuration.
      *
@@ -109,7 +108,7 @@ class ExportManager
         foreach($this->formatters() as $formatter => $formatterConfig) {
             $config['formatters'][$formatter] = $formatterConfig;
         }
-        
+
         return $config;
     }
 
@@ -140,10 +139,10 @@ class ExportManager
     public function withFormatter(string $formatter, array $config = [])
     {
         $this->formatters[$formatter] = $config;
-        
+
         return $this;
     }
-    
+
     /**
      * Dynamically call the default driver instance.
      *

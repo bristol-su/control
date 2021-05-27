@@ -7,6 +7,7 @@ use BristolSU\ControlDB\Contracts\Repositories\Position;
 use BristolSU\ControlDB\Contracts\Repositories\Role;
 use BristolSU\ControlDB\Contracts\Repositories\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
@@ -16,8 +17,8 @@ class ExportControlCommand extends Command
 {
     /**
      * Signature for the command
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $signature = 'control:export
                             {type : The type of resource to export}
@@ -25,50 +26,35 @@ class ExportControlCommand extends Command
 
     /**
      * Name for the commmand
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $name = 'Export Control';
 
     /**
      * Description of the command
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $description = 'Export control to an external service';
 
     /**
      * Handle the command execution
-     * 
+     *
      * Seed the database with fake data.
      */
     public function handle()
     {
-        $time=-hrtime(true);
-        Exporter::driver($this->option('exporter'))->export($this->exportData());
-        $this->info('Export complete');
-        $time+=hrtime(true);
-        $this->info(sprintf('Export took %.2f s to run', $time / 1e+9));
+        $type = $this->argument('type');
+        if(!in_array(
+            $type,
+            ['user', 'group', 'role', 'position']
+        )) {
+            throw new InvalidArgumentException(sprintf('The type option %s is not allowed.', $type));
+        }
+        ExportControlJob::dispatch(1, $type, $this->option('exporter'));
+
+        $this->info('Export running in the background.');
     }
 
-    private function exportData()
-    {
-        switch($this->argument('type')) {
-            case 'user': 
-                return app(User::class)->all();
-                break;
-            case 'group':
-                return app(Group::class)->all();
-                break;
-            case 'role':
-                return app(Role::class)->all();
-                break;
-            case 'position':
-                return app(Position::class)->all();
-                break;
-            default:
-                throw new InvalidArgumentException(sprintf('The type option %s is not allowed.', $this->argument('type')));
-                break;
-        }
-    }
 }

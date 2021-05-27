@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- portal-335: Exports time out with lots of users/roles
+
 ## [2.1.5] - (16/06/2020)
 
 ### Removed
