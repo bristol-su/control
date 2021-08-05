@@ -12,7 +12,7 @@ class PositionTest extends TestCase
 
     /** @test */
     public function getById_returns_a_position_model_with_the_corresponding_id(){
-        $position = factory(Position::class)->create(['id' => 2]);
+        $position = Position::factory()->create(['id' => 2]);
         $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
         $this->assertTrue(
             $position->is($positionRepo->getById(2))
@@ -28,7 +28,7 @@ class PositionTest extends TestCase
 
     /** @test */
     public function create_creates_a_new_position_model(){
-        $dataPosition = factory(DataPosition::class)->create();
+        $dataPosition = DataPosition::factory()->create();
 
         $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
         $position = $positionRepo->create($dataPosition->id);
@@ -40,7 +40,7 @@ class PositionTest extends TestCase
 
     /** @test */
     public function create_returns_the_new_position_model(){
-        $dataPosition = factory(DataPosition::class)->create();
+        $dataPosition = DataPosition::factory()->create();
 
         $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
         $position = $positionRepo->create($dataPosition->id);
@@ -51,7 +51,7 @@ class PositionTest extends TestCase
 
     /** @test */
     public function all_returns_all_positions(){
-        $positions = factory(Position::class, 15)->create();
+        $positions = Position::factory()->count(15)->create();
         $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
         $repoPositions = $positionRepo->all();
         foreach($positions as $position) {
@@ -64,8 +64,8 @@ class PositionTest extends TestCase
     /** @test */
     public function getByDataProviderId_returns_a_position_model_with_a_given_data_provider_id()
     {
-        $dataPosition = factory(DataPosition::class)->create();
-        $position = factory(Position::class)->create(['data_provider_id' => $dataPosition->id]);
+        $dataPosition = DataPosition::factory()->create();
+        $position = Position::factory()->create(['data_provider_id' => $dataPosition->id]);
 
         $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
         $dbPosition = $positionRepo->getByDataProviderId($dataPosition->id);
@@ -79,7 +79,7 @@ class PositionTest extends TestCase
     public function getByDataProviderId_throws_an_exception_if_no_model_found()
     {
         $this->expectException(ModelNotFoundException::class);
-        factory(Position::class)->create(['data_provider_id' => 10]);
+        Position::factory()->create(['data_provider_id' => 10]);
 
         $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
         $positionRepo->getByDataProviderId(11);
@@ -88,7 +88,7 @@ class PositionTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_position_model(){
-        $position = factory(Position::class)->create();
+        $position = Position::factory()->create();
         $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
         $positionRepo->delete($position->id());
 
@@ -98,7 +98,7 @@ class PositionTest extends TestCase
 
     /** @test */
     public function count_returns_the_number_of_positions(){
-        $positions = factory(Position::class, 18)->create();
+        $positions = Position::factory()->count(18)->create();
         $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
 
         $this->assertEquals(18, $positionRepo->count());
@@ -106,7 +106,7 @@ class PositionTest extends TestCase
 
     /** @test */
     public function paginate_returns_the_number_of_positions_specified_for_the_given_page(){
-        $positions = factory(Position::class, 40)->create();
+        $positions = Position::factory()->count(40)->create();
         $positionRepo = new \BristolSU\ControlDB\Repositories\Position();
 
         $paginatedPositions = $positionRepo->paginate(2, 10);
@@ -125,9 +125,9 @@ class PositionTest extends TestCase
 
     /** @test */
     public function update_updates_a_position(){
-        $dataPosition1 = factory(DataPosition::class)->create();
-        $dataPosition2 = factory(DataPosition::class)->create();
-        $position = factory(Position::class)->create(['data_provider_id' => $dataPosition1->id()]);
+        $dataPosition1 = DataPosition::factory()->create();
+        $dataPosition2 = DataPosition::factory()->create();
+        $position = Position::factory()->create(['data_provider_id' => $dataPosition1->id()]);
 
         $this->assertDatabaseHas('control_positions', [
             'id' => $position->id(), 'data_provider_id' => $dataPosition1->id()
@@ -146,9 +146,9 @@ class PositionTest extends TestCase
 
     /** @test */
     public function update_returns_the_updated_position(){
-        $dataPosition1 = factory(DataPosition::class)->create();
-        $dataPosition2 = factory(DataPosition::class)->create();
-        $position = factory(Position::class)->create(['data_provider_id' => $dataPosition1->id()]);
+        $dataPosition1 = DataPosition::factory()->create();
+        $dataPosition2 = DataPosition::factory()->create();
+        $position = Position::factory()->create(['data_provider_id' => $dataPosition1->id()]);
 
         $this->assertEquals($dataPosition1->id(), $position->dataProviderId());
 
@@ -157,5 +157,5 @@ class PositionTest extends TestCase
 
         $this->assertEquals($dataPosition2->id(), $updatedPosition->dataProviderId());
     }
-    
+
 }

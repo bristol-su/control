@@ -14,7 +14,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function getById_returns_a_data_user_by_id()
     {
-        $dataUser = factory(DataUser::class)->create(['id' => 1]);
+        $dataUser = DataUser::factory()->create(['id' => 1]);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dbDataUser = $repository->getById(1);
@@ -37,8 +37,8 @@ class DataUserTest extends TestCase
         DataUser::addProperty('additionalAttr');
         $attributes = ['email' => 'email@email.com', 'additional_attributes' => json_encode(['additionalAttr' => 15])];
 
-        $dataUsers = factory(DataUser::class, 2)->create($attributes);
-        factory(DataUser::class, 4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
+        $dataUsers = DataUser::factory()->count(2)->create($attributes);
+        DataUser::factory()->count(4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dbDataUser = $repository->getAllWhere($attributes);
@@ -53,9 +53,9 @@ class DataUserTest extends TestCase
     {
         $attributes = ['email' => 'email@email.com', 'first_name' => 'Toby'];
 
-        $dataUsers = factory(DataUser::class, 2)->create($attributes);
-        $otherUsers = factory(DataUser::class, 2)->create(['email' => 'email@email.com', 'first_name' => 'Tobasy']);
-        $otherUsers2 = factory(DataUser::class, 2)->create(['email' => 'email2@email.com', 'first_name' => 'Tobasy']);
+        $dataUsers = DataUser::factory()->count(2)->create($attributes);
+        $otherUsers = DataUser::factory()->count(2)->create(['email' => 'email@email.com', 'first_name' => 'Tobasy']);
+        $otherUsers2 = DataUser::factory()->count(2)->create(['email' => 'email2@email.com', 'first_name' => 'Tobasy']);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dbDataUser = $repository->getAllWhere($attributes);
@@ -64,14 +64,14 @@ class DataUserTest extends TestCase
         $this->assertTrue($dataUsers[0]->is($dbDataUser[0]));
         $this->assertTrue($dataUsers[1]->is($dbDataUser[1]));
     }
-    
+
     /** @test */
     public function getAllWhere_matches_fields_containing(){
         $attributes = ['email' => 'email@email.com', 'first_name' => 'Toby'];
 
-        $dataUsers = factory(DataUser::class, 2)->create($attributes);
-        $otherUsers = factory(DataUser::class, 2)->create(['email' => 'email@email.com', 'first_name' => 'Toby2']);
-        $otherUsers2 = factory(DataUser::class, 2)->create(['email' => 'email2@email.com', 'first_name' => 'Tobasy']);
+        $dataUsers = DataUser::factory()->count(2)->create($attributes);
+        $otherUsers = DataUser::factory()->count(2)->create(['email' => 'email@email.com', 'first_name' => 'Toby2']);
+        $otherUsers2 = DataUser::factory()->count(2)->create(['email' => 'email2@email.com', 'first_name' => 'Tobasy']);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dbDataUser = $repository->getAllWhere($attributes);
@@ -88,7 +88,7 @@ class DataUserTest extends TestCase
     {
         $attributes = ['email' => 'email@email.com'];
 
-        $dataUser = factory(DataUser::class)->create($attributes);
+        $dataUser = DataUser::factory()->create($attributes);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dbDataUser = $repository->getWhere($attributes);
@@ -103,7 +103,7 @@ class DataUserTest extends TestCase
 
         $attributes = ['email' => 'email@email.com'];
 
-        $dataUser = factory(DataUser::class)->create();
+        $dataUser = DataUser::factory()->create();
 
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $dbDataUser = $repository->getWhere($attributes);
@@ -152,9 +152,9 @@ class DataUserTest extends TestCase
     public function getWhere_also_searches_additional_attributes()
     {
         DataUser::addProperty('student_id');
-        $dataUser1 = factory(DataUser::class)->create(['email' => 'email@email.com']);
+        $dataUser1 = DataUser::factory()->create(['email' => 'email@email.com']);
         $dataUser1->saveAdditionalAttribute('student_id', 'xy123');
-        $dataUser2 = factory(DataUser::class)->create(['email' => 'email@email.com']);
+        $dataUser2 = DataUser::factory()->create(['email' => 'email@email.com']);
         $dataUser2->saveAdditionalAttribute('student_id', 'xy1234');
 
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
@@ -166,7 +166,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function update_updates_a_user()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'support@example.com',
@@ -182,7 +182,7 @@ class DataUserTest extends TestCase
             'preferred_name' => 'Toby T'
         ]);
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
-        $repository->update($dataUser->id(), 'Toby2', 'Twigger2', 'support@example2.com', 
+        $repository->update($dataUser->id(), 'Toby2', 'Twigger2', 'support@example2.com',
             Carbon::create(1950, 8, 15), 'Toby T2');
         $this->assertDatabaseMissing('control_data_user', [
             'id' => $dataUser->id(),
@@ -206,7 +206,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function update_returns_the_updated_user()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'support@example.com',
@@ -218,7 +218,7 @@ class DataUserTest extends TestCase
         $this->assertEquals('support@example.com', $dataUser->email());
         $this->assertTrue(Carbon::create(1850, 12, 20)->equalTo($dataUser->dob()));
         $this->assertEquals('Toby T', $dataUser->preferredName());
-        
+
         $repository = new \BristolSU\ControlDB\Repositories\DataUser();
         $updatedUser = $repository->update($dataUser->id(), 'Toby2', 'Twigger2', 'support@example2.com',
             Carbon::create(1950, 8, 15), 'Toby T2');

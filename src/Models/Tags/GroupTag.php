@@ -4,6 +4,8 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\GroupTagScope;
 use BristolSU\ControlDB\Traits\Tags\GroupTagTrait;
+use Database\Factories\GroupTagFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class GroupTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
 {
-    use SoftDeletes, GroupTagTrait {
+    use SoftDeletes, HasFactory, GroupTagTrait {
         setName as baseSetName;
         setDescription as baseSetDescription;
         setReference as baseSetReference;
@@ -163,6 +165,16 @@ class GroupTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Ta
     {
         $this->baseSetTagCategoryId($categoryId);
         $this->refresh();
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new GroupTagFactory();
     }
 
 }

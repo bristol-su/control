@@ -12,9 +12,9 @@ class SortByColumnTest extends TestCase
 
     /** @test */
     public function it_returns_the_items_sorted_by_the_column_alphabetically_if_the_column_is_a_string(){
-        $formatted1 = FormattedItem::create(factory(Role::class)->create());
-        $formatted2 = FormattedItem::create(factory(Role::class)->create());
-        $formatted3 = FormattedItem::create(factory(Role::class)->create());
+        $formatted1 = FormattedItem::create(Role::factory()->create());
+        $formatted2 = FormattedItem::create(Role::factory()->create());
+        $formatted3 = FormattedItem::create(Role::factory()->create());
         $formatted1->addRow('col', 'Alpha');
         $formatted2->addRow('col', 'Charlie');
         $formatted3->addRow('col', 'Beta');
@@ -30,9 +30,9 @@ class SortByColumnTest extends TestCase
     
     /** @test */
     public function it_returns_the_items_sorted_by_number_if_the_column_is_an_integer(){
-        $formatted1 = FormattedItem::create(factory(Role::class)->create());
-        $formatted2 = FormattedItem::create(factory(Role::class)->create());
-        $formatted3 = FormattedItem::create(factory(Role::class)->create());
+        $formatted1 = FormattedItem::create(Role::factory()->create());
+        $formatted2 = FormattedItem::create(Role::factory()->create());
+        $formatted3 = FormattedItem::create(Role::factory()->create());
         $formatted1->addRow('col', 5000);
         $formatted2->addRow('col', 300);
         $formatted3->addRow('col', 500);
@@ -48,10 +48,10 @@ class SortByColumnTest extends TestCase
     
     /** @test */
     public function null_values_appear_last(){
-        $formatted1 = FormattedItem::create(factory(Role::class)->create());
-        $formatted2 = FormattedItem::create(factory(Role::class)->create());
-        $formatted3 = FormattedItem::create(factory(Role::class)->create());
-        $formatted4 = FormattedItem::create(factory(Role::class)->create());
+        $formatted1 = FormattedItem::create(Role::factory()->create());
+        $formatted2 = FormattedItem::create(Role::factory()->create());
+        $formatted3 = FormattedItem::create(Role::factory()->create());
+        $formatted4 = FormattedItem::create(Role::factory()->create());
         $formatted1->addRow('col', 5000);
         $formatted2->addRow('col', 300);
         $formatted3->addRow('col', 500);

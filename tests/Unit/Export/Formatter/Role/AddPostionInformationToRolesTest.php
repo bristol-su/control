@@ -14,18 +14,18 @@ class AddPostionInformationToRolesTest extends TestCase
 
     /** @test */
     public function it_adds_position_information_to_a_role_item(){
-        $dataPosition1 = factory(DataPosition::class)->create(['name' => 'Position1']);
-        $dataPosition2 = factory(DataPosition::class)->create(['name' => 'Position2']);
-        $dataPosition3 = factory(DataPosition::class)->create(['name' => 'Position3']);
-        $position1 = factory(Position::class)->create(['data_provider_id' => $dataPosition1->id()]);
-        $position2 = factory(Position::class)->create(['data_provider_id' => $dataPosition2->id()]);
-        $position3 = factory(Position::class)->create(['data_provider_id' => $dataPosition3->id()]);
+        $dataPosition1 = DataPosition::factory()->create(['name' => 'Position1']);
+        $dataPosition2 = DataPosition::factory()->create(['name' => 'Position2']);
+        $dataPosition3 = DataPosition::factory()->create(['name' => 'Position3']);
+        $position1 = Position::factory()->create(['data_provider_id' => $dataPosition1->id()]);
+        $position2 = Position::factory()->create(['data_provider_id' => $dataPosition2->id()]);
+        $position3 = Position::factory()->create(['data_provider_id' => $dataPosition3->id()]);
 
         $formatter = new AddPositionInformationToRoles([]);
         $items = $formatter->format([
-            FormattedItem::create(factory(Role::class)->create(['position_id' => $position1])),
-            FormattedItem::create(factory(Role::class)->create(['position_id' => $position2])),
-            FormattedItem::create(factory(Role::class)->create(['position_id' => $position3])),
+            FormattedItem::create(Role::factory()->create(['position_id' => $position1])),
+            FormattedItem::create(Role::factory()->create(['position_id' => $position2])),
+            FormattedItem::create(Role::factory()->create(['position_id' => $position3])),
         ]);
 
         $this->assertCount(3, $items);

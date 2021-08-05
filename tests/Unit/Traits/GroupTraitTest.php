@@ -15,8 +15,8 @@ class GroupTraitTest extends TestCase
 
     /** @test */
     public function data_returns_the_data_attribute_for_the_group(){
-        $dataGroup = factory(DataGroup::class)->create();
-        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup->id()]);
+        $dataGroup = DataGroup::factory()->create();
+        $group = Group::factory()->create(['data_provider_id' => $dataGroup->id()]);
 
         $this->assertInstanceOf(DataGroup::class, $group->data());
         $this->assertTrue($dataGroup->is($group->data()));
@@ -24,8 +24,8 @@ class GroupTraitTest extends TestCase
 
     /** @test */
     public function users_can_be_removed_from_a_group() {
-        $users = factory(User::class, 5)->create();
-        $group = factory(Group::class)->create();
+        $users = User::factory()->count(5)->create();
+        $group = Group::factory()->create();
 
         foreach($users as $user) {
             $group->addUser($user);
@@ -50,8 +50,8 @@ class GroupTraitTest extends TestCase
 
     /** @test */
     public function tags_can_be_removed_from_a_group() {
-        $tags = factory(GroupTag::class, 5)->create();
-        $group = factory(Group::class)->create();
+        $tags = GroupTag::factory()->count(5)->create();
+        $group = Group::factory()->create();
 
         foreach($tags as $tag) {
             $group->addTag($tag);
@@ -77,11 +77,11 @@ class GroupTraitTest extends TestCase
             ]);
         }
     }
-    
+
     /** @test */
     public function members_returns_all_users_belonging_to_the_group(){
-        $users = factory(User::class, 5)->create();
-        $group = factory(Group::class)->create();
+        $users = User::factory()->count(5)->create();
+        $group = Group::factory()->create();
 
         DB::table('control_group_user')->insert($users->map(function($user) use ($group) {
             return ['user_id' => $user->id, 'group_id' => $group->id];
@@ -96,8 +96,8 @@ class GroupTraitTest extends TestCase
 
     /** @test */
     public function roles_returns_all_roles_belonging_to_the_group(){
-        $group = factory(Group::class)->create();
-        $roles = factory(Role::class, 5)->create(['group_id' => $group->id]);
+        $group = Group::factory()->create();
+        $roles = Role::factory()->count(5)->create(['group_id' => $group->id]);
 
         $groupRoles = $group->roles();
         $this->assertEquals(5, $groupRoles->count());
@@ -108,8 +108,8 @@ class GroupTraitTest extends TestCase
 
     /** @test */
     public function tags_returns_all_tags_belonging_to_the_group(){
-        $groupTags = factory(GroupTag::class, 5)->create();
-        $group = factory(Group::class)->create();
+        $groupTags = GroupTag::factory()->count(5)->create();
+        $group = Group::factory()->create();
 
         DB::table('control_taggables')->insert($groupTags->map(function($groupTag) use ($group) {
             return ['tag_id' => $groupTag->id, 'taggable_id' => $group->id, 'taggable_type' => 'group'];
@@ -124,8 +124,8 @@ class GroupTraitTest extends TestCase
 
     /** @test */
     public function users_can_be_added_to_a_group() {
-        $users = factory(User::class, 5)->create();
-        $group = factory(Group::class)->create();
+        $users = User::factory()->count(5)->create();
+        $group = Group::factory()->create();
 
         foreach($users as $user) {
             $group->addUser($user);
@@ -140,8 +140,8 @@ class GroupTraitTest extends TestCase
 
     /** @test */
     public function tags_can_be_added_to_a_group() {
-        $tags = factory(GroupTag::class, 5)->create();
-        $group = factory(Group::class)->create();
+        $tags = GroupTag::factory()->count(5)->create();
+        $group = Group::factory()->create();
 
         foreach($tags as $tag) {
             $group->addTag($tag);
@@ -159,15 +159,15 @@ class GroupTraitTest extends TestCase
     /** @test */
     public function setDataProviderId_updates_the_data_provider_id()
     {
-        $oldDataGroup = factory(DataGroup::class)->create();
-        $newDataGroup = factory(DataGroup::class)->create();
-        $group = factory(Group::class)->create(['data_provider_id' => $oldDataGroup->id()]);
-        
+        $oldDataGroup = DataGroup::factory()->create();
+        $newDataGroup = DataGroup::factory()->create();
+        $group = Group::factory()->create(['data_provider_id' => $oldDataGroup->id()]);
+
         $groupRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Group::class);
         $groupRepo->update($group->id(), $newDataGroup->id())->shouldBeCalled()->willReturn($group);
         $this->instance(\BristolSU\ControlDB\Contracts\Repositories\Group::class, $groupRepo->reveal());
 
         $group->setDataProviderId($newDataGroup->id());
     }
-    
+
 }

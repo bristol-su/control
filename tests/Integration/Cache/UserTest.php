@@ -14,16 +14,16 @@ class UserTest extends TestCase
 
     /** @test */
     public function getById_saves_the_user_in_the_cache(){
-        $user = factory(User::class)->create();
-        
+        $user = User::factory()->create();
+
         $userRepository = $this->prophesize(UserRepository::class);
         $userRepository->getById($user->id())->shouldBeCalled()->willReturn($user);
-        
+
         $cache = app(Repository::class);
         $key = \BristolSU\ControlDB\Cache\User::class . '@getById:' . $user->id();
-        
+
         $userCache = new \BristolSU\ControlDB\Cache\User($userRepository->reveal(), $cache);
-        
+
         $this->assertFalse($cache->has($key));
         $this->assertTrue($user->is($userCache->getById($user->id())));
         $this->assertTrue($cache->has($key));
@@ -32,8 +32,8 @@ class UserTest extends TestCase
 
     /** @test */
     public function getByDataProviderId_saves_the_user_in_the_cache(){
-        $dataProvider = factory(DataUser::class)->create();
-        $user = factory(User::class)->create(['data_provider_id' => $dataProvider->id()]);
+        $dataProvider = DataUser::factory()->create();
+        $user = User::factory()->create(['data_provider_id' => $dataProvider->id()]);
 
         $userRepository = $this->prophesize(UserRepository::class);
         $userRepository->getByDataProviderId($user->id())->shouldBeCalled()->willReturn($user);
@@ -48,13 +48,13 @@ class UserTest extends TestCase
         $this->assertTrue($cache->has($key));
         $this->assertTrue($user->is($cache->get($key)));
     }
-    
+
 
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $dataProvider = factory(DataUser::class)->create();
-        $user = factory(User::class)->create(['data_provider_id' => $dataProvider->id()]);
+        $dataProvider = DataUser::factory()->create();
+        $user = User::factory()->create(['data_provider_id' => $dataProvider->id()]);
 
         $userRepository = $this->prophesize(UserRepository::class);
         $userRepository->create($dataProvider->id())->shouldBeCalled()->willReturn($user);
@@ -70,7 +70,7 @@ class UserTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $userRepository = $this->prophesize(UserRepository::class);
         $userRepository->delete($user->id())->shouldBeCalled();
@@ -86,7 +86,7 @@ class UserTest extends TestCase
     /** @test */
     public function paginate_does_not_save_in_the_cache()
     {
-        $users = factory(User::class, 5)->create();
+        $users = User::factory()->count(5)->create();
 
         $userRepository = $this->prophesize(UserRepository::class);
         $userRepository->paginate(1, 2)->shouldBeCalled()->willReturn($users);
@@ -102,8 +102,8 @@ class UserTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $dataProvider = factory(DataUser::class)->create();
-        $user = factory(User::class)->create(['data_provider_id' => $dataProvider->id()]);
+        $dataProvider = DataUser::factory()->create();
+        $user = User::factory()->create(['data_provider_id' => $dataProvider->id()]);
 
         $userRepository = $this->prophesize(UserRepository::class);
         $userRepository->update($user->id(), $dataProvider->id())->shouldBeCalled()->willReturn($user);
@@ -131,5 +131,5 @@ class UserTest extends TestCase
         $this->assertTrue($cache->has($key));
         $this->assertEquals(19, $cache->get($key));
     }
-    
+
 }

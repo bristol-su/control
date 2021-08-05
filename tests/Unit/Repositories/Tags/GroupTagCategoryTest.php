@@ -14,7 +14,7 @@ class GroupTagCategoryTest extends TestCase
 
     /** @test */
     public function getById_returns_a_group_tag_category_model_with_the_corresponding_id(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create(['id' => 2]);
+        $groupTagCategory = GroupTagCategory::factory()->create(['id' => 2]);
         $groupTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTagCategory();
         $this->assertTrue(
             $groupTagCategory->is($groupTagCategoryRepo->getById(2))
@@ -30,7 +30,7 @@ class GroupTagCategoryTest extends TestCase
 
     /** @test */
     public function all_returns_all_group_tags_categories(){
-        $groupTagCategories = factory(GroupTagCategory::class, 15)->create();
+        $groupTagCategories = GroupTagCategory::factory()->count(15)->create();
         $groupTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTagCategory();
         $allTagCategories = $groupTagCategoryRepo->all();
 
@@ -44,7 +44,7 @@ class GroupTagCategoryTest extends TestCase
 
     /** @test */
     public function getByReference_returns_a_tag_category_given_the_full_reference(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create(['reference' => 'ref1']);
+        $groupTagCategory = GroupTagCategory::factory()->create(['reference' => 'ref1']);
 
         $groupTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTagCategory();
         $groupTagCategoryFromRepo = $groupTagCategoryRepo->getByReference('ref1');
@@ -85,7 +85,7 @@ class GroupTagCategoryTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_group_tag_category_model(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTagCategory = GroupTagCategory::factory()->create();
         $groupTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTagCategory();
         $groupTagCategoryRepo->delete($groupTagCategory->id());
 
@@ -96,7 +96,7 @@ class GroupTagCategoryTest extends TestCase
     /** @test */
     public function update_updates_a_group_tag_category()
     {
-        $groupTagCategory = factory(GroupTagCategory::class)->create([
+        $groupTagCategory = GroupTagCategory::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',
@@ -130,7 +130,7 @@ class GroupTagCategoryTest extends TestCase
     /** @test */
     public function update_returns_the_updated_group_tag_category()
     {
-        $groupTagCategory = factory(GroupTagCategory::class)->create([
+        $groupTagCategory = GroupTagCategory::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',

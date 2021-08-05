@@ -14,10 +14,10 @@ class RoleControllerTest extends TestCase
     /** @test */
     public function it_returns_all_roles()
     {
-        $roles = factory(Role::class, 5)->create();
+        $roles = Role::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/role');
         $response->assertStatus(200);
-        
+
         $response->assertPaginatedResponse();
         $response->assertPaginatedJsonCount(5);
         foreach ($response->paginatedJson() as $roleThroughApi) {
@@ -28,7 +28,7 @@ class RoleControllerTest extends TestCase
 
     /** @test */
     public function it_limits_roles_by_the_pagination_options(){
-        $roles = factory(Role::class, 50)->create();
+        $roles = Role::factory()->count(50)->create();
         $response = $this->getJson($this->apiUrl . '/role?page=2&per_page=15');
         $response->assertStatus(200);
 
@@ -39,11 +39,11 @@ class RoleControllerTest extends TestCase
             $this->assertEquals($paginatedRoles->shift()->id(), $roleThroughApi['id']);
         }
     }
-    
+
     /** @test */
     public function it_returns_a_single_role(){
-        $dataRole = factory(DataRole::class)->create();
-        $role = factory(Role::class)->create(['data_provider_id' => $dataRole->id()]);
+        $dataRole = DataRole::factory()->create();
+        $role = Role::factory()->create(['data_provider_id' => $dataRole->id()]);
         $response = $this->getJson($this->apiUrl . '/role/' . $role->id());
 
         $response->assertStatus(200);
@@ -53,13 +53,13 @@ class RoleControllerTest extends TestCase
 
     /** @test */
     public function it_updates_a_role(){
-        $group1 = factory(Group::class)->create();
-        $group2 = factory(Group::class)->create();
-        $position1 = factory(Position::class)->create();
-        $position2 = factory(Position::class)->create();
-        
-        $dataRole = factory(DataRole::class)->create(['role_name' => 'Name1', 'email' => 'email@email.com']);
-        $role = factory(Role::class)->create([
+        $group1 = Group::factory()->create();
+        $group2 = Group::factory()->create();
+        $position1 = Position::factory()->create();
+        $position2 = Position::factory()->create();
+
+        $dataRole = DataRole::factory()->create(['role_name' => 'Name1', 'email' => 'email@email.com']);
+        $role = Role::factory()->create([
             'data_provider_id' => $dataRole->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()]);
 
         $this->assertDatabaseHas('control_data_role', [
@@ -77,7 +77,7 @@ class RoleControllerTest extends TestCase
         $this->assertDatabaseHas('control_data_role', [
             'role_name' => 'Name2', 'email' => 'email2@email.com'
         ]);
-        
+
         $this->assertDatabaseHas('control_roles', [
             'id' => $role->id(), 'position_id' => $position2->id(), 'group_id' => $group2->id()
         ]);
@@ -87,14 +87,14 @@ class RoleControllerTest extends TestCase
 
     /** @test */
     public function it_creates_a_role(){
-        $group = factory(Group::class)->create();
-        $position = factory(Position::class)->create();
+        $group = Group::factory()->create();
+        $position = Position::factory()->create();
 
         $this->assertDatabaseMissing('control_roles', [
             'position_id' => $position->id(), 'group_id' => $group->id()
         ]);
 
-        
+
         $response = $this->postJson($this->apiUrl . '/role', [
             'role_name' => 'Name2', 'email' => 'email2@email.com', 'position_id' => $position->id(), 'group_id' => $group->id()
         ]);
@@ -120,7 +120,7 @@ class RoleControllerTest extends TestCase
 
     /** @test */
     public function it_deletes_a_role(){
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
 
         $this->assertDatabaseHas('control_roles', [
             'id' => $role->id
@@ -139,8 +139,8 @@ class RoleControllerTest extends TestCase
     public function it_updates_a_role_with_additional_attributes()
     {
         DataRole::addProperty('student_id');
-        $dataRole = factory(DataRole::class)->create(['role_name' => 'Name1', 'email' => 'email@email.com', 'additional_attributes' => json_encode(['student_id' => 'xyz123'])]);
-        $role = factory(Role::class)->create(['data_provider_id' => $dataRole->id()]);
+        $dataRole = DataRole::factory()->create(['role_name' => 'Name1', 'email' => 'email@email.com', 'additional_attributes' => json_encode(['student_id' => 'xyz123'])]);
+        $role = Role::factory()->create(['data_provider_id' => $dataRole->id()]);
 
         $this->assertDatabaseHas('control_data_role', [
             'role_name' => 'Name1', 'email' => 'email@email.com', 'additional_attributes' => json_encode(['student_id' => 'xyz123'])
@@ -164,15 +164,15 @@ class RoleControllerTest extends TestCase
     /** @test */
     public function it_creates_a_role_with_additional_attributes()
     {
-        $group = factory(Group::class)->create();
-        $position = factory(Position::class)->create();
-        
+        $group = Group::factory()->create();
+        $position = Position::factory()->create();
+
         DataRole::addProperty('account_code');
-        
+
         $response = $this->postJson($this->apiUrl . '/role', [
             'role_name' => 'Name2', 'email' => 'email2@email.com', 'account_code' => 'CHA', 'position_id' => $position->id(), 'group_id' => $group->id()
         ]);
-        
+
         $response->assertStatus(201);
 
         $response->assertJsonFragment([

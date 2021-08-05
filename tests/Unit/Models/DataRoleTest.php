@@ -12,7 +12,7 @@ class DataRoleTest extends TestCase
     
     /** @test */
     public function a_data_role_can_be_created(){
-        factory(DataRole::class)->create([
+        DataRole::factory()->create([
             'role_name' => 'Role1',
             'email' => 'email1@email.com',
         ]);
@@ -26,7 +26,7 @@ class DataRoleTest extends TestCase
 
     /** @test */
     public function an_empty_data_role_can_be_created(){
-        $dataRole = factory(DataRole::class)->create([
+        $dataRole = DataRole::factory()->create([
             'role_name' => null,
             'email' => null,
         ]);
@@ -42,7 +42,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function an_id_can_be_retrieved_from_the_model()
     {
-        $dataRole = factory(DataRole::class)->create([
+        $dataRole = DataRole::factory()->create([
             'id' => 4
         ]);
 
@@ -52,7 +52,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function a_role_name_can_be_retrieved_from_the_model()
     {
-        $dataRole = factory(DataRole::class)->create([
+        $dataRole = DataRole::factory()->create([
             'role_name' => 'Role1'
         ]);
 
@@ -62,7 +62,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function an_email_can_be_retrieved_from_the_model()
     {
-        $dataRole = factory(DataRole::class)->create([
+        $dataRole = DataRole::factory()->create([
             'email' => 'email@email.com'
         ]);
 
@@ -72,7 +72,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function a_role_name_can_be_set_on_the_model()
     {
-        $dataRole = factory(DataRole::class)->create([
+        $dataRole = DataRole::factory()->create([
             'role_name' => 'Role1'
         ]);
 
@@ -84,7 +84,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function an_email_can_be_set_on_the_model()
     {
-        $dataRole = factory(DataRole::class)->create([
+        $dataRole = DataRole::factory()->create([
             'email' => 'email@email.com'
         ]);
         
@@ -96,7 +96,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function additional_properties_can_be_set_and_got(){
         DataRole::addProperty('manages_roles');
-        $dataRole = factory(DataRole::class)->create([
+        $dataRole = DataRole::factory()->create([
             'role_name' => 'Vice-Captain of group x',
             'email' => 'email@example.com'
         ]);
@@ -112,7 +112,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function additional_properties_are_saved_in_the_database(){
         DataRole::addProperty('manages_roles');
-        $dataRole = factory(DataRole::class)->create([
+        $dataRole = DataRole::factory()->create([
             'role_name' => 'Vice-Captain of group x',
             'email' => 'email@example.com'
         ]);
@@ -130,7 +130,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function additional_properties_are_appended_to_an_array(){
         DataRole::addProperty('manages_roles');
-        $dataRole = factory(DataRole::class)->create([
+        $dataRole = DataRole::factory()->create([
             'role_name' => 'Vice-Captain of group x',
             'email' => 'email@example.com'
         ]);

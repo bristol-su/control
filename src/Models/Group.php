@@ -3,7 +3,9 @@
 namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\Traits\GroupTrait;
+use Database\Factories\GroupFactory;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
 {
-    use SoftDeletes, GroupTrait {
+    use SoftDeletes, HasFactory, GroupTrait {
         setDataProviderId as baseSetDataProviderId;
     }
 
@@ -91,5 +93,14 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new GroupFactory();
+    }
 
 }

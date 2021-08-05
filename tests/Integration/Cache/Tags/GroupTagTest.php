@@ -16,7 +16,7 @@ class GroupTagTest extends TestCase
     /** @test */
     public function all_does_not_save_in_the_cache()
     {
-        $groupTags = factory(GroupTag::class, 5)->create();
+        $groupTags = GroupTag::factory()->count(5)->create();
 
         $groupTagRepository = $this->prophesize(GroupTagRepository::class);
         $groupTagRepository->all()->shouldBeCalled()->willReturn($groupTags);
@@ -33,8 +33,8 @@ class GroupTagTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
-        $groupTag = factory(GroupTag::class)->create(['tag_category_id' => $groupTagCategory->id()]);
+        $groupTagCategory = GroupTagCategory::factory()->create();
+        $groupTag = GroupTag::factory()->create(['tag_category_id' => $groupTagCategory->id()]);
 
         $groupTagRepository = $this->prophesize(GroupTagRepository::class);
         $groupTagRepository->create('name1', 'desc1', 'ref1', $groupTagCategory->id())->shouldBeCalled()->willReturn($groupTag);
@@ -50,8 +50,8 @@ class GroupTagTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
-        $groupTag = factory(GroupTag::class)->create(['tag_category_id' => $groupTagCategory->id()]);
+        $groupTagCategory = GroupTagCategory::factory()->create();
+        $groupTag = GroupTag::factory()->create(['tag_category_id' => $groupTagCategory->id()]);
 
         $groupTagRepository = $this->prophesize(GroupTagRepository::class);
         $groupTagRepository->update($groupTag->id(), 'name1', 'desc1', 'ref1', $groupTagCategory->id())->shouldBeCalled()->willReturn($groupTag);
@@ -67,8 +67,8 @@ class GroupTagTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
-        $groupTag = factory(GroupTag::class)->create(['tag_category_id' => $groupTagCategory->id()]);
+        $groupTagCategory = GroupTagCategory::factory()->create();
+        $groupTag = GroupTag::factory()->create(['tag_category_id' => $groupTagCategory->id()]);
 
         $groupTagRepository = $this->prophesize(GroupTagRepository::class);
         $groupTagRepository->delete($groupTag->id())->shouldBeCalled();
@@ -80,11 +80,11 @@ class GroupTagTest extends TestCase
 
         $this->assertNull($groupTagCache->delete($groupTag->id()));
     }
-    
+
     /** @test */
     public function allThroughTagCategory_saves_tags_in_the_cache(){
-        $tagCategory = factory(GroupTagCategory::class)->create();
-        $groupTags = factory(GroupTag::class, 5)->create(['tag_category_id' => $tagCategory->id()]);
+        $tagCategory = GroupTagCategory::factory()->create();
+        $groupTags = GroupTag::factory()->count(5)->create(['tag_category_id' => $tagCategory->id()]);
 
         $groupTagRepository = $this->prophesize(GroupTagRepository::class);
         $groupTagRepository->allThroughTagCategory(Argument::that(function($arg) use ($tagCategory) {
@@ -102,12 +102,12 @@ class GroupTagTest extends TestCase
         $this->assertInstanceOf(Collection::class, $cache->get($key));
         $this->assertContainsOnlyInstancesOf(GroupTag::class, $cache->get($key));
         $this->assertCount(5, $cache->get($key));
-        
+
     }
 
     /** @test */
     public function getById_saves_tags_in_the_cache(){
-        $groupTag = factory(GroupTag::class)->create();
+        $groupTag = GroupTag::factory()->create();
 
         $groupTagRepository = $this->prophesize(GroupTagRepository::class);
         $groupTagRepository->getById($groupTag->id())->shouldBeCalled()->willReturn($groupTag);
@@ -125,7 +125,7 @@ class GroupTagTest extends TestCase
 
     /** @test */
     public function getTagByFullReference_saves_tags_in_the_cache(){
-        $groupTag = factory(GroupTag::class)->create();
+        $groupTag = GroupTag::factory()->create();
 
         $groupTagRepository = $this->prophesize(GroupTagRepository::class);
         $groupTagRepository->getTagByFullReference('full.ref')->shouldBeCalled()->willReturn($groupTag);

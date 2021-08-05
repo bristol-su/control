@@ -14,7 +14,7 @@ class UserTagTest extends TestCase
 
     /** @test */
     public function getById_returns_a_user_tag_model_with_the_corresponding_id(){
-        $userTag = factory(UserTag::class)->create(['id' => 2]);
+        $userTag = UserTag::factory()->create(['id' => 2]);
         $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
         $this->assertTrue(
             $userTag->is($userTagRepo->getById(2))
@@ -30,7 +30,7 @@ class UserTagTest extends TestCase
 
     /** @test */
     public function all_returns_all_user_tags(){
-        $userTags = factory(UserTag::class, 15)->create();
+        $userTags = UserTag::factory()->count(15)->create();
         $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
         $allTags = $userTagRepo->all();
         $this->assertInstanceOf(Collection::class, $allTags);
@@ -43,8 +43,8 @@ class UserTagTest extends TestCase
 
     /** @test */
     public function getTagByFullReference_returns_a_tag_given_the_full_reference(){
-        $userTagCategory = factory(UserTagCategory::class)->create(['reference' => 'ref1']);
-        $userTag = factory(UserTag::class)->create(['reference' => 'ref2', 'tag_category_id' => $userTagCategory]);
+        $userTagCategory = UserTagCategory::factory()->create(['reference' => 'ref1']);
+        $userTag = UserTag::factory()->create(['reference' => 'ref2', 'tag_category_id' => $userTagCategory]);
 
         $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
         $userTagFromRepo = $userTagRepo->getTagByFullReference('ref1.ref2');
@@ -87,19 +87,19 @@ class UserTagTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_user_tag_model(){
-        $userTag = factory(UserTag::class)->create();
+        $userTag = UserTag::factory()->create();
         $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
         $userTagRepo->delete($userTag->id());
 
         $userTag->refresh();
         $this->assertTrue($userTag->trashed());
     }
-    
+
     /** @test */
     public function allThroughTagCategory_returns_all_tags_through_a_tag_category(){
-        $category = factory(UserTagCategory::class)->create();
-        $tags = factory(UserTag::class, 10)->create(['tag_category_id' => $category->id()]);
-        factory(UserTag::class, 10)->create();
+        $category = UserTagCategory::factory()->create();
+        $tags = UserTag::factory()->count(10)->create(['tag_category_id' => $category->id()]);
+        UserTag::factory()->count(10)->create();
 
         $userTagRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTag();
         $tagsFromRepo = $userTagRepo->allThroughTagCategory($category);
@@ -114,9 +114,9 @@ class UserTagTest extends TestCase
     /** @test */
     public function update_updates_a_user_tag_category()
     {
-        $oldTagCategory = factory(UserTagCategory::class)->create();
-        $newTagCategory = factory(UserTagCategory::class)->create();
-        $userTag = factory(UserTag::class)->create([
+        $oldTagCategory = UserTagCategory::factory()->create();
+        $newTagCategory = UserTagCategory::factory()->create();
+        $userTag = UserTag::factory()->create([
             'name' => 'TagName',
             'description' => 'TagDesc',
             'reference' => 'ref',
@@ -151,9 +151,9 @@ class UserTagTest extends TestCase
     /** @test */
     public function update_returns_the_updated_user_tag_category()
     {
-        $oldTagCategory = factory(UserTagCategory::class)->create();
-        $newTagCategory = factory(UserTagCategory::class)->create();
-        $userTag = factory(UserTag::class)->create([
+        $oldTagCategory = UserTagCategory::factory()->create();
+        $newTagCategory = UserTagCategory::factory()->create();
+        $userTag = UserTag::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',

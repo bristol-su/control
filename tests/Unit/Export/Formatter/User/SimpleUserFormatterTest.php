@@ -15,12 +15,12 @@ class SimpleUserFormatterTest extends TestCase
     /** @test */
     public function it_appends_the_user_information(){
         $birthday = Carbon::create(1997, 02, 14);
-        $dataUser1 = factory(DataUser::class)->create(['first_name' => 'User1', 'last_name' => 'UserLast1', 'preferred_name' => 'UserPreferred1', 'email' => 'user1@example.com', 'dob' => $birthday->format('Y-m-d')]);
-        $dataUser2 = factory(DataUser::class)->create(['first_name' => 'User2', 'last_name' => 'UserLast2', 'preferred_name' => 'UserPreferred2', 'email' => 'user2@example.com', 'dob' => $birthday->format('Y-m-d')]);
-        $dataUser3 = factory(DataUser::class)->create(['first_name' => 'User3', 'last_name' => 'UserLast3', 'preferred_name' => 'UserPreferred3', 'email' => 'user3@example.com', 'dob' => $birthday->format('Y-m-d')]);
-        $user1 = factory(User::class)->create(['data_provider_id' => $dataUser1->id()]);
-        $user2 = factory(User::class)->create(['data_provider_id' => $dataUser2->id()]);
-        $user3 = factory(User::class)->create(['data_provider_id' => $dataUser3->id()]);
+        $dataUser1 = DataUser::factory()->create(['first_name' => 'User1', 'last_name' => 'UserLast1', 'preferred_name' => 'UserPreferred1', 'email' => 'user1@example.com', 'dob' => $birthday->format('Y-m-d')]);
+        $dataUser2 = DataUser::factory()->create(['first_name' => 'User2', 'last_name' => 'UserLast2', 'preferred_name' => 'UserPreferred2', 'email' => 'user2@example.com', 'dob' => $birthday->format('Y-m-d')]);
+        $dataUser3 = DataUser::factory()->create(['first_name' => 'User3', 'last_name' => 'UserLast3', 'preferred_name' => 'UserPreferred3', 'email' => 'user3@example.com', 'dob' => $birthday->format('Y-m-d')]);
+        $user1 = User::factory()->create(['data_provider_id' => $dataUser1->id()]);
+        $user2 = User::factory()->create(['data_provider_id' => $dataUser2->id()]);
+        $user3 = User::factory()->create(['data_provider_id' => $dataUser3->id()]);
 
         $formatter = new SimpleUserFormatter([]);
         $items = $formatter->format([FormattedItem::create($user1), FormattedItem::create($user2), FormattedItem::create($user3)]);

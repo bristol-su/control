@@ -18,8 +18,7 @@
     "orchestra/testbench": "^6.0",
     "phpstan/phpstan": "^0.12.8",
     "phpspec/prophecy-phpunit": "2.0.1",
-    "brianium/paratest": "^6.0",
-    "laravel/legacy-factories": "^1.0"
+    "brianium/paratest": "^6.0"
   },
   "extra": {
     "laravel": {

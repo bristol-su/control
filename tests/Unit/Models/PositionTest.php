@@ -12,7 +12,7 @@ class PositionTest extends TestCase
     /** @test */
     public function an_id_can_be_retrieved_from_the_model()
     {
-        $position = factory(Position::class)->create([
+        $position = Position::factory()->create([
             'id' => 4
         ]);
 
@@ -21,7 +21,7 @@ class PositionTest extends TestCase
 
     /** @test */
     public function a_data_provider_id_can_be_retrieved_from_the_model(){
-        $position = factory(Position::class)->create([
+        $position = Position::factory()->create([
             'data_provider_id' => 5
         ]);
 
@@ -30,7 +30,7 @@ class PositionTest extends TestCase
 
     /** @test */
     public function a_data_provider_id_can_set_on_from_the_model(){
-        $position = factory(Position::class)->create([
+        $position = Position::factory()->create([
             'data_provider_id' => 1
         ]);
 
@@ -41,10 +41,10 @@ class PositionTest extends TestCase
 
     /** @test */
     public function data_is_returned_in_the_array(){
-        $dataPosition = factory(DataPosition::class)->create(
+        $dataPosition = DataPosition::factory()->create(
             ['name' => 'Position1', 'description' => 'description of the position']
         );
-        $position = factory(Position::class)->create([
+        $position = Position::factory()->create([
             'data_provider_id' => $dataPosition->id()
         ]);
 

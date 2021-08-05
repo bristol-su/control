@@ -13,7 +13,7 @@ class DataRoleTest extends TestCase
 
     /** @test */
     public function getById_saves_the_role_in_the_cache(){
-        $dataRole = factory(DataRole::class)->create();
+        $dataRole = DataRole::factory()->create();
 
         $roleRepository = $this->prophesize(DataRoleRepository::class);
         $roleRepository->getById($dataRole->id())->shouldBeCalled()->willReturn($dataRole);
@@ -32,7 +32,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function getWhere_does_not_save_in_the_cache()
     {
-        $role = factory(DataRole::class)->create();
+        $role = DataRole::factory()->create();
 
         $roleRepository = $this->prophesize(DataRoleRepository::class);
         $roleRepository->getWhere(['email' => 'test@test.com'])->shouldBeCalled()->willReturn($role);
@@ -48,7 +48,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function getAllWhere_does_not_save_in_the_cache()
     {
-        $roles = factory(DataRole::class, 5)->create();
+        $roles = DataRole::factory()->count(5)->create();
 
         $roleRepository = $this->prophesize(DataRoleRepository::class);
         $roleRepository->getAllWhere(['email' => 'test@test.com'])->shouldBeCalled()->willReturn($roles);
@@ -64,7 +64,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $role = factory(DataRole::class)->create();
+        $role = DataRole::factory()->create();
 
         $roleRepository = $this->prophesize(DataRoleRepository::class);
         $roleRepository->update($role->id(), 'N', 'E')->shouldBeCalled()->willReturn($role);
@@ -80,7 +80,7 @@ class DataRoleTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $role = factory(DataRole::class)->create();
+        $role = DataRole::factory()->create();
 
         $roleRepository = $this->prophesize(DataRoleRepository::class);
         $roleRepository->create('N', 'E')->shouldBeCalled()->willReturn($role);

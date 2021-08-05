@@ -12,21 +12,21 @@ class UserTest extends TestCase
 {
     /** @test */
     public function id_returns_the_id_of_the_user(){
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         
         $this->assertEquals($user->id, $user->id());
     }
     
     /** @test */
     public function dataProviderId_returns_the_data_provider_id_of_the_model(){
-        $user = factory(User::class)->create(['data_provider_id' => 5]);
+        $user = User::factory()->create(['data_provider_id' => 5]);
         
         $this->assertEquals(5, $user->dataProviderId());
     }
 
     /** @test */
     public function a_data_provider_id_can_set_on_from_the_model(){
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'data_provider_id' => 5
         ]);
 
@@ -37,10 +37,10 @@ class UserTest extends TestCase
 
     /** @test */
     public function data_is_returned_in_the_array(){
-        $dataUser = factory(DataUser::class)->create(
+        $dataUser = DataUser::factory()->create(
             ['first_name' => 'Jane', 'email' => 'test@testing.com']
         );
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'data_provider_id' => $dataUser->id()
         ]);
 
@@ -56,12 +56,12 @@ class UserTest extends TestCase
     /** @test */
     public function data_is_returned_in_the_array_including_additional_attributes(){
         DataUser::addProperty('student_id');
-        $dataUser = factory(DataUser::class)->create(
+        $dataUser = DataUser::factory()->create(
             ['first_name' => 'Jane', 'email' => 'test@testing.com']
         );
         $dataUser->student_id = 'xy123456';
         $dataUser->save();
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'data_provider_id' => $dataUser->id()
         ]);
 

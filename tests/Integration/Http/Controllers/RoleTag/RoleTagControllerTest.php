@@ -11,7 +11,7 @@ class RoleTagControllerTest extends TestCase
 
     /** @test */
     public function it_returns_all_role_tags(){
-        $roleTags = factory(RoleTag::class, 5)->create();
+        $roleTags = RoleTag::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/role-tag');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -24,7 +24,7 @@ class RoleTagControllerTest extends TestCase
 
     /** @test */
     public function it_returns_a_single_roleTag(){
-        $roleTag = factory(RoleTag::class)->create();
+        $roleTag = RoleTag::factory()->create();
         $response = $this->getJson($this->apiUrl . '/role-tag/' . $roleTag->id());
 
         $response->assertStatus(200);
@@ -33,10 +33,10 @@ class RoleTagControllerTest extends TestCase
 
     /** @test */
     public function it_updates_a_role_tag(){
-        $tagCategory1 = factory(RoleTagCategory::class)->create();
-        $tagCategory2 = factory(RoleTagCategory::class)->create();
-        
-        $roleTag = factory(RoleTag::class)->create([
+        $tagCategory1 = RoleTagCategory::factory()->create();
+        $tagCategory2 = RoleTagCategory::factory()->create();
+
+        $roleTag = RoleTag::factory()->create([
             'name' => 'tag1', 'description' => 'ATag1', 'reference' => 'tag1a', 'tag_category_id' => $tagCategory1->id()
         ]);
 
@@ -47,7 +47,7 @@ class RoleTagControllerTest extends TestCase
         $response = $this->patchJson($this->apiUrl . '/role-tag/' . $roleTag->id(), [
             'name' => 'tag2', 'description' => 'ATag2', 'reference' => 'tag2a', 'tag_category_id' => $tagCategory2->id()
         ]);
-        
+
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('control_tags', [
@@ -58,7 +58,7 @@ class RoleTagControllerTest extends TestCase
 
     /** @test */
     public function it_creates_a_role_tag(){
-        $tagCategory = factory(RoleTagCategory::class)->create();
+        $tagCategory = RoleTagCategory::factory()->create();
 
         $response = $this->postJson($this->apiUrl . '/role-tag', [
             'name' => 'tag1', 'description' => 'ATag1', 'reference' => 'tag1a', 'tag_category_id' => $tagCategory->id()
@@ -78,7 +78,7 @@ class RoleTagControllerTest extends TestCase
 
     /** @test */
     public function it_deletes_a_role_tag(){
-        $roleTag = factory(RoleTag::class)->create();
+        $roleTag = RoleTag::factory()->create();
 
         $this->assertDatabaseHas('control_tags', [
             'id' => $roleTag->id

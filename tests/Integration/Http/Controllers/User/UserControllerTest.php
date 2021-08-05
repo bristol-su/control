@@ -14,7 +14,7 @@ class UserControllerTest extends TestCase
     /** @test */
     public function it_returns_all_users()
     {
-        $users = factory(User::class, 5)->create();
+        $users = User::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/user');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -28,7 +28,7 @@ class UserControllerTest extends TestCase
 
     /** @test */
     public function it_limits_users_by_the_pagination_options(){
-        $users = factory(User::class, 50)->create();
+        $users = User::factory()->count(50)->create();
         $response = $this->getJson($this->apiUrl . '/user?page=2&per_page=15');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -39,12 +39,12 @@ class UserControllerTest extends TestCase
             $this->assertEquals($paginatedUsers->shift()->id(), $userThroughApi['id']);
         }
     }
-    
+
     /** @test */
     public function it_returns_a_single_user()
     {
-        $dataUser = factory(DataUser::class)->create();
-        $user = factory(User::class)->create(['data_provider_id' => $dataUser->id()]);
+        $dataUser = DataUser::factory()->create();
+        $user = User::factory()->create(['data_provider_id' => $dataUser->id()]);
         $response = $this->getJson($this->apiUrl . '/user/' . $user->id());
 
         $response->assertStatus(200);
@@ -55,10 +55,10 @@ class UserControllerTest extends TestCase
     /** @test */
     public function it_updates_a_user()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '1908-02-14 00:00:00', 'preferred_name' => 'JJ'
         ]);
-        $user = factory(User::class)->create(['data_provider_id' => $dataUser->id()]);
+        $user = User::factory()->create(['data_provider_id' => $dataUser->id()]);
 
         $this->assertDatabaseHas('control_data_user', [
             'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '1908-02-14 00:00:00', 'preferred_name' => 'JJ'
@@ -105,7 +105,7 @@ class UserControllerTest extends TestCase
     /** @test */
     public function it_deletes_a_user()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->assertDatabaseHas('control_users', [
             'id' => $user->id
@@ -124,11 +124,11 @@ class UserControllerTest extends TestCase
     public function it_updates_a_user_with_additional_attributes()
     {
         DataUser::addProperty('student_id');
-        $dataUser = factory(DataUser::class)->create([
-            'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '1908-02-14 00:00:00', 
+        $dataUser = DataUser::factory()->create([
+            'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '1908-02-14 00:00:00',
             'preferred_name' => 'JJ', 'additional_attributes' => json_encode(['student_id' => 'xyz123'])
         ]);
-        $user = factory(User::class)->create(['data_provider_id' => $dataUser->id()]);
+        $user = User::factory()->create(['data_provider_id' => $dataUser->id()]);
 
         $this->assertDatabaseHas('control_data_user', [
             'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '1908-02-14 00:00:00',
@@ -168,7 +168,7 @@ class UserControllerTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('control_data_user', [
-            'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '1908-02-14 00:00:00', 
+            'first_name' => 'Jane', 'last_name' => 'Jones', 'email' => 'email@email.com', 'dob' => '1908-02-14 00:00:00',
             'preferred_name' => 'JJ', 'additional_attributes' => json_encode(['student_id' => 'xyz1234'])
         ]);
 

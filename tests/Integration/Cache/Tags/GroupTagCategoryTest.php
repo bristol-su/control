@@ -16,7 +16,7 @@ class GroupTagCategoryTest extends TestCase
     /** @test */
     public function all_does_not_save_in_the_cache()
     {
-        $groupTagCategories = factory(GroupTagCategory::class, 5)->create();
+        $groupTagCategories = GroupTagCategory::factory()->count(5)->create();
 
         $groupTagCategoryRepository = $this->prophesize(GroupTagCategoryRepository::class);
         $groupTagCategoryRepository->all()->shouldBeCalled()->willReturn($groupTagCategories);
@@ -33,7 +33,7 @@ class GroupTagCategoryTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTagCategory = GroupTagCategory::factory()->create();
 
         $groupTagCategoryRepository = $this->prophesize(GroupTagCategoryRepository::class);
         $groupTagCategoryRepository->create('name1', 'desc1', 'ref1')->shouldBeCalled()->willReturn($groupTagCategory);
@@ -49,7 +49,7 @@ class GroupTagCategoryTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTagCategory = GroupTagCategory::factory()->create();
 
         $groupTagCategoryRepository = $this->prophesize(GroupTagCategoryRepository::class);
         $groupTagCategoryRepository->update($groupTagCategory->id(), 'name1', 'desc1', 'ref1')->shouldBeCalled()->willReturn($groupTagCategory);
@@ -65,7 +65,7 @@ class GroupTagCategoryTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTagCategory = GroupTagCategory::factory()->create();
 
         $groupTagCategoryRepository = $this->prophesize(GroupTagCategoryRepository::class);
         $groupTagCategoryRepository->delete($groupTagCategory->id())->shouldBeCalled();
@@ -77,10 +77,10 @@ class GroupTagCategoryTest extends TestCase
 
         $this->assertNull($groupTagCategoryCache->delete($groupTagCategory->id()));
     }
-    
+
     /** @test */
     public function getById_saves_tags_in_the_cache(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTagCategory = GroupTagCategory::factory()->create();
 
         $groupTagCategoryRepository = $this->prophesize(GroupTagCategoryRepository::class);
         $groupTagCategoryRepository->getById($groupTagCategory->id())->shouldBeCalled()->willReturn($groupTagCategory);
@@ -98,7 +98,7 @@ class GroupTagCategoryTest extends TestCase
 
     /** @test */
     public function getByReference_saves_tags_in_the_cache(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTagCategory = GroupTagCategory::factory()->create();
 
         $groupTagCategoryRepository = $this->prophesize(GroupTagCategoryRepository::class);
         $groupTagCategoryRepository->getByReference('ref')->shouldBeCalled()->willReturn($groupTagCategory);

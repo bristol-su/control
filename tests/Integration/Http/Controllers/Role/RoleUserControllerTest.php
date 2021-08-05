@@ -11,10 +11,10 @@ class RoleUserControllerTest extends TestCase
 
     /** @test */
     public function it_gets_all_users_through_a_role(){
-        $role = factory(Role::class)->create();
-        $users = factory(User::class, 5)->create();
-        factory(User::class, 3)->create();
-        
+        $role = Role::factory()->create();
+        $users = User::factory()->count(5)->create();
+        User::factory()->count(3)->create();
+
         foreach($users as $user) {
             $role->addUser($user);
             $this->assertDatabaseHas('control_role_user', [
@@ -22,7 +22,7 @@ class RoleUserControllerTest extends TestCase
                 'user_id' => $user->id(),
             ]);
         }
-        
+
         $response = $this->getJson($this->apiUrl . '/role/' . $role->id() . '/user');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -33,36 +33,36 @@ class RoleUserControllerTest extends TestCase
             $this->assertEquals($users->shift()->id(), $userThroughApi['id']);
         }
     }
-    
+
     /** @test */
     public function it_adds_a_user_to_a_role(){
-        $role = factory(Role::class)->create();
-        $user = factory(User::class)->create();
-        
+        $role = Role::factory()->create();
+        $user = User::factory()->create();
+
         $this->assertDatabaseMissing('control_role_user', [
             'role_id' => $role->id(),
             'user_id' => $user->id(),
         ]);
-        
+
         $response = $this->patchJson(
             $this->apiUrl . '/role/' . $role->id() . '/user/' . $user->id()
         );
 
         $response->assertStatus(200);
-        
+
         $this->assertDatabaseHas('control_role_user', [
             'role_id' => $role->id(),
             'user_id' => $user->id(),
         ]);
     }
-    
+
     /** @test */
     public function it_removes_a_user_from_a_role(){
-        $role = factory(Role::class)->create();
-        $user = factory(User::class)->create();
+        $role = Role::factory()->create();
+        $user = User::factory()->create();
 
         $role->addUser($user);
-        
+
         $this->assertDatabaseHas('control_role_user', [
             'role_id' => $role->id(),
             'user_id' => $user->id(),
@@ -73,7 +73,7 @@ class RoleUserControllerTest extends TestCase
         );
 
         $response->assertStatus(200);
-        
+
         $this->assertSoftDeleted('control_role_user', [
             'role_id' => $role->id(),
             'user_id' => $user->id(),
@@ -81,5 +81,5 @@ class RoleUserControllerTest extends TestCase
 
 
     }
-    
+
 }

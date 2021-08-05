@@ -253,7 +253,7 @@ class HasAdditionalPropertiesTest extends TestCase
     public function saveAdditionalAttribute_sets_and_saves_an_additional_attribute()
     {
         DataGroup::addProperty('account');
-        $dataGroup = factory(DataGroup::class)->create(['email' => 'abc@123.com']);
+        $dataGroup = DataGroup::factory()->create(['email' => 'abc@123.com']);
         $dataGroup->setAdditionalAttribute('account', 'AAA');
         $dataGroup->save();
 

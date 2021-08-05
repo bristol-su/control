@@ -14,7 +14,7 @@ class RoleTagCategoryTest extends TestCase
 
     /** @test */
     public function getById_returns_a_role_tag_category_model_with_the_corresponding_id(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create(['id' => 2]);
+        $roleTagCategory = RoleTagCategory::factory()->create(['id' => 2]);
         $roleTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
         $this->assertTrue(
             $roleTagCategory->is($roleTagCategoryRepo->getById(2))
@@ -30,7 +30,7 @@ class RoleTagCategoryTest extends TestCase
 
     /** @test */
     public function all_returns_all_role_tags_categories(){
-        $roleTagCategories = factory(RoleTagCategory::class, 15)->create();
+        $roleTagCategories = RoleTagCategory::factory()->count(15)->create();
         $roleTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
         $allTagCategories = $roleTagCategoryRepo->all();
         $this->assertInstanceOf(Collection::class, $allTagCategories);
@@ -43,7 +43,7 @@ class RoleTagCategoryTest extends TestCase
 
     /** @test */
     public function getByReference_returns_a_tag_category_given_the_full_reference(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create(['reference' => 'ref1']);
+        $roleTagCategory = RoleTagCategory::factory()->create(['reference' => 'ref1']);
 
         $roleTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
         $roleTagCategoryFromRepo = $roleTagCategoryRepo->getByReference('ref1');
@@ -84,7 +84,7 @@ class RoleTagCategoryTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_role_tag_category_model(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTagCategory = RoleTagCategory::factory()->create();
         $roleTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTagCategory();
         $roleTagCategoryRepo->delete($roleTagCategory->id());
 
@@ -95,7 +95,7 @@ class RoleTagCategoryTest extends TestCase
     /** @test */
     public function update_updates_a_role_tag_category()
     {
-        $roleTagCategory = factory(RoleTagCategory::class)->create([
+        $roleTagCategory = RoleTagCategory::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',
@@ -129,7 +129,7 @@ class RoleTagCategoryTest extends TestCase
     /** @test */
     public function update_returns_the_updated_role_tag_category()
     {
-        $roleTagCategory = factory(RoleTagCategory::class)->create([
+        $roleTagCategory = RoleTagCategory::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',

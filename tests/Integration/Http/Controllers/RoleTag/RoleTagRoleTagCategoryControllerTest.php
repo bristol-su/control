@@ -11,8 +11,8 @@ class RoleTagRoleTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_gets_the_category_of_the_given_tag(){
-        $tagCategory = factory(RoleTagCategory::class)->create(['id' => 10]);
-        $tag = factory(RoleTag::class)->create(['id' => 20, 'tag_category_id' => $tagCategory->id()]);
+        $tagCategory = RoleTagCategory::factory()->create(['id' => 10]);
+        $tag = RoleTag::factory()->create(['id' => 20, 'tag_category_id' => $tagCategory->id()]);
         
         $response = $this->getJson($this->apiUrl . '/role-tag/' . $tag->id() . '/role-tag-category');
         $response->assertStatus(200);

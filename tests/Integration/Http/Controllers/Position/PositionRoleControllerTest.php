@@ -11,10 +11,10 @@ class PositionRoleControllerTest extends TestCase
 
     /** @test */
     public function it_gets_all_roles_through_a_position(){
-        $position = factory(Position::class)->create();
-        $roles = factory(Role::class, 5)->create(['position_id' => $position->id()]);
-        factory(Role::class, 2)->create();
-        
+        $position = Position::factory()->create();
+        $roles = Role::factory()->count(5)->create(['position_id' => $position->id()]);
+        Role::factory()->count(2)->create();
+
         $response = $this->getJson($this->apiUrl . '/position/' . $position->id() . '/role');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -24,5 +24,5 @@ class PositionRoleControllerTest extends TestCase
             $this->assertEquals($roles->shift()->id(), $roleThroughApi['id']);
         }
     }
-    
+
 }

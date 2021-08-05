@@ -16,14 +16,14 @@ class AddRoleHoldersAsNewItemsTest extends TestCase
     /** @test */
     public function it_adds_role_holders_as_new_items()
     {
-        $dataUser1 = factory(DataUser::class)->create(['first_name' => 'User1', 'last_name' => 'UserLast1', 'preferred_name' => 'UserPreferred1', 'email' => 'user1@example.com']);
-        $dataUser2 = factory(DataUser::class)->create(['first_name' => 'User2', 'last_name' => 'UserLast2', 'preferred_name' => 'UserPreferred2', 'email' => 'user2@example.com']);
-        $dataUser3 = factory(DataUser::class)->create(['first_name' => 'User3', 'last_name' => 'UserLast3', 'preferred_name' => 'UserPreferred3', 'email' => 'user3@example.com']);
-        $user1 = factory(User::class)->create(['data_provider_id' => $dataUser1->id()]);
-        $user2 = factory(User::class)->create(['data_provider_id' => $dataUser2->id()]);
-        $user3 = factory(User::class)->create(['data_provider_id' => $dataUser3->id()]);
-        $role1 = factory(Role::class)->create();
-        $role2 = factory(Role::class)->create();
+        $dataUser1 = DataUser::factory()->create(['first_name' => 'User1', 'last_name' => 'UserLast1', 'preferred_name' => 'UserPreferred1', 'email' => 'user1@example.com']);
+        $dataUser2 = DataUser::factory()->create(['first_name' => 'User2', 'last_name' => 'UserLast2', 'preferred_name' => 'UserPreferred2', 'email' => 'user2@example.com']);
+        $dataUser3 = DataUser::factory()->create(['first_name' => 'User3', 'last_name' => 'UserLast3', 'preferred_name' => 'UserPreferred3', 'email' => 'user3@example.com']);
+        $user1 = User::factory()->create(['data_provider_id' => $dataUser1->id()]);
+        $user2 = User::factory()->create(['data_provider_id' => $dataUser2->id()]);
+        $user3 = User::factory()->create(['data_provider_id' => $dataUser3->id()]);
+        $role1 = Role::factory()->create();
+        $role2 = Role::factory()->create();
         app(UserRole::class)->addUserToRole($user1, $role1);
         app(UserRole::class)->addUserToRole($user2, $role2);
         app(UserRole::class)->addUserToRole($user3, $role2);

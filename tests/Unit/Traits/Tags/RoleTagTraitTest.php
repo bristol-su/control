@@ -14,8 +14,8 @@ class RoleTagTraitTest extends TestCase
 {
     /** @test */
     public function category_returns_the_owning_category(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
-        $roleTag = factory(RoleTag::class)->create(['tag_category_id' => $roleTagCategory->id]);
+        $roleTagCategory = RoleTagCategory::factory()->create();
+        $roleTag = RoleTag::factory()->create(['tag_category_id' => $roleTagCategory->id]);
 
         $this->assertInstanceOf(RoleTagCategory::class, $roleTag->category());
         $this->assertTrue($roleTagCategory->is($roleTag->category()));
@@ -23,8 +23,8 @@ class RoleTagTraitTest extends TestCase
 
     /** @test */
     public function roles_can_be_added_to_the_tag(){
-        $roleTag = factory(RoleTag::class)->create();
-        $taggedRoles = factory(Role::class, 5)->create();
+        $roleTag = RoleTag::factory()->create();
+        $taggedRoles = Role::factory()->count(5)->create();
 
         foreach($taggedRoles as $role) {
             $roleTag->addRole($role);
@@ -39,8 +39,8 @@ class RoleTagTraitTest extends TestCase
 
     /** @test */
     public function roles_can_be_removed_from_the_tag(){
-        $roleTag = factory(RoleTag::class)->create();
-        $taggedRoles = factory(Role::class, 5)->create();
+        $roleTag = RoleTag::factory()->create();
+        $taggedRoles = Role::factory()->count(5)->create();
 
         DB::table('control_taggables')->insert($taggedRoles->map(function($role) use ($roleTag) {
             return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => 'role'];
@@ -62,13 +62,13 @@ class RoleTagTraitTest extends TestCase
 
     /** @test */
     public function role_returns_all_roles_tagged(){
-        $roleTag = factory(RoleTag::class)->create();
+        $roleTag = RoleTag::factory()->create();
         // Models which could be linked to a tag. Users, positions and roles should never be returned
-        $taggedRoles = factory(Role::class, 5)->create();
-        $untaggedRoles = factory(Role::class, 5)->create();
-        $users = factory(User::class, 5)->create();
-        $positions = factory(Position::class, 5)->create();
-        $roles = factory(Role::class, 5)->create();
+        $taggedRoles = Role::factory()->count(5)->create();
+        $untaggedRoles = Role::factory()->count(5)->create();
+        $users = User::factory()->count(5)->create();
+        $positions = Position::factory()->count(5)->create();
+        $roles = Role::factory()->count(5)->create();
 
         DB::table('control_taggables')->insert($taggedRoles->map(function($role) use ($roleTag) {
             return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => 'role'];
@@ -83,8 +83,8 @@ class RoleTagTraitTest extends TestCase
 
     /** @test */
     public function fullReference_returns_the_category_reference_and_the_tag_reference(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create(['reference' => 'categoryreference1']);
-        $roleTag = factory(RoleTag::class)->create(['reference' => 'tagreference1', 'tag_category_id' => $roleTagCategory->id]);
+        $roleTagCategory = RoleTagCategory::factory()->create(['reference' => 'categoryreference1']);
+        $roleTag = RoleTag::factory()->create(['reference' => 'tagreference1', 'tag_category_id' => $roleTagCategory->id]);
 
         $this->assertEquals('categoryreference1.tagreference1', $roleTag->fullReference());
     }
@@ -93,7 +93,7 @@ class RoleTagTraitTest extends TestCase
     /** @test */
     public function setName_updates_the_role_tag_name()
     {
-        $roleTag = factory(RoleTag::class)->create();
+        $roleTag = RoleTag::factory()->create();
 
         $roleTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTag::class);
         $roleTagRepository->update($roleTag->id(), 'NewName', $roleTag->description(), $roleTag->reference(), $roleTag->categoryId())
@@ -106,7 +106,7 @@ class RoleTagTraitTest extends TestCase
     /** @test */
     public function setDescription_updates_the_role_tag_description()
     {
-        $roleTag = factory(RoleTag::class)->create();
+        $roleTag = RoleTag::factory()->create();
 
         $roleTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTag::class);
         $roleTagRepository->update($roleTag->id(), $roleTag->name(), 'NewDescription', $roleTag->reference(), $roleTag->categoryId())
@@ -119,7 +119,7 @@ class RoleTagTraitTest extends TestCase
     /** @test */
     public function setReference_updates_the_role_tag_reference()
     {
-        $roleTag = factory(RoleTag::class)->create();
+        $roleTag = RoleTag::factory()->create();
 
         $roleTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTag::class);
         $roleTagRepository->update($roleTag->id(), $roleTag->name(), $roleTag->description(), 'NewReference', $roleTag->categoryId())
@@ -132,8 +132,8 @@ class RoleTagTraitTest extends TestCase
     /** @test */
     public function setTagCategoryId_updates_the_role_tag_category_id()
     {
-        $roleTag = factory(RoleTag::class)->create();
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTag = RoleTag::factory()->create();
+        $roleTagCategory = RoleTagCategory::factory()->create();
 
         $roleTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTag::class);
         $roleTagRepository->update($roleTag->id(), $roleTag->name(), $roleTag->description(), $roleTag->reference(), $roleTagCategory->id())

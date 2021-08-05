@@ -13,7 +13,7 @@ class DataGroupTest extends TestCase
 
     /** @test */
     public function getById_saves_the_group_in_the_cache(){
-        $dataGroup = factory(DataGroup::class)->create();
+        $dataGroup = DataGroup::factory()->create();
 
         $groupRepository = $this->prophesize(DataGroupRepository::class);
         $groupRepository->getById($dataGroup->id())->shouldBeCalled()->willReturn($dataGroup);
@@ -32,7 +32,7 @@ class DataGroupTest extends TestCase
     /** @test */
     public function getWhere_does_not_save_in_the_cache()
     {
-        $group = factory(DataGroup::class)->create();
+        $group = DataGroup::factory()->create();
 
         $groupRepository = $this->prophesize(DataGroupRepository::class);
         $groupRepository->getWhere(['email' => 'test@test.com'])->shouldBeCalled()->willReturn($group);
@@ -48,7 +48,7 @@ class DataGroupTest extends TestCase
     /** @test */
     public function getAllWhere_does_not_save_in_the_cache()
     {
-        $groups = factory(DataGroup::class, 5)->create();
+        $groups = DataGroup::factory()->count(5)->create();
 
         $groupRepository = $this->prophesize(DataGroupRepository::class);
         $groupRepository->getAllWhere(['email' => 'test@test.com'])->shouldBeCalled()->willReturn($groups);
@@ -64,7 +64,7 @@ class DataGroupTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $group = factory(DataGroup::class)->create();
+        $group = DataGroup::factory()->create();
 
         $groupRepository = $this->prophesize(DataGroupRepository::class);
         $groupRepository->update($group->id(), 'N', 'E')->shouldBeCalled()->willReturn($group);
@@ -80,7 +80,7 @@ class DataGroupTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $group = factory(DataGroup::class)->create();
+        $group = DataGroup::factory()->create();
 
         $groupRepository = $this->prophesize(DataGroupRepository::class);
         $groupRepository->create('N', 'E')->shouldBeCalled()->willReturn($group);

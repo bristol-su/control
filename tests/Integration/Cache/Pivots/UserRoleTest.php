@@ -16,8 +16,8 @@ class UserRoleTest extends TestCase
     /** @test */
     public function addUserToRole_does_not_save_in_cache()
     {
-        $user = factory(User::class)->create();
-        $role = factory(Role::class)->create();
+        $user = User::factory()->create();
+        $role = Role::factory()->create();
 
         $userRoleRepository = $this->prophesize(UserRole::class);
         $userRoleRepository->addUserToRole(Argument::that(function ($arg) use ($user) {
@@ -37,8 +37,8 @@ class UserRoleTest extends TestCase
     /** @test */
     public function removeUserFromRole_does_not_save_in_cache()
     {
-        $user = factory(User::class)->create();
-        $role = factory(Role::class)->create();
+        $user = User::factory()->create();
+        $role = Role::factory()->create();
 
         $userRoleRepository = $this->prophesize(UserRole::class);
         $userRoleRepository->removeUserFromRole(Argument::that(function ($arg) use ($user) {
@@ -58,8 +58,8 @@ class UserRoleTest extends TestCase
     /** @test */
     public function getUsersThroughRole_saves_the_users_in_the_cache()
     {
-        $users = factory(User::class, 5)->create();
-        $role = factory(Role::class)->create();
+        $users = User::factory()->count(5)->create();
+        $role = Role::factory()->create();
 
         $userRoleRepository = $this->prophesize(UserRole::class);
         $userRoleRepository->getUsersThroughRole(Argument::that(function ($arg) use ($role) {
@@ -82,8 +82,8 @@ class UserRoleTest extends TestCase
     /** @test */
     public function getRolesThroughUser_saves_the_roles_in_the_cache()
     {
-        $roles = factory(Role::class, 5)->create();
-        $user = factory(User::class)->create();
+        $roles = Role::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         $userRoleRepository = $this->prophesize(UserRole::class);
         $userRoleRepository->getRolesThroughUser(Argument::that(function ($arg) use ($user) {
@@ -102,6 +102,6 @@ class UserRoleTest extends TestCase
         $this->assertContainsOnlyInstancesOf(Role::class, $cache->get($key));
         $this->assertCount(5, $cache->get($key));
     }
-        
+
 
 }

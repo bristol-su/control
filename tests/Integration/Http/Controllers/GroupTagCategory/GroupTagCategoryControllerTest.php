@@ -10,7 +10,7 @@ class GroupTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_returns_all_group_tag_categories(){
-        $groupTagCategories = factory(GroupTagCategory::class, 5)->create();
+        $groupTagCategories = GroupTagCategory::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/group-tag-category');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -23,7 +23,7 @@ class GroupTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_returns_a_single_groupTagCategory(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTagCategory = GroupTagCategory::factory()->create();
         $response = $this->getJson($this->apiUrl . '/group-tag-category/' . $groupTagCategory->id());
 
         $response->assertStatus(200);
@@ -32,7 +32,7 @@ class GroupTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_updates_a_group_tag_category(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create([
+        $groupTagCategory = GroupTagCategory::factory()->create([
             'name' => 'tagCategory1', 'description' => 'ATagCategory1', 'reference' => 'tagCategory1a'
         ]);
 
@@ -72,7 +72,7 @@ class GroupTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_deletes_a_group_tag_category(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create();
+        $groupTagCategory = GroupTagCategory::factory()->create();
 
         $this->assertDatabaseHas('control_tag_categories', [
             'id' => $groupTagCategory->id

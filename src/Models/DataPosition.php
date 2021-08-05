@@ -6,7 +6,9 @@ namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
 use BristolSU\ControlDB\Traits\DataPositionTrait;
+use Database\Factories\DataPositionFactory;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Models\DataPosition
 {
-    use SoftDeletes, HasAdditionalProperties, DataPositionTrait {
+    use SoftDeletes, HasFactory, HasAdditionalProperties, DataPositionTrait {
         setName as baseSetName;
         setDescription as baseSetDescription;
     }
@@ -99,5 +101,13 @@ class DataPosition extends Model implements \BristolSU\ControlDB\Contracts\Model
         $this->refresh();
     }
 
-
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new DataPositionFactory();
+    }
 }
