@@ -23,7 +23,7 @@ trait HasAdditionalProperties
     {
         if (is_subclass_of($this, Model::class)) {
             $this->append(static::getAdditionalAttributes());
-            $this->addHidden($this->getColumnName());
+            $this->makeHidden($this->getColumnName());
             $this->casts[] = $this->getColumnName();
         } else {
             throw new Exception('The HasAdditionalProperties trait must only be used in an Eloquent model');
@@ -42,29 +42,29 @@ trait HasAdditionalProperties
 
     /**
      * Get all additional attributes the model is using
-     * 
+     *
      * @return array
      */
     public static function getAdditionalAttributes(): array
     {
         return (app(AdditionalPropertyStore::class)->getProperties(static::class) ?? []);
     }
-    
+
     /**
      * Retrieve an additional attribute value
-     * 
+     *
      * @param string $key Key of the attribute
      * @return mixed Value of the attribute
      */
     public function getAdditionalAttribute(string $key)
     {
-        return (array_key_exists($key, ($this->{$this->getColumnName()}??[])) 
+        return (array_key_exists($key, ($this->{$this->getColumnName()}??[]))
             ? $this->{$this->getColumnName()}[$key] : null);
     }
 
     /**
      * Set an additional attribute value
-     * 
+     *
      * @param string $key Key of the attribute
      * @param mixed $value Value of the attribute
      */
@@ -87,9 +87,9 @@ trait HasAdditionalProperties
 
     /**
      * Override the default getAttribute function
-     * 
+     *
      * Any time an attribute is retrieved, we will check if it's an additional property and return it if so
-     * 
+     *
      * @param string $key Key of the property to retrieve
      * @return mixed Value of the property
      */
@@ -121,7 +121,7 @@ trait HasAdditionalProperties
 
     /**
      * Cast the additional attributes column to an array, or return an empty array by default.
-     * 
+     *
      * @return array|mixed
      */
     public function getAdditionalAttributesAttribute()
@@ -137,7 +137,7 @@ trait HasAdditionalProperties
 
     /**
      * Get the name of the additional attributes column
-     * 
+     *
      * @return string Name of the additional attributes column
      */
     private function getColumnName()
@@ -147,10 +147,10 @@ trait HasAdditionalProperties
 
     /**
      * Dynamically define accessors for the appended properties.
-     * 
+     *
      * By catching all method calls, we can check if they are calls for an accessor or mutator to an attribute and
      * carry out the corresponding action.
-     * 
+     *
      * @param string $method Method of the call
      * @param array $args Arguments for the call
      * @return mixed
@@ -166,7 +166,7 @@ trait HasAdditionalProperties
                 Str::snake(Str::substr(Str::substr($method, 3), 0, -9))
             );
         }
-        
+
         // Check if the call was a mutator
         $additionalAccessors = array_map(function($propertyKey) {
             return 'set'.Str::studly($propertyKey).'Attribute';
@@ -179,7 +179,7 @@ trait HasAdditionalProperties
             return parent::__call($method,
                 $args);
         }
-        
-        
+
+
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\GroupGroupTag;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\PositionPositionTag;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\Tags\RoleRoleTag;

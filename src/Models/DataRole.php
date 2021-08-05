@@ -7,6 +7,7 @@ namespace BristolSU\ControlDB\Models;
 use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
 use BristolSU\ControlDB\Traits\DataRoleTrait;
 use DateTime;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,19 +23,30 @@ class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * The table to use
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $table = 'control_data_role';
 
     /**
      * Fillable attributes
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $fillable = [
         'role_name', 'email'
     ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * Get the ID of the role
@@ -60,7 +72,7 @@ class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * Get the name for the role
-     * 
+     *
      * @return string|null
      */
     public function roleName(): ?string

@@ -14,13 +14,13 @@ class UserGroup extends Model
 
     /**
      * Fillable attributes
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $fillable = [
         'user_id', 'group_id'
     ];
-    
+
     /**
      * Indicates if the IDs are auto-incrementing.
      *
@@ -30,9 +30,19 @@ class UserGroup extends Model
 
     /**
      * Table to use
-     * 
-     * @var string 
+     *
+     * @var string
      */
     public $table = 'control_group_user';
-    
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 }

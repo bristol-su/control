@@ -20,7 +20,7 @@ class GroupTagCategory extends Model implements \BristolSU\ControlDB\Contracts\M
 
     /**
      * Boot the model
-     * 
+     *
      * - Add a scope to only retrieve group tag categories
      */
     protected static function boot()
@@ -34,20 +34,31 @@ class GroupTagCategory extends Model implements \BristolSU\ControlDB\Contracts\M
 
     /**
      * Table to use
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $table = 'control_tag_categories';
 
     /**
      * Fillable attributes
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $fillable = [
         'name', 'description', 'reference'
     ];
-    
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
     /**
      * ID of the tag category
      *
@@ -120,5 +131,5 @@ class GroupTagCategory extends Model implements \BristolSU\ControlDB\Contracts\M
         $this->baseSetReference($reference);
         $this->refresh();
     }
-    
+
 }
