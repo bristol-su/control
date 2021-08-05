@@ -16,7 +16,7 @@ class RoleTagTest extends TestCase
     /** @test */
     public function all_does_not_save_in_the_cache()
     {
-        $roleTags = factory(RoleTag::class, 5)->create();
+        $roleTags = RoleTag::factory()->count(5)->create();
 
         $roleTagRepository = $this->prophesize(RoleTagRepository::class);
         $roleTagRepository->all()->shouldBeCalled()->willReturn($roleTags);
@@ -33,8 +33,8 @@ class RoleTagTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
-        $roleTag = factory(RoleTag::class)->create(['tag_category_id' => $roleTagCategory->id()]);
+        $roleTagCategory = RoleTagCategory::factory()->create();
+        $roleTag = RoleTag::factory()->create(['tag_category_id' => $roleTagCategory->id()]);
 
         $roleTagRepository = $this->prophesize(RoleTagRepository::class);
         $roleTagRepository->create('name1', 'desc1', 'ref1', $roleTagCategory->id())->shouldBeCalled()->willReturn($roleTag);
@@ -50,8 +50,8 @@ class RoleTagTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
-        $roleTag = factory(RoleTag::class)->create(['tag_category_id' => $roleTagCategory->id()]);
+        $roleTagCategory = RoleTagCategory::factory()->create();
+        $roleTag = RoleTag::factory()->create(['tag_category_id' => $roleTagCategory->id()]);
 
         $roleTagRepository = $this->prophesize(RoleTagRepository::class);
         $roleTagRepository->update($roleTag->id(), 'name1', 'desc1', 'ref1', $roleTagCategory->id())->shouldBeCalled()->willReturn($roleTag);
@@ -67,8 +67,8 @@ class RoleTagTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
-        $roleTag = factory(RoleTag::class)->create(['tag_category_id' => $roleTagCategory->id()]);
+        $roleTagCategory = RoleTagCategory::factory()->create();
+        $roleTag = RoleTag::factory()->create(['tag_category_id' => $roleTagCategory->id()]);
 
         $roleTagRepository = $this->prophesize(RoleTagRepository::class);
         $roleTagRepository->delete($roleTag->id())->shouldBeCalled();
@@ -80,11 +80,11 @@ class RoleTagTest extends TestCase
 
         $this->assertNull($roleTagCache->delete($roleTag->id()));
     }
-    
+
     /** @test */
     public function allThroughTagCategory_saves_tags_in_the_cache(){
-        $tagCategory = factory(RoleTagCategory::class)->create();
-        $roleTags = factory(RoleTag::class, 5)->create(['tag_category_id' => $tagCategory->id()]);
+        $tagCategory = RoleTagCategory::factory()->create();
+        $roleTags = RoleTag::factory()->count(5)->create(['tag_category_id' => $tagCategory->id()]);
 
         $roleTagRepository = $this->prophesize(RoleTagRepository::class);
         $roleTagRepository->allThroughTagCategory(Argument::that(function($arg) use ($tagCategory) {
@@ -102,12 +102,12 @@ class RoleTagTest extends TestCase
         $this->assertInstanceOf(Collection::class, $cache->get($key));
         $this->assertContainsOnlyInstancesOf(RoleTag::class, $cache->get($key));
         $this->assertCount(5, $cache->get($key));
-        
+
     }
 
     /** @test */
     public function getById_saves_tags_in_the_cache(){
-        $roleTag = factory(RoleTag::class)->create();
+        $roleTag = RoleTag::factory()->create();
 
         $roleTagRepository = $this->prophesize(RoleTagRepository::class);
         $roleTagRepository->getById($roleTag->id())->shouldBeCalled()->willReturn($roleTag);
@@ -125,7 +125,7 @@ class RoleTagTest extends TestCase
 
     /** @test */
     public function getTagByFullReference_saves_tags_in_the_cache(){
-        $roleTag = factory(RoleTag::class)->create();
+        $roleTag = RoleTag::factory()->create();
 
         $roleTagRepository = $this->prophesize(RoleTagRepository::class);
         $roleTagRepository->getTagByFullReference('full.ref')->shouldBeCalled()->willReturn($roleTag);

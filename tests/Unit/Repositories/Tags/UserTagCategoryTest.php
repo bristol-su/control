@@ -14,7 +14,7 @@ class UserTagCategoryTest extends TestCase
 
     /** @test */
     public function getById_returns_a_user_tag_category_model_with_the_corresponding_id(){
-        $userTagCategory = factory(UserTagCategory::class)->create(['id' => 2]);
+        $userTagCategory = UserTagCategory::factory()->create(['id' => 2]);
         $userTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
         $this->assertTrue(
             $userTagCategory->is($userTagCategoryRepo->getById(2))
@@ -30,7 +30,7 @@ class UserTagCategoryTest extends TestCase
 
     /** @test */
     public function all_returns_all_user_tags_categories(){
-        $userTagCategories = factory(UserTagCategory::class, 15)->create();
+        $userTagCategories = UserTagCategory::factory()->count(15)->create();
         $userTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
         $allTagCategories = $userTagCategoryRepo->all();
         $this->assertInstanceOf(Collection::class, $allTagCategories);
@@ -43,7 +43,7 @@ class UserTagCategoryTest extends TestCase
 
     /** @test */
     public function getByReference_returns_a_tag_category_given_the_full_reference(){
-        $userTagCategory = factory(UserTagCategory::class)->create(['reference' => 'ref1']);
+        $userTagCategory = UserTagCategory::factory()->create(['reference' => 'ref1']);
 
         $userTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
         $userTagCategoryFromRepo = $userTagCategoryRepo->getByReference('ref1');
@@ -84,7 +84,7 @@ class UserTagCategoryTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_user_tag_category_model(){
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
         $userTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\UserTagCategory();
         $userTagCategoryRepo->delete($userTagCategory->id());
 
@@ -95,7 +95,7 @@ class UserTagCategoryTest extends TestCase
     /** @test */
     public function update_updates_a_user_tag_category()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create([
+        $userTagCategory = UserTagCategory::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',
@@ -129,7 +129,7 @@ class UserTagCategoryTest extends TestCase
     /** @test */
     public function update_returns_the_updated_user_tag_category()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create([
+        $userTagCategory = UserTagCategory::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',

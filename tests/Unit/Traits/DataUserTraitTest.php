@@ -11,8 +11,8 @@ class DataUserTraitTest extends TestCase
 {
     /** @test */
     public function user_returns_the_user(){
-        $dataUser = factory(DataUser::class)->create();
-        $user = factory(User::class)->create(['data_provider_id' => $dataUser->id()]);
+        $dataUser = DataUser::factory()->create();
+        $user = User::factory()->create(['data_provider_id' => $dataUser->id()]);
 
         $this->assertInstanceOf(User::class, $dataUser->user());
         $this->assertTrue($user->is($dataUser->user()));
@@ -20,7 +20,7 @@ class DataUserTraitTest extends TestCase
 
     /** @test */
     public function it_returns_null_if_no_user_found(){
-        $dataUser = factory(DataUser::class)->create();
+        $dataUser = DataUser::factory()->create();
         $this->assertNull($dataUser->user());
     }
 
@@ -28,7 +28,7 @@ class DataUserTraitTest extends TestCase
     public function setFirstName_updates_the_first_name()
     {
         $dob = Carbon::create(1977, 05, 11);
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'email@example.com',
@@ -46,7 +46,7 @@ class DataUserTraitTest extends TestCase
     public function setName_updates_the_name()
     {
         $dob = Carbon::create(1977, 05, 11);
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'email@example.com',
@@ -64,7 +64,7 @@ class DataUserTraitTest extends TestCase
     public function setEmail_updates_the_email()
     {
         $dob = Carbon::create(1977, 05, 11);
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'email@example.com',
@@ -83,7 +83,7 @@ class DataUserTraitTest extends TestCase
     {
         $dob = Carbon::create(1977, 05, 11);
         $newDob = Carbon::create(1988, 05, 11);
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'email@example.com',
@@ -101,7 +101,7 @@ class DataUserTraitTest extends TestCase
     public function setPreferredName_updates_the_preferred_name()
     {
         $dob = Carbon::create(1977, 05, 11);
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'email@example.com',

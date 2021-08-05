@@ -16,7 +16,7 @@ class PositionTagTest extends TestCase
     /** @test */
     public function all_does_not_save_in_the_cache()
     {
-        $positionTags = factory(PositionTag::class, 5)->create();
+        $positionTags = PositionTag::factory()->count(5)->create();
 
         $positionTagRepository = $this->prophesize(PositionTagRepository::class);
         $positionTagRepository->all()->shouldBeCalled()->willReturn($positionTags);
@@ -33,8 +33,8 @@ class PositionTagTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $positionTagCategory = factory(PositionTagCategory::class)->create();
-        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => $positionTagCategory->id()]);
+        $positionTagCategory = PositionTagCategory::factory()->create();
+        $positionTag = PositionTag::factory()->create(['tag_category_id' => $positionTagCategory->id()]);
 
         $positionTagRepository = $this->prophesize(PositionTagRepository::class);
         $positionTagRepository->create('name1', 'desc1', 'ref1', $positionTagCategory->id())->shouldBeCalled()->willReturn($positionTag);
@@ -50,8 +50,8 @@ class PositionTagTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $positionTagCategory = factory(PositionTagCategory::class)->create();
-        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => $positionTagCategory->id()]);
+        $positionTagCategory = PositionTagCategory::factory()->create();
+        $positionTag = PositionTag::factory()->create(['tag_category_id' => $positionTagCategory->id()]);
 
         $positionTagRepository = $this->prophesize(PositionTagRepository::class);
         $positionTagRepository->update($positionTag->id(), 'name1', 'desc1', 'ref1', $positionTagCategory->id())->shouldBeCalled()->willReturn($positionTag);
@@ -67,8 +67,8 @@ class PositionTagTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $positionTagCategory = factory(PositionTagCategory::class)->create();
-        $positionTag = factory(PositionTag::class)->create(['tag_category_id' => $positionTagCategory->id()]);
+        $positionTagCategory = PositionTagCategory::factory()->create();
+        $positionTag = PositionTag::factory()->create(['tag_category_id' => $positionTagCategory->id()]);
 
         $positionTagRepository = $this->prophesize(PositionTagRepository::class);
         $positionTagRepository->delete($positionTag->id())->shouldBeCalled();
@@ -80,11 +80,11 @@ class PositionTagTest extends TestCase
 
         $this->assertNull($positionTagCache->delete($positionTag->id()));
     }
-    
+
     /** @test */
     public function allThroughTagCategory_saves_tags_in_the_cache(){
-        $tagCategory = factory(PositionTagCategory::class)->create();
-        $positionTags = factory(PositionTag::class, 5)->create(['tag_category_id' => $tagCategory->id()]);
+        $tagCategory = PositionTagCategory::factory()->create();
+        $positionTags = PositionTag::factory()->count(5)->create(['tag_category_id' => $tagCategory->id()]);
 
         $positionTagRepository = $this->prophesize(PositionTagRepository::class);
         $positionTagRepository->allThroughTagCategory(Argument::that(function($arg) use ($tagCategory) {
@@ -102,12 +102,12 @@ class PositionTagTest extends TestCase
         $this->assertInstanceOf(Collection::class, $cache->get($key));
         $this->assertContainsOnlyInstancesOf(PositionTag::class, $cache->get($key));
         $this->assertCount(5, $cache->get($key));
-        
+
     }
 
     /** @test */
     public function getById_saves_tags_in_the_cache(){
-        $positionTag = factory(PositionTag::class)->create();
+        $positionTag = PositionTag::factory()->create();
 
         $positionTagRepository = $this->prophesize(PositionTagRepository::class);
         $positionTagRepository->getById($positionTag->id())->shouldBeCalled()->willReturn($positionTag);
@@ -125,7 +125,7 @@ class PositionTagTest extends TestCase
 
     /** @test */
     public function getTagByFullReference_saves_tags_in_the_cache(){
-        $positionTag = factory(PositionTag::class)->create();
+        $positionTag = PositionTag::factory()->create();
 
         $positionTagRepository = $this->prophesize(PositionTagRepository::class);
         $positionTagRepository->getTagByFullReference('full.ref')->shouldBeCalled()->willReturn($positionTag);

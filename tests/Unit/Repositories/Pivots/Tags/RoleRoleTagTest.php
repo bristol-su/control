@@ -11,32 +11,32 @@ use Illuminate\Support\Collection;
 
 class RoleRoleTagTest extends TestCase
 {
-    
+
     /** @test */
     public function it_gets_all_tags_through_a_role(){
-        $role = factory(Role::class)->create();
-        $roleTagsForRole = factory(RoleTag::class, 10)->create();
-        $roleTagsNotForRole = factory(RoleTag::class, 10)->create();
-        
+        $role = Role::factory()->create();
+        $roleTagsForRole = RoleTag::factory()->count(10)->create();
+        $roleTagsNotForRole = RoleTag::factory()->count(10)->create();
+
         foreach($roleTagsForRole as $roleTag) {
             RoleRoleTag::create(['tag_id' => $roleTag->id(), 'taggable_id' => $role->id()]);
         }
-        
+
         $roleRoleTag = new RoleRoleTagRepository();
         $retrievedRoleTags = $roleRoleTag->getTagsThroughRole($role);
-        
+
         $this->assertEquals(10, $retrievedRoleTags->count());
         $this->assertContainsOnlyInstancesOf(RoleTag::class, $retrievedRoleTags);
         foreach($roleTagsForRole as $roleTag) {
             $this->assertTrue($roleTag->is($retrievedRoleTags->shift()));
         }
     }
-    
+
     /** @test */
     public function it_gets_all_roles_tagged_with_a_tag(){
-        $roleTag = factory(RoleTag::class)->create();
-        $rolesForRoleTag = factory(Role::class, 10)->create();
-        $rolesNotForRoleTag = factory(Role::class, 10)->create();
+        $roleTag = RoleTag::factory()->create();
+        $rolesForRoleTag = Role::factory()->count(10)->create();
+        $rolesNotForRoleTag = Role::factory()->count(10)->create();
 
         foreach($rolesForRoleTag as $role) {
             RoleRoleTag::create(['tag_id' => $roleTag->id(), 'taggable_id' => $role->id()]);
@@ -51,14 +51,14 @@ class RoleRoleTagTest extends TestCase
             $this->assertTrue($role->is($retrievedRoles->shift()));
         }
     }
-    
-    
+
+
 
     /** @test */
     public function addTagToRole_adds_a_tag_to_a_role()
     {
-        $role = factory(Role::class)->create();
-        $roleTag = factory(RoleTag::class)->create();
+        $role = Role::factory()->create();
+        $roleTag = RoleTag::factory()->create();
 
         $roleRoleTag = new \BristolSU\ControlDB\Repositories\Pivots\Tags\RoleRoleTag();
         $this->assertEquals(0, $roleRoleTag->getTagsThroughRole($role)->count());
@@ -73,8 +73,8 @@ class RoleRoleTagTest extends TestCase
     /** @test */
     public function removeTagFromRole_removes_a_tag_from_a_role()
     {
-        $role = factory(Role::class)->create();
-        $roleTag = factory(RoleTag::class)->create();
+        $role = Role::factory()->create();
+        $roleTag = RoleTag::factory()->create();
         $roleRoleTag = new \BristolSU\ControlDB\Repositories\Pivots\Tags\RoleRoleTag();
         RoleRoleTag::create([
             'taggable_id' => $role->id(), 'tag_id' => $roleTag->id()
@@ -84,7 +84,7 @@ class RoleRoleTagTest extends TestCase
         $this->assertTrue($roleTag->is($roleRoleTag->getTagsThroughRole($role)->first()));
 
         $roleRoleTag->removeTagFromRole($roleTag, $role);
-    
+
         $this->assertEquals(0, $roleRoleTag->getTagsThroughRole($role)->count());
     }
 }

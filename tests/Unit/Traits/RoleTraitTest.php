@@ -18,8 +18,8 @@ class RoleTraitTest extends TestCase
 
     /** @test */
     public function data_returns_the_data_attribute_for_the_role(){
-        $dataRole = factory(DataRole::class)->create();
-        $role = factory(Role::class)->create(['data_provider_id' => $dataRole->id()]);
+        $dataRole = DataRole::factory()->create();
+        $role = Role::factory()->create(['data_provider_id' => $dataRole->id()]);
 
         $this->assertInstanceOf(DataRole::class, $role->data());
         $this->assertTrue($dataRole->is($role->data()));
@@ -27,8 +27,8 @@ class RoleTraitTest extends TestCase
 
     /** @test */
     public function users_can_be_removed_from_a_role() {
-        $users = factory(User::class, 5)->create();
-        $role = factory(Role::class)->create();
+        $users = User::factory()->count(5)->create();
+        $role = Role::factory()->create();
 
         foreach($users as $user) {
             $role->addUser($user);
@@ -53,8 +53,8 @@ class RoleTraitTest extends TestCase
 
     /** @test */
     public function tags_can_be_removed_from_a_role() {
-        $tags = factory(RoleTag::class, 5)->create();
-        $role = factory(Role::class)->create();
+        $tags = RoleTag::factory()->count(5)->create();
+        $role = Role::factory()->create();
 
         foreach($tags as $tag) {
             $role->addTag($tag);
@@ -82,8 +82,8 @@ class RoleTraitTest extends TestCase
     }
     /** @test */
     public function tags_can_be_saved_to_a_role(){
-        $tags = factory(RoleTag::class, 5)->create();
-        $role = factory(Role::class)->create();
+        $tags = RoleTag::factory()->count(5)->create();
+        $role = Role::factory()->create();
 
         foreach($tags as $tag) {
             $role->addTag($tag);
@@ -100,8 +100,8 @@ class RoleTraitTest extends TestCase
 
     /** @test */
     public function tags_returns_all_tags_associated_with_the_role(){
-        $roleTags = factory(RoleTag::class, 5)->create();
-        $role = factory(Role::class)->create();
+        $roleTags = RoleTag::factory()->count(5)->create();
+        $role = Role::factory()->create();
 
         DB::table('control_taggables')->insert($roleTags->map(function($roleTag) use ($role) {
             return ['tag_id' => $roleTag->id, 'taggable_id' => $role->id, 'taggable_type' => 'role'];
@@ -116,8 +116,8 @@ class RoleTraitTest extends TestCase
 
     /** @test */
     public function users_can_be_added_to_a_role(){
-        $users = factory(User::class, 5)->create();
-        $role = factory(Role::class)->create();
+        $users = User::factory()->count(5)->create();
+        $role = Role::factory()->create();
 
         foreach($users as $user) {
             $role->addUser($user);
@@ -134,8 +134,8 @@ class RoleTraitTest extends TestCase
 
     /** @test */
     public function users_returns_all_users_associated_with_the_role(){
-        $users = factory(User::class, 5)->create();
-        $role = factory(Role::class)->create();
+        $users = User::factory()->count(5)->create();
+        $role = Role::factory()->create();
 
         DB::table('control_role_user')->insert($users->map(function($user) use ($role) {
             return ['user_id' => $user->id, 'role_id' => $role->id];
@@ -150,8 +150,8 @@ class RoleTraitTest extends TestCase
 
     /** @test */
     public function groups_returns_all_groups_associated_with_the_role(){
-        $group = factory(Group::class)->create();
-        $role = factory(Role::class)->create(['group_id' => $group->id]);
+        $group = Group::factory()->create();
+        $role = Role::factory()->create(['group_id' => $group->id]);
 
         $groupThroughRole = $role->group();
         $this->assertInstanceOf(Group::class, $groupThroughRole);
@@ -160,8 +160,8 @@ class RoleTraitTest extends TestCase
 
     /** @test */
     public function positions_returns_all_positions_associated_with_the_role(){
-        $position = factory(Position::class)->create();
-        $role = factory(Role::class)->create(['position_id' => $position->id]);
+        $position = Position::factory()->create();
+        $role = Role::factory()->create(['position_id' => $position->id]);
 
         $positionThroughRole = $role->position();
         $this->assertInstanceOf(Position::class, $positionThroughRole);
@@ -171,9 +171,9 @@ class RoleTraitTest extends TestCase
     /** @test */
     public function setDataProviderId_updates_the_data_provider_id()
     {
-        $oldDataRole = factory(DataRole::class)->create();
-        $newDataRole = factory(DataRole::class)->create();
-        $role = factory(Role::class)->create(['data_provider_id' => $oldDataRole->id()]);
+        $oldDataRole = DataRole::factory()->create();
+        $newDataRole = DataRole::factory()->create();
+        $role = Role::factory()->create(['data_provider_id' => $oldDataRole->id()]);
 
         $roleRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Role::class);
         $roleRepo->update($role->id(), $role->positionId(), $role->groupId(), $newDataRole->id())->shouldBeCalled()->willReturn($role);
@@ -185,9 +185,9 @@ class RoleTraitTest extends TestCase
     /** @test */
     public function setGroupId_updates_the_group_id()
     {
-        $oldGroup = factory(Group::class)->create();
-        $newGroup = factory(Group::class)->create();
-        $role = factory(Role::class)->create(['group_id' => $oldGroup->id()]);
+        $oldGroup = Group::factory()->create();
+        $newGroup = Group::factory()->create();
+        $role = Role::factory()->create(['group_id' => $oldGroup->id()]);
 
         $roleRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Role::class);
         $roleRepo->update($role->id(), $role->positionId(), $newGroup->id(), $role->dataProviderId())->shouldBeCalled()->willReturn($role);
@@ -199,9 +199,9 @@ class RoleTraitTest extends TestCase
     /** @test */
     public function setPositionId_updates_the_position_id()
     {
-        $oldPosition = factory(Position::class)->create();
-        $newPosition = factory(Position::class)->create();
-        $role = factory(Role::class)->create(['position_id' => $oldPosition->id()]);
+        $oldPosition = Position::factory()->create();
+        $newPosition = Position::factory()->create();
+        $role = Role::factory()->create(['position_id' => $oldPosition->id()]);
 
         $roleRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Role::class);
         $roleRepo->update($role->id(), $newPosition->id(), $role->groupId(), $role->dataProviderId())->shouldBeCalled()->willReturn($role);

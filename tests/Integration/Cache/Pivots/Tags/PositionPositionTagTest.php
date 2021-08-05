@@ -15,8 +15,8 @@ class PositionPositionTagTest extends TestCase
     /** @test */
     public function addTagToPosition_does_not_save_in_cache()
     {
-        $positionTag = factory(PositionTag::class)->create();
-        $position = factory(Position::class)->create();
+        $positionTag = PositionTag::factory()->create();
+        $position = Position::factory()->create();
 
         $positionPositionTagRepository = $this->prophesize(PositionPositionTag::class);
         $positionPositionTagRepository->addTagToPosition(Argument::that(function ($arg) use ($positionTag) {
@@ -36,8 +36,8 @@ class PositionPositionTagTest extends TestCase
     /** @test */
     public function removeTagFromPosition_does_not_save_in_cache()
     {
-        $positionTag = factory(PositionTag::class)->create();
-        $position = factory(Position::class)->create();
+        $positionTag = PositionTag::factory()->create();
+        $position = Position::factory()->create();
 
         $positionPositionTagRepository = $this->prophesize(PositionPositionTag::class);
         $positionPositionTagRepository->removeTagFromPosition(Argument::that(function ($arg) use ($positionTag) {
@@ -57,8 +57,8 @@ class PositionPositionTagTest extends TestCase
     /** @test */
     public function getTagsThroughPosition_saves_the_tags_in_the_cache()
     {
-        $positionTags = factory(PositionTag::class, 5)->create();
-        $position = factory(Position::class)->create();
+        $positionTags = PositionTag::factory()->count(5)->create();
+        $position = Position::factory()->create();
 
         $positionPositionTagRepository = $this->prophesize(PositionPositionTag::class);
         $positionPositionTagRepository->getTagsThroughPosition(Argument::that(function ($arg) use ($position) {
@@ -81,8 +81,8 @@ class PositionPositionTagTest extends TestCase
     /** @test */
     public function getPositionsThroughTag_saves_the_positions_in_the_cache()
     {
-        $positions = factory(Position::class, 5)->create();
-        $positionTag = factory(PositionTag::class)->create();
+        $positions = Position::factory()->count(5)->create();
+        $positionTag = PositionTag::factory()->create();
 
         $positionPositionTagRepository = $this->prophesize(PositionPositionTag::class);
         $positionPositionTagRepository->getPositionsThroughTag(Argument::that(function ($arg) use ($positionTag) {

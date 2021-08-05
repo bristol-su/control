@@ -12,7 +12,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function getById_returns_a_group_model_with_the_corresponding_id(){
-        $group = factory(Group::class)->create(['id' => 2]);
+        $group = Group::factory()->create(['id' => 2]);
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
         $this->assertTrue(
             $group->is($groupRepo->getById(2))
@@ -28,7 +28,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function create_creates_a_new_group_model(){
-        $dataGroup = factory(DataGroup::class)->create();
+        $dataGroup = DataGroup::factory()->create();
 
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
         $group = $groupRepo->create($dataGroup->id);
@@ -40,7 +40,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function create_returns_the_new_group_model(){
-        $dataGroup = factory(DataGroup::class)->create();
+        $dataGroup = DataGroup::factory()->create();
 
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
         $group = $groupRepo->create($dataGroup->id);
@@ -51,7 +51,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function all_returns_all_groups(){
-        $groups = factory(Group::class, 15)->create();
+        $groups = Group::factory()->count(15)->create();
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
         $repoGroups = $groupRepo->all();
         foreach($groups as $group) {
@@ -64,8 +64,8 @@ class GroupTest extends TestCase
     /** @test */
     public function getByDataProviderId_returns_a_group_model_with_a_given_data_provider_id()
     {
-        $dataGroup = factory(DataGroup::class)->create();
-        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup->id]);
+        $dataGroup = DataGroup::factory()->create();
+        $group = Group::factory()->create(['data_provider_id' => $dataGroup->id]);
 
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
         $dbGroup = $groupRepo->getByDataProviderId($dataGroup->id);
@@ -79,7 +79,7 @@ class GroupTest extends TestCase
     public function getByDataProviderId_throws_an_exception_if_no_model_found()
     {
         $this->expectException(ModelNotFoundException::class);
-        factory(Group::class)->create(['data_provider_id' => 10]);
+        Group::factory()->create(['data_provider_id' => 10]);
 
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
         $groupRepo->getByDataProviderId(11);
@@ -88,7 +88,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_group_model(){
-        $group = factory(Group::class)->create();
+        $group = Group::factory()->create();
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
         $groupRepo->delete($group->id());
 
@@ -98,7 +98,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function count_returns_the_number_of_groups(){
-        $groups = factory(Group::class, 18)->create();
+        $groups = Group::factory()->count(18)->create();
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
 
         $this->assertEquals(18, $groupRepo->count());
@@ -106,7 +106,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function paginate_returns_the_number_of_groups_specified_for_the_given_page(){
-        $groups = factory(Group::class, 40)->create();
+        $groups = Group::factory()->count(40)->create();
         $groupRepo = new \BristolSU\ControlDB\Repositories\Group();
 
         $paginatedGroups = $groupRepo->paginate(2, 10);
@@ -125,9 +125,9 @@ class GroupTest extends TestCase
 
     /** @test */
     public function update_updates_a_group(){
-        $dataGroup1 = factory(DataGroup::class)->create();
-        $dataGroup2 = factory(DataGroup::class)->create();
-        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup1->id()]);
+        $dataGroup1 = DataGroup::factory()->create();
+        $dataGroup2 = DataGroup::factory()->create();
+        $group = Group::factory()->create(['data_provider_id' => $dataGroup1->id()]);
 
         $this->assertDatabaseHas('control_groups', [
             'id' => $group->id(), 'data_provider_id' => $dataGroup1->id()
@@ -146,9 +146,9 @@ class GroupTest extends TestCase
 
     /** @test */
     public function update_returns_the_updated_group(){
-        $dataGroup1 = factory(DataGroup::class)->create();
-        $dataGroup2 = factory(DataGroup::class)->create();
-        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup1->id()]);
+        $dataGroup1 = DataGroup::factory()->create();
+        $dataGroup2 = DataGroup::factory()->create();
+        $group = Group::factory()->create(['data_provider_id' => $dataGroup1->id()]);
 
         $this->assertEquals($dataGroup1->id(), $group->dataProviderId());
 
@@ -157,5 +157,5 @@ class GroupTest extends TestCase
 
         $this->assertEquals($dataGroup2->id(), $updatedGroup->dataProviderId());
     }
-    
+
 }

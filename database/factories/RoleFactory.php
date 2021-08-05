@@ -2,16 +2,29 @@
 
 namespace Database\Factories;
 
-$factory->define(\BristolSU\ControlDB\Models\Role::class, function(\Faker\Generator $faker) {
-    return [
-        'position_id' => function() {
-            return factory(\BristolSU\ControlDB\Models\Position::class)->create()->id;
-        },
-        'group_id' => function() {
-            return factory(\BristolSU\ControlDB\Models\Group::class)->create()->id;
-        },
-        'data_provider_id' => function() {
-            return factory(\BristolSU\ControlDB\Models\DataRole::class)->create()->id;
-        },
-    ];
-});
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class RoleFactory extends Factory
+{
+
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \BristolSU\ControlDB\Models\Role::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'data_provider_id' => fn() => \BristolSU\ControlDB\Models\DataRole::factory()->create()->id(),
+            'position_id' => fn() => \BristolSU\ControlDB\Models\Position::factory()->create()->id(),
+            'group_id' => fn() => \BristolSU\ControlDB\Models\Group::factory()->create()->id()
+        ];
+    }
+}

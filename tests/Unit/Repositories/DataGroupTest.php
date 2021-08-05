@@ -13,7 +13,7 @@ class DataGroupTest extends TestCase
 
     /** @test */
     public function getById_returns_a_data_group_by_id(){
-        $dataGroup = factory(DataGroup::class)->create(['id' => 1]);
+        $dataGroup = DataGroup::factory()->create(['id' => 1]);
         
         $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
         $dbDataGroup = $repository->getById(1);
@@ -33,7 +33,7 @@ class DataGroupTest extends TestCase
     public function getWhere_returns_the_first_model_matching_the_attributes(){
         $attributes = ['email' => 'email@email.com'];
 
-        $dataGroup = factory(DataGroup::class)->create($attributes);
+        $dataGroup = DataGroup::factory()->create($attributes);
         
         $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
         $dbDataGroup = $repository->getWhere($attributes);
@@ -46,9 +46,9 @@ class DataGroupTest extends TestCase
     {
         $attributes = ['email' => 'email@email.com', 'name' => 'Toby'];
 
-        $dataGroups = factory(DataGroup::class, 2)->create($attributes);
-        $otherGroups = factory(DataGroup::class, 2)->create(['email' => 'email@email.com', 'name' => 'Tobasy']);
-        $otherGroups2 = factory(DataGroup::class, 2)->create(['email' => 'email2@email.com', 'name' => 'Toby']);
+        $dataGroups = DataGroup::factory()->count(2)->create($attributes);
+        $otherGroups = DataGroup::factory()->count(2)->create(['email' => 'email@email.com', 'name' => 'Tobasy']);
+        $otherGroups2 = DataGroup::factory()->count(2)->create(['email' => 'email2@email.com', 'name' => 'Toby']);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
         $dbDataGroup = $repository->getAllWhere($attributes);
@@ -63,9 +63,9 @@ class DataGroupTest extends TestCase
     {
         $attributes = ['email' => 'email@email.com', 'name' => 'Toby'];
 
-        $dataGroups = factory(DataGroup::class, 2)->create($attributes);
-        $otherGroups = factory(DataGroup::class, 2)->create(['email' => 'email@email.com', 'name' => 'Toby2']);
-        $otherGroups2 = factory(DataGroup::class, 2)->create(['email' => 'email2@email.com', 'name' => 'Toby']);
+        $dataGroups = DataGroup::factory()->count(2)->create($attributes);
+        $otherGroups = DataGroup::factory()->count(2)->create(['email' => 'email@email.com', 'name' => 'Toby2']);
+        $otherGroups2 = DataGroup::factory()->count(2)->create(['email' => 'email2@email.com', 'name' => 'Toby']);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
         $dbDataGroup = $repository->getAllWhere($attributes);
@@ -83,7 +83,7 @@ class DataGroupTest extends TestCase
         
         $attributes = ['email' => 'email@email.com'];
 
-        $dataGroup = factory(DataGroup::class)->create(['email' => 'email2@email2.com']);
+        $dataGroup = DataGroup::factory()->create(['email' => 'email2@email2.com']);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
         $dbDataGroup = $repository->getWhere($attributes);
@@ -122,9 +122,9 @@ class DataGroupTest extends TestCase
     /** @test */
     public function getWhere_also_searches_additional_attributes(){
         DataGroup::addProperty('student_id');
-        $dataGroup1 = factory(DataGroup::class)->create(['email' => 'email@email.com']);
+        $dataGroup1 = DataGroup::factory()->create(['email' => 'email@email.com']);
         $dataGroup1->saveAdditionalAttribute('student_id', 'xy123');
-        $dataGroup2 = factory(DataGroup::class)->create(['email' => 'email@email.com']);
+        $dataGroup2 = DataGroup::factory()->create(['email' => 'email@email.com']);
         $dataGroup2->saveAdditionalAttribute('student_id', 'xy1234');
         
         $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
@@ -138,8 +138,8 @@ class DataGroupTest extends TestCase
         DataGroup::addProperty('additionalAttr');
         $attributes = ['email' => 'email@email.com', 'additional_attributes' => json_encode(['additionalAttr' => 15])];
 
-        $dataGroups = factory(DataGroup::class, 2)->create($attributes);
-        factory(DataGroup::class, 4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
+        $dataGroups = DataGroup::factory()->count(2)->create($attributes);
+        DataGroup::factory()->count(4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataGroup();
         $dbDataGroup = $repository->getAllWhere($attributes);
@@ -152,7 +152,7 @@ class DataGroupTest extends TestCase
     /** @test */
     public function update_updates_a_group()
     {
-        $dataGroup = factory(DataGroup::class)->create([
+        $dataGroup = DataGroup::factory()->create([
             'name' => 'Toby',
             'email' => 'support@example.com',
         ]);
@@ -179,7 +179,7 @@ class DataGroupTest extends TestCase
     /** @test */
     public function update_returns_the_updated_group()
     {
-        $dataGroup = factory(DataGroup::class)->create([
+        $dataGroup = DataGroup::factory()->create([
             'name' => 'Toby',
             'email' => 'support@example.com',
         ]);

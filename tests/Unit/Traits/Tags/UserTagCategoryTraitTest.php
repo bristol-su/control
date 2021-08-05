@@ -11,11 +11,11 @@ class UserTagCategoryTraitTest extends TestCase
 
     /** @test */
     public function tags_returns_the_linked_tags(){
-        $tagCategory1 = factory(UserTagCategory::class)->create();
-        $tags1 = factory(UserTag::class, 5)->create(['tag_category_id' => $tagCategory1->id]);
+        $tagCategory1 = UserTagCategory::factory()->create();
+        $tags1 = UserTag::factory()->count(5)->create(['tag_category_id' => $tagCategory1->id]);
         // Data that shouldn't be returned
-        $tagCategory2 = factory(UserTagCategory::class)->create();
-        $tags2 = factory(UserTag::class, 5)->create(['tag_category_id' => $tagCategory2->id]);
+        $tagCategory2 = UserTagCategory::factory()->create();
+        $tags2 = UserTag::factory()->count(5)->create(['tag_category_id' => $tagCategory2->id]);
 
         $tagsFromRelationship = $tagCategory1->tags();
         $this->assertEquals(5, $tagsFromRelationship->count());
@@ -27,7 +27,7 @@ class UserTagCategoryTraitTest extends TestCase
     /** @test */
     public function setName_updates_the_user_tag_category_name()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $userTagCategooryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class);
         $userTagCategooryRepository->update($userTagCategory->id(), 'NewName', $userTagCategory->description(), $userTagCategory->reference())
@@ -40,7 +40,7 @@ class UserTagCategoryTraitTest extends TestCase
     /** @test */
     public function setDescription_updates_the_user_tag_category_description()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $userTagCategooryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class);
         $userTagCategooryRepository->update($userTagCategory->id(), $userTagCategory->name(), 'NewDescription', $userTagCategory->reference())
@@ -53,7 +53,7 @@ class UserTagCategoryTraitTest extends TestCase
     /** @test */
     public function setReference_updates_the_user_tag_category_reference()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $userTagCategooryRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTagCategory::class);
         $userTagCategooryRepository->update($userTagCategory->id(), $userTagCategory->name(), $userTagCategory->description(), 'NewReference')

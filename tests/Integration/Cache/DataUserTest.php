@@ -13,7 +13,7 @@ class DataUserTest extends TestCase
 
     /** @test */
     public function getById_saves_the_user_in_the_cache(){
-        $dataUser = factory(DataUser::class)->create();
+        $dataUser = DataUser::factory()->create();
 
         $userRepository = $this->prophesize(DataUserRepository::class);
         $userRepository->getById($dataUser->id())->shouldBeCalled()->willReturn($dataUser);
@@ -32,7 +32,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function getWhere_does_not_save_in_the_cache()
     {
-        $user = factory(DataUser::class)->create();
+        $user = DataUser::factory()->create();
 
         $userRepository = $this->prophesize(DataUserRepository::class);
         $userRepository->getWhere(['email' => 'test@test.com'])->shouldBeCalled()->willReturn($user);
@@ -48,7 +48,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function getAllWhere_does_not_save_in_the_cache()
     {
-        $users = factory(DataUser::class, 5)->create();
+        $users = DataUser::factory()->count(5)->create();
 
         $userRepository = $this->prophesize(DataUserRepository::class);
         $userRepository->getAllWhere(['email' => 'test@test.com'])->shouldBeCalled()->willReturn($users);
@@ -64,7 +64,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $user = factory(DataUser::class)->create();
+        $user = DataUser::factory()->create();
 
         $userRepository = $this->prophesize(DataUserRepository::class);
         $userRepository->update($user->id(), 'F', 'L', 'E', null, 'PN')->shouldBeCalled()->willReturn($user);
@@ -80,7 +80,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $user = factory(DataUser::class)->create();
+        $user = DataUser::factory()->create();
 
         $userRepository = $this->prophesize(DataUserRepository::class);
         $userRepository->create('F', 'L', 'E', null, 'PN')->shouldBeCalled()->willReturn($user);

@@ -15,7 +15,7 @@ class RoleTest extends TestCase
 
     /** @test */
     public function getById_returns_a_role_model_with_the_corresponding_id(){
-        $role = factory(Role::class)->create(['id' => 2]);
+        $role = Role::factory()->create(['id' => 2]);
         $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
         $this->assertTrue(
             $role->is($roleRepo->getById(2))
@@ -31,7 +31,7 @@ class RoleTest extends TestCase
 
     /** @test */
     public function all_returns_all_roles(){
-        $roles = factory(Role::class, 15)->create();
+        $roles = Role::factory()->count(15)->create();
         $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
         $repoRoles = $roleRepo->all();
         foreach($roles as $role) {
@@ -66,20 +66,20 @@ class RoleTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_role_model(){
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
         $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
         $roleRepo->delete($role->id());
 
         $role->refresh();
         $this->assertTrue($role->trashed());
     }
-    
-   
+
+
     /** @test */
     public function getByDataProviderId_returns_a_role_model_with_a_given_data_provider_id()
     {
-        $dataRole = factory(DataRole::class)->create();
-        $role = factory(Role::class)->create(['data_provider_id' => $dataRole->id]);
+        $dataRole = DataRole::factory()->create();
+        $role = Role::factory()->create(['data_provider_id' => $dataRole->id]);
 
         $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
         $dbRole = $roleRepo->getByDataProviderId($dataRole->id);
@@ -93,19 +93,19 @@ class RoleTest extends TestCase
     public function getByDataProviderId_throws_an_exception_if_no_model_found()
     {
         $this->expectException(ModelNotFoundException::class);
-        factory(Role::class)->create(['data_provider_id' => 10]);
+        Role::factory()->create(['data_provider_id' => 10]);
 
         $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
         $roleRepo->getByDataProviderId(11);
 
     }
-    
+
     /** @test */
     public function allThroughGroup_returns_all_roles_with_the_given_group(){
-        $group = factory(Group::class)->create();
-        $roles = factory(Role::class, 15)->create(['group_id' => $group->id()]);
-        factory(Role::class, 15)->create();
-        
+        $group = Group::factory()->create();
+        $roles = Role::factory()->count(15)->create(['group_id' => $group->id()]);
+        Role::factory()->count(15)->create();
+
         $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
         $repoRoles = $roleRepo->allThroughGroup($group);
         $this->assertContainsOnlyInstancesOf(Role::class, $repoRoles);
@@ -118,9 +118,9 @@ class RoleTest extends TestCase
 
     /** @test */
     public function allThroughPosition_returns_all_roles_with_the_given_position(){
-        $position = factory(Position::class)->create();
-        $roles = factory(Role::class, 15)->create(['position_id' => $position->id()]);
-        factory(Role::class, 15)->create();
+        $position = Position::factory()->create();
+        $roles = Role::factory()->count(15)->create(['position_id' => $position->id()]);
+        Role::factory()->count(15)->create();
 
         $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
         $repoRoles = $roleRepo->allThroughPosition($position);
@@ -134,7 +134,7 @@ class RoleTest extends TestCase
 
     /** @test */
     public function count_returns_the_number_of_roles(){
-        $roles = factory(Role::class, 18)->create();
+        $roles = Role::factory()->count(18)->create();
         $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
 
         $this->assertEquals(18, $roleRepo->count());
@@ -142,7 +142,7 @@ class RoleTest extends TestCase
 
     /** @test */
     public function paginate_returns_the_number_of_roles_specified_for_the_given_page(){
-        $roles = factory(Role::class, 40)->create();
+        $roles = Role::factory()->count(40)->create();
         $roleRepo = new \BristolSU\ControlDB\Repositories\Role();
 
         $paginatedRoles = $roleRepo->paginate(2, 10);
@@ -161,13 +161,13 @@ class RoleTest extends TestCase
 
     /** @test */
     public function update_updates_a_role(){
-        $dataRole1 = factory(DataRole::class)->create();
-        $dataRole2 = factory(DataRole::class)->create();
-        $position1 = factory(Position::class)->create();
-        $position2 = factory(Position::class)->create();
-        $group1 = factory(Group::class)->create();
-        $group2 = factory(Group::class)->create();
-        $role = factory(Role::class)->create(['data_provider_id' => $dataRole1->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()]);
+        $dataRole1 = DataRole::factory()->create();
+        $dataRole2 = DataRole::factory()->create();
+        $position1 = Position::factory()->create();
+        $position2 = Position::factory()->create();
+        $group1 = Group::factory()->create();
+        $group2 = Group::factory()->create();
+        $role = Role::factory()->create(['data_provider_id' => $dataRole1->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()]);
 
         $this->assertDatabaseHas('control_roles', [
             'id' => $role->id(), 'data_provider_id' => $dataRole1->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()
@@ -186,13 +186,13 @@ class RoleTest extends TestCase
 
     /** @test */
     public function update_returns_the_updated_role(){
-        $dataRole1 = factory(DataRole::class)->create();
-        $dataRole2 = factory(DataRole::class)->create();
-        $position1 = factory(Position::class)->create();
-        $position2 = factory(Position::class)->create();
-        $group1 = factory(Group::class)->create();
-        $group2 = factory(Group::class)->create();
-        $role = factory(Role::class)->create(['data_provider_id' => $dataRole1->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()]);
+        $dataRole1 = DataRole::factory()->create();
+        $dataRole2 = DataRole::factory()->create();
+        $position1 = Position::factory()->create();
+        $position2 = Position::factory()->create();
+        $group1 = Group::factory()->create();
+        $group2 = Group::factory()->create();
+        $role = Role::factory()->create(['data_provider_id' => $dataRole1->id(), 'position_id' => $position1->id(), 'group_id' => $group1->id()]);
 
         $this->assertEquals($dataRole1->id(), $role->dataProviderId());
         $this->assertEquals($position1->id(), $role->positionId());
@@ -205,5 +205,5 @@ class RoleTest extends TestCase
         $this->assertEquals($position2->id(), $updatedRole->positionId());
         $this->assertEquals($group2->id(), $updatedRole->groupId());
     }
-    
+
 }

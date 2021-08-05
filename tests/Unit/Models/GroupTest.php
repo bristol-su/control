@@ -12,7 +12,7 @@ class GroupTest extends TestCase
     /** @test */
     public function an_id_can_be_retrieved_from_the_model()
     {
-        $group = factory(Group::class)->create([
+        $group = Group::factory()->create([
             'id' => 4
         ]);
 
@@ -21,7 +21,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function a_data_provider_id_can_be_retrieved_from_the_model(){
-        $group = factory(Group::class)->create([
+        $group = Group::factory()->create([
             'data_provider_id' => 5
         ]);
 
@@ -30,7 +30,7 @@ class GroupTest extends TestCase
 
     /** @test */
     public function a_data_provider_id_can_set_on_from_the_model(){
-        $group = factory(Group::class)->create([
+        $group = Group::factory()->create([
             'data_provider_id' => 2
         ]);
         
@@ -41,10 +41,10 @@ class GroupTest extends TestCase
    
     /** @test */
     public function data_is_returned_in_the_array(){
-        $dataGroup = factory(DataGroup::class)->create(
+        $dataGroup = DataGroup::factory()->create(
             ['name' => 'Group1', 'email' => 'test@testing.com']
         );
-        $group = factory(Group::class)->create([
+        $group = Group::factory()->create([
             'data_provider_id' => $dataGroup->id()
         ]);
 

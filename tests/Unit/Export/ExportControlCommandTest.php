@@ -21,10 +21,10 @@ class ExportControlCommandTest extends TestCase
     /** @test */
     public function it_exports_all_users_if_the_data_type_is_a_user(){
         $users = collect([
-            factory(User::class)->create(),
-            factory(User::class)->create(),
-            factory(User::class)->create(),
-            factory(User::class)->create()
+            User::factory()->create(),
+            User::factory()->create(),
+            User::factory()->create(),
+            User::factory()->create()
         ]);
         
         Exporter::extend('test', function($app, $config) {
@@ -43,10 +43,10 @@ class ExportControlCommandTest extends TestCase
     /** @test */
     public function it_exports_all_groups_if_the_data_type_is_a_group(){
         $groups = collect([
-            factory(Group::class)->create(),
-            factory(Group::class)->create(),
-            factory(Group::class)->create(),
-            factory(Group::class)->create()
+            Group::factory()->create(),
+            Group::factory()->create(),
+            Group::factory()->create(),
+            Group::factory()->create()
         ]);
 
         Exporter::extend('test', function($app, $config) {
@@ -65,10 +65,10 @@ class ExportControlCommandTest extends TestCase
     /** @test */
     public function it_exports_all_roles_if_the_data_type_is_a_role(){
         $roles = collect([
-            factory(Role::class)->create(),
-            factory(Role::class)->create(),
-            factory(Role::class)->create(),
-            factory(Role::class)->create()
+            Role::factory()->create(),
+            Role::factory()->create(),
+            Role::factory()->create(),
+            Role::factory()->create()
         ]);
 
         Exporter::extend('test', function($app, $config) {
@@ -87,10 +87,10 @@ class ExportControlCommandTest extends TestCase
     /** @test */
     public function it_exports_all_positions_if_the_data_type_is_a_position(){
         $positions = collect([
-            factory(Position::class)->create(),
-            factory(Position::class)->create(),
-            factory(Position::class)->create(),
-            factory(Position::class)->create()
+            Position::factory()->create(),
+            Position::factory()->create(),
+            Position::factory()->create(),
+            Position::factory()->create()
         ]);
 
         Exporter::extend('test', function($app, $config) {
@@ -109,10 +109,10 @@ class ExportControlCommandTest extends TestCase
     /** @test */
     public function it_uses_the_driver_if_given(){
         $users = collect([
-            factory(User::class)->create(),
-            factory(User::class)->create(),
-            factory(User::class)->create(),
-            factory(User::class)->create()
+            User::factory()->create(),
+            User::factory()->create(),
+            User::factory()->create(),
+            User::factory()->create()
         ]);
 
         Exporter::extend('test', function($app, $config) {

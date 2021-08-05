@@ -16,7 +16,7 @@ class GroupTagTest extends TestCase
 
     /** @test */
     public function getById_returns_a_group_tag_model_with_the_corresponding_id(){
-        $groupTag = factory(GroupTag::class)->create(['id' => 2]);
+        $groupTag = GroupTag::factory()->create(['id' => 2]);
         $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
         $this->assertTrue(
             $groupTag->is($groupTagRepo->getById(2))
@@ -32,7 +32,7 @@ class GroupTagTest extends TestCase
 
     /** @test */
     public function all_returns_all_group_tags(){
-        $groupTags = factory(GroupTag::class, 15)->create();
+        $groupTags = GroupTag::factory()->count(15)->create();
         $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
         $allTags = $groupTagRepo->all();
         $this->assertInstanceOf(Collection::class, $allTags);
@@ -45,8 +45,8 @@ class GroupTagTest extends TestCase
 
     /** @test */
     public function getTagByFullReference_returns_a_tag_given_the_full_reference(){
-        $groupTagCategory = factory(GroupTagCategory::class)->create(['reference' => 'ref1']);
-        $groupTag = factory(GroupTag::class)->create(['reference' => 'ref2', 'tag_category_id' => $groupTagCategory->id]);
+        $groupTagCategory = GroupTagCategory::factory()->create(['reference' => 'ref1']);
+        $groupTag = GroupTag::factory()->create(['reference' => 'ref2', 'tag_category_id' => $groupTagCategory->id]);
 
         $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
         $groupTagFromRepo = $groupTagRepo->getTagByFullReference('ref1.ref2');
@@ -90,7 +90,7 @@ class GroupTagTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_group_tag_model(){
-        $groupTag = factory(GroupTag::class)->create();
+        $groupTag = GroupTag::factory()->create();
         $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
         $groupTagRepo->delete($groupTag->id());
 
@@ -100,9 +100,9 @@ class GroupTagTest extends TestCase
 
     /** @test */
     public function allThroughTagCategory_returns_all_tags_through_a_tag_category(){
-        $category = factory(GroupTagCategory::class)->create();
-        $tags = factory(GroupTag::class, 10)->create(['tag_category_id' => $category->id()]);
-        factory(GroupTag::class, 10)->create();
+        $category = GroupTagCategory::factory()->create();
+        $tags = GroupTag::factory()->count(10)->create(['tag_category_id' => $category->id()]);
+        GroupTag::factory()->count(10)->create();
 
         $groupTagRepo = new \BristolSU\ControlDB\Repositories\Tags\GroupTag();
         $tagsFromRepo = $groupTagRepo->allThroughTagCategory($category);
@@ -117,9 +117,9 @@ class GroupTagTest extends TestCase
     /** @test */
     public function update_updates_a_group_tag_category()
     {
-        $oldTagCategory = factory(GroupTagCategory::class)->create();
-        $newTagCategory = factory(GroupTagCategory::class)->create();
-        $groupTag = factory(GroupTag::class)->create([
+        $oldTagCategory = GroupTagCategory::factory()->create();
+        $newTagCategory = GroupTagCategory::factory()->create();
+        $groupTag = GroupTag::factory()->create([
             'name' => 'TagName',
             'description' => 'TagDesc',
             'reference' => 'ref',
@@ -154,9 +154,9 @@ class GroupTagTest extends TestCase
     /** @test */
     public function update_returns_the_updated_group_tag_category()
     {
-        $oldTagCategory = factory(GroupTagCategory::class)->create();
-        $newTagCategory = factory(GroupTagCategory::class)->create();
-        $groupTag = factory(GroupTag::class)->create([
+        $oldTagCategory = GroupTagCategory::factory()->create();
+        $newTagCategory = GroupTagCategory::factory()->create();
+        $groupTag = GroupTag::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',
@@ -175,5 +175,5 @@ class GroupTagTest extends TestCase
         $this->assertEquals('ref2', $updatedGroupTag->reference());
         $this->assertEquals($newTagCategory->id(), $updatedGroupTag->categoryId());
     }
-    
+
 }

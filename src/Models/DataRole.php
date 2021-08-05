@@ -6,8 +6,10 @@ namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
 use BristolSU\ControlDB\Traits\DataRoleTrait;
+use Database\Factories\DataRoleFactory;
 use DateTime;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\DataRole
 {
-    use SoftDeletes, HasAdditionalProperties, DataRoleTrait {
+    use SoftDeletes, HasFactory, HasAdditionalProperties, DataRoleTrait {
         setRoleName as baseSetRoleName;
         setEmail as baseSetEmail;
     }
@@ -102,5 +104,14 @@ class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new DataRoleFactory();
+    }
 
 }

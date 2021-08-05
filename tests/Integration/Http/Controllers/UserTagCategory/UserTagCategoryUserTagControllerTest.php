@@ -11,8 +11,8 @@ class UserTagCategoryUserTagControllerTest extends TestCase
 
     /** @test */
     public function it_gets_all_tags_through_a_user_tag_category(){
-        $userTagCategory = factory(UserTagCategory::class)->create();
-        $userTags = factory(UserTag::class, 5)->create(['tag_category_id' => $userTagCategory->id()]);
+        $userTagCategory = UserTagCategory::factory()->create();
+        $userTags = UserTag::factory()->count(5)->create(['tag_category_id' => $userTagCategory->id()]);
 
         $response = $this->getJson($this->apiUrl . '/user-tag-category/' . $userTagCategory->id() . '/user-tag');
         $response->assertStatus(200);
@@ -24,5 +24,5 @@ class UserTagCategoryUserTagControllerTest extends TestCase
             $this->assertEquals($userTags->shift()->id(), $userTagThroughApi['id']);
         }
     }
-    
+
 }

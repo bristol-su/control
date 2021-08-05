@@ -12,7 +12,7 @@ class RoleTest extends TestCase
     /** @test */
     public function an_id_can_be_retrieved_from_the_model()
     {
-        $role = factory(Role::class)->create([
+        $role = Role::factory()->create([
             'id' => 4
         ]);
 
@@ -22,7 +22,7 @@ class RoleTest extends TestCase
     /** @test */
     public function a_group_id_can_be_retrieved_from_the_model()
     {
-        $role = factory(Role::class)->create([
+        $role = Role::factory()->create([
             'group_id' => 4
         ]);
 
@@ -32,7 +32,7 @@ class RoleTest extends TestCase
     /** @test */
     public function a_position_id_can_be_retrieved_from_the_model()
     {
-        $role = factory(Role::class)->create([
+        $role = Role::factory()->create([
             'position_id' => 4
         ]);
 
@@ -42,7 +42,7 @@ class RoleTest extends TestCase
     /** @test */
     public function a_group_id_can_be_set_on_the_model()
     {
-        $role = factory(Role::class)->create([
+        $role = Role::factory()->create([
             'group_id' => 1
         ]);
         
@@ -54,7 +54,7 @@ class RoleTest extends TestCase
     /** @test */
     public function a_position_id_can_be_set_on_the_model()
     {
-        $role = factory(Role::class)->create([
+        $role = Role::factory()->create([
             'position_id' => 1
         ]);
         
@@ -65,7 +65,7 @@ class RoleTest extends TestCase
 
     /** @test */
     public function a_data_provider_id_can_be_retrieved_from_the_model(){
-        $role = factory(Role::class)->create([
+        $role = Role::factory()->create([
             'data_provider_id' => 2
         ]);
 
@@ -74,7 +74,7 @@ class RoleTest extends TestCase
 
     /** @test */
     public function a_data_provider_id_can_set_on_from_the_model(){
-        $role = factory(Role::class)->create([
+        $role = Role::factory()->create([
             'data_provider_id' => 5
         ]);
 
@@ -85,10 +85,10 @@ class RoleTest extends TestCase
 
     /** @test */
     public function data_is_returned_in_the_array(){
-        $dataRole = factory(DataRole::class)->create(
+        $dataRole = DataRole::factory()->create(
             ['role_name' => 'Role1', 'email' => 'test@testing.com']
         );
-        $role = factory(Role::class)->create([
+        $role = Role::factory()->create([
             'data_provider_id' => $dataRole->id()
         ]);
 

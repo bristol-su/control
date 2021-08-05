@@ -14,9 +14,9 @@ class FormatterTest extends TestCase
     /** @test */
     public function it_calls_formatItem_if_the_formatted_item_matches_the_type(){
         $items = [
-            FormattedItem::create(factory(User::class)->create()),
-            FormattedItem::create(factory(User::class)->create()),
-            FormattedItem::create(factory(User::class)->create()),
+            FormattedItem::create(User::factory()->create()),
+            FormattedItem::create(User::factory()->create()),
+            FormattedItem::create(User::factory()->create()),
         ];
         
         $ids = array_map(function($item) {
@@ -39,9 +39,9 @@ class FormatterTest extends TestCase
     /** @test */
     public function it_calls_formatItem_if_the_formatter_handles_all(){
         $items = [
-            FormattedItem::create(factory(User::class)->create()),
-            FormattedItem::create(factory(User::class)->create()),
-            FormattedItem::create(factory(User::class)->create()),
+            FormattedItem::create(User::factory()->create()),
+            FormattedItem::create(User::factory()->create()),
+            FormattedItem::create(User::factory()->create()),
         ];
 
         $ids = array_map(function($item) {
@@ -64,9 +64,9 @@ class FormatterTest extends TestCase
     /** @test */
     public function it_does_not_call_formatItem_if_the_formatter_cannot_handle_the_item(){
         $items = [
-            FormattedItem::create(factory(User::class)->create()),
-            FormattedItem::create(factory(User::class)->create()),
-            FormattedItem::create(factory(User::class)->create()),
+            FormattedItem::create(User::factory()->create()),
+            FormattedItem::create(User::factory()->create()),
+            FormattedItem::create(User::factory()->create()),
         ];
 
         $formatter = new TestFormatter([]);
@@ -84,9 +84,9 @@ class FormatterTest extends TestCase
     /** @test */
     public function it_returns_the_formatted_items(){
         $items = [
-            FormattedItem::create(factory(User::class)->create()),
-            FormattedItem::create(factory(User::class)->create()),
-            FormattedItem::create(factory(User::class)->create()),
+            FormattedItem::create(User::factory()->create()),
+            FormattedItem::create(User::factory()->create()),
+            FormattedItem::create(User::factory()->create()),
         ];
 
         $ids = array_map(function($item) {

@@ -13,7 +13,7 @@ class DataPositionTest extends TestCase
 
     /** @test */
     public function getById_saves_the_position_in_the_cache(){
-        $dataPosition = factory(DataPosition::class)->create();
+        $dataPosition = DataPosition::factory()->create();
 
         $positionRepository = $this->prophesize(DataPositionRepository::class);
         $positionRepository->getById($dataPosition->id())->shouldBeCalled()->willReturn($dataPosition);
@@ -32,7 +32,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function getWhere_does_not_save_in_the_cache()
     {
-        $position = factory(DataPosition::class)->create();
+        $position = DataPosition::factory()->create();
 
         $positionRepository = $this->prophesize(DataPositionRepository::class);
         $positionRepository->getWhere(['email' => 'test@test.com'])->shouldBeCalled()->willReturn($position);
@@ -48,7 +48,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function getAllWhere_does_not_save_in_the_cache()
     {
-        $positions = factory(DataPosition::class, 5)->create();
+        $positions = DataPosition::factory()->count(5)->create();
 
         $positionRepository = $this->prophesize(DataPositionRepository::class);
         $positionRepository->getAllWhere(['email' => 'test@test.com'])->shouldBeCalled()->willReturn($positions);
@@ -64,7 +64,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $position = factory(DataPosition::class)->create();
+        $position = DataPosition::factory()->create();
 
         $positionRepository = $this->prophesize(DataPositionRepository::class);
         $positionRepository->update($position->id(), 'N', 'E')->shouldBeCalled()->willReturn($position);
@@ -80,7 +80,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $position = factory(DataPosition::class)->create();
+        $position = DataPosition::factory()->create();
 
         $positionRepository = $this->prophesize(DataPositionRepository::class);
         $positionRepository->create('N', 'E')->shouldBeCalled()->willReturn($position);

@@ -10,7 +10,7 @@ class UserTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_returns_all_user_tag_categories(){
-        $userTagCategories = factory(UserTagCategory::class, 5)->create();
+        $userTagCategories = UserTagCategory::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/user-tag-category');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -23,7 +23,7 @@ class UserTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_returns_a_single_userTagCategory(){
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
         $response = $this->getJson($this->apiUrl . '/user-tag-category/' . $userTagCategory->id());
 
         $response->assertStatus(200);
@@ -32,7 +32,7 @@ class UserTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_updates_a_user_tag_category(){
-        $userTagCategory = factory(UserTagCategory::class)->create([
+        $userTagCategory = UserTagCategory::factory()->create([
             'name' => 'tagCategory1', 'description' => 'ATagCategory1', 'reference' => 'tagCategory1a'
         ]);
 
@@ -72,7 +72,7 @@ class UserTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_deletes_a_user_tag_category(){
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $this->assertDatabaseHas('control_tag_categories', [
             'id' => $userTagCategory->id

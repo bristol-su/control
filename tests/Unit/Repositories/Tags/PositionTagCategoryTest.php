@@ -14,7 +14,7 @@ class PositionTagCategoryTest extends TestCase
 
     /** @test */
     public function getById_returns_a_position_tag_category_model_with_the_corresponding_id(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create(['id' => 2]);
+        $positionTagCategory = PositionTagCategory::factory()->create(['id' => 2]);
         $positionTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
         $this->assertTrue(
             $positionTagCategory->is($positionTagCategoryRepo->getById(2))
@@ -30,7 +30,7 @@ class PositionTagCategoryTest extends TestCase
 
     /** @test */
     public function all_returns_all_position_tags_categories(){
-        $positionTagCategories = factory(PositionTagCategory::class, 15)->create();
+        $positionTagCategories = PositionTagCategory::factory()->count(15)->create();
         $positionTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
         $allTagCategories = $positionTagCategoryRepo->all();
         $this->assertInstanceOf(Collection::class, $allTagCategories);
@@ -43,7 +43,7 @@ class PositionTagCategoryTest extends TestCase
 
     /** @test */
     public function getByReference_returns_a_tag_category_given_the_full_reference(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create(['reference' => 'ref1']);
+        $positionTagCategory = PositionTagCategory::factory()->create(['reference' => 'ref1']);
 
         $positionTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
         $positionTagCategoryFromRepo = $positionTagCategoryRepo->getByReference('ref1');
@@ -84,7 +84,7 @@ class PositionTagCategoryTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_position_tag_category_model(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create();
+        $positionTagCategory = PositionTagCategory::factory()->create();
         $positionTagCategoryRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTagCategory();
         $positionTagCategoryRepo->delete($positionTagCategory->id());
 
@@ -95,7 +95,7 @@ class PositionTagCategoryTest extends TestCase
     /** @test */
     public function update_updates_a_position_tag_category()
     {
-        $positionTagCategory = factory(PositionTagCategory::class)->create([
+        $positionTagCategory = PositionTagCategory::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',
@@ -129,7 +129,7 @@ class PositionTagCategoryTest extends TestCase
     /** @test */
     public function update_returns_the_updated_position_tag_category()
     {
-        $positionTagCategory = factory(PositionTagCategory::class)->create([
+        $positionTagCategory = PositionTagCategory::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',

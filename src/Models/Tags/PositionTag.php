@@ -4,6 +4,8 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\PositionTagScope;
 use BristolSU\ControlDB\Traits\Tags\PositionTagTrait;
+use Database\Factories\PositionTagFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class PositionTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\PositionTag
 {
-    use SoftDeletes, PositionTagTrait {
+    use SoftDeletes, HasFactory, PositionTagTrait {
         setName as baseSetName;
         setDescription as baseSetDescription;
         setReference as baseSetReference;
@@ -165,4 +167,13 @@ class PositionTag extends Model implements \BristolSU\ControlDB\Contracts\Models
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new PositionTagFactory();
+    }
 }

@@ -18,7 +18,6 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
-        $this->withFactories(__DIR__ . '/../database/factories');
         $this->setupPagination();
     }
 

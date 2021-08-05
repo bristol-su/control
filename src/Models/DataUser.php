@@ -6,8 +6,10 @@ namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
 use BristolSU\ControlDB\Traits\DataUserTrait;
+use Database\Factories\DataUserFactory;
 use DateTime;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\DataUser
 {
-    use SoftDeletes, HasAdditionalProperties, DataUserTrait {
+    use SoftDeletes, HasFactory, HasAdditionalProperties, DataUserTrait {
         setFirstName as baseSetFirstName;
         setLastName as baseSetLastName;
         setEmail as baseSetEmail;
@@ -175,5 +177,14 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new DataUserFactory();
+    }
 
 }

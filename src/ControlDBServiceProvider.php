@@ -129,7 +129,7 @@ use Illuminate\Support\ServiceProvider;
 class ControlDBServiceProvider extends ServiceProvider
 {
     use RegistersCachedRepositories, RegistersObserverFramework;
-    
+
     public function register()
     {
         $this->bindContracts();
@@ -138,7 +138,6 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->registerCommands();
         $this->registerMigrations();
         $this->registerConfig();
-        $this->registerFactories();
         $this->app->singleton('control-exporter', function() {
             return new ExportManager($this->app);
         });
@@ -163,20 +162,6 @@ class ControlDBServiceProvider extends ServiceProvider
         );
     }
 
-    /**
-     * Register factories in a non-production environment
-     *
-     * @throws BindingResolutionException
-     */
-    public function registerFactories()
-    {
-        if (!app()->environment('production') && class_exists(\Faker\Factory::class)) {
-            $this->app->extend(Factory::class, function(Factory $factory, $app) {
-                return $factory->load(__DIR__ .'/../database/factories');
-            });
-        }
-    }
-    
     public function registerMigrations()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -203,7 +188,7 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(DataGroupRepositoryContract::class, DataGroupRepository::class);
         $this->app->bind(DataRoleRepositoryContract::class, DataRoleRepository::class);
         $this->app->bind(DataPositionRepositoryContract::class, DataPositionRepository::class);
-        
+
         // Tag Models
         $this->app->bind(GroupTagModelContract::class, GroupTagModel::class);
         $this->app->bind(GroupTagCategoryModelContract::class, GroupTagCategoryModel::class);
@@ -223,10 +208,10 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(RoleTagCategoryRepositoryContract::class, RoleTagCategoryRepository::class);
         $this->app->bind(PositionTagRepositoryContract::class, PositionTagRepository::class);
         $this->app->bind(PositionTagCategoryRepositoryContract::class, PositionTagCategoryRepository::class);
-        
+
         // Additional Properties
         $this->app->singleton(AdditionalPropertyStore::class, AdditionalPropertySingletonStore::class);
-        
+
         // Pivot Repositories
         $this->app->bind(UserGroupContract::class, UserGroup::class);
         $this->app->bind(UserRoleContract::class, UserRole::class);
@@ -234,7 +219,7 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->bind(UserUserTagContract::class, UserUserTag::class);
         $this->app->bind(RoleRoleTagContract::class, RoleRoleTag::class);
         $this->app->bind(PositionPositionTagContract::class, PositionPositionTag::class);
-        
+
         $this->app->singleton(ObserverStore::class);
 
     }
@@ -326,7 +311,7 @@ class ControlDBServiceProvider extends ServiceProvider
         Observe::attach(RoleTagRepositoryContract::class, RoleTagObserverClearCache::class);
         Observe::attach(UserTagRepositoryContract::class, UserTagObserverClearCache::class);
         Observe::attach(PositionTagRepositoryContract::class, PositionTagObserverClearCache::class);
-        
+
         Observe::attach(GroupTagCategoryRepositoryContract::class, GroupTagCategoryObserverClearCache::class);
         Observe::attach(RoleTagCategoryRepositoryContract::class, RoleTagCategoryObserverClearCache::class);
         Observe::attach(UserTagCategoryRepositoryContract::class, UserTagCategoryObserverClearCache::class);
@@ -344,7 +329,7 @@ class ControlDBServiceProvider extends ServiceProvider
         Observe::attach(UserTagRepositoryContract::class, UserTagObserverCascadeDelete::class);
         Observe::attach(RoleTagRepositoryContract::class, RoleTagObserverCascadeDelete::class);
         Observe::attach(PositionTagRepositoryContract::class, PositionTagObserverCascadeDelete::class);
-        
+
         Observe::attach(GroupTagCategoryRepositoryContract::class, GroupTagCategoryObserverCascadeDelete::class);
         Observe::attach(UserTagCategoryRepositoryContract::class, UserTagCategoryObserverCascadeDelete::class);
         Observe::attach(RoleTagCategoryRepositoryContract::class, RoleTagCategoryObserverCascadeDelete::class);

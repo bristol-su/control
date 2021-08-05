@@ -15,8 +15,8 @@ class UserTagTraitTest extends TestCase
 {
     /** @test */
     public function category_returns_the_owning_category(){
-        $userTagCategory = factory(UserTagCategory::class)->create();
-        $userTag = factory(UserTag::class)->create(['tag_category_id' => $userTagCategory->id]);
+        $userTagCategory = UserTagCategory::factory()->create();
+        $userTag = UserTag::factory()->create(['tag_category_id' => $userTagCategory->id]);
 
         $this->assertInstanceOf(UserTagCategory::class, $userTag->category());
         $this->assertTrue($userTagCategory->is($userTag->category()));
@@ -24,8 +24,8 @@ class UserTagTraitTest extends TestCase
 
     /** @test */
     public function users_can_be_added_to_the_tag(){
-        $userTag = factory(UserTag::class)->create();
-        $taggedUsers = factory(User::class, 5)->create();
+        $userTag = UserTag::factory()->create();
+        $taggedUsers = User::factory()->count(5)->create();
 
         foreach($taggedUsers as $user) {
             $userTag->addUser($user);
@@ -40,8 +40,8 @@ class UserTagTraitTest extends TestCase
 
     /** @test */
     public function users_can_be_removed_from_the_tag(){
-        $userTag = factory(UserTag::class)->create();
-        $taggedUsers = factory(User::class, 5)->create();
+        $userTag = UserTag::factory()->create();
+        $taggedUsers = User::factory()->count(5)->create();
 
         DB::table('control_taggables')->insert($taggedUsers->map(function($user) use ($userTag) {
             return ['tag_id' => $userTag->id, 'taggable_id' => $user->id, 'taggable_type' => 'user'];
@@ -63,13 +63,13 @@ class UserTagTraitTest extends TestCase
 
     /** @test */
     public function user_returns_all_users_tagged(){
-        $userTag = factory(UserTag::class)->create();
+        $userTag = UserTag::factory()->create();
         // Models which could be linked to a tag. Positions, roles and groups should never be returned
-        $taggedUsers = factory(User::class, 5)->create();
-        $untaggedUsers = factory(User::class, 5)->create();
-        $positions = factory(Position::class, 5)->create();
-        $roles = factory(Role::class, 5)->create();
-        $groups = factory(Group::class, 5)->create();
+        $taggedUsers = User::factory()->count(5)->create();
+        $untaggedUsers = User::factory()->count(5)->create();
+        $positions = Position::factory()->count(5)->create();
+        $roles = Role::factory()->count(5)->create();
+        $groups = Group::factory()->count(5)->create();
 
         DB::table('control_taggables')->insert($taggedUsers->map(function($user) use ($userTag) {
             return ['tag_id' => $userTag->id, 'taggable_id' => $user->id, 'taggable_type' => 'user'];
@@ -84,8 +84,8 @@ class UserTagTraitTest extends TestCase
 
     /** @test */
     public function fullReference_returns_the_category_reference_and_the_tag_reference(){
-        $userTagCategory = factory(UserTagCategory::class)->create(['reference' => 'categoryreference1']);
-        $userTag = factory(UserTag::class)->create(['reference' => 'tagreference1', 'tag_category_id' => $userTagCategory->id]);
+        $userTagCategory = UserTagCategory::factory()->create(['reference' => 'categoryreference1']);
+        $userTag = UserTag::factory()->create(['reference' => 'tagreference1', 'tag_category_id' => $userTagCategory->id]);
 
         $this->assertEquals('categoryreference1.tagreference1', $userTag->fullReference());
     }
@@ -94,7 +94,7 @@ class UserTagTraitTest extends TestCase
     /** @test */
     public function setName_updates_the_user_tag_name()
     {
-        $userTag = factory(UserTag::class)->create();
+        $userTag = UserTag::factory()->create();
 
         $userTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class);
         $userTagRepository->update($userTag->id(), 'NewName', $userTag->description(), $userTag->reference(), $userTag->categoryId())
@@ -107,7 +107,7 @@ class UserTagTraitTest extends TestCase
     /** @test */
     public function setDescription_updates_the_user_tag_description()
     {
-        $userTag = factory(UserTag::class)->create();
+        $userTag = UserTag::factory()->create();
 
         $userTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class);
         $userTagRepository->update($userTag->id(), $userTag->name(), 'NewDescription', $userTag->reference(), $userTag->categoryId())
@@ -120,7 +120,7 @@ class UserTagTraitTest extends TestCase
     /** @test */
     public function setReference_updates_the_user_tag_reference()
     {
-        $userTag = factory(UserTag::class)->create();
+        $userTag = UserTag::factory()->create();
 
         $userTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class);
         $userTagRepository->update($userTag->id(), $userTag->name(), $userTag->description(), 'NewReference', $userTag->categoryId())
@@ -133,8 +133,8 @@ class UserTagTraitTest extends TestCase
     /** @test */
     public function setTagCategoryId_updates_the_user_tag_category_id()
     {
-        $userTag = factory(UserTag::class)->create();
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTag = UserTag::factory()->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $userTagRepository = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class);
         $userTagRepository->update($userTag->id(), $userTag->name(), $userTag->description(), $userTag->reference(), $userTagCategory->id())
@@ -143,5 +143,5 @@ class UserTagTraitTest extends TestCase
 
         $userTag->setTagCategoryId($userTagCategory->id());
     }
-    
+
 }

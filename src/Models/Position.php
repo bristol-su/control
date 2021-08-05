@@ -5,7 +5,9 @@ namespace BristolSU\ControlDB\Models;
 
 
 use BristolSU\ControlDB\Traits\PositionTrait;
+use Database\Factories\PositionFactory;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Position
 {
-    use SoftDeletes, PositionTrait {
+    use SoftDeletes, HasFactory, PositionTrait {
         setDataProviderId as baseSetDataProviderId;
     }
 
@@ -93,5 +95,14 @@ class Position extends Model implements \BristolSU\ControlDB\Contracts\Models\Po
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new PositionFactory();
+    }
 
 }

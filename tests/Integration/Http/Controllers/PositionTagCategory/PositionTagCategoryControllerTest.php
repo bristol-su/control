@@ -10,7 +10,7 @@ class PositionTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_returns_all_position_tag_categories(){
-        $positionTagCategories = factory(PositionTagCategory::class, 5)->create();
+        $positionTagCategories = PositionTagCategory::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/position-tag-category');
         $response->assertStatus(200);
 
@@ -24,7 +24,7 @@ class PositionTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_returns_a_single_positionTagCategory(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create();
+        $positionTagCategory = PositionTagCategory::factory()->create();
         $response = $this->getJson($this->apiUrl . '/position-tag-category/' . $positionTagCategory->id());
 
         $response->assertStatus(200);
@@ -33,7 +33,7 @@ class PositionTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_updates_a_position_tag_category(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create([
+        $positionTagCategory = PositionTagCategory::factory()->create([
             'name' => 'tagCategory1', 'description' => 'ATagCategory1', 'reference' => 'tagCategory1a'
         ]);
 
@@ -73,7 +73,7 @@ class PositionTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_deletes_a_position_tag_category(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create();
+        $positionTagCategory = PositionTagCategory::factory()->create();
 
         $this->assertDatabaseHas('control_tag_categories', [
             'id' => $positionTagCategory->id

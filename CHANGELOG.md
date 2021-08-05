@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - (05/08/2021)
+
+### Changed
+- Use new Laravel factories rather than legacy factories.
+
 ## [3.0.0] - (05/08/2021)
 
 ### Changed

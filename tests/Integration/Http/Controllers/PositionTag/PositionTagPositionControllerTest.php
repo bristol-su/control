@@ -11,8 +11,8 @@ class PositionTagPositionControllerTest extends TestCase
     /** @test */
     public function it_gets_all_positions_through_a_tag()
     {
-        $positionTag = factory(PositionTag::class)->create();
-        $positions = factory(Position::class, 5)->create();
+        $positionTag = PositionTag::factory()->create();
+        $positions = Position::factory()->count(5)->create();
 
         foreach ($positions as $position) {
             $positionTag->addPosition($position);
@@ -37,8 +37,8 @@ class PositionTagPositionControllerTest extends TestCase
     /** @test */
     public function it_tags_a_position()
     {
-        $position = factory(Position::class)->create();
-        $positionTag = factory(PositionTag::class)->create();
+        $position = Position::factory()->create();
+        $positionTag = PositionTag::factory()->create();
 
         $this->assertDatabaseMissing('control_taggables', [
             'taggable_id' => $position->id(),
@@ -62,8 +62,8 @@ class PositionTagPositionControllerTest extends TestCase
     /** @test */
     public function it_untags_a_position()
     {
-        $position = factory(Position::class)->create();
-        $positionTag = factory(PositionTag::class)->create();
+        $position = Position::factory()->create();
+        $positionTag = PositionTag::factory()->create();
 
         $position->addTag($positionTag);
 

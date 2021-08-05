@@ -6,7 +6,9 @@ namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\Contracts\Models\User as UserContract;
 use BristolSU\ControlDB\Traits\UserTrait;
+use Database\Factories\UserFactory;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class User extends Model implements UserContract
 {
-    use SoftDeletes, UserTrait {
+    use SoftDeletes, HasFactory, UserTrait {
         setDataProviderId as baseSetDataProviderId;
     }
 
@@ -87,5 +89,15 @@ class User extends Model implements UserContract
     {
         $this->baseSetDataProviderId($dataProviderId);
         $this->refresh();
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new UserFactory();
     }
 }

@@ -12,7 +12,7 @@ class DataPositionTest extends TestCase
     
     /** @test */
     public function a_data_position_can_be_created(){
-        factory(DataPosition::class)->create([
+        DataPosition::factory()->create([
             'name' => 'Position1',
             'description' => 'description1',
         ]);
@@ -26,7 +26,7 @@ class DataPositionTest extends TestCase
 
     /** @test */
     public function an_empty_data_position_can_be_created(){
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'name' => null,
             'description' => null,
         ]);
@@ -42,7 +42,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function an_id_can_be_retrieved_from_the_model()
     {
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'id' => 4
         ]);
 
@@ -52,7 +52,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function a_name_can_be_retrieved_from_the_model()
     {
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'name' => 'Position1'
         ]);
 
@@ -62,7 +62,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function an_description_can_be_retrieved_from_the_model()
     {
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'description' => 'description'
         ]);
 
@@ -72,7 +72,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function a_name_can_be_set_on_the_model()
     {
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'name' => 'Position1'
         ]);
 
@@ -84,7 +84,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function an_description_can_be_set_on_the_model()
     {
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'description' => 'description'
         ]);
         
@@ -96,7 +96,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function additional_properties_can_be_set_and_got(){
         DataPosition::addProperty('alias');
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'name' => 'Secretary',
             'description' => 'someDescription'
         ]);
@@ -110,7 +110,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function additional_properties_are_saved_in_the_database(){
         DataPosition::addProperty('alias');
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'name' => 'Secretary',
             'description' => 'someDescription'
         ]);
@@ -128,7 +128,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function additional_properties_are_appended_to_an_array(){
         DataPosition::addProperty('alias');
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'name' => 'Secretary',
             'description' => 'someDescription'
         ]);

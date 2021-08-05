@@ -14,18 +14,18 @@ class AddGroupInformationToRolesTest extends TestCase
 
     /** @test */
     public function it_adds_group_information_to_a_role_item(){
-        $dataGroup1 = factory(DataGroup::class)->create(['name' => 'Group1', 'email' => 'group1@example.com']);
-        $dataGroup2 = factory(DataGroup::class)->create(['name' => 'Group2', 'email' => 'group2@example.com']);
-        $dataGroup3 = factory(DataGroup::class)->create(['name' => 'Group3', 'email' => 'group3@example.com']);
-        $group1 = factory(Group::class)->create(['data_provider_id' => $dataGroup1->id()]);
-        $group2 = factory(Group::class)->create(['data_provider_id' => $dataGroup2->id()]);
-        $group3 = factory(Group::class)->create(['data_provider_id' => $dataGroup3->id()]);
+        $dataGroup1 = DataGroup::factory()->create(['name' => 'Group1', 'email' => 'group1@example.com']);
+        $dataGroup2 = DataGroup::factory()->create(['name' => 'Group2', 'email' => 'group2@example.com']);
+        $dataGroup3 = DataGroup::factory()->create(['name' => 'Group3', 'email' => 'group3@example.com']);
+        $group1 = Group::factory()->create(['data_provider_id' => $dataGroup1->id()]);
+        $group2 = Group::factory()->create(['data_provider_id' => $dataGroup2->id()]);
+        $group3 = Group::factory()->create(['data_provider_id' => $dataGroup3->id()]);
         
         $formatter = new AddGroupInformationToRoles([]);
         $items = $formatter->format([
-            FormattedItem::create(factory(Role::class)->create(['group_id' => $group1])),
-            FormattedItem::create(factory(Role::class)->create(['group_id' => $group2])),
-            FormattedItem::create(factory(Role::class)->create(['group_id' => $group3])),
+            FormattedItem::create(Role::factory()->create(['group_id' => $group1])),
+            FormattedItem::create(Role::factory()->create(['group_id' => $group2])),
+            FormattedItem::create(Role::factory()->create(['group_id' => $group3])),
         ]);
         
         $this->assertCount(3, $items);

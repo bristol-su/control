@@ -5,7 +5,9 @@ namespace BristolSU\ControlDB\Models;
 
 
 use BristolSU\ControlDB\Traits\RoleTrait;
+use Database\Factories\RoleFactory;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
 {
 
-    use SoftDeletes, RoleTrait {
+    use SoftDeletes, HasFactory, RoleTrait {
         setDataProviderId as baseSetDataProviderId;
         setGroupId as baseSetGroupId;
         setPositionId as baseSetPositionId;
@@ -136,6 +138,16 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
     {
         $this->baseSetPositionId($positionId);
         $this->refresh();
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new RoleFactory();
     }
 
 

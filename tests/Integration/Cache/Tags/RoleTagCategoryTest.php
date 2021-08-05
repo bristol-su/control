@@ -16,7 +16,7 @@ class RoleTagCategoryTest extends TestCase
     /** @test */
     public function all_does_not_save_in_the_cache()
     {
-        $roleTagCategories = factory(RoleTagCategory::class, 5)->create();
+        $roleTagCategories = RoleTagCategory::factory()->count(5)->create();
 
         $roleTagCategoryRepository = $this->prophesize(RoleTagCategoryRepository::class);
         $roleTagCategoryRepository->all()->shouldBeCalled()->willReturn($roleTagCategories);
@@ -33,7 +33,7 @@ class RoleTagCategoryTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTagCategory = RoleTagCategory::factory()->create();
 
         $roleTagCategoryRepository = $this->prophesize(RoleTagCategoryRepository::class);
         $roleTagCategoryRepository->create('name1', 'desc1', 'ref1')->shouldBeCalled()->willReturn($roleTagCategory);
@@ -49,7 +49,7 @@ class RoleTagCategoryTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTagCategory = RoleTagCategory::factory()->create();
 
         $roleTagCategoryRepository = $this->prophesize(RoleTagCategoryRepository::class);
         $roleTagCategoryRepository->update($roleTagCategory->id(), 'name1', 'desc1', 'ref1')->shouldBeCalled()->willReturn($roleTagCategory);
@@ -65,7 +65,7 @@ class RoleTagCategoryTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTagCategory = RoleTagCategory::factory()->create();
 
         $roleTagCategoryRepository = $this->prophesize(RoleTagCategoryRepository::class);
         $roleTagCategoryRepository->delete($roleTagCategory->id())->shouldBeCalled();
@@ -77,10 +77,10 @@ class RoleTagCategoryTest extends TestCase
 
         $this->assertNull($roleTagCategoryCache->delete($roleTagCategory->id()));
     }
-    
+
     /** @test */
     public function getById_saves_tags_in_the_cache(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTagCategory = RoleTagCategory::factory()->create();
 
         $roleTagCategoryRepository = $this->prophesize(RoleTagCategoryRepository::class);
         $roleTagCategoryRepository->getById($roleTagCategory->id())->shouldBeCalled()->willReturn($roleTagCategory);
@@ -98,7 +98,7 @@ class RoleTagCategoryTest extends TestCase
 
     /** @test */
     public function getByReference_saves_tags_in_the_cache(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTagCategory = RoleTagCategory::factory()->create();
 
         $roleTagCategoryRepository = $this->prophesize(RoleTagCategoryRepository::class);
         $roleTagCategoryRepository->getByReference('ref')->shouldBeCalled()->willReturn($roleTagCategory);

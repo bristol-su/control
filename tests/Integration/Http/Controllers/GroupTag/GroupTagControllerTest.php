@@ -11,7 +11,7 @@ class GroupTagControllerTest extends TestCase
 
     /** @test */
     public function it_returns_all_group_tags(){
-        $groupTags = factory(GroupTag::class, 5)->create();
+        $groupTags = GroupTag::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/group-tag');
         $response->assertStatus(200);
 
@@ -25,7 +25,7 @@ class GroupTagControllerTest extends TestCase
 
     /** @test */
     public function it_returns_a_single_groupTag(){
-        $groupTag = factory(GroupTag::class)->create();
+        $groupTag = GroupTag::factory()->create();
         $response = $this->getJson($this->apiUrl . '/group-tag/' . $groupTag->id());
 
         $response->assertStatus(200);
@@ -34,10 +34,10 @@ class GroupTagControllerTest extends TestCase
 
     /** @test */
     public function it_updates_a_group_tag(){
-        $tagCategory1 = factory(GroupTagCategory::class)->create();
-        $tagCategory2 = factory(GroupTagCategory::class)->create();
-        
-        $groupTag = factory(GroupTag::class)->create([
+        $tagCategory1 = GroupTagCategory::factory()->create();
+        $tagCategory2 = GroupTagCategory::factory()->create();
+
+        $groupTag = GroupTag::factory()->create([
             'name' => 'tag1', 'description' => 'ATag1', 'reference' => 'tag1a', 'tag_category_id' => $tagCategory1->id()
         ]);
 
@@ -48,7 +48,7 @@ class GroupTagControllerTest extends TestCase
         $response = $this->patchJson($this->apiUrl . '/group-tag/' . $groupTag->id(), [
             'name' => 'tag2', 'description' => 'ATag2', 'reference' => 'tag2a', 'tag_category_id' => $tagCategory2->id()
         ]);
-        
+
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('control_tags', [
@@ -59,7 +59,7 @@ class GroupTagControllerTest extends TestCase
 
     /** @test */
     public function it_creates_a_group_tag(){
-        $tagCategory = factory(GroupTagCategory::class)->create();
+        $tagCategory = GroupTagCategory::factory()->create();
 
         $response = $this->postJson($this->apiUrl . '/group-tag', [
             'name' => 'tag1', 'description' => 'ATag1', 'reference' => 'tag1a', 'tag_category_id' => $tagCategory->id()
@@ -79,7 +79,7 @@ class GroupTagControllerTest extends TestCase
 
     /** @test */
     public function it_deletes_a_group_tag(){
-        $groupTag = factory(GroupTag::class)->create();
+        $groupTag = GroupTag::factory()->create();
 
         $this->assertDatabaseHas('control_tags', [
             'id' => $groupTag->id

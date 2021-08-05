@@ -11,8 +11,8 @@ class RoleTagCategoryRoleTagControllerTest extends TestCase
 
     /** @test */
     public function it_gets_all_tags_through_a_role_tag_category(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
-        $roleTags = factory(RoleTag::class, 5)->create(['tag_category_id' => $roleTagCategory->id()]);
+        $roleTagCategory = RoleTagCategory::factory()->create();
+        $roleTags = RoleTag::factory()->count(5)->create(['tag_category_id' => $roleTagCategory->id()]);
 
         $response = $this->getJson($this->apiUrl . '/role-tag-category/' . $roleTagCategory->id() . '/role-tag');
         $response->assertStatus(200);
@@ -24,5 +24,5 @@ class RoleTagCategoryRoleTagControllerTest extends TestCase
             $this->assertEquals($roleTags->shift()->id(), $roleTagThroughApi['id']);
         }
     }
-    
+
 }
