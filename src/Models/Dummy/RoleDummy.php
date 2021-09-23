@@ -60,7 +60,8 @@ class RoleDummy implements Role
             'id' => $this->id(),
             'data_provider_id' => $this->dataProviderId(),
             'position_id' => $this->positionId(),
-            'group_id' => $this->groupId()
+            'group_id' => $this->groupId(),
+            'data' => $this->data()->toArray()
         ];
     }
 

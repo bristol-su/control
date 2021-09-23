@@ -52,7 +52,8 @@ class UserDummy implements User
     {
         return [
             'id' => $this->id(),
-            'data_provider_id' => $this->dataProviderId()
+            'data_provider_id' => $this->dataProviderId(),
+            'data' => $this->data()->toArray()
         ];
     }
 
