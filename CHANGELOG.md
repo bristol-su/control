@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.2] - (23/10/2021)
+
+### Added
+- Dummy models that can be substituted for models that have been deleted
+
 ## [3.0.1] - (05/08/2021)
 
 ### Changed
