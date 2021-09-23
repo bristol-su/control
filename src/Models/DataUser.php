@@ -6,7 +6,10 @@ namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
 use BristolSU\ControlDB\Traits\DataUserTrait;
+use Database\Factories\DataUserFactory;
 use DateTime;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\DataUser
 {
-    use SoftDeletes, HasAdditionalProperties, DataUserTrait {
+    use SoftDeletes, HasFactory, HasAdditionalProperties, DataUserTrait {
         setFirstName as baseSetFirstName;
         setLastName as baseSetLastName;
         setEmail as baseSetEmail;
@@ -25,15 +28,15 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * The table to use
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $table = 'control_data_user';
 
     /**
      * Attributes that are fillable
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $fillable = [
         'first_name', 'last_name', 'email', 'dob', 'preferred_name'
@@ -41,16 +44,27 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * Casted attributes
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $casts = [
         'dob' => 'datetime'
     ];
-    
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
     /**
      * Get the ID of the user
-     * 
+     *
      * @return int
      */
     public function id(): int
@@ -60,7 +74,7 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * Get the first name for the user
-     * 
+     *
      * @return string|null
      */
     public function firstName(): ?string
@@ -70,7 +84,7 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * Get the last name for the user
-     * 
+     *
      * @return string|null
      */
     public function lastName(): ?string
@@ -80,7 +94,7 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * Get the email for the user
-     * 
+     *
      * @return string|null
      */
     public function email(): ?string
@@ -90,7 +104,7 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * Get the date of birth for the user
-     * 
+     *
      * @return DateTime|null
      */
     public function dob(): ?DateTime
@@ -100,7 +114,7 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * Get the preferred name for the user
-     * 
+     *
      * @return string|null
      */
     public function preferredName(): ?string
@@ -163,5 +177,14 @@ class DataUser extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new DataUserFactory();
+    }
 
 }

@@ -15,8 +15,8 @@ class RoleRoleTagTest extends TestCase
     /** @test */
     public function addTagToRole_does_not_save_in_cache()
     {
-        $roleTag = factory(RoleTag::class)->create();
-        $role = factory(Role::class)->create();
+        $roleTag = RoleTag::factory()->create();
+        $role = Role::factory()->create();
 
         $roleRoleTagRepository = $this->prophesize(RoleRoleTag::class);
         $roleRoleTagRepository->addTagToRole(Argument::that(function ($arg) use ($roleTag) {
@@ -36,8 +36,8 @@ class RoleRoleTagTest extends TestCase
     /** @test */
     public function removeTagFromRole_does_not_save_in_cache()
     {
-        $roleTag = factory(RoleTag::class)->create();
-        $role = factory(Role::class)->create();
+        $roleTag = RoleTag::factory()->create();
+        $role = Role::factory()->create();
 
         $roleRoleTagRepository = $this->prophesize(RoleRoleTag::class);
         $roleRoleTagRepository->removeTagFromRole(Argument::that(function ($arg) use ($roleTag) {
@@ -57,8 +57,8 @@ class RoleRoleTagTest extends TestCase
     /** @test */
     public function getTagsThroughRole_saves_the_tags_in_the_cache()
     {
-        $roleTags = factory(RoleTag::class, 5)->create();
-        $role = factory(Role::class)->create();
+        $roleTags = RoleTag::factory()->count(5)->create();
+        $role = Role::factory()->create();
 
         $roleRoleTagRepository = $this->prophesize(RoleRoleTag::class);
         $roleRoleTagRepository->getTagsThroughRole(Argument::that(function ($arg) use ($role) {
@@ -81,8 +81,8 @@ class RoleRoleTagTest extends TestCase
     /** @test */
     public function getRolesThroughTag_saves_the_roles_in_the_cache()
     {
-        $roles = factory(Role::class, 5)->create();
-        $roleTag = factory(RoleTag::class)->create();
+        $roles = Role::factory()->count(5)->create();
+        $roleTag = RoleTag::factory()->create();
 
         $roleRoleTagRepository = $this->prophesize(RoleRoleTag::class);
         $roleRoleTagRepository->getRolesThroughTag(Argument::that(function ($arg) use ($roleTag) {

@@ -13,29 +13,29 @@ class UserGroupTest extends TestCase
 
     /** @test */
     public function it_gets_all_users_attached_to_a_group(){
-        $usersInGroup = factory(User::class, 10)->create();
-        $usersNotInGroup = factory(User::class, 10)->create();
-        $group = factory(Group::class)->create();
-        
+        $usersInGroup = User::factory()->count(10)->create();
+        $usersNotInGroup = User::factory()->count(10)->create();
+        $group = Group::factory()->create();
+
         $usersInGroup->each(function(User $user) use ($group) {
             \BristolSU\ControlDB\Models\Pivots\UserGroup::create([
                 'user_id' => $user->id(), 'group_id' => $group->id()
             ]);
         });
-        
+
         $usersThroughRepository = (new UserGroup())->getUsersThroughGroup($group);
         $this->assertEquals(10, $usersThroughRepository->count());
-        
+
         foreach($usersInGroup as $user) {
             $this->assertTrue($user->is($usersThroughRepository->shift()));
         }
     }
-    
+
     /** @test */
     public function it_gets_all_groups_a_user_is_attached_to(){
-        $groupsInUser = factory(Group::class, 10)->create();
-        $groupsNotInUser = factory(Group::class, 10)->create();
-        $user = factory(User::class)->create();
+        $groupsInUser = Group::factory()->count(10)->create();
+        $groupsNotInUser = Group::factory()->count(10)->create();
+        $user = User::factory()->create();
 
         $groupsInUser->each(function(Group $group) use ($user) {
             \BristolSU\ControlDB\Models\Pivots\UserGroup::create([
@@ -50,16 +50,16 @@ class UserGroupTest extends TestCase
             $this->assertTrue($group->is($groupsThroughRepository->shift()));
         }
     }
-    
+
     /** @test */
     public function it_adds_a_user_to_a_group(){
-        $group = factory(Group::class)->create();
-        $user = factory(User::class)->create();
+        $group = Group::factory()->create();
+        $user = User::factory()->create();
         $userGroup = new UserGroup();
         $this->assertEquals(0, $userGroup->getUsersThroughGroup($group)->count());
 
         $userGroup->addUserToGroup($user, $group);
-        
+
         $this->assertEquals(1, $userGroup->getUsersThroughGroup($group)->count());
         $this->assertInstanceOf(User::class, $userGroup->getUsersThroughGroup($group)->first());
         $this->assertTrue($user->is($userGroup->getUsersThroughGroup($group)->first()));
@@ -67,12 +67,12 @@ class UserGroupTest extends TestCase
 
     /** @test */
     public function it_removes_a_user_from_a_group(){
-        $group = factory(Group::class)->create();
-        $user = factory(User::class)->create();
+        $group = Group::factory()->create();
+        $user = User::factory()->create();
         $userGroup = new UserGroup();
 
         \BristolSU\ControlDB\Models\Pivots\UserGroup::create(['user_id' => $user->id(), 'group_id' => $group->id()]);
-        
+
         $this->assertEquals(1, $userGroup->getUsersThroughGroup($group)->count());
         $this->assertInstanceOf(User::class, $userGroup->getUsersThroughGroup($group)->first());
         $this->assertTrue($user->is($userGroup->getUsersThroughGroup($group)->first()));
@@ -81,5 +81,5 @@ class UserGroupTest extends TestCase
 
         $this->assertEquals(0, $userGroup->getUsersThroughGroup($group)->count());
     }
-    
+
 }

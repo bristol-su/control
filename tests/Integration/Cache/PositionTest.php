@@ -14,16 +14,16 @@ class PositionTest extends TestCase
 
     /** @test */
     public function getById_saves_the_position_in_the_cache(){
-        $position = factory(Position::class)->create();
-        
+        $position = Position::factory()->create();
+
         $positionRepository = $this->prophesize(PositionRepository::class);
         $positionRepository->getById($position->id())->shouldBeCalled()->willReturn($position);
-        
+
         $cache = app(Repository::class);
         $key = \BristolSU\ControlDB\Cache\Position::class . '@getById:' . $position->id();
-        
+
         $positionCache = new \BristolSU\ControlDB\Cache\Position($positionRepository->reveal(), $cache);
-        
+
         $this->assertFalse($cache->has($key));
         $this->assertTrue($position->is($positionCache->getById($position->id())));
         $this->assertTrue($cache->has($key));
@@ -32,8 +32,8 @@ class PositionTest extends TestCase
 
     /** @test */
     public function getByDataProviderId_saves_the_position_in_the_cache(){
-        $dataProvider = factory(DataPosition::class)->create();
-        $position = factory(Position::class)->create(['data_provider_id' => $dataProvider->id()]);
+        $dataProvider = DataPosition::factory()->create();
+        $position = Position::factory()->create(['data_provider_id' => $dataProvider->id()]);
 
         $positionRepository = $this->prophesize(PositionRepository::class);
         $positionRepository->getByDataProviderId($position->id())->shouldBeCalled()->willReturn($position);
@@ -52,7 +52,7 @@ class PositionTest extends TestCase
     /** @test */
     public function all_does_not_save_in_the_cache()
     {
-        $positions = factory(Position::class, 5)->create();
+        $positions = Position::factory()->count(5)->create();
 
         $positionRepository = $this->prophesize(PositionRepository::class);
         $positionRepository->all()->shouldBeCalled()->willReturn($positions);
@@ -68,8 +68,8 @@ class PositionTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $dataProvider = factory(DataPosition::class)->create();
-        $position = factory(Position::class)->create(['data_provider_id' => $dataProvider->id()]);
+        $dataProvider = DataPosition::factory()->create();
+        $position = Position::factory()->create(['data_provider_id' => $dataProvider->id()]);
 
         $positionRepository = $this->prophesize(PositionRepository::class);
         $positionRepository->create($dataProvider->id())->shouldBeCalled()->willReturn($position);
@@ -85,7 +85,7 @@ class PositionTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $position = factory(Position::class)->create();
+        $position = Position::factory()->create();
 
         $positionRepository = $this->prophesize(PositionRepository::class);
         $positionRepository->delete($position->id())->shouldBeCalled();
@@ -101,7 +101,7 @@ class PositionTest extends TestCase
     /** @test */
     public function paginate_does_not_save_in_the_cache()
     {
-        $positions = factory(Position::class, 5)->create();
+        $positions = Position::factory()->count(5)->create();
 
         $positionRepository = $this->prophesize(PositionRepository::class);
         $positionRepository->paginate(1, 2)->shouldBeCalled()->willReturn($positions);
@@ -117,8 +117,8 @@ class PositionTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $dataProvider = factory(DataPosition::class)->create();
-        $position = factory(Position::class)->create(['data_provider_id' => $dataProvider->id()]);
+        $dataProvider = DataPosition::factory()->create();
+        $position = Position::factory()->create(['data_provider_id' => $dataProvider->id()]);
 
         $positionRepository = $this->prophesize(PositionRepository::class);
         $positionRepository->update($position->id(), $dataProvider->id())->shouldBeCalled()->willReturn($position);
@@ -146,5 +146,5 @@ class PositionTest extends TestCase
         $this->assertTrue($cache->has($key));
         $this->assertEquals(19, $cache->get($key));
     }
-    
+
 }

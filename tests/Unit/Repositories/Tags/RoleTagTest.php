@@ -14,7 +14,7 @@ class RoleTagTest extends TestCase
 
     /** @test */
     public function getById_returns_a_role_tag_model_with_the_corresponding_id(){
-        $roleTag = factory(RoleTag::class)->create(['id' => 2]);
+        $roleTag = RoleTag::factory()->create(['id' => 2]);
         $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
         $this->assertTrue(
             $roleTag->is($roleTagRepo->getById(2))
@@ -30,7 +30,7 @@ class RoleTagTest extends TestCase
 
     /** @test */
     public function all_returns_all_role_tags(){
-        $roleTags = factory(RoleTag::class, 15)->create();
+        $roleTags = RoleTag::factory()->count(15)->create();
         $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
         $allTags = $roleTagRepo->all();
         $this->assertInstanceOf(Collection::class, $allTags);
@@ -43,8 +43,8 @@ class RoleTagTest extends TestCase
 
     /** @test */
     public function getTagByFullReference_returns_a_tag_given_the_full_reference(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create(['reference' => 'ref1']);
-        $roleTag = factory(RoleTag::class)->create(['reference' => 'ref2', 'tag_category_id' => $roleTagCategory]);
+        $roleTagCategory = RoleTagCategory::factory()->create(['reference' => 'ref1']);
+        $roleTag = RoleTag::factory()->create(['reference' => 'ref2', 'tag_category_id' => $roleTagCategory]);
 
         $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
         $roleTagFromRepo = $roleTagRepo->getTagByFullReference('ref1.ref2');
@@ -87,7 +87,7 @@ class RoleTagTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_role_tag_model(){
-        $roleTag = factory(RoleTag::class)->create();
+        $roleTag = RoleTag::factory()->create();
         $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
         $roleTagRepo->delete($roleTag->id());
 
@@ -97,9 +97,9 @@ class RoleTagTest extends TestCase
 
     /** @test */
     public function allThroughTagCategory_returns_all_tags_through_a_tag_category(){
-        $category = factory(RoleTagCategory::class)->create();
-        $tags = factory(RoleTag::class, 10)->create(['tag_category_id' => $category->id()]);
-        factory(RoleTag::class, 10)->create();
+        $category = RoleTagCategory::factory()->create();
+        $tags = RoleTag::factory()->count(10)->create(['tag_category_id' => $category->id()]);
+        RoleTag::factory()->count(10)->create();
 
         $roleTagRepo = new \BristolSU\ControlDB\Repositories\Tags\RoleTag();
         $tagsFromRepo = $roleTagRepo->allThroughTagCategory($category);
@@ -114,9 +114,9 @@ class RoleTagTest extends TestCase
     /** @test */
     public function update_updates_a_role_tag_category()
     {
-        $oldTagCategory = factory(RoleTagCategory::class)->create();
-        $newTagCategory = factory(RoleTagCategory::class)->create();
-        $roleTag = factory(RoleTag::class)->create([
+        $oldTagCategory = RoleTagCategory::factory()->create();
+        $newTagCategory = RoleTagCategory::factory()->create();
+        $roleTag = RoleTag::factory()->create([
             'name' => 'TagName',
             'description' => 'TagDesc',
             'reference' => 'ref',
@@ -151,9 +151,9 @@ class RoleTagTest extends TestCase
     /** @test */
     public function update_returns_the_updated_role_tag_category()
     {
-        $oldTagCategory = factory(RoleTagCategory::class)->create();
-        $newTagCategory = factory(RoleTagCategory::class)->create();
-        $roleTag = factory(RoleTag::class)->create([
+        $oldTagCategory = RoleTagCategory::factory()->create();
+        $newTagCategory = RoleTagCategory::factory()->create();
+        $roleTag = RoleTag::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',

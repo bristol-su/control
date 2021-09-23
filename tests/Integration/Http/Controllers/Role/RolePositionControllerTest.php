@@ -11,8 +11,8 @@ class RolePositionControllerTest extends TestCase
 
     /** @test */
     public function it_gets_the_position_from_the_role(){
-        $position = factory(Position::class)->create();
-        $role = factory(Role::class)->create(['position_id' => $position->id()]);
+        $position = Position::factory()->create();
+        $role = Role::factory()->create(['position_id' => $position->id()]);
         
         $response = $this->getJson($this->apiUrl . '/position/' . $position->id() . '/role');
         

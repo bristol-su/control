@@ -13,7 +13,7 @@ class DataPositionTest extends TestCase
 
     /** @test */
     public function getById_returns_a_data_position_by_id(){
-        $dataPosition = factory(DataPosition::class)->create(['id' => 1]);
+        $dataPosition = DataPosition::factory()->create(['id' => 1]);
         
         $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
         $dbDataPosition = $repository->getById(1);
@@ -33,7 +33,7 @@ class DataPositionTest extends TestCase
     public function getWhere_returns_the_first_model_matching_the_attributes(){
         $attributes = ['description' => 'description1'];
 
-        $dataPosition = factory(DataPosition::class)->create($attributes);
+        $dataPosition = DataPosition::factory()->create($attributes);
         
         $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
         $dbDataPosition = $repository->getWhere($attributes);
@@ -46,9 +46,9 @@ class DataPositionTest extends TestCase
     {
         $attributes = ['description' => 'desc', 'name' => 'Toby'];
 
-        $dataPositions = factory(DataPosition::class, 2)->create($attributes);
-        $otherPositions = factory(DataPosition::class, 2)->create(['description' => 'desc', 'name' => 'Tobasy']);
-        $otherPositions2 = factory(DataPosition::class, 2)->create(['description' => 'des2c', 'name' => 'Toby']);
+        $dataPositions = DataPosition::factory()->count(2)->create($attributes);
+        $otherPositions = DataPosition::factory()->count(2)->create(['description' => 'desc', 'name' => 'Tobasy']);
+        $otherPositions2 = DataPosition::factory()->count(2)->create(['description' => 'des2c', 'name' => 'Toby']);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
         $dbDataPosition = $repository->getAllWhere($attributes);
@@ -63,9 +63,9 @@ class DataPositionTest extends TestCase
     {
         $attributes = ['description' => 'desc', 'name' => 'Toby'];
 
-        $dataPositions = factory(DataPosition::class, 2)->create($attributes);
-        $otherPositions = factory(DataPosition::class, 2)->create(['description' => 'desc', 'name' => 'Toby2']);
-        $otherPositions2 = factory(DataPosition::class, 2)->create(['description' => 'des2c', 'name' => 'Toby']);
+        $dataPositions = DataPosition::factory()->count(2)->create($attributes);
+        $otherPositions = DataPosition::factory()->count(2)->create(['description' => 'desc', 'name' => 'Toby2']);
+        $otherPositions2 = DataPosition::factory()->count(2)->create(['description' => 'des2c', 'name' => 'Toby']);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
         $dbDataPosition = $repository->getAllWhere($attributes);
@@ -83,7 +83,7 @@ class DataPositionTest extends TestCase
         
         $attributes = ['description' => 'description1'];
 
-        $dataPosition = factory(DataPosition::class)->create(['description' => 'description2']);
+        $dataPosition = DataPosition::factory()->create(['description' => 'description2']);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
         $dbDataPosition = $repository->getWhere($attributes);
@@ -122,9 +122,9 @@ class DataPositionTest extends TestCase
     /** @test */
     public function getWhere_also_searches_additional_attributes(){
         DataPosition::addProperty('student_id');
-        $dataPosition1 = factory(DataPosition::class)->create(['name' => 'Name1']);
+        $dataPosition1 = DataPosition::factory()->create(['name' => 'Name1']);
         $dataPosition1->saveAdditionalAttribute('student_id', 'xy123');
-        $dataPosition2 = factory(DataPosition::class)->create(['name' => 'Name1']);
+        $dataPosition2 = DataPosition::factory()->create(['name' => 'Name1']);
         $dataPosition2->saveAdditionalAttribute('student_id', 'xy1234');
 
         $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
@@ -138,8 +138,8 @@ class DataPositionTest extends TestCase
         DataPosition::addProperty('additionalAttr');
         $attributes = ['name' => 'abc123', 'additional_attributes' => json_encode(['additionalAttr' => 15])];
 
-        $dataPositions = factory(DataPosition::class, 2)->create($attributes);
-        factory(DataPosition::class, 4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
+        $dataPositions = DataPosition::factory()->count(2)->create($attributes);
+        DataPosition::factory()->count(4)->create(['additional_attributes' => json_encode(['additionalAttr' => 5])]);
 
         $repository = new \BristolSU\ControlDB\Repositories\DataPosition();
         $dbDataPosition = $repository->getAllWhere($attributes);
@@ -152,7 +152,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function update_updates_a_position()
     {
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'name' => 'Toby',
             'description' => 'description_example.com',
         ]);
@@ -179,7 +179,7 @@ class DataPositionTest extends TestCase
     /** @test */
     public function update_returns_the_updated_position()
     {
-        $dataPosition = factory(DataPosition::class)->create([
+        $dataPosition = DataPosition::factory()->create([
             'name' => 'Toby',
             'description' => 'description_example.com',
         ]);

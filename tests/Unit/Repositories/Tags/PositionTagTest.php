@@ -16,7 +16,7 @@ class PositionTagTest extends TestCase
 
     /** @test */
     public function getById_returns_a_position_tag_model_with_the_corresponding_id(){
-        $positionTag = factory(PositionTag::class)->create(['id' => 2]);
+        $positionTag = PositionTag::factory()->create(['id' => 2]);
         $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
         $this->assertTrue(
             $positionTag->is($positionTagRepo->getById(2))
@@ -32,7 +32,7 @@ class PositionTagTest extends TestCase
 
     /** @test */
     public function all_returns_all_position_tags(){
-        $positionTags = factory(PositionTag::class, 15)->create();
+        $positionTags = PositionTag::factory()->count(15)->create();
         $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
         $allTags = $positionTagRepo->all();
         $this->assertInstanceOf(Collection::class, $allTags);
@@ -45,8 +45,8 @@ class PositionTagTest extends TestCase
 
     /** @test */
     public function getTagByFullReference_returns_a_tag_given_the_full_reference(){
-        $positionTagCategory = factory(PositionTagCategory::class)->create(['reference' => 'ref1']);
-        $positionTag = factory(PositionTag::class)->create(['reference' => 'ref2', 'tag_category_id' => $positionTagCategory]);
+        $positionTagCategory = PositionTagCategory::factory()->create(['reference' => 'ref1']);
+        $positionTag = PositionTag::factory()->create(['reference' => 'ref2', 'tag_category_id' => $positionTagCategory]);
 
         $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
         $positionTagFromRepo = $positionTagRepo->getTagByFullReference('ref1.ref2');
@@ -61,7 +61,7 @@ class PositionTagTest extends TestCase
         $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
         $positionTagRepo->getTagByFullReference('nota.validref');
     }
-   
+
     /** @test */
     public function create_creates_a_position_tag_model(){
         $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
@@ -89,19 +89,19 @@ class PositionTagTest extends TestCase
 
     /** @test */
     public function delete_deletes_a_position_tag_model(){
-        $positionTag = factory(PositionTag::class)->create();
+        $positionTag = PositionTag::factory()->create();
         $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
         $positionTagRepo->delete($positionTag->id());
 
         $positionTag->refresh();
         $this->assertTrue($positionTag->trashed());
     }
-    
+
     /** @test */
     public function allThroughTagCategory_returns_all_tags_through_a_tag_category(){
-        $category = factory(PositionTagCategory::class)->create();
-        $tags = factory(PositionTag::class, 10)->create(['tag_category_id' => $category->id()]);
-        factory(PositionTag::class, 10)->create();
+        $category = PositionTagCategory::factory()->create();
+        $tags = PositionTag::factory()->count(10)->create(['tag_category_id' => $category->id()]);
+        PositionTag::factory()->count(10)->create();
 
         $positionTagRepo = new \BristolSU\ControlDB\Repositories\Tags\PositionTag();
         $tagsFromRepo = $positionTagRepo->allThroughTagCategory($category);
@@ -116,9 +116,9 @@ class PositionTagTest extends TestCase
     /** @test */
     public function update_updates_a_position_tag_category()
     {
-        $oldTagCategory = factory(PositionTagCategory::class)->create();
-        $newTagCategory = factory(PositionTagCategory::class)->create();
-        $positionTag = factory(PositionTag::class)->create([
+        $oldTagCategory = PositionTagCategory::factory()->create();
+        $newTagCategory = PositionTagCategory::factory()->create();
+        $positionTag = PositionTag::factory()->create([
             'name' => 'TagName',
             'description' => 'TagDesc',
             'reference' => 'ref',
@@ -153,9 +153,9 @@ class PositionTagTest extends TestCase
     /** @test */
     public function update_returns_the_updated_position_tag_category()
     {
-        $oldTagCategory = factory(PositionTagCategory::class)->create();
-        $newTagCategory = factory(PositionTagCategory::class)->create();
-        $positionTag = factory(PositionTag::class)->create([
+        $oldTagCategory = PositionTagCategory::factory()->create();
+        $newTagCategory = PositionTagCategory::factory()->create();
+        $positionTag = PositionTag::factory()->create([
             'name' => 'TagCategoryName',
             'description' => 'TagCategoryDesc',
             'reference' => 'ref',

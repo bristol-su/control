@@ -15,8 +15,8 @@ class UserUserTagTest extends TestCase
     /** @test */
     public function addTagToUser_does_not_save_in_cache()
     {
-        $userTag = factory(UserTag::class)->create();
-        $user = factory(User::class)->create();
+        $userTag = UserTag::factory()->create();
+        $user = User::factory()->create();
 
         $userUserTagRepository = $this->prophesize(UserUserTag::class);
         $userUserTagRepository->addTagToUser(Argument::that(function ($arg) use ($userTag) {
@@ -36,8 +36,8 @@ class UserUserTagTest extends TestCase
     /** @test */
     public function removeTagFromUser_does_not_save_in_cache()
     {
-        $userTag = factory(UserTag::class)->create();
-        $user = factory(User::class)->create();
+        $userTag = UserTag::factory()->create();
+        $user = User::factory()->create();
 
         $userUserTagRepository = $this->prophesize(UserUserTag::class);
         $userUserTagRepository->removeTagFromUser(Argument::that(function ($arg) use ($userTag) {
@@ -57,8 +57,8 @@ class UserUserTagTest extends TestCase
     /** @test */
     public function getTagsThroughUser_saves_the_tags_in_the_cache()
     {
-        $userTags = factory(UserTag::class, 5)->create();
-        $user = factory(User::class)->create();
+        $userTags = UserTag::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         $userUserTagRepository = $this->prophesize(UserUserTag::class);
         $userUserTagRepository->getTagsThroughUser(Argument::that(function ($arg) use ($user) {
@@ -81,8 +81,8 @@ class UserUserTagTest extends TestCase
     /** @test */
     public function getUsersThroughTag_saves_the_users_in_the_cache()
     {
-        $users = factory(User::class, 5)->create();
-        $userTag = factory(UserTag::class)->create();
+        $users = User::factory()->count(5)->create();
+        $userTag = UserTag::factory()->create();
 
         $userUserTagRepository = $this->prophesize(UserUserTag::class);
         $userUserTagRepository->getUsersThroughTag(Argument::that(function ($arg) use ($userTag) {

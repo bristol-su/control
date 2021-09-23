@@ -13,7 +13,7 @@ class GroupControllerTest extends TestCase
     /** @test */
     public function it_returns_all_groups()
     {
-        $groups = factory(Group::class, 5)->create();
+        $groups = Group::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/group');
         $response->assertStatus(200);
 
@@ -27,7 +27,7 @@ class GroupControllerTest extends TestCase
 
     /** @test */
     public function it_limits_groups_by_the_pagination_options(){
-        $groups = factory(Group::class, 50)->create();
+        $groups = Group::factory()->count(50)->create();
         $response = $this->getJson($this->apiUrl . '/group?page=2&per_page=15');
         $response->assertStatus(200);
 
@@ -42,8 +42,8 @@ class GroupControllerTest extends TestCase
     /** @test */
     public function it_returns_a_single_group()
     {
-        $dataGroup = factory(DataGroup::class)->create();
-        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup->id()]);
+        $dataGroup = DataGroup::factory()->create();
+        $group = Group::factory()->create(['data_provider_id' => $dataGroup->id()]);
         $response = $this->getJson($this->apiUrl . '/group/' . $group->id());
 
         $response->assertStatus(200);
@@ -54,8 +54,8 @@ class GroupControllerTest extends TestCase
     /** @test */
     public function it_updates_a_group()
     {
-        $dataGroup = factory(DataGroup::class)->create(['name' => 'Name1', 'email' => 'email@email.com']);
-        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup->id()]);
+        $dataGroup = DataGroup::factory()->create(['name' => 'Name1', 'email' => 'email@email.com']);
+        $group = Group::factory()->create(['data_provider_id' => $dataGroup->id()]);
 
         $this->assertDatabaseHas('control_data_group', [
             'name' => 'Name1', 'email' => 'email@email.com'
@@ -76,8 +76,8 @@ class GroupControllerTest extends TestCase
     public function it_updates_a_group_with_additional_attributes()
     {
         DataGroup::addProperty('student_id');
-        $dataGroup = factory(DataGroup::class)->create(['name' => 'Name1', 'email' => 'email@email.com', 'additional_attributes' => json_encode(['student_id' => 'xyz123'])]);
-        $group = factory(Group::class)->create(['data_provider_id' => $dataGroup->id()]);
+        $dataGroup = DataGroup::factory()->create(['name' => 'Name1', 'email' => 'email@email.com', 'additional_attributes' => json_encode(['student_id' => 'xyz123'])]);
+        $group = Group::factory()->create(['data_provider_id' => $dataGroup->id()]);
 
         $this->assertDatabaseHas('control_data_group', [
             'name' => 'Name1', 'email' => 'email@email.com', 'additional_attributes' => json_encode(['student_id' => 'xyz123'])
@@ -86,11 +86,11 @@ class GroupControllerTest extends TestCase
         $response = $this->patchJson($this->apiUrl . '/group/' . $group->id(), [
             'name' => 'Name2', 'email' => 'email2@email.com', 'student_id' => 'xzy789'
         ]);
-        
+
         $response->assertJsonFragment([
             'name' => 'Name2', 'email' => 'email2@email.com', 'student_id' => 'xzy789'
         ]);
-        
+
         $this->assertDatabaseHas('control_data_group', [
             'name' => 'Name2', 'email' => 'email2@email.com', 'additional_attributes' => json_encode(['student_id' => 'xzy789'])
         ]);
@@ -148,7 +148,7 @@ class GroupControllerTest extends TestCase
     /** @test */
     public function it_deletes_a_group()
     {
-        $group = factory(Group::class)->create();
+        $group = Group::factory()->create();
 
         $this->assertDatabaseHas('control_groups', [
             'id' => $group->id

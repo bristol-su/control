@@ -16,8 +16,8 @@ class UserGroupTest extends TestCase
     /** @test */
     public function addUserToGroup_does_not_save_in_cache()
     {
-        $user = factory(User::class)->create();
-        $group = factory(Group::class)->create();
+        $user = User::factory()->create();
+        $group = Group::factory()->create();
 
         $userGroupRepository = $this->prophesize(UserGroup::class);
         $userGroupRepository->addUserToGroup(Argument::that(function ($arg) use ($user) {
@@ -37,8 +37,8 @@ class UserGroupTest extends TestCase
     /** @test */
     public function removeUserFromGroup_does_not_save_in_cache()
     {
-        $user = factory(User::class)->create();
-        $group = factory(Group::class)->create();
+        $user = User::factory()->create();
+        $group = Group::factory()->create();
 
         $userGroupRepository = $this->prophesize(UserGroup::class);
         $userGroupRepository->removeUserFromGroup(Argument::that(function ($arg) use ($user) {
@@ -58,8 +58,8 @@ class UserGroupTest extends TestCase
     /** @test */
     public function getUsersThroughGroup_saves_the_users_in_the_cache()
     {
-        $users = factory(User::class, 5)->create();
-        $group = factory(Group::class)->create();
+        $users = User::factory()->count(5)->create();
+        $group = Group::factory()->create();
 
         $userGroupRepository = $this->prophesize(UserGroup::class);
         $userGroupRepository->getUsersThroughGroup(Argument::that(function ($arg) use ($group) {
@@ -82,8 +82,8 @@ class UserGroupTest extends TestCase
     /** @test */
     public function getGroupsThroughUser_saves_the_groups_in_the_cache()
     {
-        $groups = factory(Group::class, 5)->create();
-        $user = factory(User::class)->create();
+        $groups = Group::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         $userGroupRepository = $this->prophesize(UserGroup::class);
         $userGroupRepository->getGroupsThroughUser(Argument::that(function ($arg) use ($user) {
@@ -102,6 +102,6 @@ class UserGroupTest extends TestCase
         $this->assertContainsOnlyInstancesOf(Group::class, $cache->get($key));
         $this->assertCount(5, $cache->get($key));
     }
-        
+
 
 }

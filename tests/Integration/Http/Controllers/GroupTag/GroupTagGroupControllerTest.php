@@ -11,8 +11,8 @@ class GroupTagGroupControllerTest extends TestCase
     /** @test */
     public function it_gets_all_groups_through_a_tag()
     {
-        $groupTag = factory(GroupTag::class)->create();
-        $groups = factory(Group::class, 5)->create();
+        $groupTag = GroupTag::factory()->create();
+        $groups = Group::factory()->count(5)->create();
 
         foreach ($groups as $group) {
             $groupTag->addGroup($group);
@@ -37,8 +37,8 @@ class GroupTagGroupControllerTest extends TestCase
     /** @test */
     public function it_tags_a_group()
     {
-        $group = factory(Group::class)->create();
-        $groupTag = factory(GroupTag::class)->create();
+        $group = Group::factory()->create();
+        $groupTag = GroupTag::factory()->create();
 
         $this->assertDatabaseMissing('control_taggables', [
             'taggable_id' => $group->id(),
@@ -62,8 +62,8 @@ class GroupTagGroupControllerTest extends TestCase
     /** @test */
     public function it_untags_a_group()
     {
-        $group = factory(Group::class)->create();
-        $groupTag = factory(GroupTag::class)->create();
+        $group = Group::factory()->create();
+        $groupTag = GroupTag::factory()->create();
 
         $group->addTag($groupTag);
 

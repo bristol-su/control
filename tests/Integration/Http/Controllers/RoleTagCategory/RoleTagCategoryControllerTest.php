@@ -10,7 +10,7 @@ class RoleTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_returns_all_role_tag_categories(){
-        $roleTagCategories = factory(RoleTagCategory::class, 5)->create();
+        $roleTagCategories = RoleTagCategory::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/role-tag-category');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -23,7 +23,7 @@ class RoleTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_returns_a_single_roleTagCategory(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTagCategory = RoleTagCategory::factory()->create();
         $response = $this->getJson($this->apiUrl . '/role-tag-category/' . $roleTagCategory->id());
 
         $response->assertStatus(200);
@@ -32,7 +32,7 @@ class RoleTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_updates_a_role_tag_category(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create([
+        $roleTagCategory = RoleTagCategory::factory()->create([
             'name' => 'tagCategory1', 'description' => 'ATagCategory1', 'reference' => 'tagCategory1a'
         ]);
 
@@ -72,7 +72,7 @@ class RoleTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_deletes_a_role_tag_category(){
-        $roleTagCategory = factory(RoleTagCategory::class)->create();
+        $roleTagCategory = RoleTagCategory::factory()->create();
 
         $this->assertDatabaseHas('control_tag_categories', [
             'id' => $roleTagCategory->id

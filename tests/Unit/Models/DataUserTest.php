@@ -15,7 +15,7 @@ class DataUserTest extends TestCase
     public function a_data_user_can_be_created(){
         $dob = Carbon::now()->subYears(22);
         
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby',
             'last_name' => 'Twigger',
             'email' => 'email1@email.com',
@@ -35,7 +35,7 @@ class DataUserTest extends TestCase
 
     /** @test */
     public function an_empty_data_user_can_be_created(){
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => null,
             'last_name' => null,
             'email' => null,
@@ -57,7 +57,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function an_id_can_be_retrieved_from_the_model()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'id' => 4
         ]);
 
@@ -67,7 +67,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function a_first_name_can_be_retrieved_from_the_model()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby'
         ]);
 
@@ -77,7 +77,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function a_last_name_can_be_retrieved_from_the_model()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'last_name' => 'Twigger'
         ]);
 
@@ -87,7 +87,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function a_preferred_name_can_be_retrieved_from_the_model()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'preferred_name' => 'TobyT'
         ]);
 
@@ -97,7 +97,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function an_email_can_be_retrieved_from_the_model()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'email' => 'email@email.com'
         ]);
 
@@ -108,7 +108,7 @@ class DataUserTest extends TestCase
     public function a_dob_can_be_retrieved_from_the_model()
     {
         $dob = Carbon::create(1902, 12, 22, 00, 00, 00);
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'dob' => $dob
         ]);
 
@@ -118,7 +118,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function a_first_name_can_be_set_on_the_model()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'first_name' => 'Toby'
         ]);
 
@@ -130,7 +130,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function a_last_name_can_be_set_on_the_model()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'last_name' => 'Twigger'
         ]);
 
@@ -142,7 +142,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function a_preferred_name_can_be_set_on_the_model()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'preferred_name' => 'TobyT'
         ]);
 
@@ -155,7 +155,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function an_email_can_be_set_on_the_model()
     {
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'email' => 'email@email.com'
         ]);
         
@@ -168,7 +168,7 @@ class DataUserTest extends TestCase
     public function a_dob_can_be_set_on_the_model()
     {
         $dob = Carbon::now()->subYears(22);
-        $dataUser = factory(DataUser::class)->create([
+        $dataUser = DataUser::factory()->create([
             'dob' => Carbon::now()
         ]);
 
@@ -180,7 +180,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function additional_properties_can_be_set_and_got(){
         DataUser::addProperty('student_id');
-        $dataUser = factory(DataUser::class)->create();
+        $dataUser = DataUser::factory()->create();
 
         $dataUser->student_id = 'xy12345';
         $dataUser->save();
@@ -191,7 +191,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function additional_properties_are_saved_in_the_database(){
         DataUser::addProperty('student_id');
-        $dataUser = factory(DataUser::class)->create();
+        $dataUser = DataUser::factory()->create();
 
         $dataUser->student_id = 'xy12345';
         $dataUser->save();
@@ -205,7 +205,7 @@ class DataUserTest extends TestCase
     /** @test */
     public function additional_properties_are_appended_to_an_array(){
         DataUser::addProperty('student_id');
-        $dataUser = factory(DataUser::class)->create();
+        $dataUser = DataUser::factory()->create();
 
         $dataUser->student_id = 'XY12345';
         $dataUser->save();

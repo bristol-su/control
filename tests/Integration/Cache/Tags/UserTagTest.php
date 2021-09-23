@@ -16,7 +16,7 @@ class UserTagTest extends TestCase
     /** @test */
     public function all_does_not_save_in_the_cache()
     {
-        $userTags = factory(UserTag::class, 5)->create();
+        $userTags = UserTag::factory()->count(5)->create();
 
         $userTagRepository = $this->prophesize(UserTagRepository::class);
         $userTagRepository->all()->shouldBeCalled()->willReturn($userTags);
@@ -33,8 +33,8 @@ class UserTagTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create();
-        $userTag = factory(UserTag::class)->create(['tag_category_id' => $userTagCategory->id()]);
+        $userTagCategory = UserTagCategory::factory()->create();
+        $userTag = UserTag::factory()->create(['tag_category_id' => $userTagCategory->id()]);
 
         $userTagRepository = $this->prophesize(UserTagRepository::class);
         $userTagRepository->create('name1', 'desc1', 'ref1', $userTagCategory->id())->shouldBeCalled()->willReturn($userTag);
@@ -50,8 +50,8 @@ class UserTagTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create();
-        $userTag = factory(UserTag::class)->create(['tag_category_id' => $userTagCategory->id()]);
+        $userTagCategory = UserTagCategory::factory()->create();
+        $userTag = UserTag::factory()->create(['tag_category_id' => $userTagCategory->id()]);
 
         $userTagRepository = $this->prophesize(UserTagRepository::class);
         $userTagRepository->update($userTag->id(), 'name1', 'desc1', 'ref1', $userTagCategory->id())->shouldBeCalled()->willReturn($userTag);
@@ -67,8 +67,8 @@ class UserTagTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create();
-        $userTag = factory(UserTag::class)->create(['tag_category_id' => $userTagCategory->id()]);
+        $userTagCategory = UserTagCategory::factory()->create();
+        $userTag = UserTag::factory()->create(['tag_category_id' => $userTagCategory->id()]);
 
         $userTagRepository = $this->prophesize(UserTagRepository::class);
         $userTagRepository->delete($userTag->id())->shouldBeCalled();
@@ -80,11 +80,11 @@ class UserTagTest extends TestCase
 
         $this->assertNull($userTagCache->delete($userTag->id()));
     }
-    
+
     /** @test */
     public function allThroughTagCategory_saves_tags_in_the_cache(){
-        $tagCategory = factory(UserTagCategory::class)->create();
-        $userTags = factory(UserTag::class, 5)->create(['tag_category_id' => $tagCategory->id()]);
+        $tagCategory = UserTagCategory::factory()->create();
+        $userTags = UserTag::factory()->count(5)->create(['tag_category_id' => $tagCategory->id()]);
 
         $userTagRepository = $this->prophesize(UserTagRepository::class);
         $userTagRepository->allThroughTagCategory(Argument::that(function($arg) use ($tagCategory) {
@@ -102,12 +102,12 @@ class UserTagTest extends TestCase
         $this->assertInstanceOf(Collection::class, $cache->get($key));
         $this->assertContainsOnlyInstancesOf(UserTag::class, $cache->get($key));
         $this->assertCount(5, $cache->get($key));
-        
+
     }
 
     /** @test */
     public function getById_saves_tags_in_the_cache(){
-        $userTag = factory(UserTag::class)->create();
+        $userTag = UserTag::factory()->create();
 
         $userTagRepository = $this->prophesize(UserTagRepository::class);
         $userTagRepository->getById($userTag->id())->shouldBeCalled()->willReturn($userTag);
@@ -125,7 +125,7 @@ class UserTagTest extends TestCase
 
     /** @test */
     public function getTagByFullReference_saves_tags_in_the_cache(){
-        $userTag = factory(UserTag::class)->create();
+        $userTag = UserTag::factory()->create();
 
         $userTagRepository = $this->prophesize(UserTagRepository::class);
         $userTagRepository->getTagByFullReference('full.ref')->shouldBeCalled()->willReturn($userTag);

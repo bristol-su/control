@@ -4,6 +4,8 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\PositionTagCategoryScope;
 use BristolSU\ControlDB\Traits\Tags\PositionTagCategoryTrait;
+use Database\Factories\PositionTagCategoryFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\PositionTagCategory
 {
-    use SoftDeletes, PositionTagCategoryTrait {
+    use SoftDeletes, HasFactory, PositionTagCategoryTrait {
         setName as baseSetName;
         setDescription as baseSetDescription;
         setReference as baseSetReference;
@@ -56,6 +58,17 @@ class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contract
     public function id(): int
     {
         return $this->id;
+    }
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
@@ -120,5 +133,15 @@ class PositionTagCategory extends Model implements \BristolSU\ControlDB\Contract
         $this->baseSetReference($reference);
         $this->refresh();
     }
-    
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new PositionTagCategoryFactory();
+    }
+
 }

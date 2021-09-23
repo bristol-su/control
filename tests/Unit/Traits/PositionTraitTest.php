@@ -14,8 +14,8 @@ class PositionTraitTest extends TestCase
 {
     /** @test */
     public function data_returns_the_data_attribute_for_the_position(){
-        $dataPosition = factory(DataPosition::class)->create();
-        $position = factory(Position::class)->create(['data_provider_id' => $dataPosition->id()]);
+        $dataPosition = DataPosition::factory()->create();
+        $position = Position::factory()->create(['data_provider_id' => $dataPosition->id()]);
 
         $this->assertInstanceOf(DataPosition::class, $position->data());
         $this->assertTrue($dataPosition->is($position->data()));
@@ -23,8 +23,8 @@ class PositionTraitTest extends TestCase
 
     /** @test */
     public function tags_can_be_removed_from_a_position() {
-        $tags = factory(PositionTag::class, 5)->create();
-        $position = factory(Position::class)->create();
+        $tags = PositionTag::factory()->count(5)->create();
+        $position = Position::factory()->create();
 
         foreach($tags as $tag) {
             $position->addTag($tag);
@@ -50,11 +50,11 @@ class PositionTraitTest extends TestCase
             ]);
         }
     }
-    
+
     /** @test */
     public function tags_returns_all_tags_the_position_has(){
-        $positionTags = factory(PositionTag::class, 5)->create();
-        $position = factory(Position::class)->create();
+        $positionTags = PositionTag::factory()->count(5)->create();
+        $position = Position::factory()->create();
 
         DB::table('control_taggables')->insert($positionTags->map(function($positionTag) use ($position) {
             return ['tag_id' => $positionTag->id, 'taggable_id' => $position->id, 'taggable_type' => 'position'];
@@ -69,8 +69,8 @@ class PositionTraitTest extends TestCase
 
     /** @test */
     public function tags_can_be_added_to_a_position(){
-        $tags = factory(PositionTag::class, 5)->create();
-        $position = factory(Position::class)->create();
+        $tags = PositionTag::factory()->count(5)->create();
+        $position = Position::factory()->create();
 
         foreach($tags as $tag) {
             $position->addTag($tag);
@@ -87,8 +87,8 @@ class PositionTraitTest extends TestCase
 
     /** @test */
     public function roles_returns_all_roles_the_position_has(){
-        $position = factory(Position::class)->create();
-        $roles = factory(Role::class, 10)->create(['position_id' => $position->id]);
+        $position = Position::factory()->create();
+        $roles = Role::factory()->count(10)->create(['position_id' => $position->id]);
 
         $positionRoles = $position->roles();
         $this->assertEquals(10, $positionRoles->count());
@@ -100,9 +100,9 @@ class PositionTraitTest extends TestCase
     /** @test */
     public function setDataProviderId_updates_the_data_provider_id()
     {
-        $oldDataPosition = factory(DataPosition::class)->create();
-        $newDataPosition = factory(DataPosition::class)->create();
-        $position = factory(Position::class)->create(['data_provider_id' => $oldDataPosition->id()]);
+        $oldDataPosition = DataPosition::factory()->create();
+        $newDataPosition = DataPosition::factory()->create();
+        $position = Position::factory()->create(['data_provider_id' => $oldDataPosition->id()]);
 
         $positionRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\Position::class);
         $positionRepo->update($position->id(), $newDataPosition->id())->shouldBeCalled()->willReturn($position);
@@ -110,5 +110,5 @@ class PositionTraitTest extends TestCase
 
         $position->setDataProviderId($newDataPosition->id());
     }
-    
+
 }

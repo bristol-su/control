@@ -6,6 +6,9 @@ namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\Contracts\Models\User as UserContract;
 use BristolSU\ControlDB\Traits\UserTrait;
+use Database\Factories\UserFactory;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,10 +17,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class User extends Model implements UserContract
 {
-    use SoftDeletes, UserTrait {
+    use SoftDeletes, HasFactory, UserTrait {
         setDataProviderId as baseSetDataProviderId;
     }
-    
+
     /**
      * Table to use
      *
@@ -40,6 +43,17 @@ class User extends Model implements UserContract
     protected $appends = [
         'data'
     ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * ID of the user
@@ -70,10 +84,20 @@ class User extends Model implements UserContract
     {
         return $this->data();
     }
-    
+
     public function setDataProviderId(int $dataProviderId): void
     {
         $this->baseSetDataProviderId($dataProviderId);
         $this->refresh();
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new UserFactory();
     }
 }

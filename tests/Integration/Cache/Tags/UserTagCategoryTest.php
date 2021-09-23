@@ -16,7 +16,7 @@ class UserTagCategoryTest extends TestCase
     /** @test */
     public function all_does_not_save_in_the_cache()
     {
-        $userTagCategories = factory(UserTagCategory::class, 5)->create();
+        $userTagCategories = UserTagCategory::factory()->count(5)->create();
 
         $userTagCategoryRepository = $this->prophesize(UserTagCategoryRepository::class);
         $userTagCategoryRepository->all()->shouldBeCalled()->willReturn($userTagCategories);
@@ -33,7 +33,7 @@ class UserTagCategoryTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $userTagCategoryRepository = $this->prophesize(UserTagCategoryRepository::class);
         $userTagCategoryRepository->create('name1', 'desc1', 'ref1')->shouldBeCalled()->willReturn($userTagCategory);
@@ -49,7 +49,7 @@ class UserTagCategoryTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $userTagCategoryRepository = $this->prophesize(UserTagCategoryRepository::class);
         $userTagCategoryRepository->update($userTagCategory->id(), 'name1', 'desc1', 'ref1')->shouldBeCalled()->willReturn($userTagCategory);
@@ -65,7 +65,7 @@ class UserTagCategoryTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $userTagCategoryRepository = $this->prophesize(UserTagCategoryRepository::class);
         $userTagCategoryRepository->delete($userTagCategory->id())->shouldBeCalled();
@@ -77,10 +77,10 @@ class UserTagCategoryTest extends TestCase
 
         $this->assertNull($userTagCategoryCache->delete($userTagCategory->id()));
     }
-    
+
     /** @test */
     public function getById_saves_tags_in_the_cache(){
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $userTagCategoryRepository = $this->prophesize(UserTagCategoryRepository::class);
         $userTagCategoryRepository->getById($userTagCategory->id())->shouldBeCalled()->willReturn($userTagCategory);
@@ -98,7 +98,7 @@ class UserTagCategoryTest extends TestCase
 
     /** @test */
     public function getByReference_saves_tags_in_the_cache(){
-        $userTagCategory = factory(UserTagCategory::class)->create();
+        $userTagCategory = UserTagCategory::factory()->create();
 
         $userTagCategoryRepository = $this->prophesize(UserTagCategoryRepository::class);
         $userTagCategoryRepository->getByReference('ref')->shouldBeCalled()->willReturn($userTagCategory);

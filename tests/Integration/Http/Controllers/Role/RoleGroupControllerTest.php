@@ -11,8 +11,8 @@ class RoleGroupControllerTest extends TestCase
 
     /** @test */
     public function it_gets_the_group_from_the_role(){
-        $group = factory(Group::class)->create();
-        $role = factory(Role::class)->create(['group_id' => $group->id()]);
+        $group = Group::factory()->create();
+        $role = Role::factory()->create(['group_id' => $group->id()]);
         
         $response = $this->getJson($this->apiUrl . '/group/' . $group->id() . '/role');
         

@@ -11,10 +11,10 @@ class GroupRoleControllerTest extends TestCase
 
     /** @test */
     public function it_gets_all_roles_through_a_group(){
-        $group = factory(Group::class)->create();
-        $roles = factory(Role::class, 5)->create(['group_id' => $group->id()]);
-        factory(Role::class, 2)->create();
-        
+        $group = Group::factory()->create();
+        $roles = Role::factory()->count(5)->create(['group_id' => $group->id()]);
+        Role::factory()->count(2)->create();
+
         $response = $this->getJson($this->apiUrl . '/group/' . $group->id() . '/role');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -24,5 +24,5 @@ class GroupRoleControllerTest extends TestCase
             $this->assertEquals($roles->shift()->id(), $roleThroughApi['id']);
         }
     }
-    
+
 }

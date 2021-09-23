@@ -11,7 +11,7 @@ class PositionTagControllerTest extends TestCase
 
     /** @test */
     public function it_returns_all_position_tags(){
-        $positionTags = factory(PositionTag::class, 5)->create();
+        $positionTags = PositionTag::factory()->count(5)->create();
         $response = $this->getJson($this->apiUrl . '/position-tag');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -25,7 +25,7 @@ class PositionTagControllerTest extends TestCase
 
     /** @test */
     public function it_returns_a_single_positionTag(){
-        $positionTag = factory(PositionTag::class)->create();
+        $positionTag = PositionTag::factory()->create();
         $response = $this->getJson($this->apiUrl . '/position-tag/' . $positionTag->id());
 
         $response->assertStatus(200);
@@ -34,10 +34,10 @@ class PositionTagControllerTest extends TestCase
 
     /** @test */
     public function it_updates_a_position_tag(){
-        $tagCategory1 = factory(PositionTagCategory::class)->create();
-        $tagCategory2 = factory(PositionTagCategory::class)->create();
-        
-        $positionTag = factory(PositionTag::class)->create([
+        $tagCategory1 = PositionTagCategory::factory()->create();
+        $tagCategory2 = PositionTagCategory::factory()->create();
+
+        $positionTag = PositionTag::factory()->create([
             'name' => 'tag1', 'description' => 'ATag1', 'reference' => 'tag1a', 'tag_category_id' => $tagCategory1->id()
         ]);
 
@@ -48,7 +48,7 @@ class PositionTagControllerTest extends TestCase
         $response = $this->patchJson($this->apiUrl . '/position-tag/' . $positionTag->id(), [
             'name' => 'tag2', 'description' => 'ATag2', 'reference' => 'tag2a', 'tag_category_id' => $tagCategory2->id()
         ]);
-        
+
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('control_tags', [
@@ -59,7 +59,7 @@ class PositionTagControllerTest extends TestCase
 
     /** @test */
     public function it_creates_a_position_tag(){
-        $tagCategory = factory(PositionTagCategory::class)->create();
+        $tagCategory = PositionTagCategory::factory()->create();
 
         $response = $this->postJson($this->apiUrl . '/position-tag', [
             'name' => 'tag1', 'description' => 'ATag1', 'reference' => 'tag1a', 'tag_category_id' => $tagCategory->id()
@@ -79,7 +79,7 @@ class PositionTagControllerTest extends TestCase
 
     /** @test */
     public function it_deletes_a_position_tag(){
-        $positionTag = factory(PositionTag::class)->create();
+        $positionTag = PositionTag::factory()->create();
 
         $this->assertDatabaseHas('control_tags', [
             'id' => $positionTag->id

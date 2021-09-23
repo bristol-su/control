@@ -4,6 +4,8 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\GroupTagScope;
 use BristolSU\ControlDB\Traits\Tags\GroupTagTrait;
+use Database\Factories\GroupTagFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class GroupTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\GroupTag
 {
-    use SoftDeletes, GroupTagTrait {
+    use SoftDeletes, HasFactory, GroupTagTrait {
         setName as baseSetName;
         setDescription as baseSetDescription;
         setReference as baseSetReference;
@@ -21,7 +23,7 @@ class GroupTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Ta
 
     /**
      * Boot the model
-     * 
+     *
      * - Add a global scope to only return group tags
      */
     protected static function boot()
@@ -32,15 +34,15 @@ class GroupTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Ta
 
     /**
      * Table to use
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $table = 'control_tags';
 
     /**
      * Fillable properties
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $fillable = [
         'name', 'description', 'reference', 'tag_category_id'
@@ -48,7 +50,7 @@ class GroupTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Ta
 
     /**
      * Append the full reference
-     * 
+     *
      * @var array Attributes to append
      */
     protected $appends = [
@@ -59,7 +61,18 @@ class GroupTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Ta
     {
         return $this->fullReference();
     }
-    
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
     /**
      * ID of the group tag
      *
@@ -102,7 +115,7 @@ class GroupTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Ta
 
     /**
      * ID of the tag category
-     * 
+     *
      * @return int
      */
     public function categoryId(): int
@@ -153,5 +166,15 @@ class GroupTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Ta
         $this->baseSetTagCategoryId($categoryId);
         $this->refresh();
     }
-    
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new GroupTagFactory();
+    }
+
 }

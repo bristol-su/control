@@ -3,6 +3,9 @@
 namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\Traits\GroupTrait;
+use Database\Factories\GroupFactory;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,32 +14,43 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
 {
-    use SoftDeletes, GroupTrait {
+    use SoftDeletes, HasFactory, GroupTrait {
         setDataProviderId as baseSetDataProviderId;
     }
 
     /**
      * Table to use
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $table = 'control_groups';
 
     /**
      * Fillable attributes
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $fillable = ['data_provider_id'];
 
     /**
      * Attributes to append when casting to an array
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $appends = [
         'data'
     ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * ID of the group
@@ -50,14 +64,14 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
 
     /**
      * ID of the data provider for the group
-     * 
+     *
      * @return int
      */
     public function dataProviderId(): int
     {
         return $this->data_provider_id;
     }
-    
+
     /**
      * Laravel integration for a data property
      *
@@ -79,5 +93,14 @@ class Group extends Model implements \BristolSU\ControlDB\Contracts\Models\Group
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new GroupFactory();
+    }
 
 }

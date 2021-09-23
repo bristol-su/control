@@ -11,8 +11,8 @@ class UserTagUserControllerTest extends TestCase
     /** @test */
     public function it_gets_all_users_through_a_tag()
     {
-        $userTag = factory(UserTag::class)->create();
-        $users = factory(User::class, 5)->create();
+        $userTag = UserTag::factory()->create();
+        $users = User::factory()->count(5)->create();
 
         foreach ($users as $user) {
             $userTag->addUser($user);
@@ -37,8 +37,8 @@ class UserTagUserControllerTest extends TestCase
     /** @test */
     public function it_tags_a_user()
     {
-        $user = factory(User::class)->create();
-        $userTag = factory(UserTag::class)->create();
+        $user = User::factory()->create();
+        $userTag = UserTag::factory()->create();
 
         $this->assertDatabaseMissing('control_taggables', [
             'taggable_id' => $user->id(),
@@ -62,8 +62,8 @@ class UserTagUserControllerTest extends TestCase
     /** @test */
     public function it_untags_a_user()
     {
-        $user = factory(User::class)->create();
-        $userTag = factory(UserTag::class)->create();
+        $user = User::factory()->create();
+        $userTag = UserTag::factory()->create();
 
         $user->addTag($userTag);
 

@@ -11,8 +11,8 @@ class PositionTagPositionTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_gets_the_category_of_the_given_tag(){
-        $tagCategory = factory(PositionTagCategory::class)->create(['id' => 10]);
-        $tag = factory(PositionTag::class)->create(['id' => 20, 'tag_category_id' => $tagCategory->id()]);
+        $tagCategory = PositionTagCategory::factory()->create(['id' => 10]);
+        $tag = PositionTag::factory()->create(['id' => 20, 'tag_category_id' => $tagCategory->id()]);
         
         $response = $this->getJson($this->apiUrl . '/position-tag/' . $tag->id() . '/position-tag-category');
         

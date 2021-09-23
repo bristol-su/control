@@ -11,8 +11,8 @@ class GroupTagGroupTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_gets_the_category_of_the_given_tag(){
-        $tagCategory = factory(GroupTagCategory::class)->create(['id' => 10]);
-        $tag = factory(GroupTag::class)->create(['id' => 20, 'tag_category_id' => $tagCategory->id()]);
+        $tagCategory = GroupTagCategory::factory()->create(['id' => 10]);
+        $tag = GroupTag::factory()->create(['id' => 20, 'tag_category_id' => $tagCategory->id()]);
         
         $response = $this->getJson($this->apiUrl . '/group-tag/' . $tag->id() . '/group-tag-category');
         

@@ -11,8 +11,8 @@ class RoleTagRoleControllerTest extends TestCase
     /** @test */
     public function it_gets_all_roles_through_a_tag()
     {
-        $roleTag = factory(RoleTag::class)->create();
-        $roles = factory(Role::class, 5)->create();
+        $roleTag = RoleTag::factory()->create();
+        $roles = Role::factory()->count(5)->create();
 
         foreach ($roles as $role) {
             $roleTag->addRole($role);
@@ -37,8 +37,8 @@ class RoleTagRoleControllerTest extends TestCase
     /** @test */
     public function it_tags_a_role()
     {
-        $role = factory(Role::class)->create();
-        $roleTag = factory(RoleTag::class)->create();
+        $role = Role::factory()->create();
+        $roleTag = RoleTag::factory()->create();
 
         $this->assertDatabaseMissing('control_taggables', [
             'taggable_id' => $role->id(),
@@ -62,8 +62,8 @@ class RoleTagRoleControllerTest extends TestCase
     /** @test */
     public function it_untags_a_role()
     {
-        $role = factory(Role::class)->create();
-        $roleTag = factory(RoleTag::class)->create();
+        $role = Role::factory()->create();
+        $roleTag = RoleTag::factory()->create();
 
         $role->addTag($roleTag);
 

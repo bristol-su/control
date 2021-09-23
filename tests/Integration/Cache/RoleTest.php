@@ -16,16 +16,16 @@ class RoleTest extends TestCase
 
     /** @test */
     public function getById_saves_the_role_in_the_cache(){
-        $role = factory(Role::class)->create();
-        
+        $role = Role::factory()->create();
+
         $roleRepository = $this->prophesize(RoleRepository::class);
         $roleRepository->getById($role->id())->shouldBeCalled()->willReturn($role);
-        
+
         $cache = app(Repository::class);
         $key = \BristolSU\ControlDB\Cache\Role::class . '@getById:' . $role->id();
-        
+
         $roleCache = new \BristolSU\ControlDB\Cache\Role($roleRepository->reveal(), $cache);
-        
+
         $this->assertFalse($cache->has($key));
         $this->assertTrue($role->is($roleCache->getById($role->id())));
         $this->assertTrue($cache->has($key));
@@ -34,8 +34,8 @@ class RoleTest extends TestCase
 
     /** @test */
     public function getByDataProviderId_saves_the_role_in_the_cache(){
-        $dataProvider = factory(DataRole::class)->create();
-        $role = factory(Role::class)->create(['data_provider_id' => $dataProvider->id()]);
+        $dataProvider = DataRole::factory()->create();
+        $role = Role::factory()->create(['data_provider_id' => $dataProvider->id()]);
 
         $roleRepository = $this->prophesize(RoleRepository::class);
         $roleRepository->getByDataProviderId($role->id())->shouldBeCalled()->willReturn($role);
@@ -54,7 +54,7 @@ class RoleTest extends TestCase
     /** @test */
     public function all_does_not_save_in_the_cache()
     {
-        $roles = factory(Role::class, 5)->create();
+        $roles = Role::factory()->count(5)->create();
 
         $roleRepository = $this->prophesize(RoleRepository::class);
         $roleRepository->all()->shouldBeCalled()->willReturn($roles);
@@ -70,10 +70,10 @@ class RoleTest extends TestCase
     /** @test */
     public function create_does_not_save_in_the_cache()
     {
-        $dataProvider = factory(DataRole::class)->create();
-        $group = factory(Group::class)->create();
-        $position = factory(Position::class)->create();
-        $role = factory(Role::class)->create(['data_provider_id' => $dataProvider->id(), 'group_id' => $group->id(), 'position_id' => $position->id()]);
+        $dataProvider = DataRole::factory()->create();
+        $group = Group::factory()->create();
+        $position = Position::factory()->create();
+        $role = Role::factory()->create(['data_provider_id' => $dataProvider->id(), 'group_id' => $group->id(), 'position_id' => $position->id()]);
 
         $roleRepository = $this->prophesize(RoleRepository::class);
         $roleRepository->create($position->id(), $group->id(), $dataProvider->id())->shouldBeCalled()->willReturn($role);
@@ -89,7 +89,7 @@ class RoleTest extends TestCase
     /** @test */
     public function delete_does_not_save_in_the_cache()
     {
-        $role = factory(Role::class)->create();
+        $role = Role::factory()->create();
 
         $roleRepository = $this->prophesize(RoleRepository::class);
         $roleRepository->delete($role->id())->shouldBeCalled();
@@ -105,7 +105,7 @@ class RoleTest extends TestCase
     /** @test */
     public function paginate_does_not_save_in_the_cache()
     {
-        $roles = factory(Role::class, 5)->create();
+        $roles = Role::factory()->count(5)->create();
 
         $roleRepository = $this->prophesize(RoleRepository::class);
         $roleRepository->paginate(1, 2)->shouldBeCalled()->willReturn($roles);
@@ -121,10 +121,10 @@ class RoleTest extends TestCase
     /** @test */
     public function update_does_not_save_in_the_cache()
     {
-        $group = factory(Group::class)->create();
-        $position = factory(Position::class)->create();
-        $dataProvider = factory(DataRole::class)->create();
-        $role = factory(Role::class)->create(['data_provider_id' => $dataProvider->id()]);
+        $group = Group::factory()->create();
+        $position = Position::factory()->create();
+        $dataProvider = DataRole::factory()->create();
+        $role = Role::factory()->create(['data_provider_id' => $dataProvider->id()]);
 
         $roleRepository = $this->prophesize(RoleRepository::class);
         $roleRepository->update($role->id(), $position->id(), $group->id(), $dataProvider->id())->shouldBeCalled()->willReturn($role);
@@ -155,8 +155,8 @@ class RoleTest extends TestCase
 
     /** @test */
     public function allThroughGroup_saves_all_roles_with_a_group_in_the_cache(){
-        $group = factory(Group::class)->create();
-        $roles = factory(Role::class, 5)->create(['group_id' => $group->id()]);
+        $group = Group::factory()->create();
+        $roles = Role::factory()->count(5)->create(['group_id' => $group->id()]);
 
         $roleRepository = $this->prophesize(RoleRepository::class);
         $roleRepository->allThroughGroup(Argument::that(function($arg) use ($group) {
@@ -176,8 +176,8 @@ class RoleTest extends TestCase
 
     /** @test */
     public function allThroughPosition_saves_all_roles_with_a_position_in_the_cache(){
-        $position = factory(Position::class)->create();
-        $roles = factory(Role::class, 5)->create(['position_id' => $position->id()]);
+        $position = Position::factory()->create();
+        $roles = Role::factory()->count(5)->create(['position_id' => $position->id()]);
 
         $roleRepository = $this->prophesize(RoleRepository::class);
         $roleRepository->allThroughPosition(Argument::that(function($arg) use ($position) {
@@ -194,5 +194,5 @@ class RoleTest extends TestCase
         $this->assertTrue($cache->has($key));
         $this->assertCount(5, $cache->get($key));
     }
-    
+
 }

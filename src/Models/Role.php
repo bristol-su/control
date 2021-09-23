@@ -5,6 +5,9 @@ namespace BristolSU\ControlDB\Models;
 
 
 use BristolSU\ControlDB\Traits\RoleTrait;
+use Database\Factories\RoleFactory;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
 {
 
-    use SoftDeletes, RoleTrait {
+    use SoftDeletes, HasFactory, RoleTrait {
         setDataProviderId as baseSetDataProviderId;
         setGroupId as baseSetGroupId;
         setPositionId as baseSetPositionId;
@@ -42,6 +45,17 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
     protected $appends = [
         'data'
     ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * ID of the role
@@ -124,6 +138,16 @@ class Role extends Model implements \BristolSU\ControlDB\Contracts\Models\Role
     {
         $this->baseSetPositionId($positionId);
         $this->refresh();
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new RoleFactory();
     }
 
 

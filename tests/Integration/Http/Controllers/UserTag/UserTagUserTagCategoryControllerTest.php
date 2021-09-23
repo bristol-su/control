@@ -11,8 +11,8 @@ class UserTagUserTagCategoryControllerTest extends TestCase
 
     /** @test */
     public function it_gets_the_category_of_the_given_tag(){
-        $tagCategory = factory(UserTagCategory::class)->create(['id' => 10]);
-        $tag = factory(UserTag::class)->create(['id' => 20, 'tag_category_id' => $tagCategory->id()]);
+        $tagCategory = UserTagCategory::factory()->create(['id' => 10]);
+        $tag = UserTag::factory()->create(['id' => 20, 'tag_category_id' => $tagCategory->id()]);
         
         $response = $this->getJson($this->apiUrl . '/user-tag/' . $tag->id() . '/user-tag-category');
         

@@ -13,12 +13,12 @@ class SimpleRoleFormatterTest extends TestCase
 
     /** @test */
     public function it_appends_the_role_information(){
-        $dataRole1 = factory(DataRole::class)->create(['role_name' => 'Role1', 'email' => 'role1@example.com']);
-        $dataRole2 = factory(DataRole::class)->create(['role_name' => 'Role2', 'email' => 'role2@example.com']);
-        $dataRole3 = factory(DataRole::class)->create(['role_name' => 'Role3', 'email' => 'role3@example.com']);
-        $role1 = factory(Role::class)->create(['data_provider_id' => $dataRole1->id()]);
-        $role2 = factory(Role::class)->create(['data_provider_id' => $dataRole2->id()]);
-        $role3 = factory(Role::class)->create(['data_provider_id' => $dataRole3->id()]);
+        $dataRole1 = DataRole::factory()->create(['role_name' => 'Role1', 'email' => 'role1@example.com']);
+        $dataRole2 = DataRole::factory()->create(['role_name' => 'Role2', 'email' => 'role2@example.com']);
+        $dataRole3 = DataRole::factory()->create(['role_name' => 'Role3', 'email' => 'role3@example.com']);
+        $role1 = Role::factory()->create(['data_provider_id' => $dataRole1->id()]);
+        $role2 = Role::factory()->create(['data_provider_id' => $dataRole2->id()]);
+        $role3 = Role::factory()->create(['data_provider_id' => $dataRole3->id()]);
 
         $formatter = new SimpleRoleFormatter([]);
         $items = $formatter->format([FormattedItem::create($role1), FormattedItem::create($role2), FormattedItem::create($role3)]);

@@ -6,7 +6,10 @@ namespace BristolSU\ControlDB\Models;
 
 use BristolSU\ControlDB\AdditionalProperties\HasAdditionalProperties;
 use BristolSU\ControlDB\Traits\DataRoleTrait;
+use Database\Factories\DataRoleFactory;
 use DateTime;
+use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,26 +18,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\DataRole
 {
-    use SoftDeletes, HasAdditionalProperties, DataRoleTrait {
+    use SoftDeletes, HasFactory, HasAdditionalProperties, DataRoleTrait {
         setRoleName as baseSetRoleName;
         setEmail as baseSetEmail;
     }
 
     /**
      * The table to use
-     * 
-     * @var string 
+     *
+     * @var string
      */
     protected $table = 'control_data_role';
 
     /**
      * Fillable attributes
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $fillable = [
         'role_name', 'email'
     ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * Get the ID of the role
@@ -60,7 +74,7 @@ class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
 
     /**
      * Get the name for the role
-     * 
+     *
      * @return string|null
      */
     public function roleName(): ?string
@@ -90,5 +104,14 @@ class DataRole extends Model implements \BristolSU\ControlDB\Contracts\Models\Da
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new DataRoleFactory();
+    }
 
 }

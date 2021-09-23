@@ -11,9 +11,9 @@ class UserUserTagControllerTest extends TestCase
 
     /** @test */
     public function it_gets_all_tags_through_a_user(){
-        $user = factory(User::class)->create();
-        $userTags = factory(UserTag::class, 5)->create();
-        
+        $user = User::factory()->create();
+        $userTags = UserTag::factory()->count(5)->create();
+
         foreach($userTags as $userTag) {
             $user->addTag($userTag);
             $this->assertDatabaseHas('control_taggables', [
@@ -22,7 +22,7 @@ class UserUserTagControllerTest extends TestCase
                 'taggable_type' => 'user'
             ]);
         }
-        
+
         $response = $this->getJson($this->apiUrl . '/user/' . $user->id() . '/tag');
         $response->assertStatus(200);
         $response->assertPaginatedResponse();
@@ -33,38 +33,38 @@ class UserUserTagControllerTest extends TestCase
             $this->assertEquals($userTags->shift()->id(), $userTagThroughApi['id']);
         }
     }
-    
+
     /** @test */
     public function it_tags_a_user(){
-        $user = factory(User::class)->create();
-        $userTag = factory(UserTag::class)->create();
-        
+        $user = User::factory()->create();
+        $userTag = UserTag::factory()->create();
+
         $this->assertDatabaseMissing('control_taggables', [
             'taggable_id' => $user->id(),
             'tag_id' => $userTag->id(),
             'taggable_type' => 'user'
         ]);
-        
+
         $response = $this->patchJson(
             $this->apiUrl . '/user/' . $user->id() . '/tag/' . $userTag->id()
         );
 
         $response->assertStatus(200);
-        
+
         $this->assertDatabaseHas('control_taggables', [
             'taggable_id' => $user->id(),
             'tag_id' => $userTag->id(),
             'taggable_type' => 'user'
         ]);
     }
-    
+
     /** @test */
     public function it_untags_a_user(){
-        $user = factory(User::class)->create();
-        $userTag = factory(UserTag::class)->create();
+        $user = User::factory()->create();
+        $userTag = UserTag::factory()->create();
 
         $user->addTag($userTag);
-        
+
         $this->assertDatabaseHas('control_taggables', [
             'taggable_id' => $user->id(),
             'tag_id' => $userTag->id(),
@@ -76,7 +76,7 @@ class UserUserTagControllerTest extends TestCase
         );
 
         $response->assertStatus(200);
-        
+
         $this->assertSoftDeleted('control_taggables', [
             'taggable_id' => $user->id(),
             'tag_id' => $userTag->id(),
@@ -85,5 +85,5 @@ class UserUserTagControllerTest extends TestCase
 
 
     }
-    
+
 }

@@ -4,6 +4,8 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\RoleTagScope;
 use BristolSU\ControlDB\Traits\Tags\RoleTagTrait;
+use Database\Factories\RoleTagFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class RoleTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\RoleTag
 {
-    use SoftDeletes, RoleTagTrait {
+    use SoftDeletes, HasFactory, RoleTagTrait {
         setName as baseSetName;
         setDescription as baseSetDescription;
         setReference as baseSetReference;
@@ -59,7 +61,18 @@ class RoleTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
     {
         return $this->fullReference();
     }
-    
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+
     /**
      * ID of the role tag
      *
@@ -154,4 +167,13 @@ class RoleTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new RoleTagFactory();
+    }
 }

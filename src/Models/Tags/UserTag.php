@@ -4,6 +4,8 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\UserTagScope;
 use BristolSU\ControlDB\Traits\Tags\UserTagTrait;
+use Database\Factories\UserTagFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\UserTag
 {
-    use SoftDeletes, UserTagTrait {
+    use SoftDeletes, HasFactory, UserTagTrait {
         setName as baseSetName;
         setDescription as baseSetDescription;
         setReference as baseSetReference;
@@ -58,6 +60,17 @@ class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
     public function getFullReferenceAttribute()
     {
         return $this->fullReference();
+    }
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
@@ -154,5 +167,14 @@ class UserTag extends Model implements \BristolSU\ControlDB\Contracts\Models\Tag
         $this->refresh();
     }
 
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new UserTagFactory();
+    }
 
 }

@@ -1,9 +1,28 @@
 <?php
 
-$factory->define(\BristolSU\ControlDB\Models\User::class, function(\Faker\Generator $faker) {
-    return [
-        'data_provider_id' => function() {
-            return factory(\BristolSU\ControlDB\Models\DataUser::class)->create()->id;
-        },
-    ];
-});
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class UserFactory extends Factory
+{
+
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = \BristolSU\ControlDB\Models\User::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'data_provider_id' => fn() => \BristolSU\ControlDB\Models\DataUser::factory()->create()->id()
+        ];
+    }
+}

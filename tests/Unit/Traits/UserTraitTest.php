@@ -14,8 +14,8 @@ class UserTraitTest extends TestCase
 {
     /** @test */
     public function tags_can_be_added_to_a_user(){
-        $tags = factory(UserTag::class, 5)->create();
-        $user = factory(User::class)->create();
+        $tags = UserTag::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         foreach($tags as $tag) {
             $user->addTag($tag);
@@ -32,8 +32,8 @@ class UserTraitTest extends TestCase
 
     /** @test */
     public function tags_returns_all_tags_associated_with_the_user(){
-        $userTags = factory(UserTag::class, 5)->create();
-        $user = factory(User::class)->create();
+        $userTags = UserTag::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         DB::table('control_taggables')->insert($userTags->map(function($userTag) use ($user) {
             return ['tag_id' => $userTag->id, 'taggable_id' => $user->id, 'taggable_type' => 'user'];
@@ -49,8 +49,8 @@ class UserTraitTest extends TestCase
 
     /** @test */
     public function roles_returns_all_roles_belonging_to_the_user() {
-        $roles = factory(Role::class, 5)->create();
-        $user = factory(User::class)->create();
+        $roles = Role::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         DB::table('control_role_user')->insert($roles->map(function($role) use ($user) {
             return ['role_id' => $role->id, 'user_id' => $user->id];
@@ -65,8 +65,8 @@ class UserTraitTest extends TestCase
 
     /** @test */
     public function roleRelationship_can_be_used_to_add_a_role_to_a_user() {
-        $roles = factory(Role::class, 5)->create();
-        $user = factory(User::class)->create();
+        $roles = Role::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         foreach($roles as $role) {
             $user->addRole($role);
@@ -81,8 +81,8 @@ class UserTraitTest extends TestCase
 
     /** @test */
     public function groups_returns_all_groups_belonging_to_the_user(){
-        $groups = factory(Group::class, 5)->create();
-        $user = factory(User::class)->create();
+        $groups = Group::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         DB::table('control_group_user')->insert($groups->map(function($group) use ($user) {
             return ['group_id' => $group->id, 'user_id' => $user->id];
@@ -98,8 +98,8 @@ class UserTraitTest extends TestCase
 
     /** @test */
     public function groups_can_be_added_to_a_user() {
-        $groups = factory(Group::class, 5)->create();
-        $user = factory(User::class)->create();
+        $groups = Group::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         foreach($groups as $group) {
             $user->addGroup($group);
@@ -114,8 +114,8 @@ class UserTraitTest extends TestCase
 
     /** @test */
     public function groups_can_be_removed_from_a_user() {
-        $groups = factory(Group::class, 5)->create();
-        $user = factory(User::class)->create();
+        $groups = Group::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         foreach($groups as $group) {
             $user->addGroup($group);
@@ -141,8 +141,8 @@ class UserTraitTest extends TestCase
 
     /** @test */
     public function roles_can_be_removed_from_a_user() {
-        $roles = factory(Role::class, 5)->create();
-        $user = factory(User::class)->create();
+        $roles = Role::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         foreach($roles as $role) {
             $user->addRole($role);
@@ -167,8 +167,8 @@ class UserTraitTest extends TestCase
 
     /** @test */
     public function data_returns_the_data_attribute_for_the_user(){
-        $dataUser = factory(DataUser::class)->create();
-        $user = factory(User::class)->create(['data_provider_id' => $dataUser->id()]);
+        $dataUser = DataUser::factory()->create();
+        $user = User::factory()->create(['data_provider_id' => $dataUser->id()]);
 
         $this->assertInstanceOf(DataUser::class, $user->data());
         $this->assertTrue($dataUser->is($user->data()));
@@ -176,8 +176,8 @@ class UserTraitTest extends TestCase
 
     /** @test */
     public function tags_can_be_removed_from_a_user() {
-        $tags = factory(UserTag::class, 5)->create();
-        $user = factory(User::class)->create();
+        $tags = UserTag::factory()->count(5)->create();
+        $user = User::factory()->create();
 
         foreach($tags as $tag) {
             $user->addTag($tag);
@@ -207,9 +207,9 @@ class UserTraitTest extends TestCase
     /** @test */
     public function setDataProviderId_updates_the_data_provider_id()
     {
-        $oldDataUser = factory(DataUser::class)->create();
-        $newDataUser = factory(DataUser::class)->create();
-        $user = factory(User::class)->create(['data_provider_id' => $oldDataUser->id()]);
+        $oldDataUser = DataUser::factory()->create();
+        $newDataUser = DataUser::factory()->create();
+        $user = User::factory()->create(['data_provider_id' => $oldDataUser->id()]);
 
         $userRepo = $this->prophesize(\BristolSU\ControlDB\Contracts\Repositories\User::class);
         $userRepo->update($user->id(), $newDataUser->id())->shouldBeCalled()->willReturn($user);

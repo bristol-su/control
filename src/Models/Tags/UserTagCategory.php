@@ -4,6 +4,8 @@ namespace BristolSU\ControlDB\Models\Tags;
 
 use BristolSU\ControlDB\Scopes\UserTagCategoryScope;
 use BristolSU\ControlDB\Traits\Tags\UserTagCategoryTrait;
+use Database\Factories\UserTagCategoryFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class UserTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Models\Tags\UserTagCategory
 {
-    use SoftDeletes, UserTagCategoryTrait {
+    use SoftDeletes, HasFactory, UserTagCategoryTrait {
         setName as baseSetName;
         setDescription as baseSetDescription;
         setReference as baseSetReference;
@@ -47,6 +49,17 @@ class UserTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
     protected $fillable = [
         'name', 'description', 'reference'
     ];
+
+    /**
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param  \DateTimeInterface  $date
+     * @return string
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * ID of the tag category
@@ -121,5 +134,13 @@ class UserTagCategory extends Model implements \BristolSU\ControlDB\Contracts\Mo
         $this->refresh();
     }
 
-
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return new UserTagCategoryFactory();
+    }
 }
