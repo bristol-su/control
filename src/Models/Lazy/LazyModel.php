@@ -15,7 +15,7 @@ abstract class LazyModel
     }
 
 
-    public static function lazy(int $id)
+    public static function load(int $id)
     {
         return new static($id);
     }
