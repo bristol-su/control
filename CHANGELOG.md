@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Lazy models for lazyloading of control models
+- Lazy models for lazyloading of control models through repositories
+- Events fired on main model actions
 
 ## [3.0.1] - (05/08/2021)
 
