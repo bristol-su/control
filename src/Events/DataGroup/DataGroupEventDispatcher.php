@@ -43,5 +43,6 @@ class DataGroupEventDispatcher implements DataGroupRepository
         $dataGroupArray = $this->baseRepository->getById($id)->toArray();
         $updatedDataGroup = $this->baseRepository->update($id, $name, $email);
         DataGroupUpdated::dispatch($updatedDataGroup, array_diff($updatedDataGroup->toArray(), $dataGroupArray));
+        return $updatedDataGroup;
     }
 }

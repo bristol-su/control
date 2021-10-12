@@ -43,6 +43,7 @@ class PositionEventDispatcher implements PositionRepository
         $positionArray = $this->baseRepository->getById($id)->toArray();
         $updatedPosition = $this->baseRepository->update($id, $dataProviderId);
         PositionUpdated::dispatch($updatedPosition, array_diff($updatedPosition->toArray(), $positionArray));
+        return $updatedPosition;
     }
 
     public function delete(int $id): void

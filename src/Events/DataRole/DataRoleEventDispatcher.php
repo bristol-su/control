@@ -43,5 +43,6 @@ class DataRoleEventDispatcher implements DataRoleRepository
         $dataRoleArray = $this->baseRepository->getById($id)->toArray();
         $updatedDataRole = $this->baseRepository->update($id, $roleName, $email);
         DataRoleUpdated::dispatch($updatedDataRole, array_diff($updatedDataRole->toArray(), $dataRoleArray));
+        return $updatedDataRole;
     }
 }

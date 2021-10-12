@@ -70,5 +70,6 @@ class RoleEventDispatcher implements RoleRepository
         $roleArray = $this->baseRepository->getById($id)->toArray();
         $updatedRole = $this->baseRepository->update($id, $positionId, $groupId, $dataProviderId);
         RoleUpdated::dispatch($updatedRole, array_diff($updatedRole->toArray(), $roleArray));
+        return $updatedRole;
     }
 }

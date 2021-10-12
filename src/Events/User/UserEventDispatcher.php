@@ -43,6 +43,7 @@ class UserEventDispatcher implements UserRepository
         $userArray = $this->baseRepository->getById($id)->toArray();
         $updatedUser = $this->baseRepository->update($id, $dataProviderId);
         UserUpdated::dispatch($updatedUser, array_diff($updatedUser->toArray(), $userArray));
+        return $updatedUser;
     }
 
     public function delete(int $id): void

@@ -43,6 +43,7 @@ class GroupEventDispatcher implements GroupRepository
         $groupArray = $this->baseRepository->getById($id)->toArray();
         $updatedGroup = $this->baseRepository->update($id, $dataProviderId);
         GroupUpdated::dispatch($updatedGroup, array_diff($updatedGroup->toArray(), $groupArray));
+        return $updatedGroup;
     }
 
     public function delete(int $id): void
