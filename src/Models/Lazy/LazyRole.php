@@ -46,7 +46,7 @@ class LazyRole extends LazyModel implements RoleContract
 
     protected function resolveModelFromId(int $id)
     {
-        return app(RoleRepository::class)->getById();
+        return app(RoleRepository::class)->getById($id);
     }
 
     public function positionId(): int

@@ -91,6 +91,6 @@ class LazyUser extends LazyModel implements UserContract
 
     protected function resolveModelFromId(int $id)
     {
-        return app(UserRepository::class)->getById();
+        return app(UserRepository::class)->getById($id);
     }
 }

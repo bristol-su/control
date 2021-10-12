@@ -44,7 +44,7 @@ class LazyGroup extends LazyModel implements GroupContract
 
     protected function resolveModelFromId(int $id)
     {
-        return app(GroupRepository::class)->getById();
+        return app(GroupRepository::class)->getById($id);
     }
 
     public function members(): Collection

@@ -43,7 +43,7 @@ class LazyPosition extends LazyModel implements PositionContract
 
     protected function resolveModelFromId(int $id)
     {
-        return app(PositionRepository::class)->getById();
+        return app(PositionRepository::class)->getById($id);
     }
 
     public function roles(): Collection
