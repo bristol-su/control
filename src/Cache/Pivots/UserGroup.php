@@ -5,6 +5,8 @@ namespace BristolSU\ControlDB\Cache\Pivots;
 use BristolSU\ControlDB\Contracts\Models\Group;
 use BristolSU\ControlDB\Contracts\Models\User;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserGroup as UserGroupContract;
+use BristolSU\ControlDB\Contracts\Repositories\User as UserRepository;
+use BristolSU\ControlDB\Contracts\Repositories\Group as GroupRepository;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Collection;
 
@@ -34,9 +36,14 @@ class UserGroup implements UserGroupContract
      */
     public function getUsersThroughGroup(Group $group): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getUsersThroughGroup:' . $group->id(), function() use ($group) {
-            return $this->userGroup->getUsersThroughGroup($group);
-        });
+        $key = static::class . '@getUsersThroughGroup:' . $group->id();
+        if(!$this->cache->has($key)) {
+            $users = $this->userGroup->getUsersThroughGroup($group);
+            $this->cache->forever($key, $users->map(fn(User $user) => $user->id())->all());
+            return $users;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $userId) => app(UserRepository::class)->getById($userId));
     }
 
     /**
@@ -47,9 +54,14 @@ class UserGroup implements UserGroupContract
      */
     public function getGroupsThroughUser(User $user): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getGroupsThroughUser:' . $user->id(), function() use ($user) {
-            return $this->userGroup->getGroupsThroughUser($user);
-        });    
+        $key = static::class . '@getGroupsThroughUser:' . $user->id();
+        if(!$this->cache->has($key)) {
+            $groups = $this->userGroup->getGroupsThroughUser($user);
+            $this->cache->forever($key, $groups->map(fn(Group $group) => $group->id())->all());
+            return $groups;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $groupId) => app(GroupRepository::class)->getById($groupId));
     }
 
     /**

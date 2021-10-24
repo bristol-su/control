@@ -64,19 +64,19 @@ class UserRoleTest extends TestCase
         $userRoleRepository = $this->prophesize(UserRole::class);
         $userRoleRepository->getUsersThroughRole(Argument::that(function ($arg) use ($role) {
             return $arg instanceof Role && $arg->is($role);
-        }))->shouldBeCalled()->willReturn($users);
+        }))->shouldBeCalledTimes(1)->willReturn($users);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\UserRole::class . '@getUsersThroughRole:' . $role->id();
+        $userRoleCache = new \BristolSU\ControlDB\Cache\Pivots\UserRole($userRoleRepository->reveal(), app(Repository::class));
 
-        $roleTagCache = new \BristolSU\ControlDB\Cache\Pivots\UserRole($userRoleRepository->reveal(), $cache);
+        $assertUsers = function($users) {
+            $this->assertInstanceOf(Collection::class, $users);
+            $this->assertContainsOnlyInstancesOf(User::class, $users);
+            $this->assertCount(5, $users);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $roleTagCache->getUsersThroughRole($role));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(User::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertUsers($userRoleCache->getUsersThroughRole($role));
+        $assertUsers($userRoleCache->getUsersThroughRole($role));
     }
 
     /** @test */
@@ -88,19 +88,19 @@ class UserRoleTest extends TestCase
         $userRoleRepository = $this->prophesize(UserRole::class);
         $userRoleRepository->getRolesThroughUser(Argument::that(function ($arg) use ($user) {
             return $arg instanceof User && $arg->is($user);
-        }))->shouldBeCalled()->willReturn($roles);
+        }))->shouldBeCalledTimes(1)->willReturn($roles);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\UserRole::class . '@getRolesThroughUser:' . $user->id();
+        $userTagCache = new \BristolSU\ControlDB\Cache\Pivots\UserRole($userRoleRepository->reveal(), app(Repository::class));
 
-        $userTagCache = new \BristolSU\ControlDB\Cache\Pivots\UserRole($userRoleRepository->reveal(), $cache);
+        $assertRoles = function($roles) {
+            $this->assertInstanceOf(Collection::class, $roles);
+            $this->assertContainsOnlyInstancesOf(Role::class, $roles);
+            $this->assertCount(5, $roles);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $userTagCache->getRolesThroughUser($user));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(Role::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertRoles($userTagCache->getRolesThroughUser($user));
+        $assertRoles($userTagCache->getRolesThroughUser($user));
     }
 
 

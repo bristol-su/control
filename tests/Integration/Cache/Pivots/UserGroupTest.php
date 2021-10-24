@@ -29,9 +29,9 @@ class UserGroupTest extends TestCase
         $cache = $this->prophesize(Repository::class);
         $cache->rememberForever(Argument::any(), Argument::any())->shouldNotBeCalled();
 
-        $groupTagCache = new \BristolSU\ControlDB\Cache\Pivots\UserGroup($userGroupRepository->reveal(), $cache->reveal());
+        $userGroupCache = new \BristolSU\ControlDB\Cache\Pivots\UserGroup($userGroupRepository->reveal(), $cache->reveal());
 
-        $groupTagCache->addUserToGroup($user, $group);
+        $userGroupCache->addUserToGroup($user, $group);
     }
 
     /** @test */
@@ -50,9 +50,9 @@ class UserGroupTest extends TestCase
         $cache = $this->prophesize(Repository::class);
         $cache->rememberForever(Argument::any(), Argument::any())->shouldNotBeCalled();
 
-        $groupTagCache = new \BristolSU\ControlDB\Cache\Pivots\UserGroup($userGroupRepository->reveal(), $cache->reveal());
+        $userGroupCache = new \BristolSU\ControlDB\Cache\Pivots\UserGroup($userGroupRepository->reveal(), $cache->reveal());
 
-        $groupTagCache->removeUserFromGroup($user, $group);
+        $userGroupCache->removeUserFromGroup($user, $group);
     }
 
     /** @test */
@@ -64,19 +64,19 @@ class UserGroupTest extends TestCase
         $userGroupRepository = $this->prophesize(UserGroup::class);
         $userGroupRepository->getUsersThroughGroup(Argument::that(function ($arg) use ($group) {
             return $arg instanceof Group && $arg->is($group);
-        }))->shouldBeCalled()->willReturn($users);
+        }))->shouldBeCalledTimes(1)->willReturn($users);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\UserGroup::class . '@getUsersThroughGroup:' . $group->id();
+        $userGroupCache = new \BristolSU\ControlDB\Cache\Pivots\UserGroup($userGroupRepository->reveal(), app(Repository::class));
 
-        $groupTagCache = new \BristolSU\ControlDB\Cache\Pivots\UserGroup($userGroupRepository->reveal(), $cache);
+        $assertUsers = function($users) {
+            $this->assertInstanceOf(Collection::class, $users);
+            $this->assertContainsOnlyInstancesOf(User::class, $users);
+            $this->assertCount(5, $users);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $groupTagCache->getUsersThroughGroup($group));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(User::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertUsers($userGroupCache->getUsersThroughGroup($group));
+        $assertUsers($userGroupCache->getUsersThroughGroup($group));
     }
 
     /** @test */
@@ -88,19 +88,19 @@ class UserGroupTest extends TestCase
         $userGroupRepository = $this->prophesize(UserGroup::class);
         $userGroupRepository->getGroupsThroughUser(Argument::that(function ($arg) use ($user) {
             return $arg instanceof User && $arg->is($user);
-        }))->shouldBeCalled()->willReturn($groups);
+        }))->shouldBeCalledTimes(1)->willReturn($groups);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\UserGroup::class . '@getGroupsThroughUser:' . $user->id();
+        $userTagCache = new \BristolSU\ControlDB\Cache\Pivots\UserGroup($userGroupRepository->reveal(), app(Repository::class));
 
-        $userTagCache = new \BristolSU\ControlDB\Cache\Pivots\UserGroup($userGroupRepository->reveal(), $cache);
+        $assertGroups = function($groups) {
+            $this->assertInstanceOf(Collection::class, $groups);
+            $this->assertContainsOnlyInstancesOf(Group::class, $groups);
+            $this->assertCount(5, $groups);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $userTagCache->getGroupsThroughUser($user));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(Group::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertGroups($userTagCache->getGroupsThroughUser($user));
+        $assertGroups($userTagCache->getGroupsThroughUser($user));
     }
 
 

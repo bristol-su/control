@@ -57,9 +57,14 @@ class UserUserTag implements UserUserTagRepository
      */
     public function getTagsThroughUser(User $user): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getTagsThroughUser:' . $user->id(), function() use ($user) {
-            return $this->userUserTagRepository->getTagsThroughUser($user);
-        });
+        $key = static::class . '@getTagsThroughUser:' . $user->id();
+        if(!$this->cache->has($key)) {
+            $userTags = $this->userUserTagRepository->getTagsThroughUser($user);
+            $this->cache->forever($key, $userTags->map(fn(UserTag $userTag) => $userTag->id())->all());
+            return $userTags;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $userTagId) => app(\BristolSU\ControlDB\Contracts\Repositories\Tags\UserTag::class)->getById($userTagId));
     }
 
     /**
@@ -70,8 +75,13 @@ class UserUserTag implements UserUserTagRepository
      */
     public function getUsersThroughTag(UserTag $userTag): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getUsersThroughTag:' . $userTag->id(), function() use ($userTag) {
-            return $this->userUserTagRepository->getUsersThroughTag($userTag);
-        });   
+        $key = static::class . '@getUsersThroughTag:' . $userTag->id();
+        if(!$this->cache->has($key)) {
+            $users = $this->userUserTagRepository->getUsersThroughTag($userTag);
+            $this->cache->forever($key, $users->map(fn(User $user) => $user->id())->all());
+            return $users;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $userId) => app(\BristolSU\ControlDB\Contracts\Repositories\User::class)->getById($userId));
     }
 }

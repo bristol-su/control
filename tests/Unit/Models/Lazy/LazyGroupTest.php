@@ -1,0 +1,55 @@
+<?php
+
+namespace BristolSU\Tests\ControlDB\Unit\Models\Lazy;
+
+use BristolSU\ControlDB\Models\DataGroup;
+use BristolSU\ControlDB\Models\Lazy\LazyGroup;
+use BristolSU\ControlDB\Models\Group;
+use BristolSU\Tests\ControlDB\TestCase;
+
+class LazyGroupTest extends TestCase
+{
+
+    /** @test */
+    public function an_id_can_be_retrieved_from_the_model()
+    {
+        $group = new LazyGroup(Group::factory()->create(['id' => 4])->id());
+
+        $this->assertEquals(4, $group->id());
+    }
+
+    /** @test */
+    public function a_data_provider_id_can_be_retrieved_from_the_model(){
+        $group = Group::factory()->create([
+            'data_provider_id' => 5
+        ]);
+
+        $this->assertEquals(5, $group->dataProviderId());
+    }
+
+    /** @test */
+    public function a_data_provider_id_can_set_on_from_the_model(){
+        $group = new LazyGroup(Group::factory()->create(['data_provider_id' => 1])->id());
+
+        $group->setDataProviderId(5);
+
+        $this->assertEquals(5, $group->dataProviderId());
+    }
+
+    /** @test */
+    public function data_is_returned_in_the_array(){
+        $dataGroup = DataGroup::factory()->create(
+            ['name' => 'Group1', 'email' => 'email@example.com']
+        );
+        $group = new LazyGroup(Group::factory()->create(['data_provider_id' => $dataGroup->id()])->id());
+
+        $attributes = $group->toArray();
+        $this->assertArrayHasKey('data', $attributes);
+        $this->assertIsArray($attributes['data']);
+        $this->assertArrayHasKey('name', $attributes['data']);
+        $this->assertArrayHasKey('email', $attributes['data']);
+        $this->assertEquals('Group1', $attributes['data']['name']);
+        $this->assertEquals('email@example.com', $attributes['data']['email']);
+    }
+
+}

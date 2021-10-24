@@ -60,22 +60,22 @@ class PositionPositionTagTest extends TestCase
         $positionTags = PositionTag::factory()->count(5)->create();
         $position = Position::factory()->create();
 
-        $positionPositionTagRepository = $this->prophesize(PositionPositionTag::class);
-        $positionPositionTagRepository->getTagsThroughPosition(Argument::that(function ($arg) use ($position) {
+        $basePositionPositionTagRepository = $this->prophesize(PositionPositionTag::class);
+        $basePositionPositionTagRepository->getTagsThroughPosition(Argument::that(function ($arg) use ($position) {
             return $arg instanceof Position && $arg->is($position);
-        }))->shouldBeCalled()->willReturn($positionTags);
+        }))->shouldBeCalledTimes(1)->willReturn($positionTags);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\Tags\PositionPositionTag::class . '@getTagsThroughPosition:' . $position->id();
+        $positionPositionTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\PositionPositionTag($basePositionPositionTagRepository->reveal(), app(Repository::class));
 
-        $positionPositionTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\PositionPositionTag($positionPositionTagRepository->reveal(), $cache);
+        $assertPositionTags = function($positionTags) {
+            $this->assertInstanceOf(Collection::class, $positionTags);
+            $this->assertContainsOnlyInstancesOf(PositionTag::class, $positionTags);
+            $this->assertCount(5, $positionTags);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $positionPositionTagCache->getTagsThroughPosition($position));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(PositionTag::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertPositionTags($positionPositionTagCache->getTagsThroughPosition($position));
+        $assertPositionTags($positionPositionTagCache->getTagsThroughPosition($position));
     }
 
     /** @test */
@@ -84,21 +84,22 @@ class PositionPositionTagTest extends TestCase
         $positions = Position::factory()->count(5)->create();
         $positionTag = PositionTag::factory()->create();
 
-        $positionPositionTagRepository = $this->prophesize(PositionPositionTag::class);
-        $positionPositionTagRepository->getPositionsThroughTag(Argument::that(function ($arg) use ($positionTag) {
+        $basePositionPositionTagRepository = $this->prophesize(PositionPositionTag::class);
+        $basePositionPositionTagRepository->getPositionsThroughTag(Argument::that(function ($arg) use ($positionTag) {
             return $arg instanceof PositionTag && $arg->is($positionTag);
-        }))->shouldBeCalled()->willReturn($positions);
+        }))->shouldBeCalledTimes(1)->willReturn($positions);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\Tags\PositionPositionTag::class . '@getPositionsThroughTag:' . $positionTag->id();
+        $positionPositionTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\PositionPositionTag($basePositionPositionTagRepository->reveal(), app(Repository::class));
 
-        $positionTagTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\PositionPositionTag($positionPositionTagRepository->reveal(), $cache);
+        $assertPositions = function($positions) {
+            $this->assertInstanceOf(Collection::class, $positions);
+            $this->assertContainsOnlyInstancesOf(Position::class, $positions);
+            $this->assertCount(5, $positions);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $positionTagTagCache->getPositionsThroughTag($positionTag));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(Position::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertPositions($positionPositionTagCache->getPositionsThroughTag($positionTag));
+        $assertPositions($positionPositionTagCache->getPositionsThroughTag($positionTag));
+
     }
 }
