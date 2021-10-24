@@ -42,7 +42,10 @@ class UserEventDispatcher implements UserRepository
     {
         $userArray = $this->baseRepository->getById($id)->toArray();
         $updatedUser = $this->baseRepository->update($id, $dataProviderId);
-        UserUpdated::dispatch($updatedUser, array_diff($updatedUser->toArray(), $userArray));
+        $updatedData = array_filter([
+            'data_provider_id' => $dataProviderId === $userArray['data_provider_id'] ? null : $dataProviderId,
+        ]);
+        UserUpdated::dispatch($updatedUser, $updatedData);
         return $updatedUser;
     }
 

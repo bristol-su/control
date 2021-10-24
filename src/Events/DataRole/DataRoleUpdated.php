@@ -17,7 +17,7 @@ class DataRoleUpdated
      * @var DataRole
      */
     public DataRole $dataRole;
-    private array $updatedData;
+    public array $updatedData;
 
     /**
      * Create a new event instance.

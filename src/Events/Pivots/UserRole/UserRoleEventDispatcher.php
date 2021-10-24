@@ -1,6 +1,6 @@
 <?php
 
-namespace BristolSU\Control\Events\Pivots\UserRole;
+namespace BristolSU\ControlDB\Events\Pivots\UserRole;
 
 use BristolSU\ControlDB\Contracts\Models\Role;
 use BristolSU\ControlDB\Contracts\Models\User;

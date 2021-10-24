@@ -17,7 +17,7 @@ class GroupUpdated
      * @var Group
      */
     public Group $group;
-    private array $updatedData;
+    public array $updatedData;
 
     /**
      * Create a new event instance.

@@ -17,7 +17,7 @@ class PositionUpdated
      * @var Position
      */
     public Position $position;
-    private array $updatedData;
+    public array $updatedData;
 
     /**
      * Create a new event instance.

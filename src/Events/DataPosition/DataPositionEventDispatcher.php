@@ -42,7 +42,11 @@ class DataPositionEventDispatcher implements DataPositionRepository
     {
         $dataPositionArray = $this->baseRepository->getById($id)->toArray();
         $updatedDataPosition = $this->baseRepository->update($id, $name, $description);
-        DataPositionUpdated::dispatch($updatedDataPosition, array_diff($updatedDataPosition->toArray(), $dataPositionArray));
+        $updatedData = array_filter([
+            'name' => $name=== $dataPositionArray['name'] ? null : $name,
+            'description' => $description === $dataPositionArray['description'] ? null : $description,
+        ]);
+        DataPositionUpdated::dispatch($updatedDataPosition, $updatedData);
         return $updatedDataPosition;
     }
 }

@@ -17,7 +17,7 @@ class RoleUpdated
      * @var Role
      */
     public Role $role;
-    private array $updatedData;
+    public array $updatedData;
 
     /**
      * Create a new event instance.

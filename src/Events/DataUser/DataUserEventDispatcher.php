@@ -42,7 +42,14 @@ class DataUserEventDispatcher implements DataUserRepository
     {
         $dataUserArray = $this->baseRepository->getById($id)->toArray();
         $updatedDataUser = $this->baseRepository->update($id, $firstName, $lastName, $email, $dob, $preferredName);
-        DataUserUpdated::dispatch($updatedDataUser, array_diff($updatedDataUser->toArray(), $dataUserArray));
+        $updatedData = array_filter([
+            'first_name' => $firstName === $dataUserArray['first_name'] ? null : $firstName,
+            'last_name' => $lastName === $dataUserArray['last_name'] ? null : $lastName,
+            'email' => $email === $dataUserArray['email'] ? null : $email,
+            'dob' => $dob === $dataUserArray['dob'] ? null : $dob,
+            'preferred_name' => $preferredName === $dataUserArray['preferred_name'] ? null : $preferredName,
+        ]);
+        DataUserUpdated::dispatch($updatedDataUser, $updatedData);
         return $updatedDataUser;
     }
 }

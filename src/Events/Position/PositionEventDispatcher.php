@@ -42,7 +42,10 @@ class PositionEventDispatcher implements PositionRepository
     {
         $positionArray = $this->baseRepository->getById($id)->toArray();
         $updatedPosition = $this->baseRepository->update($id, $dataProviderId);
-        PositionUpdated::dispatch($updatedPosition, array_diff($updatedPosition->toArray(), $positionArray));
+        $updatedData = array_filter([
+            'data_provider_id' => $dataProviderId === $positionArray['data_provider_id'] ? null : $dataProviderId,
+        ]);
+        PositionUpdated::dispatch($updatedPosition, $updatedData);
         return $updatedPosition;
     }
 

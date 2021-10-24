@@ -2,8 +2,8 @@
 
 namespace BristolSU\ControlDB;
 
-use BristolSU\Control\Events\Pivots\UserGroup\UserGroupEventDispatcher;
-use BristolSU\Control\Events\Pivots\UserRole\UserRoleEventDispatcher;
+use BristolSU\ControlDB\Events\Pivots\UserGroup\UserGroupEventDispatcher;
+use BristolSU\ControlDB\Events\Pivots\UserRole\UserRoleEventDispatcher;
 use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertySingletonStore;
 use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertyStore;
 use BristolSU\ControlDB\Bootstrap\RegistersCachedRepositories;
@@ -145,6 +145,7 @@ class ControlDBServiceProvider extends ServiceProvider
     public function register()
     {
         $this->bindContracts();
+        $this->registerModelEvents();
         $this->registerObserversFramework($this->app);
         $this->registerCachedRepositories($this->app);
         $this->registerCommands();
@@ -160,7 +161,6 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->setupRouteModelBinding();
         $this->setupRoutes();
         $this->setupObservers();
-        $this->registerModelEvents();
     }
 
     public function registerModelEvents()

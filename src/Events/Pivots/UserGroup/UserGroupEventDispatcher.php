@@ -1,6 +1,6 @@
 <?php
 
-namespace BristolSU\Control\Events\Pivots\UserGroup;
+namespace BristolSU\ControlDB\Events\Pivots\UserGroup;
 
 use BristolSU\ControlDB\Contracts\Models\Group;
 use BristolSU\ControlDB\Contracts\Models\User;

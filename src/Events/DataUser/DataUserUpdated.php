@@ -17,7 +17,7 @@ class DataUserUpdated
      * @var DataUser
      */
     public DataUser $dataUser;
-    private array $updatedData;
+    public array $updatedData;
 
     /**
      * Create a new event instance.

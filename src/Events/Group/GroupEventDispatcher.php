@@ -42,7 +42,10 @@ class GroupEventDispatcher implements GroupRepository
     {
         $groupArray = $this->baseRepository->getById($id)->toArray();
         $updatedGroup = $this->baseRepository->update($id, $dataProviderId);
-        GroupUpdated::dispatch($updatedGroup, array_diff($updatedGroup->toArray(), $groupArray));
+        $updatedData = array_filter([
+            'data_provider_id' => $dataProviderId === $groupArray['data_provider_id'] ? null : $dataProviderId,
+        ]);
+        GroupUpdated::dispatch($updatedGroup, $updatedData);
         return $updatedGroup;
     }
 
