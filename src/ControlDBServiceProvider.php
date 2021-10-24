@@ -2,6 +2,8 @@
 
 namespace BristolSU\ControlDB;
 
+use BristolSU\Control\Events\Pivots\UserGroup\UserGroupEventDispatcher;
+use BristolSU\Control\Events\Pivots\UserRole\UserRoleEventDispatcher;
 use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertySingletonStore;
 use BristolSU\ControlDB\AdditionalProperties\AdditionalPropertyStore;
 use BristolSU\ControlDB\Bootstrap\RegistersCachedRepositories;
@@ -25,6 +27,10 @@ use BristolSU\ControlDB\Events\DataGroup\DataGroupEventDispatcher;
 use BristolSU\ControlDB\Events\DataPosition\DataPositionEventDispatcher;
 use BristolSU\ControlDB\Events\DataRole\DataRoleEventDispatcher;
 use BristolSU\ControlDB\Events\DataUser\DataUserEventDispatcher;
+use BristolSU\ControlDB\Events\Pivots\Tags\GroupGroupTag\GroupGroupTagEventDispatcher;
+use BristolSU\ControlDB\Events\Pivots\Tags\PositionPositionTag\PositionPositionTagEventDispatcher;
+use BristolSU\ControlDB\Events\Pivots\Tags\RoleRoleTag\RoleRoleTagEventDispatcher;
+use BristolSU\ControlDB\Events\Pivots\Tags\UserUserTag\UserUserTagEventDispatcher;
 use BristolSU\ControlDB\Events\User\UserEventDispatcher;
 use BristolSU\ControlDB\Events\Group\GroupEventDispatcher;
 use BristolSU\ControlDB\Events\Role\RoleEventDispatcher;
@@ -167,6 +173,12 @@ class ControlDBServiceProvider extends ServiceProvider
         $this->app->extend(RoleRepositoryContract::class, fn (RoleRepositoryContract $service) => new RoleEventDispatcher($service));
         $this->app->extend(DataPositionRepositoryContract::class, fn (DataPositionRepositoryContract $service) => new DataPositionEventDispatcher($service));
         $this->app->extend(PositionRepositoryContract::class, fn (PositionRepositoryContract $service) => new PositionEventDispatcher($service));
+        $this->app->extend(UserGroupContract::class, fn (UserGroupContract $service) => new UserGroupEventDispatcher($service));
+        $this->app->extend(UserRoleContract::class, fn (UserRoleContract $service) => new UserRoleEventDispatcher($service));
+        $this->app->extend(UserUserTagContract::class, fn (UserUserTagContract $service) => new UserUserTagEventDispatcher($service));
+        $this->app->extend(GroupGroupTagContract::class, fn (GroupGroupTagContract $service) => new GroupGroupTagEventDispatcher($service));
+        $this->app->extend(RoleRoleTagContract::class, fn (RoleRoleTagContract $service) => new RoleRoleTagEventDispatcher($service));
+        $this->app->extend(PositionPositionTagContract::class, fn (PositionPositionTagContract $service) => new PositionPositionTagEventDispatcher($service));
     }
 
     /**
