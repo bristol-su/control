@@ -145,9 +145,9 @@ class ControlDBServiceProvider extends ServiceProvider
     public function register()
     {
         $this->bindContracts();
-        $this->registerModelEvents();
         $this->registerObserversFramework($this->app);
         $this->registerCachedRepositories($this->app);
+        $this->registerModelEvents();
         $this->registerCommands();
         $this->registerMigrations();
         $this->registerConfig();
