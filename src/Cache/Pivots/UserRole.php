@@ -5,6 +5,8 @@ namespace BristolSU\ControlDB\Cache\Pivots;
 use BristolSU\ControlDB\Contracts\Models\Role;
 use BristolSU\ControlDB\Contracts\Models\User;
 use BristolSU\ControlDB\Contracts\Repositories\Pivots\UserRole as UserRoleContract;
+use BristolSU\ControlDB\Contracts\Repositories\Role as RoleRepository;
+use BristolSU\ControlDB\Contracts\Repositories\User as UserRepository;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Collection;
 
@@ -34,9 +36,14 @@ class UserRole implements UserRoleContract
      */
     public function getUsersThroughRole(Role $role): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getUsersThroughRole:' . $role->id(), function() use ($role) {
-            return $this->userRole->getUsersThroughRole($role);
-        });
+        $key = static::class . '@getUsersThroughRole:' . $role->id();
+        if(!$this->cache->has($key)) {
+            $users = $this->userRole->getUsersThroughRole($role);
+            $this->cache->forever($key, $users->map(fn(User $user) => $user->id())->all());
+            return $users;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $userId) => app(UserRepository::class)->getById($userId));
     }
 
     /**
@@ -44,12 +51,18 @@ class UserRole implements UserRoleContract
      *
      * @param User $user
      * @return Role[]|Collection Roles the user is a member of
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function getRolesThroughUser(User $user): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getRolesThroughUser:' . $user->id(), function() use ($user) {
-            return $this->userRole->getRolesThroughUser($user);
-        });
+        $key = static::class . '@getRolesThroughUser:' . $user->id();
+        if(!$this->cache->has($key)) {
+            $roles = $this->userRole->getRolesThroughUser($user);
+            $this->cache->forever($key, $roles->map(fn(Role $role) => $role->id())->all());
+            return $roles;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $roleId) => app(RoleRepository::class)->getById($roleId));
     }
 
     /**
@@ -74,5 +87,5 @@ class UserRole implements UserRoleContract
     {
         $this->userRole->removeUserFromRole($user, $role);
     }
-    
+
 }

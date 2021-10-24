@@ -57,9 +57,14 @@ class GroupGroupTag implements GroupGroupTagRepository
      */
     public function getTagsThroughGroup(Group $group): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getTagsThroughGroup:' . $group->id(), function() use ($group) {
-            return $this->groupGroupTagRepository->getTagsThroughGroup($group);
-        });
+        $key = static::class . '@getTagsThroughGroup:' . $group->id();
+        if(!$this->cache->has($key)) {
+            $groupTags = $this->groupGroupTagRepository->getTagsThroughGroup($group);
+            $this->cache->forever($key, $groupTags->map(fn(GroupTag $groupTag) => $groupTag->id())->all());
+            return $groupTags;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $groupTagId) => app(\BristolSU\ControlDB\Contracts\Repositories\Tags\GroupTag::class)->getById($groupTagId));
     }
 
     /**
@@ -70,8 +75,13 @@ class GroupGroupTag implements GroupGroupTagRepository
      */
     public function getGroupsThroughTag(GroupTag $groupTag): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getGroupsThroughTag:' . $groupTag->id(), function() use ($groupTag) {
-            return $this->groupGroupTagRepository->getGroupsThroughTag($groupTag);
-        });   
+        $key = static::class . '@getGroupsThroughTag:' . $groupTag->id();
+        if(!$this->cache->has($key)) {
+            $groups = $this->groupGroupTagRepository->getGroupsThroughTag($groupTag);
+            $this->cache->forever($key, $groups->map(fn(Group $group) => $group->id())->all());
+            return $groups;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $groupId) => app(\BristolSU\ControlDB\Contracts\Repositories\Group::class)->getById($groupId));
     }
 }

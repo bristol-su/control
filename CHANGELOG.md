@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lazy models for lazyloading of control models through repositories
 - Events fired on all repository actions with side effects
 
+### Fixed
+- Reduced scope of some cache to avoid lingering changes not being cleared
+
 ## [3.0.2] - (23/10/2021)
 
 ### Added

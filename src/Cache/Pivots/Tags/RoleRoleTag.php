@@ -57,9 +57,14 @@ class RoleRoleTag implements RoleRoleTagRepository
      */
     public function getTagsThroughRole(Role $role): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getTagsThroughRole:' . $role->id(), function() use ($role) {
-            return $this->roleRoleTagRepository->getTagsThroughRole($role);
-        });
+        $key = static::class . '@getTagsThroughRole:' . $role->id();
+        if(!$this->cache->has($key)) {
+            $roleTags = $this->roleRoleTagRepository->getTagsThroughRole($role);
+            $this->cache->forever($key, $roleTags->map(fn(RoleTag $roleTag) => $roleTag->id())->all());
+            return $roleTags;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $roleTagId) => app(\BristolSU\ControlDB\Contracts\Repositories\Tags\RoleTag::class)->getById($roleTagId));
     }
 
     /**
@@ -70,8 +75,13 @@ class RoleRoleTag implements RoleRoleTagRepository
      */
     public function getRolesThroughTag(RoleTag $roleTag): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getRolesThroughTag:' . $roleTag->id(), function() use ($roleTag) {
-            return $this->roleRoleTagRepository->getRolesThroughTag($roleTag);
-        });   
+        $key = static::class . '@getRolesThroughTag:' . $roleTag->id();
+        if(!$this->cache->has($key)) {
+            $roles = $this->roleRoleTagRepository->getRolesThroughTag($roleTag);
+            $this->cache->forever($key, $roles->map(fn(Role $role) => $role->id())->all());
+            return $roles;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $roleId) => app(\BristolSU\ControlDB\Contracts\Repositories\Role::class)->getById($roleId));
     }
 }

@@ -57,9 +57,14 @@ class PositionPositionTag implements PositionPositionTagRepository
      */
     public function getTagsThroughPosition(Position $position): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getTagsThroughPosition:' . $position->id(), function() use ($position) {
-            return $this->positionPositionTagRepository->getTagsThroughPosition($position);
-        });
+        $key = static::class . '@getTagsThroughPosition:' . $position->id();
+        if(!$this->cache->has($key)) {
+            $positionTags = $this->positionPositionTagRepository->getTagsThroughPosition($position);
+            $this->cache->forever($key, $positionTags->map(fn(PositionTag $positionTag) => $positionTag->id())->all());
+            return $positionTags;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $positionTagId) => app(\BristolSU\ControlDB\Contracts\Repositories\Tags\PositionTag::class)->getById($positionTagId));
     }
 
     /**
@@ -70,8 +75,13 @@ class PositionPositionTag implements PositionPositionTagRepository
      */
     public function getPositionsThroughTag(PositionTag $positionTag): Collection
     {
-        return $this->cache->rememberForever(static::class . '@getPositionsThroughTag:' . $positionTag->id(), function() use ($positionTag) {
-            return $this->positionPositionTagRepository->getPositionsThroughTag($positionTag);
-        });   
+        $key = static::class . '@getPositionsThroughTag:' . $positionTag->id();
+        if(!$this->cache->has($key)) {
+            $positions = $this->positionPositionTagRepository->getPositionsThroughTag($positionTag);
+            $this->cache->forever($key, $positions->map(fn(Position $position) => $position->id())->all());
+            return $positions;
+        }
+        return collect($this->cache->get($key))
+            ->map(fn(int $positionId) => app(\BristolSU\ControlDB\Contracts\Repositories\Position::class)->getById($positionId));
     }
 }
