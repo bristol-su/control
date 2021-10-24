@@ -60,22 +60,22 @@ class GroupGroupTagTest extends TestCase
         $groupTags = GroupTag::factory()->count(5)->create();
         $group = Group::factory()->create();
 
-        $groupGroupTagRepository = $this->prophesize(GroupGroupTag::class);
-        $groupGroupTagRepository->getTagsThroughGroup(Argument::that(function ($arg) use ($group) {
+        $baseGroupGroupTagRepository = $this->prophesize(GroupGroupTag::class);
+        $baseGroupGroupTagRepository->getTagsThroughGroup(Argument::that(function ($arg) use ($group) {
             return $arg instanceof Group && $arg->is($group);
-        }))->shouldBeCalled()->willReturn($groupTags);
+        }))->shouldBeCalledTimes(1)->willReturn($groupTags);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\Tags\GroupGroupTag::class . '@getTagsThroughGroup:' . $group->id();
+        $groupGroupTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\GroupGroupTag($baseGroupGroupTagRepository->reveal(), app(Repository::class));
 
-        $groupGroupTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\GroupGroupTag($groupGroupTagRepository->reveal(), $cache);
+        $assertGroupTags = function($groupTags) {
+            $this->assertInstanceOf(Collection::class, $groupTags);
+            $this->assertContainsOnlyInstancesOf(GroupTag::class, $groupTags);
+            $this->assertCount(5, $groupTags);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $groupGroupTagCache->getTagsThroughGroup($group));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(GroupTag::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertGroupTags($groupGroupTagCache->getTagsThroughGroup($group));
+        $assertGroupTags($groupGroupTagCache->getTagsThroughGroup($group));
     }
 
     /** @test */
@@ -84,21 +84,22 @@ class GroupGroupTagTest extends TestCase
         $groups = Group::factory()->count(5)->create();
         $groupTag = GroupTag::factory()->create();
 
-        $groupGroupTagRepository = $this->prophesize(GroupGroupTag::class);
-        $groupGroupTagRepository->getGroupsThroughTag(Argument::that(function ($arg) use ($groupTag) {
+        $baseGroupGroupTagRepository = $this->prophesize(GroupGroupTag::class);
+        $baseGroupGroupTagRepository->getGroupsThroughTag(Argument::that(function ($arg) use ($groupTag) {
             return $arg instanceof GroupTag && $arg->is($groupTag);
-        }))->shouldBeCalled()->willReturn($groups);
+        }))->shouldBeCalledTimes(1)->willReturn($groups);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\Tags\GroupGroupTag::class . '@getGroupsThroughTag:' . $groupTag->id();
+        $groupGroupTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\GroupGroupTag($baseGroupGroupTagRepository->reveal(), app(Repository::class));
 
-        $groupTagTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\GroupGroupTag($groupGroupTagRepository->reveal(), $cache);
+        $assertGroups = function($groups) {
+            $this->assertInstanceOf(Collection::class, $groups);
+            $this->assertContainsOnlyInstancesOf(Group::class, $groups);
+            $this->assertCount(5, $groups);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $groupTagTagCache->getGroupsThroughTag($groupTag));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(Group::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertGroups($groupGroupTagCache->getGroupsThroughTag($groupTag));
+        $assertGroups($groupGroupTagCache->getGroupsThroughTag($groupTag));
+
     }
 }

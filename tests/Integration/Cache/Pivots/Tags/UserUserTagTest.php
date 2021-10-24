@@ -60,22 +60,22 @@ class UserUserTagTest extends TestCase
         $userTags = UserTag::factory()->count(5)->create();
         $user = User::factory()->create();
 
-        $userUserTagRepository = $this->prophesize(UserUserTag::class);
-        $userUserTagRepository->getTagsThroughUser(Argument::that(function ($arg) use ($user) {
+        $baseUserUserTagRepository = $this->prophesize(UserUserTag::class);
+        $baseUserUserTagRepository->getTagsThroughUser(Argument::that(function ($arg) use ($user) {
             return $arg instanceof User && $arg->is($user);
-        }))->shouldBeCalled()->willReturn($userTags);
+        }))->shouldBeCalledTimes(1)->willReturn($userTags);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\Tags\UserUserTag::class . '@getTagsThroughUser:' . $user->id();
+        $userUserTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\UserUserTag($baseUserUserTagRepository->reveal(), app(Repository::class));
 
-        $userUserTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\UserUserTag($userUserTagRepository->reveal(), $cache);
+        $assertUserTags = function($userTags) {
+            $this->assertInstanceOf(Collection::class, $userTags);
+            $this->assertContainsOnlyInstancesOf(UserTag::class, $userTags);
+            $this->assertCount(5, $userTags);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $userUserTagCache->getTagsThroughUser($user));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(UserTag::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertUserTags($userUserTagCache->getTagsThroughUser($user));
+        $assertUserTags($userUserTagCache->getTagsThroughUser($user));
     }
 
     /** @test */
@@ -84,21 +84,22 @@ class UserUserTagTest extends TestCase
         $users = User::factory()->count(5)->create();
         $userTag = UserTag::factory()->create();
 
-        $userUserTagRepository = $this->prophesize(UserUserTag::class);
-        $userUserTagRepository->getUsersThroughTag(Argument::that(function ($arg) use ($userTag) {
+        $baseUserUserTagRepository = $this->prophesize(UserUserTag::class);
+        $baseUserUserTagRepository->getUsersThroughTag(Argument::that(function ($arg) use ($userTag) {
             return $arg instanceof UserTag && $arg->is($userTag);
-        }))->shouldBeCalled()->willReturn($users);
+        }))->shouldBeCalledTimes(1)->willReturn($users);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\Tags\UserUserTag::class . '@getUsersThroughTag:' . $userTag->id();
+        $userUserTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\UserUserTag($baseUserUserTagRepository->reveal(), app(Repository::class));
 
-        $userTagTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\UserUserTag($userUserTagRepository->reveal(), $cache);
+        $assertUsers = function($users) {
+            $this->assertInstanceOf(Collection::class, $users);
+            $this->assertContainsOnlyInstancesOf(User::class, $users);
+            $this->assertCount(5, $users);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $userTagTagCache->getUsersThroughTag($userTag));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(User::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertUsers($userUserTagCache->getUsersThroughTag($userTag));
+        $assertUsers($userUserTagCache->getUsersThroughTag($userTag));
+
     }
 }

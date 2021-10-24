@@ -60,22 +60,22 @@ class RoleRoleTagTest extends TestCase
         $roleTags = RoleTag::factory()->count(5)->create();
         $role = Role::factory()->create();
 
-        $roleRoleTagRepository = $this->prophesize(RoleRoleTag::class);
-        $roleRoleTagRepository->getTagsThroughRole(Argument::that(function ($arg) use ($role) {
+        $baseRoleRoleTagRepository = $this->prophesize(RoleRoleTag::class);
+        $baseRoleRoleTagRepository->getTagsThroughRole(Argument::that(function ($arg) use ($role) {
             return $arg instanceof Role && $arg->is($role);
-        }))->shouldBeCalled()->willReturn($roleTags);
+        }))->shouldBeCalledTimes(1)->willReturn($roleTags);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\Tags\RoleRoleTag::class . '@getTagsThroughRole:' . $role->id();
+        $roleRoleTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\RoleRoleTag($baseRoleRoleTagRepository->reveal(), app(Repository::class));
 
-        $roleRoleTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\RoleRoleTag($roleRoleTagRepository->reveal(), $cache);
+        $assertRoleTags = function($roleTags) {
+            $this->assertInstanceOf(Collection::class, $roleTags);
+            $this->assertContainsOnlyInstancesOf(RoleTag::class, $roleTags);
+            $this->assertCount(5, $roleTags);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $roleRoleTagCache->getTagsThroughRole($role));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(RoleTag::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertRoleTags($roleRoleTagCache->getTagsThroughRole($role));
+        $assertRoleTags($roleRoleTagCache->getTagsThroughRole($role));
     }
 
     /** @test */
@@ -84,21 +84,22 @@ class RoleRoleTagTest extends TestCase
         $roles = Role::factory()->count(5)->create();
         $roleTag = RoleTag::factory()->create();
 
-        $roleRoleTagRepository = $this->prophesize(RoleRoleTag::class);
-        $roleRoleTagRepository->getRolesThroughTag(Argument::that(function ($arg) use ($roleTag) {
+        $baseRoleRoleTagRepository = $this->prophesize(RoleRoleTag::class);
+        $baseRoleRoleTagRepository->getRolesThroughTag(Argument::that(function ($arg) use ($roleTag) {
             return $arg instanceof RoleTag && $arg->is($roleTag);
-        }))->shouldBeCalled()->willReturn($roles);
+        }))->shouldBeCalledTimes(1)->willReturn($roles);
 
-        $cache = app(Repository::class);
-        $key = \BristolSU\ControlDB\Cache\Pivots\Tags\RoleRoleTag::class . '@getRolesThroughTag:' . $roleTag->id();
+        $roleRoleTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\RoleRoleTag($baseRoleRoleTagRepository->reveal(), app(Repository::class));
 
-        $roleTagTagCache = new \BristolSU\ControlDB\Cache\Pivots\Tags\RoleRoleTag($roleRoleTagRepository->reveal(), $cache);
+        $assertRoles = function($roles) {
+            $this->assertInstanceOf(Collection::class, $roles);
+            $this->assertContainsOnlyInstancesOf(Role::class, $roles);
+            $this->assertCount(5, $roles);
+        };
 
-        $this->assertFalse($cache->has($key));
-        $this->assertCount(5, $roleTagTagCache->getRolesThroughTag($roleTag));
-        $this->assertTrue($cache->has($key));
-        $this->assertInstanceOf(Collection::class, $cache->get($key));
-        $this->assertContainsOnlyInstancesOf(Role::class, $cache->get($key));
-        $this->assertCount(5, $cache->get($key));
+        // The underlying instance should only be called once
+        $assertRoles($roleRoleTagCache->getRolesThroughTag($roleTag));
+        $assertRoles($roleRoleTagCache->getRolesThroughTag($roleTag));
+
     }
 }
