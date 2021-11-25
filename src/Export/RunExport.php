@@ -47,20 +47,16 @@ class RunExport implements ShouldQueue
     {
         switch($this->type) {
             case 'user':
-                return app(User::class)->paginate($this->page, 200)
-                    ->map(fn($user) => LazyUser::load($user->id()));
+                return app(User::class)->paginate($this->page, 200);
                 break;
             case 'group':
-                return app(Group::class)->paginate($this->page, 200)
-                ->map(fn($group) => LazyGroup::load($group->id()));
+                return app(Group::class)->paginate($this->page, 200);
                 break;
             case 'role':
-                return app(Role::class)->paginate($this->page, 200)
-                ->map(fn($role) => LazyRole::load($role->id()));
+                return app(Role::class)->paginate($this->page, 200);
                 break;
             case 'position':
-                return app(Position::class)->paginate($this->page, 200)
-                ->map(fn($position) => LazyPosition::load($position->id()));
+                return app(Position::class)->paginate($this->page, 200);
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('The type option %s is not allowed.', $this->type));

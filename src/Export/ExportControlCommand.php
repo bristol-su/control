@@ -47,6 +47,7 @@ class ExportControlCommand extends Command
     {
         $time=-hrtime(true);
         foreach($this->pages() as $page) {
+            $this->info('Processing page ' . $page);
             RunExport::dispatch($this->option('exporter'), $this->argument('type'), $page);
         }
         $this->info('Export complete');
@@ -73,7 +74,10 @@ class ExportControlCommand extends Command
                 $count = 0;
         }
 
-        return range(0, $count);
+        if($count > 0) {
+            return range(1, $count);
+        }
+        return [];
     }
 
 
