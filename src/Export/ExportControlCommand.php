@@ -75,7 +75,7 @@ class ExportControlCommand extends Command
         }
 
         if($count > 0) {
-            return range(1, $count);
+            return range(1, ceil($count/200));
         }
         return [];
     }
