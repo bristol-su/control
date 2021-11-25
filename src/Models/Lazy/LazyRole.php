@@ -56,7 +56,7 @@ class LazyRole extends LazyModel implements RoleContract
 
     public function groupId(): int
     {
-        $this->model()->groupId();
+        return $this->model()->groupId();
     }
 
     public function setGroupId(int $groupId): void
@@ -81,7 +81,7 @@ class LazyRole extends LazyModel implements RoleContract
 
     public function users(): Collection
     {
-        $this->model()->users();
+        return $this->model()->users();
     }
 
     public function tags(): Collection

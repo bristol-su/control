@@ -51,7 +51,7 @@ class LazyUser extends LazyModel implements UserContract
 
     public function roles(): Collection
     {
-     return $this->model()->roles();
+        return $this->model()->roles();
     }
 
     public function groups(): Collection

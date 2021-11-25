@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Made exports more memory efficient
+- Lazy model not returning group ID
 
 ## [3.1.0] - (24/10/2021)
 
