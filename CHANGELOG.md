@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Made exports more memory efficient
+
 ## [3.1.0] - (24/10/2021)
 
 ### Added
