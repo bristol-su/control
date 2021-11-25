@@ -47,7 +47,7 @@ class ExportControlCommand extends Command
     {
         $time=-hrtime(true);
         foreach($this->pages() as $page) {
-            RunExport::dispatch($this->option('exporter'), $this->exportData($page));
+            RunExport::dispatch($this->option('exporter'), $this->argument('type'), $page);
         }
         $this->info('Export complete');
         $time+=hrtime(true);
@@ -76,24 +76,5 @@ class ExportControlCommand extends Command
         return range(0, $count);
     }
 
-    private function exportData(int $page)
-    {
-        switch($this->argument('type')) {
-            case 'user':
-                return app(User::class)->paginate($page, 200);
-                break;
-            case 'group':
-                return app(Group::class)->paginate($page, 200);
-                break;
-            case 'role':
-                return app(Role::class)->paginate($page, 200);
-                break;
-            case 'position':
-                return app(Position::class)->paginate($page, 200);
-                break;
-            default:
-                throw new InvalidArgumentException(sprintf('The type option %s is not allowed.', $this->argument('type')));
-                break;
-        }
-    }
+
 }
