@@ -16,6 +16,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 class RunExport implements ShouldQueue
@@ -40,7 +41,9 @@ class RunExport implements ShouldQueue
      */
     public function handle()
     {
+        Log::info('About to run roles with page ' . $this->page);
         Exporter::driver($this->exporter)->export($this->getData());
+        Log::info('Ran roles with page ' . $this->page);
     }
 
     private function getData()
