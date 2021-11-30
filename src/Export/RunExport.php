@@ -41,9 +41,7 @@ class RunExport implements ShouldQueue
      */
     public function handle()
     {
-        Log::info(sprintf('About to run %s with page %u', $this->type, $this->page));
         Exporter::driver($this->exporter)->export($this->getData());
-        Log::info(sprintf('Ran %s with page %u', $this->type, $this->page));
     }
 
     private function getData()
