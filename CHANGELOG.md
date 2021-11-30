@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.2] - (30/11/2021)
+
+### Fixed
+- Lazy role not always returning IDs
+
 ## [3.1.1] - (30/11/2021)
 
 ### Fixed
